@@ -1,4 +1,6 @@
 # 详情页模板
+## Detail Page Template
+Keywords: detail page, information display, view data, content structure
 
 ## 详情页页面模板规范
 
