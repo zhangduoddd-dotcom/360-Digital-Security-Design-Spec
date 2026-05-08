@@ -1,4 +1,6 @@
-# AI生图强约束与NegativePrompt
+# AI生图强约束与NegativePrompt规范
+## AI Image Generation Rules & Negative Prompt Specification
+Keywords: AI image, generation constraints, negative prompt, design rules
 
 本文件用于在具体页面生成时提供短上下文约束。不要整套规范一次性投喂给 AI；每次只组合“全局基础规范 + 对应页面模板 + 本文件 + 当前页面内容”。
 
