@@ -1,4 +1,6 @@
 # 用户管理模板
+## User Management Template
+Keywords: user, permission, account, role management
 
 ## 用户管理页面模板规范
 
