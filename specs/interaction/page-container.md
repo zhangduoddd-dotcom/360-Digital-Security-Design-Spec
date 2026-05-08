@@ -1,8 +1,8 @@
-# 列表页-容器搭建规则
-## List Page Container Construction Rules
-Keywords: layout, container, page structure
+# 后台管理系统页面搭建基础规则
+## Background Management System Page Construction Rules
+Keywords: background system, page construction, layout structure, enterprise management
 
-列表页采用典型的**企业级后台管理系统布局**，整体为「顶部导航栏 \+ 左侧边栏 \+ 主内容区」的三层嵌套结构，各模块容器规则如下：
+系统页面采用典型的**企业级后台管理系统布局**，整体为「顶部导航栏 \+ 左侧边栏 \+ 主内容区」的三层嵌套结构，各模块容器规则如下：
 
 ---
 
