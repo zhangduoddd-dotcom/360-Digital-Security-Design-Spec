@@ -1,4 +1,6 @@
-# 系统设置模板
+# 系统通用配置模板
+## System General Configuration Template
+Keywords: system config, global setup, parameter configuration
 
 ## 系统设置页面模板规范
 
