@@ -1,4 +1,6 @@
-# UE-系统特定等级标签、状态标签、语义色使用规范.md
+# 语义色与状态标签使用规范
+## Color Semantics & Status Label Specification
+Keywords: color, status, label, level, security
 
 ***
 
