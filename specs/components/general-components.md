@@ -1,6 +1,6 @@
-# 通用组件规范
-## General Component Specification
-Keywords: component, UI, button, form, modal, table
+# 通用组件设计使用规范
+## General Component Design and Usage Specification
+Keywords: components, UI, design rules, usage, interaction, B-end, enterprise
 
 ## 按钮规范
 
