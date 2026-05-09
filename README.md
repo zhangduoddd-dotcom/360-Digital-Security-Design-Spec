@@ -1,9 +1,8 @@
-# 360\-Digital\-Security\-Design\-Spec
+# 360-Digital-Security-Design-Spec
 
-Standard design specification library for 360 digital security business, covering UI specification, interaction rules, visual guidelines and component design standards, unified design language and product experience for digital security related products\.
+Standard design specification library for 360 digital security business, covering UI specification, interaction rules, visual guidelines and component design standards, unified design language and product experience for digital security related products.
 
 > 面向 AI 高保真页面生成的企业级数字安全产品设计规范库
-> 
 > 
 
 ---
@@ -42,7 +41,6 @@ Standard design specification library for 360 digital security business, coverin
 ├── [LICENSE](./LICENSE)
 └── [README.md](./README.md)
 
-
 ---
 
 ## ✨ 核心特点
@@ -77,7 +75,14 @@ Standard design specification library for 360 digital security business, coverin
 
 ## 📅 更新日志
 
-### 2026\-05\-08（今日新建）
+
+### 2026\-05\-09（新增）
+
+- 新增 Information Entry.md # 信息录入交互规范
+
+---
+
+### 2026\-05\-08（新建）
 
 - 初始化仓库核心结构，搭建 specs 目录及各子目录（ai、components、interaction、templates）
 
