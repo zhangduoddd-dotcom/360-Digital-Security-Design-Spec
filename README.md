@@ -28,6 +28,7 @@ Standard design specification library for 360 digital security business, coverin
 │ │ ├── page-container.md # 页面容器搭建规则
 │ │ ├── list-table.md # 列表页表格交互规范
 │ │ └── list-search.md # 列表页搜索栏交互规范
+│ │ └── Information Entry.md # 表单页\-信息录入交互规范
 │ ├── templates/ # 页面模板
 │ │ ├── dashboard.md # 工作台模板
 │ │ ├── list-page.md # 列表页模板
