@@ -20,7 +20,7 @@ Standard design specification library for 360 digital security business, coverin
 360-Digital-Security-Design-Spec/
 ├── specs/
 │   ├── ai/ # AI 设计辅助规则
-│   │   └── [ai-image-rules.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/ai/ai-image-rules.md) # AI 生图强约束与 Negative Prompt 规范
+│   │   └── `[ai-image-rules.md](# AI 生图强约束与 Negative Prompt 规范)`(https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/ai/ai-image-rules.md) # AI 生图强约束与 Negative Prompt 规范
 │   ├── components/ # 组件设计规范
 │   │   ├── [Ant Design Vue UI Spec...md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/components/Ant%20Design%20Vue%20UI%20Spec...md) # 面向 AI 生成的 Ant Design Vue 最新组件定制规范
 │   │   └── [general-components.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/components/general-components.md) # 通用组件设计使用规范
