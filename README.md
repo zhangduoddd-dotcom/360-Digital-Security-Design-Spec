@@ -16,32 +16,30 @@ Standard design specification library for 360 digital security business, coverin
 
 ## 📂 目录结构
 
-```Plain Text
 360-Digital-Security-Design-Spec/
 ├── specs/
-│ ├── ai/ # AI 设计辅助规则
-│ │ └── ai-image-rules.md # AI 生图强约束与 Negative Prompt 规范
-│ ├── components/ # 组件设计规范
-│ │ ├── Ant Design Vue UI Spec...md # 面向 AI 生成的 Ant Design Vue 最新组件定制规范
-│ │ └── general-components.md # 通用组件设计使用规范
-│ ├── interaction/ # 交互规则
-│ │ ├── page-container.md # 页面容器搭建规则
-│ │ ├── list-table.md # 列表页表格交互规范
-│ │ └── list-search.md # 列表页搜索栏交互规范
-│ │ └── Information Entry.md # 信息录入交互规范
-│ ├── templates/ # 页面模板
-│ │ ├── dashboard.md # 工作台模板
-│ │ ├── list-page.md # 列表页模板
-│ │ ├── detail-page.md # 详情页模板
-│ │ ├── form-page.md # 表单页模板
-│ │ ├── user-management.md # 用户管理模板
-│ │ ├── system-settings.md # 系统设置模板
-│ │ └── system-config.md # 系统通用配置模板
-│ ├── color-semantics.md # 语义色与状态标签规范
-│ └── global-basics.md # 全局基础规范
-├── LICENSE
-└── README.md
-```
+│   ├── ai/ # AI 设计辅助规则
+│   │   └── [ai-image-rules.md](./specs/ai/ai-image-rules.md) # AI 生图强约束与 Negative Prompt 规范
+│   ├── components/ # 组件设计规范
+│   │   ├── [Ant Design Vue UI Spec...md](./specs/components/Ant%20Design%20Vue%20UI%20Spec...md) # 面向 AI 生成的 Ant Design Vue 最新组件定制规范
+│   │   └── [general-components.md](./specs/components/general-components.md) # 通用组件设计使用规范
+│   ├── interaction/ # 交互规则
+│   │   ├── [page-container.md](./specs/interaction/page-container.md) # 页面容器搭建规则
+│   │   ├── [list-table.md](./specs/interaction/list-table.md) # 列表页表格交互规范
+│   │   ├── [list-search.md](./specs/interaction/list-search.md) # 列表页搜索栏交互规范
+│   │   └── [Information Entry.md](./specs/interaction/Information%20Entry.md) # 信息录入交互规范
+│   ├── templates/ # 页面模板
+│   │   ├── [dashboard.md](./specs/templates/dashboard.md) # 工作台模板
+│   │   ├── [list-page.md](./specs/templates/list-page.md) # 列表页模板
+│   │   ├── [detail-page.md](./specs/templates/detail-page.md) # 详情页模板
+│   │   ├── [form-page.md](./specs/templates/form-page.md) # 表单页模板
+│   │   ├── [user-management.md](./specs/templates/user-management.md) # 用户管理模板
+│   │   ├── [system-settings.md](./specs/templates/system-settings.md) # 系统设置模板
+│   │   └── [system-config.md](./specs/templates/system-config.md) # 系统通用配置模板
+│   ├── [color-semantics.md](./specs/color-semantics.md) # 语义色与状态标签规范
+│   └── [global-basics.md](./specs/global-basics.md) # 全局基础规范
+├── [LICENSE](./LICENSE)
+└── [README.md](./README.md)
 
 ---
 
