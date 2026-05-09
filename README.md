@@ -43,6 +43,51 @@ Standard design specification library for 360 digital security business, coverin
 └── [README.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/README.md)
 ```
 
+## 快速导航
+
+### 🧩 AI 设计辅助
+
+- \[AI 生图强约束与 Negative Prompt 规范\]\(\./specs/ai/ai\-image\-rules\.md\)
+
+### 🧩 组件设计规范
+
+- \[Ant Design Vue UI 定制规范\]\(\./specs/components/Ant Design Vue UI Spec\.\.\.md\)
+
+- \[通用组件设计使用规范\]\(\./specs/components/general\-components\.md\)
+
+### 🧩 交互规则
+
+- \[页面容器搭建规则\]\(\./specs/interaction/page\-container\.md\)
+
+- \[列表页表格交互规范\]\(\./specs/interaction/list\-table\.md\)
+
+- \[列表页搜索栏交互规范\]\(\./specs/interaction/list\-search\.md\)
+
+- \[信息录入交互规范\]\(\./specs/interaction/Information Entry\.md\)
+
+### 🧩 页面模板
+
+- \[工作台模板\]\(\./specs/templates/dashboard\.md\)
+
+- \[列表页模板\]\(\./specs/templates/list\-page\.md\)
+
+- \[详情页模板\]\(\./specs/templates/detail\-page\.md\)
+
+- \[表单页模板\]\(\./specs/templates/form\-page\.md\)
+
+- \[用户管理模板\]\(\./specs/templates/user\-management\.md\)
+
+- \[系统设置模板\]\(\./specs/templates/system\-settings\.md\)
+
+- \[系统通用配置模板\]\(\./specs/templates/system\-config\.md\)
+
+### 🧩 全局基础规范
+
+- \[全局基础规范\]\(\./specs/global\-basics\.md\)
+
+- \[语义色与状态标签规范\]\(\./specs/color\-semantics\.md\)
+
+---
 ---
 
 ## ✨ 核心特点
