@@ -46,6 +46,7 @@ Standard design specification library for 360 digital security business, coverin
 ## 快速导航
 
 ### 🧩 AI 设计辅助
+[AI 生图强约束与 Negative Prompt 规范](specs/ai/ai-image-rules.md "ai-image-rules.md")
 
 - \[AI 生图强约束与 Negative Prompt 规范\]\(\./specs/ai/ai\-image\-rules\.md\)
 
