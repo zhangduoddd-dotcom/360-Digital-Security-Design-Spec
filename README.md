@@ -16,6 +16,7 @@ Standard design specification library for 360 digital security business, coverin
 
 ## 📂 目录结构
 
+```plaintext
 360-Digital-Security-Design-Spec/
 ├── specs/
 │   ├── ai/ # AI 设计辅助规则
@@ -40,6 +41,7 @@ Standard design specification library for 360 digital security business, coverin
 │   └── [global-basics.md](./specs/global-basics.md) # 全局基础规范
 ├── [LICENSE](./LICENSE)
 └── [README.md](./README.md)
+
 
 ---
 
