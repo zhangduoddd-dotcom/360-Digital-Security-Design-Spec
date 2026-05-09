@@ -1,5 +1,7 @@
 # 360-Digital-Security-Design-Spec
 
+360 数字安全设计规范库（2026 年 5 月 9 日更新）
+
 Standard design specification library for 360 digital security business, covering UI specification, interaction rules, visual guidelines and component design standards, unified design language and product experience for digital security related products.
 
 > 面向 AI 高保真页面生成的企业级数字安全产品设计规范库
@@ -18,27 +20,27 @@ Standard design specification library for 360 digital security business, coverin
 360-Digital-Security-Design-Spec/
 ├── specs/
 │   ├── ai/ # AI 设计辅助规则
-│   │   └── [ai-image-rules.md](./specs/ai/ai-image-rules.md) # AI 生图强约束与 Negative Prompt 规范
+│   │   └── [ai-image-rules.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/ai/ai-image-rules.md) # AI 生图强约束与 Negative Prompt 规范
 │   ├── components/ # 组件设计规范
-│   │   ├── [Ant Design Vue UI Spec...md](./specs/components/Ant%20Design%20Vue%20UI%20Spec...md) # 面向 AI 生成的 Ant Design Vue 最新组件定制规范
-│   │   └── [general-components.md](./specs/components/general-components.md) # 通用组件设计使用规范
+│   │   ├── [Ant Design Vue UI Spec...md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/components/Ant%20Design%20Vue%20UI%20Spec...md) # 面向 AI 生成的 Ant Design Vue 最新组件定制规范
+│   │   └── [general-components.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/components/general-components.md) # 通用组件设计使用规范
 │   ├── interaction/ # 交互规则
-│   │   ├── [page-container.md](./specs/interaction/page-container.md) # 页面容器搭建规则
-│   │   ├── [list-table.md](./specs/interaction/list-table.md) # 列表页表格交互规范
-│   │   ├── [list-search.md](./specs/interaction/list-search.md) # 列表页搜索栏交互规范
-│   │   └── [Information Entry.md](./specs/interaction/Information%20Entry.md) # 信息录入交互规范
+│   │   ├── [page-container.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/interaction/page-container.md) # 页面容器搭建规则
+│   │   ├── [list-table.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/interaction/list-table.md) # 列表页表格交互规范
+│   │   ├── [list-search.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/interaction/list-search.md) # 列表页搜索栏交互规范
+│   │   └── [Information Entry.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/interaction/Information%20Entry.md) # 信息录入交互规范
 │   ├── templates/ # 页面模板
-│   │   ├── [dashboard.md](./specs/templates/dashboard.md) # 工作台模板
-│   │   ├── [list-page.md](./specs/templates/list-page.md) # 列表页模板
-│   │   ├── [detail-page.md](./specs/templates/detail-page.md) # 详情页模板
-│   │   ├── [form-page.md](./specs/templates/form-page.md) # 表单页模板
-│   │   ├── [user-management.md](./specs/templates/user-management.md) # 用户管理模板
-│   │   ├── [system-settings.md](./specs/templates/system-settings.md) # 系统设置模板
-│   │   └── [system-config.md](./specs/templates/system-config.md) # 系统通用配置模板
-│   ├── [color-semantics.md](./specs/color-semantics.md) # 语义色与状态标签规范
-│   └── [global-basics.md](./specs/global-basics.md) # 全局基础规范
-├── [LICENSE](./LICENSE)
-└── [README.md](./README.md)
+│   │   ├── [dashboard.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/templates/dashboard.md) # 工作台模板
+│   │   ├── [list-page.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/templates/list-page.md) # 列表页模板
+│   │   ├── [detail-page.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/templates/detail-page.md) # 详情页模板
+│   │   ├── [form-page.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/templates/form-page.md) # 表单页模板
+│   │   ├── [user-management.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/templates/user-management.md) # 用户管理模板
+│   │   ├── [system-settings.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/templates/system-settings.md) # 系统设置模板
+│   │   └── [system-config.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/templates/system-config.md) # 系统通用配置模板
+│   ├── [color-semantics.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/color-semantics.md) # 语义色与状态标签规范
+│   └── [global-basics.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/specs/global-basics.md) # 全局基础规范
+├── [LICENSE](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/LICENSE)
+└── [README.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/README.md)
 ```
 
 ---
@@ -77,7 +79,7 @@ Standard design specification library for 360 digital security business, coverin
 
 - 初始化仓库核心结构，搭建 specs 目录及各子目录（ai、components、interaction、templates）
 - 新建所有核心规范文档、页面模板文档及 AI 设计辅助文档
-- 完成 [README.md](README.md) 编写，明确仓库用途、目录结构及使用说明
+- 完成 [README.md](https://github.com/zhangduoddd-dotcom/360-Digital-Security-Design-Spec/blob/main/README.md) 编写，明确仓库用途、目录结构及使用说明
 - 统一规范文档命名、中英双语标题及关键词，适配 AI 高保真解析需求
 
 ---
