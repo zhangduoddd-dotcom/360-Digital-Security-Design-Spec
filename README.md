@@ -29,37 +29,29 @@ Standard design specification library for 360 digital security business, coverin
 ### 🧩 交互规则
 
 [page-container.md——后台管理系统页面搭建基础规则](specs/interaction/page-container.md "Background Management System Page Construction Rules")
-
 [list-table.md-—列表页-表格区域交互规范](specs/interaction/list-table.md "List Page Table Interaction Specification")
-
 [list-search.md-—列表页-搜索栏区域交互基础规范](specs/interaction/list-search.md "search, filter, query, list page, interaction")
-
 [Information Entry.md-—表单页-信息录入交互规范](specs/interaction/Information-Entry.md "search, filter, query, list page, interaction")
 
 
 ### 🧩 页面模板
 
-- \[工作台模板\]\(\./specs/templates/dashboard\.md\)
+[dashboard.md-—工作台模板](specs/templates/dashboard\.md "-")
+[page.md-—列表页模板](specs/templates/list\-page\.md "-")
+[detail.md—详情页模板](specs/templates/detail-page.md "-")
+[form.md—表单页模板](specs/templates/form-page.md "-")
+[user-management.md—用户管理模板](specs/templates/user-management.md "-")
+[system-settings.md—系统设置模板](specs/templates/system-settings.md "-")
+[system-config.md—系统通用配置模板](specs/templates/system-config.md "-")
 
-- \[列表页模板\]\(\./specs/templates/list\-page\.md\)
-
-- \[详情页模板\]\(\./specs/templates/detail\-page\.md\)
-
-- \[表单页模板\]\(\./specs/templates/form\-page\.md\)
-
-- \[用户管理模板\]\(\./specs/templates/user\-management\.md\)
-
-- \[系统设置模板\]\(\./specs/templates/system\-settings\.md\)
-
-- \[系统通用配置模板\]\(\./specs/templates/system\-config\.md\)
 
 ### 🧩 全局基础规范
 
-- \[全局基础规范\]\(\./specs/global\-basics\.md\)
+[basics.md-—全局基础规范](specs/global\-basics\.md "-")
 
-- \[语义色与状态标签规范\]\(\./specs/color\-semantics\.md\)
+[semantics.md-—语义色与状态标签规范](specs/color\-semantics\.md "-")
 
----
+
 ---
 
 ## ✨ 核心特点
