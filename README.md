@@ -1,8 +1,8 @@
-# 360-Digital-Security-Design-Spec
+# Backend Design Standards
+后台产品设计规范与组件标准体系
 
-360 数字安全设计规范库（2026 年 5 月 9 日更新）
-
-Standard design specification library for 360 digital security business, covering UI specification, interaction rules, visual guidelines and component design standards, unified design language and product experience for digital security related products.
+Standard Backend Design Specification Library, covering UI specification, interaction rules, visual guidelines and component design standards, unified design language and product experience for related products.
+标准后端设计规范库，涵盖UI 规范、交互规则、视觉准则及组件设计标准，为相关产品统一设计语言与产品体验。
 
 > 面向 AI 高保真页面生成的企业级数字安全产品设计规范库
 
