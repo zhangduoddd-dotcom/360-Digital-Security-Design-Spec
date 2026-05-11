@@ -84,7 +84,7 @@ Standard design specification library for 360 digital security business, coverin
 
 - 新增 Information Entry.md # 信息录入交互规范
 
-### 2026-05-08（今日新建）
+### 2026-05-08（新建）
 
 - 初始化仓库核心结构，搭建 specs 目录及各子目录（ai、components、interaction、templates）
 - 新建所有核心规范文档、页面模板文档及 AI 设计辅助文档
