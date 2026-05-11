@@ -1,20 +1,16 @@
-# Backend Design Standards
-后台产品设计规范与组件标准体系
+# Backend Design Standards  后台产品设计规范与组件标准体系
 
-Standard Backend Design Specification Library, covering UI specification, interaction rules, visual guidelines and component design standards, unified design language and product experience for related products.
-标准后端设计规范库，涵盖UI 规范、交互规则、视觉准则及组件设计标准，为相关产品统一设计语言与产品体验。
-
-> 面向 AI 高保真页面生成的企业级数字安全产品设计规范库
-
----
 
 ## 📚 仓库简介
 
-本仓库是 **360 数字安全产品设计规范库**，专为企业级 B 端后台系统打造，提供统一的设计标准、组件样式与交互规则。核心目标是支持 **AI 高保真页面生成**，所有规范均基于最新技术栈，可直接用于开源项目归档、团队协作复用。
+Standard Backend Design Library, delivering unified UI specs and interaction rules for AI high-fidelity page generation.
+
+> 后台产品标准化设计规范库，专为 AI 高保真页面生成提供统一 UI 规范与交互准则。
 
 ---
 
-## 快速导航
+
+## 🔗 快速导航
 
 ### 🧩 ai-constraints——AI约束与规范
 
