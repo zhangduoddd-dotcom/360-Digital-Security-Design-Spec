@@ -16,17 +16,17 @@ Standard design specification library for 360 digital security business, coverin
 
 ## 快速导航
 
-### 🧩 AI 设计辅助
+### 🧩 ai-constraints——AI约束与规范
 
 [ai-image-rules.md——AI 生图强约束与 Negative Prompt 规范](specs/ai/ai-image-rules.md "ai-image-rules.md")
 
-### 🧩 组件设计规范
+### 🧩 components——组件设计规范
 
 [Ant Design Vue UI Spec for AI High-Fidelity.md——面向AI高保真页面生成的Ant Design Vue最新组件UI定制规范](specs/components/Ant-Design-Vue-UI-Spec-for-AI-High-Fidelity.md "Ant Design Vue UI Spec for AI High-Fidelity.md")  
 [general-components.md——通用组件设计使用规范](specs/components/general-components.md "General Component Design and Usage Specification")
 
 
-### 🧩 交互规则
+### 🧩 interaction——交互规则
 
 [page-container.md——后台管理系统页面搭建基础规则](specs/interaction/page-container.md "Background Management System Page Construction Rules")  
 [list-table.md-—列表页-表格区域交互规范](specs/interaction/list-table.md "List Page Table Interaction Specification")  
@@ -34,7 +34,7 @@ Standard design specification library for 360 digital security business, coverin
 [Information Entry.md-—表单页-信息录入交互规范](specs/interaction/Information-Entry.md "search, filter, query, list page, interaction")  
 
 
-### 🧩 页面模板
+### 🧩 templates——页面模板
 
 [dashboard.md-—工作台模板](specs/templates/dashboard\.md "-")  
 [page.md-—列表页模板](specs/templates/list\-page\.md "-")  
