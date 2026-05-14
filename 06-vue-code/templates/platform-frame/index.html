@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>平台固定框架 Demo - 级联收起菜单版</title>
+  <link rel="stylesheet" href="./platform-frame.css" />
+</head>
+<body>
+  <div class="platform-frame" id="frame">
+    <header class="platform-top-nav">
+      <div class="top-nav-left">
+        <div class="top-logo-wrap">
+          <img class="top-logo" src="./asset/icons/svg_21e691e3.svg" alt="LOGO 占位" />
+        </div>
+        <div class="top-nav-menu-wrap">
+          <nav class="top-nav-menu" id="topNav"></nav>
+        </div>
+      </div>
+      <div class="top-nav-right">
+        <div class="top-nav-right-inner">
+          <div class="system-days">
+            <img class="system-icon" src="./asset/icons/svg_ca19bca3.svg" alt="" />
+            <span class="weak">360全网安全大脑高效赋能</span>
+            <span class="strong">328</span>
+            <span class="weak">天</span>
+          </div>
+          <div class="top-actions">
+            <div class="top-icon-button" data-top-popover="visualPopover"><img class="top-icon" src="./asset/icons/svg_eaa4c907.svg" alt="" /></div>
+            <div class="top-icon-button" data-top-popover="noticePopover"><img class="top-icon" src="./asset/icons/svg_2b713e10.svg" alt="" /></div>
+            <div class="admin-user" data-top-popover="userPopover">
+              <img class="top-icon" src="./asset/icons/svg_e33526de.svg" alt="" />
+              <div class="user-dropdown">
+                <span>超级管理员</span>
+                <img class="top-icon" src="./asset/icons/svg_c4750d0b.svg" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="top-popover" id="visualPopover">
+      <div class="top-popover-option">安全态势大屏</div>
+      <div class="top-popover-option">运营看板</div>
+    </div>
+    <div class="top-popover" id="noticePopover">
+      <div class="top-popover-option">暂无未读通知</div>
+      <div class="top-popover-option">查看消息中心</div>
+    </div>
+    <div class="top-popover" id="userPopover">
+      <div class="top-popover-option">个人中心</div>
+      <div class="top-popover-option">账号设置</div>
+      <div class="top-popover-option">退出登录</div>
+    </div>
+
+    <div class="platform-body">
+      <aside class="platform-sidebar">
+        <div class="sidebar-scroll" id="sidebar"></div>
+        <div class="sidebar-footer">
+          <button class="sidebar-collapse-button" type="button" id="collapseBtn" title="展开/收起菜单">
+            <img class="sidebar-collapse-img" src="./asset/icons/svg_c7bf2c0f.svg" alt="展开收起" />
+          </button>
+          <div class="sidebar-version">V10.0</div>
+        </div>
+      </aside>
+
+      <main class="platform-main">
+        <section class="platform-page-header return-header">
+          <button class="return-button" type="button" title="返回">
+            <img class="return-icon" src="./asset/icons/svg_9875e337.svg" alt="返回" />
+          </button>
+          <span class="return-title" id="pageTitle">新增日志源</span>
+        </section>
+
+        <section class="platform-page-content">
+          <div class="content-shell">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">业务内容区示例</div>
+                <button class="btn btn-primary" onclick="document.getElementById('collapseBtn').click()">切换展开收起</button>
+              </div>
+              <div class="card-body">
+                <div class="demo-note">这里是唯一允许替换的业务内容区。后续生成页面时，只替换 .platform-page-content 内部内容。</div>
+
+                <div class="rule-grid">
+                  <div class="rule-card">
+                    <div class="rule-title">固定框架</div>
+                    <div class="rule-desc">顶部导航、左侧菜单、可返回页头、内容区结构固定。</div>
+                  </div>
+                  <div class="rule-card">
+                    <div class="rule-title">左侧菜单</div>
+                    <div class="rule-desc">支持展开、收起、收起态级联菜单和选中态同步。</div>
+                  </div>
+                  <div class="rule-card">
+                    <div class="rule-title">顶部导航</div>
+                    <div class="rule-desc">支持默认、hover、选中、下拉和右侧功能浮层。</div>
+                  </div>
+                  <div class="rule-card">
+                    <div class="rule-title">业务替换</div>
+                    <div class="rule-desc">只替换业务文案、菜单数据、页面标题和业务内容。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="./platform-frame.js"></script>
+</body>
+</html>
