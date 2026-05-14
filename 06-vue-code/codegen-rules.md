@@ -1,24 +1,49 @@
-# Vue 代码生成规则
-## Vue Code Generation Rules
+# Vue 代码与 HTML 演示生成规则
+## Vue Code and HTML Demo Generation Rules
 
-Keywords: vue codegen, ant design vue, preview html, typescript, backend page, ai result
+Keywords: vue codegen, html demo, ant design vue, preview html, typescript, backend page, ai result
 
-本文用于约束 AI 生成后台页面代码。默认输出 Vue 3 + TypeScript + Ant Design Vue，同时必须提供一个可直接打开预览的 HTML 文件。
+本文用于约束 AI 生成后台页面代码和 HTML 可演示页面。默认应先判断用户要的是“可演示页面”还是“工程代码”。
 
-## 1. 默认交付物
+## 1. 默认交付物判断
 
-当用户要求生成代码、开发页面、做 demo 或做可演示页面时，AI 必须同时输出：
+### 1.1 可演示页面 / demo / 可点击预览
+
+当用户要求生成可演示页面、页面 demo、可点击预览、高保真演示环境、HTML 预览时，默认只输出：
+
+```text
+一个可直接打开预览的 HTML 文件
+```
+
+HTML 文件必须包含完整 HTML、CSS、JavaScript、mock 数据和基础点击交互，不依赖构建工具，不请求真实接口。
+
+### 1.2 Vue 代码 / 工程代码
+
+当用户明确要求生成 Vue 代码、前端代码、工程代码、接入项目或 Vue3 + TypeScript + Ant Design Vue 页面时，输出：
 
 ```text
 1. Vue 3 + TypeScript + Ant Design Vue 页面代码
 2. 一个可直接打开预览的 HTML 文件
 ```
 
-如果用户只明确要求 HTML，可以只输出 HTML；否则默认两份都给。
+如果用户明确只要 Vue 代码，可以只输出 Vue 代码；如果用户明确只要 HTML，可以只输出 HTML。
 
-## 2. Vue 代码要求
+## 2. HTML 预览文件要求
 
-必须包含：
+HTML 文件用于给设计师快速看效果和调交互，应满足：
+
+- 单文件可打开。
+- 包含完整 HTML、CSS、JavaScript。
+- 不依赖构建工具。
+- 不请求真实接口。
+- 使用 mock 数据。
+- 支持基础点击交互。
+- 视觉风格接近正式 Ant Design Vue 页面。
+- 包含 loading、empty、error、反馈等基础状态。
+
+## 3. Vue 代码要求
+
+当用户明确要求 Vue / 工程代码时，Vue 代码必须包含：
 
 - 清晰的类型定义。
 - mock 数据或接口占位。
@@ -27,18 +52,6 @@ Keywords: vue codegen, ant design vue, preview html, typescript, backend page, a
 - 成功、失败、删除确认等操作反馈。
 - 符合页面规范和交互规范的结构。
 - 与 HTML 预览一致的字段、文案、状态和主要视觉风格。
-
-## 3. HTML 预览文件要求
-
-HTML 文件用于给设计师快速看效果，应满足：
-
-- 单文件可打开。
-- 包含完整 HTML、CSS、JavaScript。
-- 不依赖构建工具。
-- 不请求真实接口。
-- 使用 mock 数据。
-- 支持基础点击交互。
-- 视觉风格接近 Vue 版本。
 
 ## 4. 页面类型要求
 
@@ -66,9 +79,9 @@ HTML 文件用于给设计师快速看效果，应满足：
 
 必须包含异常标题、说明文案和建议操作，例如刷新重试、返回首页、申请权限。
 
-## 5. AI 原生页面代码要求
+## 5. AI 原生页面要求
 
-生成 AI 原生平台、多智能体协作、智能生成、AI 审核、AI 分析类页面时，必须包含以下结构：
+生成 AI 原生平台、多智能体协作、智能生成、AI 审核、AI 分析类页面时，必须包含以下结构。
 
 ### 5.1 AI 任务状态
 
@@ -98,6 +111,8 @@ interface AiResult {
   status: '待审核' | '已编辑' | '已应用' | '失败'
 }
 ```
+
+HTML 演示文件中可用 mock 数据模拟以上结构；Vue 工程代码中应定义对应类型。
 
 ### 5.3 AI 结果操作
 
@@ -137,8 +152,8 @@ AI 操作记录必须保留：
 
 ## 7. 禁止项
 
-- 不要只给 Vue 代码而不给预览 HTML，除非用户明确说不需要。
-- 不要用 AI 生图 Prompt 替代代码实现要求。
+- 不要把“可演示页面 / demo / 可点击预览”默认扩大成交付 Vue 工程代码。
+- 不要用 AI 生图 Prompt 替代代码或 HTML 实现要求。
 - 不要只输出静态结构而没有基础状态和交互。
 - 不要散乱硬编码大量颜色和间距。
 - 不要让 AI 结果直接成为最终发布内容，必须保留人工审核或确认路径。
