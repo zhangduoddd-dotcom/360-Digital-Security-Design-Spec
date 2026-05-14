@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>平台固定框架 Demo - 级联收起菜单版</title>
+  <title>平台固定框架模板</title>
   <link rel="stylesheet" href="./platform-frame.css" />
 </head>
 <body>
@@ -21,8 +21,8 @@
         <div class="top-nav-right-inner">
           <div class="system-days">
             <img class="system-icon" src="./asset/icons/svg_ca19bca3.svg" alt="" />
-            <span class="weak">360全网安全大脑高效赋能</span>
-            <span class="strong">328</span>
+            <span id="topStatusText" class="weak">360全网安全大脑高效赋能</span>
+            <span id="topStatusDays" class="strong">328</span>
             <span class="weak">天</span>
           </div>
           <div class="top-actions">
@@ -31,7 +31,7 @@
             <div class="admin-user" data-top-popover="userPopover">
               <img class="top-icon" src="./asset/icons/svg_e33526de.svg" alt="" />
               <div class="user-dropdown">
-                <span>超级管理员</span>
+                <span id="topUserName">超级管理员</span>
                 <img class="top-icon" src="./asset/icons/svg_c4750d0b.svg" alt="" />
               </div>
             </div>
@@ -40,19 +40,9 @@
       </div>
     </header>
 
-    <div class="top-popover" id="visualPopover">
-      <div class="top-popover-option">安全态势大屏</div>
-      <div class="top-popover-option">运营看板</div>
-    </div>
-    <div class="top-popover" id="noticePopover">
-      <div class="top-popover-option">暂无未读通知</div>
-      <div class="top-popover-option">查看消息中心</div>
-    </div>
-    <div class="top-popover" id="userPopover">
-      <div class="top-popover-option">个人中心</div>
-      <div class="top-popover-option">账号设置</div>
-      <div class="top-popover-option">退出登录</div>
-    </div>
+    <div class="top-popover" id="visualPopover"></div>
+    <div class="top-popover" id="noticePopover"></div>
+    <div class="top-popover" id="userPopover"></div>
 
     <div class="platform-body">
       <aside class="platform-sidebar">
@@ -74,6 +64,7 @@
         </section>
 
         <section class="platform-page-content">
+          <!-- 业务内容唯一替换区：AI 生成页面时，只能替换 .platform-page-content 内部内容 -->
           <div class="content-shell">
             <div class="card">
               <div class="card-header">
@@ -82,24 +73,11 @@
               </div>
               <div class="card-body">
                 <div class="demo-note">这里是唯一允许替换的业务内容区。后续生成页面时，只替换 .platform-page-content 内部内容。</div>
-
                 <div class="rule-grid">
-                  <div class="rule-card">
-                    <div class="rule-title">固定框架</div>
-                    <div class="rule-desc">顶部导航、左侧菜单、可返回页头、内容区结构固定。</div>
-                  </div>
-                  <div class="rule-card">
-                    <div class="rule-title">左侧菜单</div>
-                    <div class="rule-desc">支持展开、收起、收起态级联菜单和选中态同步。</div>
-                  </div>
-                  <div class="rule-card">
-                    <div class="rule-title">顶部导航</div>
-                    <div class="rule-desc">支持默认、hover、选中、下拉和右侧功能浮层。</div>
-                  </div>
-                  <div class="rule-card">
-                    <div class="rule-title">业务替换</div>
-                    <div class="rule-desc">只替换业务文案、菜单数据、页面标题和业务内容。</div>
-                  </div>
+                  <div class="rule-card"><div class="rule-title">固定框架</div><div class="rule-desc">顶部导航、左侧菜单、可返回页头、内容区结构固定。</div></div>
+                  <div class="rule-card"><div class="rule-title">左侧菜单</div><div class="rule-desc">支持展开、收起、收起态级联菜单和选中态同步。</div></div>
+                  <div class="rule-card"><div class="rule-title">顶部导航</div><div class="rule-desc">支持默认、hover、选中、下拉和右侧功能浮层。</div></div>
+                  <div class="rule-card"><div class="rule-title">业务替换</div><div class="rule-desc">只替换业务文案、菜单数据、页面标题和业务内容。</div></div>
                 </div>
               </div>
             </div>
@@ -109,6 +87,7 @@
     </div>
   </div>
 
+  <script src="./platform-frame-data.js"></script>
   <script src="./platform-frame.js"></script>
 </body>
 </html>
