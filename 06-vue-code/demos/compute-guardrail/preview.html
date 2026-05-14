@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>算力消耗防护演示</title>
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f7fb} .wrap{padding:20px}
+.card{background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:16px;margin-bottom:12px}
+.btn{padding:8px 14px;border-radius:6px;border:1px solid #1677ff;color:#1677ff;background:#fff;cursor:pointer}.btn.primary{background:#1677ff;color:#fff}
+.flex{display:flex;gap:8px;align-items:center}.right{float:right}.tag{display:inline-block;padding:2px 8px;border-radius:10px;background:#e6f4ff;color:#1677ff;font-size:12px}
+.table{width:100%;border-collapse:collapse}.table th,.table td{border-bottom:1px solid #f0f0f0;padding:10px;text-align:left}
+.drawer{position:fixed;top:0;right:0;width:520px;height:100%;background:#fff;border-left:1px solid #e8e8e8;box-shadow:-4px 0 16px rgba(0,0,0,.08);padding:16px;overflow:auto;display:none}
+.drawer.show{display:block}.small{font-size:12px;color:#666}.chip{font-size:12px;padding:2px 6px;border-radius:8px;background:#f0f5ff}
+</style></head><body>
+<div class="wrap">
+  <div class="card"><h2 style="margin:0 0 8px">算力消耗防护</h2><span class="tag">高优先级应用永远优先保障</span>
+    <div class="flex" style="margin-top:10px"><button class="btn primary" onclick="openD('d1')">应用优先级维护</button><button class="btn" onclick="openD('d2')">调度算法配置</button></div>
+  </div>
+  <div class="card"><table class="table"><tr><th>规则名称</th><th>业务模型</th><th>TPM</th><th>对象标识</th></tr>
+    <tr><td>算力消耗-qwen</td><td>qwen2.5-72b</td><td>300000</td><td>API KEY</td></tr>
+    <tr><td>全局限流-ds</td><td>deepseek-v3.2</td><td>200000</td><td>不区分对象</td></tr>
+  </table></div>
+</div>
+<div id="d1" class="drawer"><h3>应用优先级维护</h3><p>默认优先级为 P1，可配置 P0/P1/P2。</p><ul><li>内容审核助手：<b>P1</b></li><li>智能客服系统：<b>P1</b></li><li>默认应用-未分组：<b>P1</b></li></ul><button class="btn" onclick="closeD('d1')">关闭</button></div>
+<div id="d2" class="drawer"><h3>调度算法配置</h3><p>加权公平调度（WFQ）：按实时 TPM / 最大 TPM 触发阈值策略，优先保障高优先级。</p>
+  <h4>模型 TPM（留空=无限大）</h4><ul><li>gpt-4o <span class="chip">精确匹配</span> 500000</li><li>qwen2.5-72b <span class="chip">前缀匹配</span> 300000</li><li>default-model <span class="chip">缺省匹配</span> （空）</li></ul>
+  <h4>阈值（整数≤100且依次降低）</h4><p>P0=90，P1=85，P2=80</p><button class="btn" onclick="closeD('d2')">关闭</button></div>
+<script>function openD(id){document.getElementById(id).classList.add('show')}function closeD(id){document.getElementById(id).classList.remove('show')}</script>
+</body></html>
