@@ -10,7 +10,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 | 目录 | 内容 |
 |---|---|
 | [01-foundation/](./01-foundation/) | 全局设计基础：原则、布局、颜色、字体、Token、投影 |
-| [02-components/](./02-components/) | 组件规范：Ant Design Vue、组件尺寸、按钮、表单、表格、反馈 |
+| [02-components/](./02-components/) | 组件规范：Ant Design Vue、组件尺寸、按钮、图标、表单、表格、反馈 |
 | [03-interaction/](./03-interaction/) | 交互规范：页面容器、导航、搜索区、表格区、表单录入、权限状态 |
 | [04-pages/](./04-pages/) | 页面规范：工作台、列表页、表单页、详情页、分步流程页、异常页、用户管理、系统设置 |
 | [05-ai-image/](./05-ai-image/) | AI 生图：Prompt 规则、页面 Prompt、Negative Prompt、AI 原生平台 |
@@ -22,7 +22,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 | 用户任务 | 优先读取 | 辅助读取 |
 |---|---|---|
 | 查询全局基础规范 | [01-foundation/overview.md](./01-foundation/overview.md) | [01-foundation/layout.md](./01-foundation/layout.md)、[01-foundation/color.md](./01-foundation/color.md)、[01-foundation/tokens.md](./01-foundation/tokens.md)、[01-foundation/shadow.md](./01-foundation/shadow.md) |
-| 查询组件规格 / 尺寸 | [02-components/component-size.md](./02-components/component-size.md) | [02-components/button.md](./02-components/button.md)、[02-components/form.md](./02-components/form.md)、[02-components/table.md](./02-components/table.md)、[02-components/feedback.md](./02-components/feedback.md) |
+| 查询组件规格 / 尺寸 | [02-components/component-size.md](./02-components/component-size.md) | [02-components/button.md](./02-components/button.md)、[02-components/icon.md](./02-components/icon.md)、[02-components/form.md](./02-components/form.md)、[02-components/table.md](./02-components/table.md)、[02-components/feedback.md](./02-components/feedback.md) |
 | 生成工作台 UI | [04-pages/dashboard.md](./04-pages/dashboard.md) | [01-foundation/layout.md](./01-foundation/layout.md)、[01-foundation/shadow.md](./01-foundation/shadow.md)、[02-components/component-size.md](./02-components/component-size.md)、[07-checklists/design-review.md](./07-checklists/design-review.md) |
 | 生成列表页 UI | [04-pages/list-page.md](./04-pages/list-page.md) | [03-interaction/list-search.md](./03-interaction/list-search.md)、[03-interaction/list-table.md](./03-interaction/list-table.md)、[02-components/component-size.md](./02-components/component-size.md)、[03-interaction/page-container.md](./03-interaction/page-container.md) |
 | 生成表单页 UI | [04-pages/form-page.md](./04-pages/form-page.md) | [03-interaction/form-entry.md](./03-interaction/form-entry.md)、[02-components/form.md](./02-components/form.md)、[02-components/component-size.md](./02-components/component-size.md) |
@@ -35,8 +35,8 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 | 生成导航框架 | [03-interaction/page-container.md](./03-interaction/page-container.md) | [03-interaction/navigation.md](./03-interaction/navigation.md)、[01-foundation/layout.md](./01-foundation/layout.md) |
 | 生成 AI 生图 Prompt | [05-ai-image/prompt-rules.md](./05-ai-image/prompt-rules.md) | 对应页面规范、[05-ai-image/negative-prompts.md](./05-ai-image/negative-prompts.md) |
 | 生成 AI 原生平台页面 | [05-ai-image/ai-native-platform.md](./05-ai-image/ai-native-platform.md) | [06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[06-vue-code/codegen-rules.md](./06-vue-code/codegen-rules.md)、[07-checklists/frontend-acceptance.md](./07-checklists/frontend-acceptance.md) |
-| 生成可演示页面 / demo / 可点击预览 | [06-vue-code/preview-html.md](./06-vue-code/preview-html.md) | 对应页面规范、交互规范、[01-foundation/tokens.md](./01-foundation/tokens.md)、[01-foundation/shadow.md](./01-foundation/shadow.md)、[02-components/component-size.md](./02-components/component-size.md) |
-| 生成 Vue 页面代码 / 工程代码 | [06-vue-code/codegen-rules.md](./06-vue-code/codegen-rules.md) | 对应页面规范、交互规范、[02-components/component-size.md](./02-components/component-size.md)、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[06-vue-code/antdv-adapter.md](./06-vue-code/antdv-adapter.md) |
+| 生成可演示页面 / demo / 可点击预览 | [06-vue-code/preview-html.md](./06-vue-code/preview-html.md) | 对应页面规范、交互规范、[01-foundation/tokens.md](./01-foundation/tokens.md)、[01-foundation/shadow.md](./01-foundation/shadow.md)、[02-components/component-size.md](./02-components/component-size.md)、[02-components/icon.md](./02-components/icon.md) |
+| 生成 Vue 页面代码 / 工程代码 | [06-vue-code/codegen-rules.md](./06-vue-code/codegen-rules.md) | 对应页面规范、交互规范、[02-components/component-size.md](./02-components/component-size.md)、[02-components/icon.md](./02-components/icon.md)、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[06-vue-code/antdv-adapter.md](./06-vue-code/antdv-adapter.md) |
 | 检查设计输出 | [07-checklists/design-review.md](./07-checklists/design-review.md) | 对应页面、基础、组件和交互规范 |
 | 检查前端实现 | [07-checklists/frontend-acceptance.md](./07-checklists/frontend-acceptance.md) | [06-vue-code/codegen-rules.md](./06-vue-code/codegen-rules.md)、[01-foundation/tokens.md](./01-foundation/tokens.md)、[02-components/component-size.md](./02-components/component-size.md) |
 
@@ -57,6 +57,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 - [02-components/ant-design-vue.md](./02-components/ant-design-vue.md)
 - [02-components/component-size.md](./02-components/component-size.md)
 - [02-components/button.md](./02-components/button.md)
+- [02-components/icon.md](./02-components/icon.md)
 - [02-components/form.md](./02-components/form.md)
 - [02-components/table.md](./02-components/table.md)
 - [02-components/feedback.md](./02-components/feedback.md)
@@ -115,5 +116,6 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 - 只有明确要求 Vue 代码、前端代码、工程代码或接入项目时，才读取完整 Vue 代码生成规则并输出 Vue 代码。
 - 涉及视觉基础、Token、投影或响应式时，读取 [01-foundation/layout.md](./01-foundation/layout.md)、[01-foundation/tokens.md](./01-foundation/tokens.md)、[01-foundation/shadow.md](./01-foundation/shadow.md)。
 - 涉及组件尺寸、控件高度、圆角、控件状态时，读取 [02-components/component-size.md](./02-components/component-size.md)。
+- 涉及图标、图标按钮、操作 icon 或状态 icon 时，读取 [02-components/icon.md](./02-components/icon.md)。
 - 涉及 AI 原生平台、多智能体协作、AI 审核、AI 结果应用时，读取 [05-ai-image/ai-native-platform.md](./05-ai-image/ai-native-platform.md) 和 [06-vue-code/preview-html.md](./06-vue-code/preview-html.md)。
 - 每个文档应尽量自包含，AI 读到当前文档即可完成主要判断。
