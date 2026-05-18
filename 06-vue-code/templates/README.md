@@ -1,64 +1,38 @@
-# 框架模板调用规则
-## Frame Template Routing Rules
+# 框架 HTML 母版调用规则
 
-本目录用于存放可直接复用的固定框架代码。AI 生成页面时，应优先直接复制对应模板代码，再替换业务内容，避免重复按规范重新拼装框架导致样式和交互偏差。
+本目录用于存放可直接复用的固定框架代码。
 
-## 1. 默认调用规则
+## 调用规则
 
 | 用户描述 | 调用模板 |
 |---|---|
-| 默认后台页面 / 通用后台页面 / 未指定特定产品框架 | [`platform-frame/`](./platform-frame/) |
-| 明确说“本地安全大脑 / 本脑 / 基于本脑框架” | [`local-security-brain-frame/`](./local-security-brain-frame/) |
-| 明确说“终端安全管理系统 / 终端 / 基于终端框架” | [`terminal-security-frame/`](./terminal-security-frame/) |
+| 默认后台页面 / 通用后台页面 / 未指定特定产品框架 | `platform-frame/` |
+| 明确说“本地安全大脑 / 本脑 / 基于本脑框架” | `local-security-brain-frame/source.html` |
+| 明确说“终端安全管理系统 / 终端 / 基于终端框架” | `terminal-security-frame/source.html` |
 
-## 2. 主线默认框架
+## 默认框架
 
-未指定特定产品框架时，必须继续使用：
+未指定特定产品框架时，继续使用：
 
 ```text
 06-vue-code/templates/platform-frame/
 03-interaction/platform-frame.md
 ```
 
-不要默认使用本脑框架或终端框架。
+## 产品框架使用方式
 
-## 3. 本脑框架调用条件
-
-只有用户明确说：
+当用户明确说“基于本脑框架”或“基于终端框架”时：
 
 ```text
-本地安全大脑
-本脑
-基于本脑框架
-使用双层顶部导航
+读取对应目录下的 source.html。
+完整复制 source.html 作为页面底座。
+只替换业务内容。
+保留框架 DOM、CSS、JS。
 ```
 
-才调用：
+如果 `source.html` 与 README、INDEX、preview-html.md 等文字说明存在差异，以 `source.html` 为准。
 
-```text
-06-vue-code/templates/local-security-brain-frame/
-```
-
-## 4. 终端框架调用条件
-
-只有用户明确说：
-
-```text
-终端安全管理系统
-终端
-基于终端框架
-使用本级中心 / 区域中心切换
-```
-
-才调用：
-
-```text
-06-vue-code/templates/terminal-security-frame/
-```
-
-## 5. 业务内容替换规则
-
-无论调用哪个模板，固定框架部分都不允许重新设计或重写。AI 只能替换：
+## 业务内容替换范围
 
 ```text
 Logo / 产品文案
@@ -69,4 +43,4 @@ mock 数据
 iconfont 映射
 ```
 
-框架结构、布局尺寸、基础交互、展开收起规则、页头层级、内容区位置不允许改动。
+框架结构、布局尺寸、基础交互、展开收起规则、页头层级、内容区位置保持不变。
