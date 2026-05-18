@@ -1,17 +1,33 @@
 # Token 规范
 ## Tokens
 
-Keywords: tokens, css variables, color token, spacing token, shadow token, frontend alias, font rendering
+Keywords: tokens, css variables, color token, spacing token, shadow token, frontend alias, font rendering, p6
 
 本文定义基础样式变量，方便 AI 生成统一的设计稿、HTML 预览文件和 Vue 页面代码。设计文档可保留中文 Token，工程落地建议同时提供英文 alias。
 
-## 1. 原始 CSS Token
+## 1. 主色统一策略
+
+主线包默认品牌主色统一为：
+
+```text
+p6 #00AB7A 科技绿
+```
+
+规则：
+
+- 普通主按钮、链接型操作、选中态、focus ring、hover 强调都以 `p6` 为主。
+- hover 使用 `p5 #1DB887`，active 使用 `p7 #039972`。
+- 浅选中背景使用 `p1 #D9F4EE`。
+- 蓝色不再作为品牌主色，只保留为 `info` 信息语义色。
+- AI 渐变如需使用，也必须以科技绿系为主，不得恢复蓝色品牌主色。
+
+## 2. 原始 CSS Token
 
 ```css
 :root {
-  --AI 悬停: linear-gradient(0deg, rgba(255,255,255,0.20), rgba(255,255,255,0.20)),linear-gradient(126deg, #1AFFAF 0%,#1093FF 37%,#004DFF 100%);
-  --AI 按下: linear-gradient(0deg, rgba(0,0,0,0.20), rgba(0,0,0,0.20)),linear-gradient(309deg, #004DFF 0%,#1093FF 54%,#1AFFAF 100%);
-  --AI 默认: linear-gradient(307deg, #004DFF 0%,#1093FF 65%,#1AFFAF 100%);
+  --AI 悬停: linear-gradient(0deg, rgba(255,255,255,0.18), rgba(255,255,255,0.18)), linear-gradient(126deg, #71EDC2 0%, #00AB7A 45%, #006853 100%);
+  --AI 按下: linear-gradient(0deg, rgba(0,0,0,0.18), rgba(0,0,0,0.18)), linear-gradient(309deg, #013C32 0%, #008563 54%, #4AD3A4 100%);
+  --AI 默认: linear-gradient(307deg, #013C32 0%, #00AB7A 62%, #71EDC2 100%);
 
   --p1: #D9F4EE;
   --p2: #B9F7E2;
@@ -92,7 +108,7 @@ Keywords: tokens, css variables, color token, spacing token, shadow token, front
 
   --shadow-default: 0px 3px 6px -4px rgba(0,0,0,0.12),0px 6px 16px 0px rgba(0,0,0,0.08),0px 9px 28px 8px rgba(0,0,0,0.04);
   --shadow-hover: 0px 1px 2px -2px rgba(0,0,0,0.16),0px 3px 6px 0px rgba(0,0,0,0.12),0px 5px 12px 4px rgba(0,0,0,0.08);
-  --shadow-superbox-hover: 0px 4px 12px 0px rgba(183,179,255,0.50);
+  --shadow-superbox-hover: 0px 4px 12px 0px rgba(0,171,122,0.18);
 
   --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
   --font-weight-regular: 400;
@@ -102,20 +118,20 @@ Keywords: tokens, css variables, color token, spacing token, shadow token, front
 }
 ```
 
-## 2. 推荐英文 Alias
+## 3. 推荐英文 Alias
 
 工程中建议通过英文 alias 调用，避免中文变量名和空格变量名在构建链中产生兼容问题。
 
 ```css
 :root {
-  /* Brand */
+  /* Brand: default technology green */
   --color-primary-bg: var(--p1);
   --color-primary-hover: var(--p5);
   --color-primary: var(--p6);
   --color-primary-active: var(--p7);
   --color-primary-text-active: var(--p8);
 
-  /* AI */
+  /* AI: green gradient only */
   --color-ai-default: var(--AI 默认);
   --color-ai-hover: var(--AI 悬停);
   --color-ai-active: var(--AI 按下);
@@ -172,7 +188,7 @@ Keywords: tokens, css variables, color token, spacing token, shadow token, front
 }
 ```
 
-## 3. 字体渲染基础规则
+## 4. 字体渲染基础规则
 
 前端基础样式必须关闭浏览器字体合成，并启用平滑抗锯齿。
 
@@ -192,29 +208,30 @@ select {
 }
 ```
 
-## 4. Token 命名与重复变量处理
+## 5. Token 命名与重复变量处理
 
 | 情况 | 处理规则 |
 |---|---|
-| `Blue-7` 重复出现，色值一致 | 保留一个标准定义即可 |
+| `Blue-*` | 仅作为 info 信息语义色，不作为品牌主色 |
 | `gray-6/7/8/9` 重复出现，色值一致 | 保留第一次定义即可 |
 | `P6` 与 `p6` 一致 | 前端交付统一使用小写 `p6` |
 | `P7` 与 `p7` 一致 | 前端交付统一使用小写 `p7` |
 | 中文变量名如 `AI 默认`、`投影-默认` | 设计文档保留中文名；代码落地建议增加英文 alias |
 
-## 5. 前端落地注意事项
+## 6. 前端落地注意事项
 
 - 如果构建链对中文 CSS 变量名、空格变量名兼容性不好，应以英文 alias 为主，中文 Token 只保留在设计文档和 Figma Token 中。
 - 重复 Token 不要重复声明。
 - `P6/P7` 是 `p6/p7` 的别名，工程交付统一使用小写。
-- 不要把 AI 渐变赋给普通 primary button；普通主按钮继续使用 `p6/p5/p7`。
-- 旧项目如果已经使用蓝色作为主色，需要在主题层做映射，不要直接修改语义色。
+- 普通主按钮继续使用 `p6/p5/p7`。
+- 不要将蓝色作为普通 primary button、链接、表格行操作或选中态主色。
+- 旧项目如果曾使用蓝色作为主色，需要在主题层映射到 `p6 #00AB7A`。
 - 工程基础样式必须继承字体渲染基础规则，不允许依赖浏览器伪粗体或伪斜体。
 
-## 6. AI / Vue 生成要求
+## 7. AI / Vue 生成要求
 
 - Vue 代码和 HTML 预览文件中应优先使用 Token 或 alias，不要散乱硬编码颜色。
-- AI 生图 Prompt 中可以使用中文 Token 语义描述，例如“科技绿主色”“AI 三态渐变”“一级投影”。
+- AI 生图 Prompt 中可以使用中文 Token 语义描述，例如“科技绿主色”“绿色 AI 三态渐变”“一级投影”。
 - 代码生成时若需要输出 CSS，优先输出英文 alias。
 - 设计验收和前端验收应检查 Token 是否被正确调用。
 - HTML / Vue 代码必须包含字体渲染基础规则，不得省略 `font-synthesis` 和字体抗锯齿设置。
