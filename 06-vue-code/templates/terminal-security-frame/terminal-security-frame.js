@@ -1,0 +1,19 @@
+function closePanels(except){document.querySelectorAll('.center-dropdown.visible,.user-dropdown.visible,.safe-brain-popover.visible,.screen-drawer.visible').forEach(panel=>{if(panel!==except)panel.classList.remove('visible')});document.querySelectorAll('.open').forEach(item=>{const target=item.dataset.target;if(!except||target!==except.id)item.classList.remove('open')})}
+
+function positionPanel(trigger,panel,align='left'){const rect=trigger.getBoundingClientRect();if(align==='right'){panel.style.left=Math.max(8,rect.right-panel.offsetWidth)+'px'}else{panel.style.left=rect.left+'px'}panel.style.top=rect.bottom+'px'}
+
+function bindClickDropdown(triggerId,panelId,align='left'){const trigger=document.getElementById(triggerId);const panel=document.getElementById(panelId);trigger.dataset.target=panelId;trigger.addEventListener('click',event=>{event.stopPropagation();const visible=panel.classList.contains('visible');closePanels(panel);if(!visible){positionPanel(trigger,panel,align);panel.classList.add('visible');trigger.classList.add('open')}else{panel.classList.remove('visible');trigger.classList.remove('open')}})}
+
+function bindHoverDropdown(triggerId,panelId,align='left'){const trigger=document.getElementById(triggerId);const panel=document.getElementById(panelId);trigger.dataset.target=panelId;let timer=null;function open(){clearTimeout(timer);closePanels(panel);positionPanel(trigger,panel,align);panel.classList.add('visible');trigger.classList.add('open')}function delayClose(){clearTimeout(timer);timer=setTimeout(()=>{panel.classList.remove('visible');trigger.classList.remove('open')},120)}trigger.addEventListener('mouseenter',open);trigger.addEventListener('mouseleave',delayClose);panel.addEventListener('mouseenter',()=>clearTimeout(timer));panel.addEventListener('mouseleave',delayClose);trigger.addEventListener('click',event=>{event.stopPropagation();open()})}
+
+function bindScreenDrawer(){const trigger=document.getElementById('visualScreenTrigger');const panel=document.getElementById('screenDrawer');trigger.dataset.target='screenDrawer';trigger.addEventListener('click',event=>{event.stopPropagation();const visible=panel.classList.contains('visible');closePanels(panel);if(!visible){panel.classList.add('visible');trigger.classList.add('open')}else{panel.classList.remove('visible');trigger.classList.remove('open')}});panel.addEventListener('click',event=>event.stopPropagation())}
+
+bindHoverDropdown('centerSwitch','centerDropdown','left');bindClickDropdown('safeBrainTrigger','safeBrainPopover','right');bindScreenDrawer();bindClickDropdown('terminalUser','userDropdown','right');
+
+document.querySelectorAll('.center-option').forEach(option=>{option.addEventListener('click',event=>{event.stopPropagation();document.querySelectorAll('.center-option').forEach(item=>item.classList.remove('active'));option.classList.add('active');document.getElementById('centerSwitchText').textContent=option.dataset.center;closePanels()})});
+
+document.getElementById('terminalCollapse').addEventListener('click',event=>{event.stopPropagation();document.getElementById('terminalFrame').classList.toggle('sidebar-collapsed')});
+
+document.querySelectorAll('.terminal-sidebar-item').forEach(item=>{item.addEventListener('click',()=>{document.querySelectorAll('.terminal-sidebar-item').forEach(nav=>nav.classList.remove('active'));item.classList.add('active');const title=item.dataset.title;document.getElementById('pageHeaderTitle').textContent=title;document.getElementById('contentTitle').textContent=title;document.querySelector('.content-desc').textContent=`当前为 ${title} 页面。终端场景为基础左右结构：左侧 184px 窄导航，右侧内容区为上下结构，上方基础页头，下方业务内容区。`})});
+
+document.addEventListener('click',()=>closePanels());
