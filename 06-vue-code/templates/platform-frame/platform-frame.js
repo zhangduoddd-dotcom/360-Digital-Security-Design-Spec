@@ -195,9 +195,14 @@ function applyTopStatus() {
   const status = config.topStatus || {};
   const statusText = document.getElementById('topStatusText');
   const statusDays = document.getElementById('topStatusDays');
+  const subscriptionCount = document.getElementById('topSubscriptionCount');
+  const organizationName = document.getElementById('topOrganizationName');
   const userName = document.getElementById('topUserName');
-  if (statusText) statusText.textContent = status.text || '360全网安全大脑高效赋能';
+
+  if (statusText) statusText.textContent = status.text || '360全网安全大脑持续守护';
   if (statusDays) statusDays.textContent = String(status.days || 328);
+  if (subscriptionCount) subscriptionCount.textContent = String(status.subscriptionCount || 8);
+  if (organizationName) organizationName.textContent = status.organizationName || '总公司全局';
   if (userName) userName.textContent = status.userName || '超级管理员';
 }
 
