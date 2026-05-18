@@ -1,7 +1,7 @@
 # HTML 可演示页面规范
 ## Preview HTML Demo Rules
 
-Keywords: preview html, clickable demo, html demo, frontend preview, backend page, platform frame, font rendering
+Keywords: preview html, clickable demo, html demo, frontend preview, backend page, platform frame, font rendering, terminal security frame
 
 本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证。
 
@@ -22,14 +22,30 @@ HTML 预览
 
 ## 2. 底层框架硬约束
 
-生成任何 HTML 可演示页面时，必须优先读取并使用：
+生成任何 HTML 可演示页面时，默认必须优先读取并使用：
 
 ```text
 03-interaction/platform-frame.md
 06-vue-code/templates/platform-frame/index.html
 ```
 
-HTML demo 必须包含并锁定以下框架：
+### 2.1 框架模板调用优先级
+
+| 场景 | 必须调用 |
+|---|---|
+| 默认后台页面 / 未指定特定产品框架 | `06-vue-code/templates/platform-frame/` |
+| 用户明确说“本地安全大脑 / 本脑 / 基于本脑框架” | `06-vue-code/templates/local-security-brain-frame/` |
+| 用户明确说“终端安全管理系统 / 终端 / 基于终端框架” | `06-vue-code/templates/terminal-security-frame/` |
+
+规则：
+
+```text
+默认后台页面继续使用通用 platform-frame。
+本脑框架和终端框架只是主线中的特定产品变体。
+只有用户明确指定对应产品框架时，才允许调用对应模板。
+```
+
+HTML demo 默认必须包含并锁定以下框架：
 
 ```text
 顶部通用导航 TopNavigation
@@ -87,6 +103,8 @@ HTML 可演示页面必须满足：
 ## 6. 样式要求
 
 - 必须先遵循 `03-interaction/platform-frame.md` 中的框架样式。
+- 如果用户明确指定“终端安全管理系统 / 终端”，必须调用 `06-vue-code/templates/terminal-security-frame/`，不得用通用框架临时拼装。
+- 如果用户明确指定“本地安全大脑 / 本脑”，必须调用 `06-vue-code/templates/local-security-brain-frame/`，不得用通用框架临时拼装。
 - 必须继承字体渲染规则：`font-synthesis: none`、`font-synthesis-weight: none`、`font-synthesis-style: none`、`-webkit-font-smoothing: antialiased`、`-moz-osx-font-smoothing: grayscale`。
 - 使用浅灰页面背景和白色内容卡片。
 - 使用 `p6 #00AB7A` 作为品牌主色。
