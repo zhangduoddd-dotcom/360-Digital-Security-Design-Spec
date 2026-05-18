@@ -1,7 +1,7 @@
 # HTML 可演示页面规范
 ## Preview HTML Demo Rules
 
-Keywords: preview html, clickable demo, html demo, frontend preview, backend page, platform frame
+Keywords: preview html, clickable demo, html demo, frontend preview, backend page, platform frame, font rendering
 
 本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证。
 
@@ -26,6 +26,7 @@ HTML 预览
 
 ```text
 03-interaction/platform-frame.md
+06-vue-code/templates/platform-frame/index.html
 ```
 
 HTML demo 必须包含并锁定以下框架：
@@ -58,6 +59,7 @@ HTML 可演示页面必须满足：
 - 视觉风格应接近正式 Ant Design Vue 页面。
 - 体现品牌色、Token、组件尺寸、交互状态和反馈规则。
 - 使用真实 `asset/icons/*.svg` 引用，不用字符、emoji 或 CSS 自造图标。
+- 必须继承 `font-rendering.css` 或等效字体渲染基线。
 
 ## 4. 平台框架交互要求
 
@@ -85,6 +87,7 @@ HTML 可演示页面必须满足：
 ## 6. 样式要求
 
 - 必须先遵循 `03-interaction/platform-frame.md` 中的框架样式。
+- 必须继承字体渲染规则：`font-synthesis: none`、`font-synthesis-weight: none`、`font-synthesis-style: none`、`-webkit-font-smoothing: antialiased`、`-moz-osx-font-smoothing: grayscale`。
 - 使用浅灰页面背景和白色内容卡片。
 - 使用 `p6 #00AB7A` 作为品牌主色。
 - 主按钮默认 p6，hover p5，active p7。
@@ -94,9 +97,10 @@ HTML 可演示页面必须满足：
 - 表格、表单、按钮、标签样式与规范一致。
 - 不使用过强装饰、营销视觉或夸张动效。
 - 不新增平台框架规范外的游离色值。
+- 表格、列表、表单、按钮、输入框、抽屉、提示说明等高密度文本区域不得出现伪粗体。
 
 ## 7. 与 Vue 代码的关系
 
 HTML 可演示页面用于快速查看和调整界面。只有用户明确要求工程代码时，才额外输出 Vue 3 + TypeScript + Ant Design Vue 代码。
 
-如果同时输出 Vue 和 HTML，两者应在页面结构、字段、状态、文案和主要视觉风格上保持一致；平台固定框架必须保持一致。
+如果同时输出 Vue 和 HTML，两者应在页面结构、字段、状态、文案和主要视觉风格上保持一致；平台固定框架和字体渲染规则必须保持一致。
