@@ -1,9 +1,9 @@
 # 设计走查清单
 ## Design Review Checklist
 
-Keywords: design review, checklist, backend ui, consistency, ai scenario
+Keywords: design review, checklist, backend ui, consistency, ai scenario, figma handoff
 
-本文用于设计稿自查、团队评审和规范一致性检查。
+本文用于设计稿自查、团队评审和规范一致性检查。适用于 Figma 设计、AI 生图结果、HTML 预览稿和前端实现前的设计走查。
 
 ## 1. 全局一致性
 
@@ -13,6 +13,8 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 - [ ] 颜色是否来自统一 Token。
 - [ ] 卡片、表格、表单、按钮是否使用统一组件。
 - [ ] 页面层级是否清晰。
+- [ ] 同类页面是否使用同一布局骨架。
+- [ ] 同类状态是否使用同一颜色和提示方式。
 
 ## 2. 页面架构
 
@@ -23,6 +25,8 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 - [ ] 筛选区、内容区、操作区是否分区清楚。
 - [ ] 小屏下侧边栏是否能正确收起。
 - [ ] 顶部导航、侧边导航、主内容区、弹层区关系是否稳定。
+- [ ] 页面主任务是否被放在首屏或核心内容区。
+- [ ] 弹窗、抽屉、浮层是否承载临时任务，而不是替代主流程。
 
 ## 3. 表格
 
@@ -36,6 +40,8 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 - [ ] 横向滚动时是否冻结主列和操作列。
 - [ ] 勾选行相关操作是否与勾选状态联动。
 - [ ] 勾选后是否展示 `已选 N 项`。
+- [ ] 空值是否统一展示为 `-`。
+- [ ] 状态和等级是否同时使用文字与颜色表达。
 
 ## 4. 表单
 
@@ -48,6 +54,8 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 - [ ] 字段超过 12 个时是否分组。
 - [ ] 字段超过 20 个时是否步骤化。
 - [ ] 脏状态离开是否有确认提示。
+- [ ] 高风险配置是否说明影响范围。
+- [ ] 提交中是否有 loading，避免重复提交。
 
 ## 5. 按钮
 
@@ -57,6 +65,8 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 - [ ] 是否包含 hover / click / disabled / loading 状态。
 - [ ] 多个操作是否按主次排列。
 - [ ] 普通业务按钮是否没有误用 AI 渐变。
+- [ ] 主按钮是否用于当前区域最重要操作。
+- [ ] 低频操作是否合理收纳，而不是堆满页面。
 
 ## 6. 反馈
 
@@ -67,6 +77,8 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 - [ ] Modal 是否用于阻断式确认。
 - [ ] 抽屉是否用于不离开当前页面的附加任务。
 - [ ] 空状态、异常页是否有下一步操作。
+- [ ] 不可逆操作是否没有只用 Toast 提示。
+- [ ] 操作前、操作中、操作后是否都有清晰反馈。
 
 ## 7. AI 场景
 
@@ -77,8 +89,25 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 - [ ] 高风险 AI 操作是否需要人工确认。
 - [ ] 是否保留操作日志和审计信息。
 - [ ] 多智能体协作时是否展示每个智能体的贡献或状态。
+- [ ] AI 结果是否没有被默认当作最终结果。
+- [ ] AI 结果是否展示生成时间、模型或来源数据。
+- [ ] 应用 AI 结果前是否允许人工编辑。
 
-## 8. 布局、列表与适配检查
+## 8. Figma 交付检查
+
+| 交付项 | 要求 |
+|---|---|
+| 页面命名 | 使用业务模块 + 页面类型 |
+| Frame 尺寸 | 默认 1440px |
+| 组件命名 | 按组件类型 / 状态 / 尺寸命名 |
+| 状态完整性 | Default、Hover、Active、Disabled、Loading、Error |
+| 颜色 Token | 使用统一命名，不直接写散色 |
+| 字体样式 | 使用统一 Text Style |
+| 间距 | 遵循 4px 原子单位 |
+| 图标 | 使用统一图标库 |
+| 备注 | 关键交互、异常、空状态需要标注 |
+
+## 9. 布局、列表与适配检查
 
 | 检查项 | 合格标准 |
 |---|---|
@@ -94,9 +123,10 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 | 操作按钮 | 列表页操作按钮间距是否为 8px |
 | Dashboard 图表 | 是否为环形、趋势、柱形等图表定义最小宽度 |
 | 图表压缩 | 宽度不足时是否横向滚动，而不是强行压缩 |
+| 抽屉弹窗 | 是否按 560px / 880px / 80% 三类宽度选择 |
 | 表格横向滚动 | 是否固定关键列 / 操作列并保证表头内容对齐 |
 
-## 9. CSS Token 检查
+## 10. CSS Token 检查
 
 | 检查项 | 验收标准 |
 |---|---|
@@ -108,4 +138,19 @@ Keywords: design review, checklist, backend ui, consistency, ai scenario
 | 安全等级 | 致命、严重、高危、中危、低危、安全是否按 Deep red / Red / Orange red / Orange / Yellow / Green 映射 |
 | Focus ring | 表单聚焦、错误、成功、警告状态是否使用 2px 外描边 Token |
 | 投影 | 卡片是否用一级投影；弹窗 / 抽屉是否用二级投影；AI 超级输入框 hover 是否用专门阴影 |
+| 重复变量 | 是否清理 `P6/P7`、重复 `Blue-7`、重复 `gray-*` 等冗余声明 |
 | 工程命名 | 是否为中文 Token 建立英文 alias，避免工程兼容问题 |
+
+## 11. 结论判断
+
+设计走查不只判断“是否好看”，而是判断页面是否可用、可读、可维护、可落地。合格的 B 端设计应同时满足：
+
+```text
+结构清晰
+信息完整
+操作可预期
+状态有反馈
+风险有确认
+Token 可追溯
+前端可实现
+```

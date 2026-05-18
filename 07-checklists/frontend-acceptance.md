@@ -12,6 +12,8 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] Vue 页面和 HTML 预览在结构、字段、文案和主要视觉风格上保持一致。
 - [ ] HTML 预览文件支持基础点击交互。
 - [ ] 没有只给静态页面而缺少 loading、empty、error、反馈状态。
+- [ ] 代码中包含 mock 数据，且不请求真实接口。
+- [ ] 主要业务路径可以通过 HTML 预览验证。
 
 ## 2. 布局实现
 
@@ -23,6 +25,7 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 收起态侧边栏宽度为 56px。
 - [ ] 表格列多时横向滚动和固定列正确。
 - [ ] Dashboard 图表和卡片有最小宽度，不被压缩到不可读。
+- [ ] 内容区域宽度不足时，通过换行、堆叠或横向滚动处理，而不是强行压缩到不可读。
 
 ## 3. 组件实现
 
@@ -33,6 +36,8 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 表格文字符合高密度场景 12px 规范。
 - [ ] 分页器位置、间距、每页条数、跳页功能正确。
 - [ ] 标签、徽标、状态点颜色与语义一致。
+- [ ] 弹窗、抽屉、Popover、下拉菜单的层级和投影正确。
+- [ ] Tooltip、帮助说明、错误提示的位置和触发方式正确。
 
 ## 4. 交互状态
 
@@ -44,6 +49,8 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 成功、失败、异常、空状态反馈完整。
 - [ ] 空状态和异常状态有下一步操作。
 - [ ] 表单脏状态离开有确认提示。
+- [ ] 高风险操作不能只用 Message / Toast 提示。
+- [ ] 删除、禁用、还原、覆盖、发布、重置等操作有二次确认。
 
 ## 5. 数据与文案
 
@@ -53,6 +60,8 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 表头、字段、按钮文案与设计规范一致。
 - [ ] Tooltip、错误提示、帮助信息内容准确。
 - [ ] 风险、等级、状态标签文案使用标准命名。
+- [ ] 确认弹窗标题包含动作和对象。
+- [ ] 高风险操作说明包含操作结果和是否可恢复。
 
 ## 6. Token 与样式
 
@@ -68,8 +77,17 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 | 投影 | 卡片使用一级投影；弹窗 / 抽屉使用二级投影；AI 超级输入框 hover 使用专门阴影 |
 | 变量重复 | 清理 `P6/P7`、重复 `Blue-7`、重复 `gray-*` 等冗余声明 |
 | 工程命名 | 为中文 Token 建立英文 alias，避免工程兼容问题 |
+| 硬编码 | 关键颜色、阴影、字号、间距不应大量散乱硬编码 |
 
-## 7. AI 原生页面验收
+## 7. 字体与文本实现
+
+- [ ] 全局设置统一 `font-family`。
+- [ ] 页面标题、模块标题、正文、辅助文本、高密度表格文本符合字体规范。
+- [ ] 图表、表格、弹窗、抽屉中的字体与页面字体一致。
+- [ ] 不同组件没有散乱使用不同字体族。
+- [ ] 错误提示说明原因和修正方式。
+
+## 8. AI 原生页面验收
 
 - [ ] AI 操作说明生成内容和影响范围。
 - [ ] AI 执行中有 loading 或进度反馈。
@@ -80,8 +98,9 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 重要 AI 操作需要人工确认。
 - [ ] 保留操作日志和审计信息。
 - [ ] 多智能体协作页面展示每个智能体的状态、贡献或执行进度。
+- [ ] AI 结果应用后可追溯操作者、时间和应用范围。
 
-## 8. HTML 预览文件验收
+## 9. HTML 预览文件验收
 
 - [ ] 单文件可打开。
 - [ ] 不依赖构建工具。
@@ -90,3 +109,15 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 支持基础点击交互。
 - [ ] 与 Vue 页面结构、字段、状态、文案一致。
 - [ ] 可模拟搜索、重置、分页、弹窗、抽屉、表单校验、loading 和成功反馈。
+- [ ] 可模拟至少一种异常或空状态。
+- [ ] 可模拟至少一种高风险确认操作。
+
+## 10. 工程落地建议
+
+前端实现时，应优先保证规范可维护，而不是只还原视觉截图。
+
+- Token 应集中维护，不要分散在页面私有样式中。
+- 页面级 mock 数据应结构清晰，便于后续替换真实接口。
+- 状态枚举应与规范命名一致。
+- 危险操作、AI 结果应用、权限控制等逻辑应可复用。
+- HTML 预览和 Vue 页面应尽量保持字段、状态、交互一致，避免 demo 与正式代码割裂。
