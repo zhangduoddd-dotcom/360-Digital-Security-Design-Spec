@@ -1,7 +1,7 @@
 # 前端验收清单
 ## Frontend Acceptance Checklist
 
-Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, backend
+Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, backend, font rendering
 
 本文用于检查 Vue 页面代码和 HTML 预览文件是否符合设计规范、交互规则和工程落地要求。
 
@@ -78,6 +78,7 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 | 变量重复 | 清理 `P6/P7`、重复 `Blue-7`、重复 `gray-*` 等冗余声明 |
 | 工程命名 | 为中文 Token 建立英文 alias，避免工程兼容问题 |
 | 硬编码 | 关键颜色、阴影、字号、间距不应大量散乱硬编码 |
+| 字体渲染 | 必须继承字体渲染基线，关闭浏览器伪粗体 / 伪斜体 |
 
 ## 7. 字体与文本实现
 
@@ -85,6 +86,14 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 页面标题、模块标题、正文、辅助文本、高密度表格文本符合字体规范。
 - [ ] 图表、表格、弹窗、抽屉中的字体与页面字体一致。
 - [ ] 不同组件没有散乱使用不同字体族。
+- [ ] 已设置 `font-synthesis: none`。
+- [ ] 已设置 `font-synthesis-weight: none`。
+- [ ] 已设置 `font-synthesis-style: none`。
+- [ ] 已设置 `-webkit-font-smoothing: antialiased`。
+- [ ] 已设置 `-moz-osx-font-smoothing: grayscale`。
+- [ ] 表格、列表、配置抽屉等高密度信息区域没有出现正文视觉接近标题字重的情况。
+- [ ] 正文、表单、列表、按钮、输入框、选择器、抽屉内容、提示说明没有依赖浏览器伪粗体。
+- [ ] macOS 下中文呈现清晰、轻量，不出现异常变粗。
 - [ ] 错误提示说明原因和修正方式。
 
 ## 8. AI 原生页面验收
@@ -111,6 +120,7 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 可模拟搜索、重置、分页、弹窗、抽屉、表单校验、loading 和成功反馈。
 - [ ] 可模拟至少一种异常或空状态。
 - [ ] 可模拟至少一种高风险确认操作。
+- [ ] HTML 预览文件继承平台固定框架的字体渲染规则。
 
 ## 10. 工程落地建议
 
@@ -121,3 +131,4 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - 状态枚举应与规范命名一致。
 - 危险操作、AI 结果应用、权限控制等逻辑应可复用。
 - HTML 预览和 Vue 页面应尽量保持字段、状态、交互一致，避免 demo 与正式代码割裂。
+- 字体渲染基线应放在全局样式或平台固定框架中，不要分散在页面私有样式里。
