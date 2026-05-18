@@ -1,0 +1,20 @@
+html,
+body,
+button,
+input,
+textarea,
+select {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+  font-synthesis: none;
+  font-synthesis-weight: none;
+  font-synthesis-style: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+  字体渲染基线：
+  1. 关闭浏览器伪粗体 / 伪斜体合成。
+  2. 保持 macOS / Windows 下中文文字轻量、清晰、易扫读。
+  3. 表格、表单、按钮、输入框、选择器、抽屉、提示说明等高密度文本区域必须继承本规则。
+*/
