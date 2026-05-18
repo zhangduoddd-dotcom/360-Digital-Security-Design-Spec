@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>终端安全管理系统框架模板</title>
+  <link rel="stylesheet" href="./terminal-security-frame.css" />
+</head>
+<body>
+  <div class="terminal-frame" id="terminalFrame">
+    <header class="terminal-topbar">
+      <div class="terminal-top-left">
+        <img class="terminal-logo" src="./asset/logo-terminal.svg" alt="360终端安全管理系统" />
+        <div class="center-switch" id="centerSwitch">
+          <span class="terminal-icon terminal-icon-database"></span>
+          <span class="center-switch-text" id="centerSwitchText">本级中心</span>
+          <span class="terminal-arrow"></span>
+        </div>
+      </div>
+
+      <div class="terminal-top-right">
+        <div class="safe-brain-trigger" id="safeBrainTrigger">
+          <span class="safe-brain-icon"></span>
+          <span>360全网安全大脑持续守护</span>
+          <strong>911</strong>
+          <span>天，共</span>
+          <strong>15</strong>
+          <span>项订阅服务</span>
+        </div>
+
+        <div class="visual-screen-trigger" id="visualScreenTrigger">
+          <span class="terminal-icon terminal-icon-chart"></span>
+          <span>可视化大屏</span>
+          <span class="terminal-arrow"></span>
+        </div>
+
+        <span class="terminal-divider"></span>
+        <button class="terminal-icon-button" title="设置"><span class="terminal-icon terminal-icon-setting"></span></button>
+        <button class="terminal-icon-button" title="信息"><span class="terminal-icon terminal-icon-info"></span></button>
+        <button class="terminal-icon-button" title="权限"><span class="terminal-icon terminal-icon-shield"></span></button>
+        <button class="terminal-icon-button" title="组织"><span class="terminal-icon terminal-icon-group"></span></button>
+        <button class="terminal-icon-button has-badge" title="消息"><span class="terminal-icon terminal-icon-mail"></span><sup>1</sup></button>
+        <div class="terminal-user" id="terminalUser">DemoTest<span class="terminal-arrow"></span></div>
+      </div>
+    </header>
+
+    <div class="center-dropdown" id="centerDropdown">
+      <div class="center-option active" data-center="本级中心">本级中心</div>
+      <div class="center-option" data-center="华北区域中心">华北区域中心</div>
+      <div class="center-option" data-center="华东区域中心">华东区域中心</div>
+      <div class="center-option" data-center="华南区域中心">华南区域中心</div>
+    </div>
+
+    <div class="safe-brain-popover" id="safeBrainPopover">
+      <div class="safe-brain-header">
+        <h2>全网数据订阅服务状态</h2>
+        <p><strong>15</strong> 项订阅服务</p>
+      </div>
+      <div class="safe-brain-content">
+        <h3>病毒库</h3>
+        <div class="safe-brain-table">
+          <div class="row"><span>Windows</span><span>2026-03-28</span><span>Windows / Windows Server</span><span>授权至2026-12-16</span><button>检查更新</button></div>
+          <div class="row"><span>Linux</span><span>2026-04-16</span><span>Linux</span><span>授权至2026-12-16</span><button>检查更新</button></div>
+          <div class="row"><span>Mac</span><span>2026-03-03</span><span>Mac</span><span>授权至2026-12-16</span><button>检查更新</button></div>
+          <div class="row"><span>国产系统</span><span>2026-04-16</span><span>国产通用桌面机 / 服务器</span><span>授权至2026-12-16</span><button>检查更新</button></div>
+        </div>
+        <h3>主防引擎</h3>
+        <div class="safe-brain-table"><div class="row"><span>Windows</span><span>10.0.0.2509</span><span>Windows / Windows Server</span><span>授权至2026-12-16</span><button>检查更新</button></div></div>
+        <h3>规则库</h3>
+        <div class="safe-brain-table"><div class="row"><span>Windows</span><span>2023-10-20</span><span>-</span><span>-</span><button>检查更新</button></div><div class="row"><span>Linux</span><span>2023-10-20</span><span>-</span><span>-</span><button>检查更新</button></div></div>
+      </div>
+      <div class="safe-brain-footer">360全网安全大脑订阅服务可有效增强【360终端安全管理系统】安全能力。如产品部署在隔离网环境中，请通过离线工具定期更新订阅。</div>
+    </div>
+
+    <div class="screen-drawer" id="screenDrawer">
+      <div class="screen-card"><div class="screen-thumb"></div><p>终端安全总览</p></div>
+      <div class="screen-card"><div class="screen-thumb"></div><p>病毒威胁安全态势</p></div>
+      <div class="screen-card"><div class="screen-thumb"></div><p>漏洞威胁安全态势</p></div>
+      <div class="screen-setting"><span class="terminal-icon terminal-icon-setting"></span>大屏设置</div>
+    </div>
+
+    <div class="user-dropdown" id="userDropdown">
+      <div>修改密码</div>
+      <div>退出登录</div>
+    </div>
+
+    <div class="terminal-body">
+      <aside class="terminal-sidebar">
+        <div class="terminal-sidebar-scroll" id="terminalSidebar">
+          <button class="terminal-sidebar-item active" data-title="终端概览"><span class="terminal-icon terminal-icon-dashboard"></span><span class="terminal-sidebar-label">终端概览</span></button>
+          <button class="terminal-sidebar-item" data-title="终端资产"><span class="terminal-icon terminal-icon-box"></span><span class="terminal-sidebar-label">终端资产</span></button>
+          <button class="terminal-sidebar-item" data-title="安全管理"><span class="terminal-icon terminal-icon-shield"></span><span class="terminal-sidebar-label">安全管理</span></button>
+          <button class="terminal-sidebar-item" data-title="策略配置"><span class="terminal-icon terminal-icon-setting"></span><span class="terminal-sidebar-label">策略配置</span></button>
+          <button class="terminal-sidebar-item" data-title="操作日志"><span class="terminal-icon terminal-icon-log"></span><span class="terminal-sidebar-label">操作日志</span></button>
+        </div>
+        <div class="terminal-sidebar-footer">
+          <button class="terminal-collapse" id="terminalCollapse" title="展开/收起菜单"><span class="terminal-collapse-icon"></span></button>
+          <span class="terminal-version">V10.0</span>
+        </div>
+      </aside>
+
+      <section class="terminal-right-panel">
+        <section class="terminal-page-header">
+          <div class="terminal-page-title" id="pageHeaderTitle">终端概览</div>
+          <div class="terminal-page-actions">
+            <button class="terminal-button">导出</button>
+            <button class="terminal-button primary">新建任务</button>
+          </div>
+        </section>
+        <main class="platform-page-content">
+          <div class="content-card">
+            <h1 class="content-title" id="contentTitle">终端概览</h1>
+            <p class="content-desc">业务内容唯一替换区。终端框架固定为：56px 顶部导航、184px / 56px 左侧窄导航、右侧 48px 基础页头和业务内容区。</p>
+          </div>
+        </main>
+      </section>
+    </div>
+  </div>
+
+  <script src="./terminal-security-frame.js"></script>
+</body>
+</html>
