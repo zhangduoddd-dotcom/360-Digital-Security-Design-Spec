@@ -1,7 +1,7 @@
 # Vue 代码与 HTML 演示生成规则
 ## Vue Code and HTML Demo Generation Rules
 
-Keywords: vue codegen, html demo, ant design vue, preview html, typescript, backend page, ai result
+Keywords: vue codegen, html demo, ant design vue, preview html, typescript, backend page, ai result, font rendering
 
 本文用于约束 AI 生成后台页面代码和 HTML 可演示页面。默认应先判断用户要的是“可演示页面”还是“工程代码”。
 
@@ -40,6 +40,7 @@ HTML 文件用于给设计师快速看效果和调交互，应满足：
 - 支持基础点击交互。
 - 视觉风格接近正式 Ant Design Vue 页面。
 - 包含 loading、empty、error、反馈等基础状态。
+- 必须继承平台固定框架和字体渲染基线。
 
 ## 3. Vue 代码要求
 
@@ -52,6 +53,7 @@ HTML 文件用于给设计师快速看效果和调交互，应满足：
 - 成功、失败、删除确认等操作反馈。
 - 符合页面规范和交互规范的结构。
 - 与 HTML 预览一致的字段、文案、状态和主要视觉风格。
+- 继承统一字体栈和字体渲染基线，禁止浏览器伪粗体 / 伪斜体。
 
 ## 4. 页面类型要求
 
@@ -141,7 +143,7 @@ AI 操作记录必须保留：
 
 多智能体协作页面需要展示每个智能体的贡献、状态或执行进度。
 
-## 6. CSS 与 Token 要求
+## 6. CSS、Token 与字体渲染要求
 
 - 普通主按钮使用 `p6 #00AB7A`，hover 使用 `p5 #1DB887`，active 使用 `p7 #039972`。
 - AI 功能入口可使用 AI 三态渐变，但普通保存、提交、筛选、导出、删除按钮禁止使用 AI 渐变。
@@ -149,6 +151,10 @@ AI 操作记录必须保留：
 - 表格、表单等高密度内容区域不要滥用强投影。
 - Focus ring 使用 2px 外描边，不改变组件尺寸。
 - 如工程不适合中文 CSS 变量名，必须使用英文 alias。
+- 全局必须使用规范字体栈。
+- 必须设置 `font-synthesis: none`、`font-synthesis-weight: none`、`font-synthesis-style: none`。
+- 必须设置 `-webkit-font-smoothing: antialiased` 和 `-moz-osx-font-smoothing: grayscale`。
+- 表格、列表、表单、按钮、输入框、选择器、抽屉和提示说明等高密度文本区域不得依赖伪粗体。
 
 ## 7. 禁止项
 
@@ -156,6 +162,7 @@ AI 操作记录必须保留：
 - 不要用 AI 生图 Prompt 替代代码或 HTML 实现要求。
 - 不要只输出静态结构而没有基础状态和交互。
 - 不要散乱硬编码大量颜色和间距。
+- 不要省略字体渲染基线，避免页面文字在不同系统中异常变粗。
 - 不要让 AI 结果直接成为最终发布内容，必须保留人工审核或确认路径。
 - 不要缺少 AI 结果来源、依据、置信度或操作记录。
 
