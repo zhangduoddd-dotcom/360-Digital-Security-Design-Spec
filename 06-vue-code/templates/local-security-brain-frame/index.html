@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>本地安全大脑框架模板</title>
+  <link rel="stylesheet" href="./local-security-brain-frame.css" />
+</head>
+<body>
+  <div class="brain-frame">
+    <header class="double-top-nav">
+      <div class="top-nav-inner">
+        <div class="brand-area">
+          <div class="brand-logo-placeholder" id="brandLogo">LOGO 占位</div>
+        </div>
+
+        <div class="nav-right-zone">
+          <div class="top-info-row">
+            <div class="top-info-item">
+              <span class="brain-icon brain-icon-bars"></span>
+              <span id="topStatusText">360全网安全大脑持续守护 <strong>328</strong> 天，共 <strong>8</strong> 项订阅服务</span>
+            </div>
+            <div class="top-split"></div>
+            <div class="top-info-item">
+              <span class="brain-icon brain-icon-company"></span>
+              <span class="top-info-text-white" id="organizationName">总公司全局</span>
+              <span class="brain-arrow"></span>
+            </div>
+            <div class="top-split"></div>
+            <div class="top-info-item">
+              <span class="brain-icon brain-icon-user"></span>
+              <span class="top-info-text-white" id="userName">超级管理员</span>
+              <span class="brain-arrow"></span>
+            </div>
+            <div class="top-split"></div>
+            <div class="top-info-item icon-only" title="通知"><span class="brain-icon brain-icon-notice"></span></div>
+            <div class="top-split"></div>
+            <div class="top-info-item icon-only" title="设置"><span class="brain-icon brain-icon-setting"></span></div>
+          </div>
+
+          <nav class="main-nav-row" id="mainNav">
+            <div class="global-menu" title="全局菜单"><span class="global-menu-icon"></span></div>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <div class="brain-body">
+      <aside class="local-brain-sidebar">
+        <div class="local-sidebar-scroll" id="localBrainSidebar"></div>
+        <div class="local-sidebar-footer">
+          <span class="local-collapse-icon"></span>
+          <span>V10.0</span>
+        </div>
+      </aside>
+
+      <div class="brain-main-panel">
+        <div class="brain-tab-header" id="brainTabHeader"></div>
+
+        <main class="platform-page-content">
+          <!-- 业务内容唯一替换区：AI 生成本脑页面时，只能替换 .platform-page-content 内部内容 -->
+          <div class="content-container">
+            <h1 class="content-title" id="contentTitle">威胁告警</h1>
+            <p class="content-desc" id="contentDesc">这里是本地安全大脑框架模板的业务内容区。内容容器横向、纵向填满页面，白底、边框、圆角，无阴影。</p>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-dropdown" id="navDropdown"></div>
+
+  <script src="./local-security-brain-frame-data.js"></script>
+  <script src="./local-security-brain-frame.js"></script>
+</body>
+</html>
