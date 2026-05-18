@@ -12,14 +12,17 @@ window.PLATFORM_FRAME_CONFIG = {
   },
 
   topStatus: {
-    text: '360全网安全大脑高效赋能',
+    text: '360全网安全大脑持续守护',
     days: 328,
+    subscriptionCount: 8,
+    organizationName: '总公司全局',
     userName: '超级管理员'
   },
 
   topPopovers: {
-    visualPopover: ['安全态势大屏', '运营看板'],
+    organizationPopover: ['总公司全局', '华北一区', '华东一区'],
     noticePopover: ['暂无未读通知', '查看消息中心'],
+    settingPopover: ['系统设置', '偏好设置'],
     userPopover: ['个人中心', '账号设置', '退出登录']
   },
 
