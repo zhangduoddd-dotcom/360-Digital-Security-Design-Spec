@@ -3,7 +3,7 @@
 
 Keywords: button, icon button, primary action, ai button, p6
 
-本文合并上传包按钮细节，并统一到主线的 Vue / HTML 生成规范。品牌主色统一为科技绿 `p6 #00AB7A`。
+本文合并上传包按钮细节，并统一到主线的 Vue / HTML 生成规范。普通品牌主色统一为科技绿 `p6 #00AB7A`，原有 AI 渐变 Token 保持不变。
 
 ## 1. 使用原则
 
@@ -24,7 +24,7 @@ Keywords: button, icon button, primary action, ai button, p6
 | Text / Ghost | 表格行内或轻量操作 | 科技绿文字，无边框 |
 | Icon | 工具栏、行操作、密集区域 | 正方形热区，配 Tooltip |
 | Danger | 高风险操作 | 使用错误语义色，并二次确认 |
-| AI | 智能生成、AI 分析、重新生成 | 使用绿色系 AI 渐变 |
+| AI | 智能生成、AI 分析、重新生成 | 使用原有 AI 三态渐变 Token |
 
 ## 3. 尺寸规范
 
@@ -36,7 +36,7 @@ Keywords: button, icon button, primary action, ai button, p6
 
 规则：常规后台页面默认 32px；表格行内优先使用文字按钮或 24px 图标按钮；图标与文字间距统一 4px。
 
-## 4. 主色状态
+## 4. 普通主色状态
 
 | 状态 | Token | 颜色 / 规则 |
 |---|---|---|
@@ -72,8 +72,8 @@ loading 时阻止重复点击；disabled 不响应 hover 与 active；focus ring
 
 AI 按钮只用于智能生成、AI 分析、智能推荐、自动填充、重新生成、应用结果等场景。
 
-- 默认、hover、active 使用 `--color-ai-default / hover / active`。
-- AI 渐变必须以科技绿系为主。
+- 默认、hover、active 使用 `--color-ai-default / --color-ai-hover / --color-ai-active`。
+- AI 渐变沿用原有 Token，不参与本次普通主色替换。
 - AI 生成中必须有 loading 状态。
 - AI 结果必须支持查看依据、编辑、应用和撤销。
 
@@ -85,4 +85,4 @@ AI 按钮只用于智能生成、AI 分析、智能推荐、自动填充、重�
 
 ## 9. Vue / HTML 生成要求
 
-Vue 使用 `a-button`，主按钮使用 `type="primary"` 并映射到 `p6 #00AB7A`。HTML 预览必须模拟 default、hover、active、disabled、loading、danger、AI 状态。
+Vue 使用 `a-button`，普通主按钮使用 `type="primary"` 并映射到 `p6 #00AB7A`。HTML 预览必须模拟 default、hover、active、disabled、loading、danger、AI 状态。
