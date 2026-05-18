@@ -1,7 +1,7 @@
 # 文档索引
 ## Document Index
 
-Keywords: index, ai routing, backend design, html demo, vue codegen, ui generation, platform frame
+Keywords: index, ai routing, backend design, html demo, vue codegen, ui generation, platform frame, local security brain frame
 
 > 本文件是 AI 读取仓库时的主导航，也方便人工快速跳转查阅。
 
@@ -14,14 +14,30 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 | [03-interaction/](./03-interaction/) | 交互规范：平台固定框架、页面容器、导航、搜索区、表格区、表单录入、权限状态 |
 | [04-pages/](./04-pages/) | 页面规范：总览、工作台、列表页、表单页、详情页、分步流程页、异常页、用户管理、系统设置、系统配置 |
 | [05-ai-image/](./05-ai-image/) | AI 生图：Prompt 规则、页面 Prompt、Negative Prompt、AI 原生平台 |
-| [06-vue-code/](./06-vue-code/) | HTML 演示与 Vue 代码生成：HTML 预览文件、代码规则、工程落地、Ant Design Vue 适配 |
+| [06-vue-code/](./06-vue-code/) | HTML 演示与 Vue 代码生成：HTML 预览文件、代码规则、工程落地、Ant Design Vue 适配、固定框架模板 |
 | [07-checklists/](./07-checklists/) | 验收清单：设计走查、AI 输出、前端实现 |
 
-## 2. 任务路由
+## 2. 框架调用优先级
+
+| 场景 | 必须调用 |
+|---|---|
+| 默认后台页面 / 未指定特定产品框架 | [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)、[06-vue-code/templates/platform-frame/](./06-vue-code/templates/platform-frame/) |
+| 用户明确说“本地安全大脑 / 本脑 / 基于本脑框架” | [06-vue-code/templates/local-security-brain-frame/](./06-vue-code/templates/local-security-brain-frame/) |
+
+规则：
+
+```text
+默认后台页面继续使用通用 platform-frame。
+只有用户明确指定“本地安全大脑 / 本脑”时，才调用 local-security-brain-frame。
+local-security-brain-frame 是主线中的特定产品变体，不替代通用 platform-frame。
+```
+
+## 3. 任务路由
 
 | 用户任务 | 优先读取 | 辅助读取 |
 |---|---|---|
 | 生成任何后台页面 / HTML demo / Vue 页面 | [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)、[04-pages/overview.md](./04-pages/overview.md) | 对应页面规范、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[02-components/icon.md](./02-components/icon.md) |
+| 基于本地安全大脑 / 本脑框架生成页面 | [06-vue-code/templates/local-security-brain-frame/README.md](./06-vue-code/templates/local-security-brain-frame/README.md)、[06-vue-code/templates/local-security-brain-frame/](./06-vue-code/templates/local-security-brain-frame/) | 对应页面规范、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[02-components/icon.md](./02-components/icon.md) |
 | 查询全局基础规范 | [01-foundation/overview.md](./01-foundation/overview.md) | [01-foundation/layout.md](./01-foundation/layout.md)、[01-foundation/color.md](./01-foundation/color.md)、[01-foundation/tokens.md](./01-foundation/tokens.md)、[01-foundation/shadow.md](./01-foundation/shadow.md) |
 | 查询组件规格 / 尺寸 | [02-components/component-size.md](./02-components/component-size.md) | [02-components/button.md](./02-components/button.md)、[02-components/icon.md](./02-components/icon.md)、[02-components/form.md](./02-components/form.md)、[02-components/table.md](./02-components/table.md)、[02-components/feedback.md](./02-components/feedback.md) |
 | 生成工作台 UI | [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)、[04-pages/overview.md](./04-pages/overview.md)、[04-pages/dashboard.md](./04-pages/dashboard.md) | [01-foundation/layout.md](./01-foundation/layout.md)、[01-foundation/shadow.md](./01-foundation/shadow.md)、[02-components/component-size.md](./02-components/component-size.md)、[07-checklists/design-review.md](./07-checklists/design-review.md) |
@@ -41,9 +57,9 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 | 检查设计输出 | [04-pages/overview.md](./04-pages/overview.md)、[07-checklists/design-review.md](./07-checklists/design-review.md) | [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)、对应页面、基础、组件和交互规范 |
 | 检查前端实现 | [07-checklists/frontend-acceptance.md](./07-checklists/frontend-acceptance.md) | [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)、[06-vue-code/codegen-rules.md](./06-vue-code/codegen-rules.md)、[01-foundation/tokens.md](./01-foundation/tokens.md)、[02-components/component-size.md](./02-components/component-size.md) |
 
-## 3. 完整文档清单
+## 4. 完整文档清单
 
-### 3.1 基础规范
+### 4.1 基础规范
 
 - [01-foundation/overview.md](./01-foundation/overview.md)
 - [01-foundation/layout.md](./01-foundation/layout.md)
@@ -52,7 +68,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 - [01-foundation/tokens.md](./01-foundation/tokens.md)
 - [01-foundation/shadow.md](./01-foundation/shadow.md)
 
-### 3.2 组件规范
+### 4.2 组件规范
 
 - [02-components/overview.md](./02-components/overview.md)
 - [02-components/ant-design-vue.md](./02-components/ant-design-vue.md)
@@ -63,7 +79,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 - [02-components/table.md](./02-components/table.md)
 - [02-components/feedback.md](./02-components/feedback.md)
 
-### 3.3 交互规范
+### 4.3 交互规范
 
 - [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)
 - [03-interaction/page-container.md](./03-interaction/page-container.md)
@@ -73,7 +89,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 - [03-interaction/form-entry.md](./03-interaction/form-entry.md)
 - [03-interaction/permission-state.md](./03-interaction/permission-state.md)
 
-### 3.4 页面规范
+### 4.4 页面规范
 
 - [04-pages/overview.md](./04-pages/overview.md)
 - [04-pages/dashboard.md](./04-pages/dashboard.md)
@@ -86,7 +102,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 - [04-pages/system-settings.md](./04-pages/system-settings.md)
 - [04-pages/system-config.md](./04-pages/system-config.md)
 
-### 3.5 AI 生图
+### 4.5 AI 生图
 
 - [05-ai-image/skill.md](./05-ai-image/skill.md)
 - [05-ai-image/prompt-rules.md](./05-ai-image/prompt-rules.md)
@@ -94,7 +110,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 - [05-ai-image/negative-prompts.md](./05-ai-image/negative-prompts.md)
 - [05-ai-image/ai-native-platform.md](./05-ai-image/ai-native-platform.md)
 
-### 3.6 HTML 演示与 Vue 代码生成
+### 4.6 HTML 演示与 Vue 代码生成
 
 - [06-vue-code/skill.md](./06-vue-code/skill.md)
 - [06-vue-code/reference.md](./06-vue-code/reference.md)
@@ -102,17 +118,20 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 - [06-vue-code/preview-html.md](./06-vue-code/preview-html.md)
 - [06-vue-code/vue-engineering.md](./06-vue-code/vue-engineering.md)
 - [06-vue-code/antdv-adapter.md](./06-vue-code/antdv-adapter.md)
+- [06-vue-code/templates/platform-frame/](./06-vue-code/templates/platform-frame/)
+- [06-vue-code/templates/local-security-brain-frame/](./06-vue-code/templates/local-security-brain-frame/)
 
-### 3.7 验收清单
+### 4.7 验收清单
 
 - [07-checklists/design-review.md](./07-checklists/design-review.md)
 - [07-checklists/ai-output.md](./07-checklists/ai-output.md)
 - [07-checklists/frontend-acceptance.md](./07-checklists/frontend-acceptance.md)
 
-## 4. AI 读取原则
+## 5. AI 读取原则
 
 - 不要一次性读取所有文件。
-- 生成任何后台页面、HTML demo、Vue 页面、页面截图或高保真界面时，必须优先读取 [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)。
+- 生成任何后台页面、HTML demo、Vue 页面、页面截图或高保真界面时，默认必须优先读取 [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)。
+- 只有当用户明确指定“本地安全大脑 / 本脑 / 基于本脑框架”时，才读取 [06-vue-code/templates/local-security-brain-frame/](./06-vue-code/templates/local-security-brain-frame/)。
 - 生成具体页面前，应读取 [04-pages/overview.md](./04-pages/overview.md) 判断页面类型和最小读取路径。
 - 固定底层框架不可改动，只允许替换 Logo 占位、业务文案、菜单数据和 `.platform-page-content` 内的业务内容。
 - 先判断任务类型，再读取对应页面规范。
