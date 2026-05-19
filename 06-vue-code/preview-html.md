@@ -1,7 +1,7 @@
 # HTML 可演示页面规范
 ## Preview HTML Demo Rules
 
-Keywords: preview html, clickable demo, html demo, frontend preview, backend page, platform frame, font rendering, single navigation frame, double top navigation frame
+Keywords: preview html, clickable demo, html demo, frontend preview, backend page, single navigation frame, double navigation frame
 
 本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证。
 
@@ -20,36 +20,27 @@ HTML 预览
 
 不需要同时输出 Vue 代码，除非用户明确要求“Vue 代码 / 工程代码 / 前端代码 / 接入项目”。
 
-## 2. 底层框架硬约束
+## 2. 框架模板调用规则
 
-当用户明确说“基于本套 GitHub / 本仓库规范 / 本套设计规范”生成页面，且没有明确要求自定义导航框架，也没有明确要求基于双层导航框架时，必须优先读取并完整套用：
-
-```text
-06-vue-code/templates/terminal-security-frame/index.html
-```
-
-> 说明：当前 `terminal-security-frame/` 目录名保留不变，但调用语义已更新为“单层导航框架”。AI 不应再把该模板理解为终端业务专属框架。
-
-### 2.1 框架模板调用优先级
+生成 HTML 可演示页面时，必须先判断用户是否明确指定导航框架。
 
 | 场景 | 必须调用 |
 |---|---|
-| 基于本套 GitHub 生成页面 / 按本仓库规范生成页面 / 未明确指定导航框架 | `06-vue-code/templates/terminal-security-frame/index.html` |
-| 用户明确说“基于单层导航框架 / 单层顶部导航 / 单层导航页面” | `06-vue-code/templates/terminal-security-frame/index.html` |
-| 用户明确说“基于双层导航框架 / 双层顶部导航 / 双层导航页面” | `06-vue-code/templates/double-top-navigation-frame/source.html` |
-| 用户明确说“本地安全大脑 / 本脑 / 基于本脑框架” | `06-vue-code/templates/local-security-brain-frame/` |
-| 用户明确要求自定义导航框架 | 按用户指定方案处理 |
+| 基于本套 GitHub 生成页面 / 按本仓库规范生成页面 / 未明确指定导航框架 | `06-vue-code/templates/common-single-nav.html` |
+| 明确说“基于单层导航框架 / 单层顶部导航 / 单层导航页面” | `06-vue-code/templates/common-single-nav.html` |
+| 明确说“基于双层导航框架 / 双层顶部导航 / 双层导航页面” | `06-vue-code/templates/double-nav-frame.html` |
+| 明确要求自定义导航框架 | 按用户指定方案处理 |
 
 规则：
 
 ```text
 单层导航框架是本套 GitHub 的默认 HTML 母版。
-本脑框架和双层导航框架是主线中的特定框架变体。
-只有用户明确指定双层导航框架时，才允许调用 double-top-navigation-frame/source.html。
-只有用户明确要求自定义导航框架时，才不使用单层导航框架母版。
+双层导航框架是明确指定时才调用的特定母版。
+只有用户明确指定“双层导航框架 / 双层顶部导航 / 双层导航页面”时，才调用 double-nav-frame.html。
+只有用户明确要求“自定义导航框架”时，才允许不使用默认单层导航框架母版。
 ```
 
-### 2.2 单层导航框架硬约束
+## 3. 默认单层导航框架硬约束
 
 当用户明确提出以下任一描述时：
 
@@ -66,20 +57,20 @@ HTML 预览
 且没有明确指定“双层导航框架 / 自定义导航框架”时，必须调用：
 
 ```text
-06-vue-code/templates/terminal-security-frame/index.html
+06-vue-code/templates/common-single-nav.html
 ```
 
 使用方式：
 
 ```text
-1. 读取 index.html。
-2. 完整复制 index.html 作为 HTML demo 底座。
+1. 读取 common-single-nav.html。
+2. 完整复制 common-single-nav.html 作为 HTML demo 底座。
 3. 只替换业务内容、导航文案、菜单数据、页面内容和 mock 数据。
-4. 不重新推导、不重新拼装、不沿用旧终端业务属性框架语义。
-5. 保留 index.html 中的 DOM、CSS、JS、iconfont、hover、active、open、展开收起和响应式交互。
+4. 不重新推导、不重新拼装单层导航框架。
+5. 保留 common-single-nav.html 中的 DOM、CSS、JS、iconfont、hover、active、open、展开收起和响应式交互。
 ```
 
-### 2.3 双层导航框架硬约束
+## 4. 双层导航框架硬约束
 
 当用户明确提出以下任一描述时：
 
@@ -88,41 +79,70 @@ HTML 预览
 基于双层顶部导航
 双层导航页面
 双层顶部导航页面
-double-top-navigation-frame
+double-nav-frame
+double top navigation
 ```
 
 必须调用：
 
 ```text
-06-vue-code/templates/double-top-navigation-frame/source.html
+06-vue-code/templates/double-nav-frame.html
 ```
 
 使用方式：
 
 ```text
-1. 读取 source.html。
-2. 完整复制 source.html 作为 HTML demo 底座。
+1. 读取 double-nav-frame.html。
+2. 完整复制 double-nav-frame.html 作为 HTML demo 底座。
 3. 只替换业务内容、导航文案、菜单数据、页面内容和 mock 数据。
-4. 不重新推导、不重新拼装、不沿用旧双层导航框架。
-5. 保留 source.html 中的 DOM、CSS、JS、iconfont、hover、active、open、展开收起和响应式交互。
+4. 不重新推导、不重新拼装双层导航框架。
+5. 保留 double-nav-frame.html 中的 DOM、CSS、JS、iconfont、hover、active、open、展开收起和响应式交互。
 ```
 
-HTML demo 默认必须包含并锁定以下框架：
+## 5. 固定框架保留规则
+
+HTML demo 必须完整保留所调用母版中的固定框架，包括但不限于：
 
 ```text
 顶部导航 TopNavigation
 页面内左侧菜单 Sidebar
 页头 Header
 页面内容区 PageContent
+顶部导航状态
+左侧菜单展开 / 收起状态
+下拉 / 浮层 / 级联菜单交互
+响应式规则
+字体渲染规则
+iconfont 引用与状态 icon 规则
 ```
 
 固定框架的结构、尺寸、颜色、icon、展开 / 收起、收起态级联菜单、顶部导航状态和页头结构不允许变化。
 
-只允许替换：Logo 占位图片、顶部一级导航文案和路由、左侧菜单业务文案和路由、页面标题文案、`.platform-page-content` 内的业务内容、mock 数据。
+只允许替换：
 
-不允许替换：顶部导航高度 / 颜色 / 布局、左侧菜单宽度 / 颜色 / 状态 / 收起交互、收起态级联浮层交互、页头结构、框架 icon 状态规则、页面内容区 padding 和背景。
+```text
+Logo 占位图片
+顶部导航文案和路由
+左侧菜单业务文案和路由
+页面标题文案
+页面内容区内的业务内容
+mock 数据
+必要的业务字段和示例数据
+```
 
-## 3. 文件要求
+不允许替换：
+
+```text
+顶部导航高度 / 颜色 / 布局
+左侧菜单宽度 / 颜色 / 状态 / 收起交互
+收起态级联浮层交互
+页头结构
+框架 icon 状态规则
+页面内容区 padding 和背景
+框架 CSS 类名和 JS 交互逻辑
+```
+
+## 6. 文件要求
 
 HTML 可演示页面必须满足：
 
@@ -133,24 +153,13 @@ HTML 可演示页面必须满足：
 - 使用 mock 数据。
 - 支持基础点击交互。
 - 必须完整实现所调用的固定框架母版。
-- 业务内容只能写入 `.platform-page-content` 或母版指定的业务内容区。
+- 业务内容只能写入母版指定的业务内容区。
 - 视觉风格应接近正式 Ant Design Vue 页面。
 - 体现品牌色、Token、组件尺寸、交互状态和反馈规则。
 - 使用规范指定的 iconfont Font Class，不用字符、emoji 或 CSS 自造图标。
-- 必须继承 `font-rendering.css` 或等效字体渲染基线。
+- 必须继承字体渲染基线，避免伪粗体、伪斜体和浏览器字体合成。
 
-## 4. 平台框架交互要求
-
-| 框架区域 | 必须交互 |
-|---|---|
-| 顶部导航 | 默认、hover、选中、可点击下拉、右侧功能浮层、用户浮层 |
-| 左侧菜单展开态 | 一级 / 二级 / 三级菜单、选中态、hover 态、禁用态、展开 / 收起态 |
-| 左侧菜单收起态 | 56px 收起态、hover icon 灰色底、级联浮层、点击叶子菜单同步选中 |
-| 收起态级联浮层 | 逐层展开，不把二级 / 三级堆在同一个浮层 |
-| 页头 | 按母版结构保留 |
-| 页面内容区 | 承载业务内容，不侵入固定框架 |
-
-## 5. 基础交互要求
+## 7. 基础交互要求
 
 | 页面类型 | HTML 预览交互 |
 |---|---|
@@ -162,12 +171,11 @@ HTML 可演示页面必须满足：
 | 异常页 | 刷新重试、返回首页、申请权限等可恢复操作 |
 | AI 原生页面 | 执行中、生成结果、编辑结果、重新生成、应用结果、查看依据 |
 
-## 6. 样式要求
+## 8. 样式要求
 
-- 基于本套 GitHub 生成页面时，默认调用 `06-vue-code/templates/terminal-security-frame/index.html` 单层导航框架，不得用通用框架临时拼装。
-- 如果用户明确指定“基于单层导航框架 / 单层顶部导航 / 单层导航页面”，必须调用 `06-vue-code/templates/terminal-security-frame/index.html`。
-- 如果用户明确指定“基于双层导航框架 / 双层顶部导航 / 双层导航页面”，必须调用 `06-vue-code/templates/double-top-navigation-frame/source.html`，不得用通用框架或旧双层导航框架临时拼装。
-- 如果用户明确指定“本地安全大脑 / 本脑”，必须调用 `06-vue-code/templates/local-security-brain-frame/`，不得用通用框架临时拼装。
+- 基于本套 GitHub 生成页面时，默认调用 `06-vue-code/templates/common-single-nav.html`，不得临时拼装导航框架。
+- 明确指定“基于单层导航框架 / 单层顶部导航 / 单层导航页面”时，必须调用 `06-vue-code/templates/common-single-nav.html`。
+- 明确指定“基于双层导航框架 / 双层顶部导航 / 双层导航页面”时，必须调用 `06-vue-code/templates/double-nav-frame.html`。
 - 必须继承字体渲染规则：`font-synthesis: none`、`font-synthesis-weight: none`、`font-synthesis-style: none`、`-webkit-font-smoothing: antialiased`、`-moz-osx-font-smoothing: grayscale`。
 - 使用浅灰页面背景和白色内容卡片。
 - 使用 `p6 #00AB7A` 作为品牌主色。
@@ -180,8 +188,17 @@ HTML 可演示页面必须满足：
 - 不新增平台框架规范外的游离色值。
 - 表格、列表、表单、按钮、输入框、抽屉、提示说明等高密度文本区域不得出现伪粗体。
 
-## 7. 与 Vue 代码的关系
+## 9. 与 Vue 代码的关系
 
-HTML 可演示页面用于快速查看和调整界面。只有用户明确要求工程代码时，才额外输出 Vue 3 + TypeScript + Ant Design Vue 代码。
+HTML 可演示页面用于快速查看和调整界面。
 
-如果同时输出 Vue 和 HTML，两者应在页面结构、字段、状态、文案和主要视觉风格上保持一致；平台固定框架和字体渲染规则必须保持一致。
+只有用户明确要求以下内容时，才额外输出 Vue 3 + TypeScript + Ant Design Vue 代码：
+
+```text
+Vue 代码
+工程代码
+前端代码
+接入项目
+```
+
+如果同时输出 Vue 和 HTML，两者应在页面结构、字段、状态、文案和主要视觉风格上保持一致；固定框架和字体渲染规则必须保持一致。
