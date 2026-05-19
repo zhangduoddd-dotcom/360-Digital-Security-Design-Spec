@@ -1,7 +1,7 @@
 # 文档索引
 ## Document Index
 
-Keywords: index, ai routing, backend design, html demo, vue codegen, ui generation, platform frame, local security brain frame
+Keywords: index, ai routing, backend design, html demo, vue codegen, ui generation, platform frame, local security brain frame, terminal security frame, double top navigation frame
 
 > 本文件是 AI 读取仓库时的主导航，也方便人工快速跳转查阅。
 
@@ -23,13 +23,17 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 |---|---|
 | 默认后台页面 / 未指定特定产品框架 | [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)、[06-vue-code/templates/platform-frame/](./06-vue-code/templates/platform-frame/) |
 | 用户明确说“本地安全大脑 / 本脑 / 基于本脑框架” | [06-vue-code/templates/local-security-brain-frame/](./06-vue-code/templates/local-security-brain-frame/) |
+| 用户明确说“终端安全管理系统 / 终端 / 基于终端框架” | [06-vue-code/templates/terminal-security-frame/](./06-vue-code/templates/terminal-security-frame/) |
+| 用户明确说“基于双层导航框架 / 双层顶部导航 / 双层导航页面” | [06-vue-code/templates/double-top-navigation-frame/source.html](./06-vue-code/templates/double-top-navigation-frame/source.html) |
 
 规则：
 
 ```text
 默认后台页面继续使用通用 platform-frame。
 只有用户明确指定“本地安全大脑 / 本脑”时，才调用 local-security-brain-frame。
-local-security-brain-frame 是主线中的特定产品变体，不替代通用 platform-frame。
+只有用户明确指定“终端安全管理系统 / 终端”时，才调用 terminal-security-frame。
+只有用户明确指定“基于双层导航框架 / 双层顶部导航 / 双层导航页面”时，才调用 double-top-navigation-frame/source.html。
+double-top-navigation-frame 是主线中的固定 HTML 母版，不替代通用 platform-frame。
 ```
 
 ## 3. 任务路由
@@ -38,6 +42,8 @@ local-security-brain-frame 是主线中的特定产品变体，不替代通用 p
 |---|---|---|
 | 生成任何后台页面 / HTML demo / Vue 页面 | [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)、[04-pages/overview.md](./04-pages/overview.md) | 对应页面规范、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[02-components/icon.md](./02-components/icon.md) |
 | 基于本地安全大脑 / 本脑框架生成页面 | [06-vue-code/templates/local-security-brain-frame/README.md](./06-vue-code/templates/local-security-brain-frame/README.md)、[06-vue-code/templates/local-security-brain-frame/](./06-vue-code/templates/local-security-brain-frame/) | 对应页面规范、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[02-components/icon.md](./02-components/icon.md) |
+| 基于终端安全管理系统 / 终端框架生成页面 | [06-vue-code/templates/terminal-security-frame/](./06-vue-code/templates/terminal-security-frame/) | 对应页面规范、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[02-components/icon.md](./02-components/icon.md) |
+| 基于双层导航框架 / 双层顶部导航生成页面 | [06-vue-code/templates/double-top-navigation-frame/source.html](./06-vue-code/templates/double-top-navigation-frame/source.html) | 对应页面规范、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[02-components/icon.md](./02-components/icon.md) |
 | 查询全局基础规范 | [01-foundation/overview.md](./01-foundation/overview.md) | [01-foundation/layout.md](./01-foundation/layout.md)、[01-foundation/color.md](./01-foundation/color.md)、[01-foundation/tokens.md](./01-foundation/tokens.md)、[01-foundation/shadow.md](./01-foundation/shadow.md) |
 | 查询组件规格 / 尺寸 | [02-components/component-size.md](./02-components/component-size.md) | [02-components/button.md](./02-components/button.md)、[02-components/icon.md](./02-components/icon.md)、[02-components/form.md](./02-components/form.md)、[02-components/table.md](./02-components/table.md)、[02-components/feedback.md](./02-components/feedback.md) |
 | 生成工作台 UI | [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)、[04-pages/overview.md](./04-pages/overview.md)、[04-pages/dashboard.md](./04-pages/dashboard.md) | [01-foundation/layout.md](./01-foundation/layout.md)、[01-foundation/shadow.md](./01-foundation/shadow.md)、[02-components/component-size.md](./02-components/component-size.md)、[07-checklists/design-review.md](./07-checklists/design-review.md) |
@@ -120,6 +126,8 @@ local-security-brain-frame 是主线中的特定产品变体，不替代通用 p
 - [06-vue-code/antdv-adapter.md](./06-vue-code/antdv-adapter.md)
 - [06-vue-code/templates/platform-frame/](./06-vue-code/templates/platform-frame/)
 - [06-vue-code/templates/local-security-brain-frame/](./06-vue-code/templates/local-security-brain-frame/)
+- [06-vue-code/templates/terminal-security-frame/](./06-vue-code/templates/terminal-security-frame/)
+- [06-vue-code/templates/double-top-navigation-frame/source.html](./06-vue-code/templates/double-top-navigation-frame/source.html)
 
 ### 4.7 验收清单
 
@@ -132,6 +140,8 @@ local-security-brain-frame 是主线中的特定产品变体，不替代通用 p
 - 不要一次性读取所有文件。
 - 生成任何后台页面、HTML demo、Vue 页面、页面截图或高保真界面时，默认必须优先读取 [03-interaction/platform-frame.md](./03-interaction/platform-frame.md)。
 - 只有当用户明确指定“本地安全大脑 / 本脑 / 基于本脑框架”时，才读取 [06-vue-code/templates/local-security-brain-frame/](./06-vue-code/templates/local-security-brain-frame/)。
+- 只有当用户明确指定“终端安全管理系统 / 终端 / 基于终端框架”时，才读取 [06-vue-code/templates/terminal-security-frame/](./06-vue-code/templates/terminal-security-frame/)。
+- 只有当用户明确指定“基于双层导航框架 / 双层顶部导航 / 双层导航页面”时，才读取并完整套用 [06-vue-code/templates/double-top-navigation-frame/source.html](./06-vue-code/templates/double-top-navigation-frame/source.html)。
 - 生成具体页面前，应读取 [04-pages/overview.md](./04-pages/overview.md) 判断页面类型和最小读取路径。
 - 固定底层框架不可改动，只允许替换 Logo 占位、业务文案、菜单数据和 `.platform-page-content` 内的业务内容。
 - 先判断任务类型，再读取对应页面规范。
