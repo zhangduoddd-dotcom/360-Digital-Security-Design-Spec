@@ -1,65 +1,70 @@
-# 平台固定框架代码模板
-## Locked Platform Frame Template
+# 旧版平台固定框架代码模板
+## Legacy Platform Frame Template
 
-本目录是所有后台页面生成时必须复用的底层框架代码模板。它不是参考示例，而是可直接复制的固定框架预制件。
+本目录是旧版通用平台框架，仅用于历史参考、比对旧页面结构或迁移旧 Demo。
 
-## 文件结构
+当前主线默认 HTML 母版已经切换为：
+
+```text
+06-vue-code/templates/terminal-security-frame/index.html
+```
+
+> 说明：`terminal-security-frame/` 目录名保留不变，但调用语义是“单层导航框架”。
+
+## 1. 当前状态
+
+```text
+platform-frame/ = legacy / archive
+```
+
+AI 生成新页面时，不应默认调用本目录。
+
+只有在用户明确提出以下需求时，才允许读取本目录：
+
+```text
+查看旧版平台框架
+对比旧框架
+迁移旧 platform-frame 页面
+沿用 legacy platform-frame
+```
+
+## 2. 默认页面生成规则
+
+基于本套 GitHub / 本仓库规范生成页面时，默认调用：
+
+```text
+06-vue-code/templates/terminal-security-frame/index.html
+```
+
+明确要求双层导航框架时，调用：
+
+```text
+06-vue-code/templates/double-top-navigation-frame/source.html
+```
+
+明确要求本地安全大脑 / 本脑框架时，调用：
+
+```text
+06-vue-code/templates/local-security-brain-frame/index.html
+```
+
+## 3. 文件结构
 
 ```text
 platform-frame/
-├── index.html                # 可直接打开预览的固定框架 HTML
-├── platform-frame.css        # 固定框架样式，业务禁止修改
-├── platform-frame-data.js    # 唯一允许改的框架数据入口
-├── platform-frame.js         # 固定框架交互，业务禁止修改
-└── asset/icons/              # 固定框架使用的 SVG icon
+├── index.html
+├── platform-frame.css
+├── platform-frame-data.js
+├── platform-frame.js
+└── asset/icons/
 ```
 
-## 使用方式
+以上文件保留用于历史参考，不作为新页面默认底座。
 
-生成任何 HTML demo 时，必须以 `index.html` 为底板。
+## 4. 禁止误用
 
-只允许修改：
+AI 不得再把本目录描述为“所有后台页面生成时必须复用的底层框架”。
 
-```text
-1. platform-frame-data.js 中的 Logo、顶部导航、左侧菜单、路由、默认选中项
-2. index.html 中 .platform-page-content 内的业务内容
-3. asset/icons/svg_21e691e3.svg，可替换为真实 Logo，占位尺寸不变
-```
+AI 不得在未明确要求 legacy 框架时使用本目录生成新页面。
 
-禁止修改：
-
-```text
-platform-frame.css
-platform-frame.js
-顶部导航结构、尺寸、颜色、交互
-左侧菜单结构、尺寸、颜色、展开 / 收起、收起态级联菜单
-可返回页头结构
-页面内容区 padding 和背景
-框架 icon 状态规则
-```
-
-## 固定框架边界
-
-```text
-TopNavigation：固定
-Sidebar：固定
-ReturnHeader：固定
-PageContent：可替换业务内容
-```
-
-业务只能进入 `.platform-page-content`。
-
-## 对应规范
-
-必须同时遵循：
-
-```text
-03-interaction/platform-frame.md
-06-vue-code/preview-html.md
-02-components/icon.md
-01-foundation/color.md
-```
-
-## AI 使用提醒
-
-后续生成列表页、表单页、详情页、工作台、异常页、AI 原生页面时，不要重新生成框架。先复制本模板，再替换业务内容区。
+如果本文件与 `INDEX.md`、`06-vue-code/preview-html.md`、`06-vue-code/templates/README.md` 的主线规则存在差异，以主线规则为准。
