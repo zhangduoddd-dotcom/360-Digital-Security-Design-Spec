@@ -12,7 +12,7 @@ Keywords: icon, iconfont, font class, semantic consistency, backend components, 
 ### 1.1 在线 CSS
 
 ```text
-https://at.alicdn.com/t/c/font_5177816_bhdsh3zh4q.css
+https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.css
 ```
 
 ### 1.2 Font Class 引入
@@ -21,9 +21,9 @@ https://at.alicdn.com/t/c/font_5177816_bhdsh3zh4q.css
 /* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
   font-family: "iconfont"; /* Project id 5177816 */
-  src: url('//at.alicdn.com/t/c/font_5177816_bhdsh3zh4q.woff2?t=1779181816271') format('woff2'),
-       url('//at.alicdn.com/t/c/font_5177816_bhdsh3zh4q.woff?t=1779181816271') format('woff'),
-       url('//at.alicdn.com/t/c/font_5177816_bhdsh3zh4q.ttf?t=1779181816271') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff2?t=1779186015229') format('woff2'),
+       url('//at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff?t=1779186015229') format('woff'),
+       url('//at.alicdn.com/t/c/font_5177816_df7h6mjlznn.ttf?t=1779186015229') format('truetype');
 }
 
 .iconfont {
