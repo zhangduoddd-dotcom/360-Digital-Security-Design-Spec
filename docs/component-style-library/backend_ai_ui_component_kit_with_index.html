@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>组件基础样式库索引补齐版</title>
+  <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.css">
+  <style>
+    :root {
+      --frame-top-height: 56px;
+      --sidebar-expanded-width: 216px;
+      --sidebar-collapsed-width: 56px;
+      --frame-page-header-height: 48px;
+      --top-bg: #242933;
+      --page-bg: #F2F3F5;
+      --card-bg: #FFFFFF;
+      --border: #E8EAED;
+      --border-strong: #DFE1E6;
+      --text-title: #242933;
+      --text-body: #525966;
+      --text-secondary: #8A9099;
+      --text-tertiary: #AEB2B8;
+      --text-disabled: #AEB2B8;
+      --text-inverse: #FFFFFF;
+      --text-inverse-secondary: #D3D4D6;
+      --primary: #00AB7A;
+      --primary-hover: #1DB887;
+      --primary-active: #039972;
+      --primary-bg: #D9F4EE;
+      --primary-bg-soft: #E6F8F3;
+      --gray-2: #F8F9FA;
+      --gray-3: #F2F3F5;
+      --gray-4: #E8EAED;
+      --success: #52C41A;
+      --success-bg: #EFF8EE;
+      --success-border: #BCE0B4;
+      --info: #1890FF;
+      --info-bg: #E6F7FF;
+      --info-border: #91D5FF;
+      --warning: #F58A02;
+      --warning-bg: #FFF8E6;
+      --warning-border: #FFC054;
+      --error: #F0131E;
+      --error-bg: #FFE8E6;
+      --error-border: #FFBEB8;
+      --color-ai-default: linear-gradient(307deg, #004DFF 0%, #1093FF 65%, #1AFFAF 100%);
+      --shadow-card: 0 4px 16px rgba(36, 41, 51, .05);
+      --shadow-popover: 0 8px 24px rgba(36, 41, 51, .14);
+      --motion-fast: .15s ease;
+      --motion-base: .2s ease;
+    }
+    * { box-sizing: border-box; }
+    html, body, button, input, textarea, select { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { margin: 0; background: var(--page-bg); color: var(--text-body); font-size: 14px; line-height: 22px; }
+    .platform-frame { min-width: 1180px; min-height: 100vh; display: flex; flex-direction: column; background: var(--page-bg); }
+    .platform-top-nav { height: var(--frame-top-height); display: flex; align-items: center; justify-content: space-between; background: var(--top-bg); color: var(--text-inverse); padding: 0 24px; }
+    .top-brand { display: flex; align-items: center; gap: 12px; }
+    .top-brand-mark { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 6px; background: linear-gradient(135deg, var(--primary), var(--primary-hover)); }
+    .top-brand-title { font-size: 16px; line-height: 24px; font-weight: 600; }
+    .top-brand-sub { color: var(--text-inverse-secondary); font-size: 12px; line-height: 20px; }
+    .platform-body { flex: 1; display: flex; min-height: 0; }
+    .platform-sidebar { width: var(--sidebar-expanded-width); flex: 0 0 var(--sidebar-expanded-width); background: var(--card-bg); border-right: 1px solid var(--border); }
+    .sidebar-scroll { padding: 8px; position: sticky; top: 0; }
+    .sidebar-title { height: 40px; display: flex; align-items: center; padding: 0 12px; color: var(--text-secondary); font-size: 12px; }
+    .menu-item { height: 40px; display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 4px; color: var(--text-title); text-decoration: none; }
+    .menu-item:hover, .menu-item.active { color: var(--primary-active); background: var(--primary-bg); }
+    .platform-main { flex: 1; min-width: 0; }
+    .platform-page-header { min-height: var(--frame-page-header-height); display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; background: var(--card-bg); border-bottom: 1px solid var(--border); }
+    .page-title { color: var(--text-title); font-size: 16px; line-height: 28px; font-weight: 600; }
+    .page-subtitle { color: var(--text-secondary); font-size: 12px; line-height: 20px; }
+    .platform-page-content { padding: 16px; display: grid; gap: 16px; }
+    .section-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow-card); overflow: hidden; }
+    .section-header { min-height: 48px; display: flex; justify-content: space-between; gap: 16px; padding: 12px 20px; border-bottom: 1px solid var(--border); }
+    .section-title { margin: 0; color: var(--text-title); font-size: 15px; line-height: 24px; font-weight: 600; }
+    .section-desc { margin: 2px 0 0; color: var(--text-secondary); font-size: 12px; line-height: 20px; }
+    .section-body { padding: 20px; }
+    .demo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .demo-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .demo-panel { min-width: 0; padding: 16px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+    .demo-panel h3 { margin: 0 0 12px; color: var(--text-title); font-size: 14px; line-height: 22px; }
+    .demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .code-note { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 10px; border-radius: 4px; background: var(--primary-bg); color: var(--primary-active); font-size: 12px; }
+    .ant-btn { height: 32px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 0 14px; border: 1px solid var(--border-strong); border-radius: 6px; background: #fff; color: var(--text-body); cursor: pointer; white-space: nowrap; transition: color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast); }
+    .ant-btn:hover { color: var(--primary); border-color: var(--primary-hover); }
+    .ant-btn-primary { color: #fff; border-color: var(--primary); background: var(--primary); }
+    .ant-btn-primary:hover { color: #fff; border-color: var(--primary-hover); background: var(--primary-hover); }
+    .ant-btn-ai { color: #fff; border: 0; background: var(--color-ai-default); }
+    .ant-btn-sm { height: 24px; padding: 0 8px; border-radius: 4px; font-size: 12px; }
+    .ant-btn-lg { height: 40px; padding: 0 24px; border-radius: 8px; font-size: 16px; }
+    .ant-input, .ant-select-selector { height: 32px; border: 1px solid var(--border-strong); border-radius: 6px; background: #fff; color: var(--text-title); outline: none; }
+    .ant-input { width: 200px; padding: 4px 11px; }
+    .ant-input:focus, .ant-input-focused { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(0,171,122,.18); }
+    .ant-input-status-error { border-color: var(--error); }
+    .ant-form-item-explain-error { margin-top: 4px; color: var(--error); font-size: 12px; }
+    .ant-tag { min-height: 22px; display: inline-flex; align-items: center; gap: 4px; padding: 0 7px; border: 1px solid var(--border); border-radius: 4px; background: var(--gray-2); color: var(--text-body); font-size: 12px; line-height: 20px; white-space: nowrap; }
+    .ant-tag-success { color: #389E0D; background: var(--success-bg); border-color: var(--success-border); }
+    .ant-tag-processing { color: #096DD9; background: var(--info-bg); border-color: var(--info-border); }
+    .ant-tag-warning { color: #CF6E00; background: var(--warning-bg); border-color: var(--warning-border); }
+    .ant-tag-error { color: var(--error); background: var(--error-bg); border-color: var(--error-border); }
+    .ant-table-wrapper { background: #fff; overflow: hidden; }
+    .ant-table-toolbar { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    .ant-table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+    .ant-table th { height: 48px; padding: 0 12px; border-bottom: 1px solid var(--border); background: var(--gray-2); color: var(--text-secondary); font-weight: 500; text-align: left; }
+    .ant-table td { height: 48px; padding: 0 12px; border-bottom: 1px solid var(--border); color: var(--text-body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ant-table tbody tr:hover td { background: var(--gray-3); }
+    .ant-table tbody tr.row-selected td { background: var(--primary-bg); }
+    .ant-pagination { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 10px 12px; color: var(--text-secondary); }
+    .ant-pagination-item { min-width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; background: #fff; color: var(--text-body); border: 1px solid transparent; }
+    .ant-pagination-item-active { color: var(--primary-active); background: var(--primary-bg); font-weight: 500; }
+    table.index-table { width: 100%; border-collapse: collapse; }
+    table.index-table th, table.index-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+    table.index-table th { color: var(--text-secondary); background: var(--gray-2); font-weight: 500; }
+    code { padding: 2px 5px; border-radius: 4px; background: var(--gray-2); color: var(--primary-active); }
+    @media (max-width: 1180px) { .platform-frame { min-width: 0; } .platform-sidebar { display: none; } .demo-grid, .demo-grid-3 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="platform-frame">
+    <header class="platform-top-nav">
+      <div class="top-brand">
+        <span class="top-brand-mark"><i class="iconfont icon-a-quanjucaidan1"></i></span>
+        <div><div class="top-brand-title">360组件基础样式库</div><div class="top-brand-sub">Backend-Design-Standards / Component Style Library</div></div>
+      </div>
+      <div>控件高度 <strong>24 / 32 / 40</strong> · 主色 <strong>#00AB7A</strong></div>
+    </header>
+    <div class="platform-body">
+      <aside class="platform-sidebar">
+        <div class="sidebar-scroll">
+          <div class="sidebar-title">规范索引</div>
+          <a class="menu-item active" href="#index">索引总览</a>
+          <a class="menu-item" href="#tokens">Token 分类</a>
+          <a class="menu-item" href="#components">组件映射</a>
+          <a class="menu-item" href="#button">Button 按钮</a>
+          <a class="menu-item" href="#input">Input 输入框</a>
+          <a class="menu-item" href="#table">Table 表格</a>
+          <a class="menu-item" href="#tag">Tag 标签</a>
+          <a class="menu-item" href="#pagination">Pagination 分页</a>
+          <a class="menu-item" href="#checklist">验收清单</a>
+        </div>
+      </aside>
+      <main class="platform-main">
+        <div class="platform-page-header"><div><div class="page-title">组件基础样式库索引补齐版</div><div class="page-subtitle">完整 HTML Demo 与 Markdown 索引合并入口，用于 AI 生成后台页面时统一组件样式、Token、状态和验收规则。</div></div><button class="ant-btn ant-btn-primary">规范入口</button></div>
+        <div class="platform-page-content">
+          <section class="section-card" id="index"><div class="section-header"><div><h2 class="section-title">索引总览</h2><p class="section-desc">本文件作为主分支中的可预览 HTML Demo，与同目录 Markdown 索引配套使用。</p></div><span class="code-note">HTML + Index</span></div><div class="section-body demo-grid-3"><div class="demo-panel"><h3>页面框架</h3><p>顶部导航 56px、左侧导航 216px、页面头 48px、内容区 16px padding、白色卡片 8px 圆角。</p></div><div class="demo-panel"><h3>组件覆盖</h3><p>Button / Input / Select / Checkbox / Radio / Tabs / Table / Tag / Tooltip / DatePicker / Pagination。</p></div><div class="demo-panel"><h3>生成约束</h3><p>主色统一科技绿，表格密度 48 / 40，控件高度 24 / 32 / 40，图标统一 iconfont 5177816。</p></div></div></section>
+          <section class="section-card" id="tokens"><div class="section-header"><div><h2 class="section-title">Token 分类索引</h2><p class="section-desc">将基础颜色、背景、文本、状态、阴影、动效沉淀为 AI 与研发共用变量。</p></div><span class="code-note">:root</span></div><div class="section-body"><table class="index-table"><thead><tr><th>分类</th><th>关键变量</th><th>说明</th></tr></thead><tbody><tr><td>框架背景</td><td><code>--top-bg</code> <code>--page-bg</code> <code>--card-bg</code></td><td>顶部深色、页面灰底、内容白卡。</td></tr><tr><td>品牌主色</td><td><code>--primary</code> <code>--primary-hover</code> <code>--primary-active</code></td><td>普通主按钮、选中态、聚焦态统一使用科技绿。</td></tr><tr><td>状态色</td><td><code>--success</code> <code>--info</code> <code>--warning</code> <code>--error</code></td><td>用于 Tag、Alert、Message、表单错误等状态表达。</td></tr><tr><td>文本色</td><td><code>--text-title</code> <code>--text-body</code> <code>--text-secondary</code> <code>--text-disabled</code></td><td>标题、正文、弱提示、禁用信息分层。</td></tr></tbody></table></div></section>
+          <section class="section-card" id="components"><div class="section-header"><div><h2 class="section-title">组件与 Ant Design 映射</h2><p class="section-desc">结构参考 Ant Design，视觉 Token 使用 360 后台样式约束。</p></div><span class="code-note">Ant Mapping</span></div><div class="section-body"><table class="index-table"><thead><tr><th>组件</th><th>class</th><th>关键规则</th></tr></thead><tbody><tr><td>Button</td><td><code>.ant-btn</code></td><td>默认 32px；小 24px；大 40px；主按钮使用科技绿；AI 入口使用渐变。</td></tr><tr><td>Input / Select</td><td><code>.ant-input</code> <code>.ant-select</code></td><td>默认 32px；hover / focus / disabled / error 状态完整。</td></tr><tr><td>Table</td><td><code>.ant-table</code></td><td>常规 48px；紧凑 40px；包含 hover、selected、disabled、empty、loading、error。</td></tr><tr><td>Tag</td><td><code>.ant-tag</code></td><td>支持 default / success / processing / warning / error 五类状态。</td></tr><tr><td>Pagination</td><td><code>.ant-pagination</code></td><td>包含总数、当前页、禁用、每页条数和跳页输入。</td></tr></tbody></table></div></section>
+          <section class="section-card" id="button"><div class="section-header"><div><h2 class="section-title">Button 按钮</h2><p class="section-desc">类型、尺寸、加载、禁用、AI 入口；普通主按钮统一使用 p6 科技绿。</p></div><span class="code-note">Ant: Button</span></div><div class="section-body"><div class="demo-row"><button class="ant-btn ant-btn-primary">新建</button><button class="ant-btn">Default</button><button class="ant-btn ant-btn-sm">Small</button><button class="ant-btn ant-btn-lg">Large</button><button class="ant-btn ant-btn-ai">AI 分析</button></div></div></section>
+          <section class="section-card" id="input"><div class="section-header"><div><h2 class="section-title">Input 输入框</h2><p class="section-desc">Default / Hover / Focus / Disabled / Error / Search。</p></div><span class="code-note">Ant: Input</span></div><div class="section-body demo-grid"><div class="demo-panel"><h3>基础状态</h3><div class="demo-row"><input class="ant-input" placeholder="Default"><input class="ant-input ant-input-focused" value="focus 状态"><input class="ant-input" value="禁用状态" disabled></div></div><div class="demo-panel"><h3>错误状态</h3><input class="ant-input ant-input-status-error" value="192.168.1.999"><div class="ant-form-item-explain-error">请输入合法 IPv4 地址。</div></div></div></section>
+          <section class="section-card" id="table"><div class="section-header"><div><h2 class="section-title">Table 表格</h2><p class="section-desc">保留浅灰表头、选择列、状态 Tag、分页、loading / empty / error 约束。</p></div><span class="code-note">Ant: Table</span></div><div class="section-body"><div class="ant-table-wrapper"><div class="ant-table-toolbar"><div class="demo-row"><input class="ant-input" placeholder="搜索资产 / IP"><button class="ant-btn ant-btn-primary">查询</button><button class="ant-btn">重置</button></div><div>已选 <strong>2</strong> 项</div></div><table class="ant-table"><thead><tr><th style="width:72px">序号</th><th>资产名称</th><th style="width:120px">风险等级</th><th style="width:120px">状态</th><th style="width:160px">操作</th></tr></thead><tbody><tr class="row-selected"><td>01</td><td>api-gateway-prod-01</td><td><span class="ant-tag ant-tag-error">高风险</span></td><td><span class="ant-tag ant-tag-success">运行中</span></td><td><button class="ant-btn ant-btn-sm">查看</button></td></tr><tr><td>02</td><td>order-center-prod-02</td><td><span class="ant-tag ant-tag-warning">中风险</span></td><td><span class="ant-tag ant-tag-processing">处置中</span></td><td><button class="ant-btn ant-btn-sm">查看</button></td></tr></tbody></table></div></div></section>
+          <section class="section-card" id="tag"><div class="section-header"><div><h2 class="section-title">Tag 标签</h2><p class="section-desc">属性标签、状态标签、风险等级、可删除标签；标签必须保留文字。</p></div><span class="code-note">Ant: Tag</span></div><div class="section-body"><div class="demo-row"><span class="ant-tag">默认</span><span class="ant-tag ant-tag-success">成功</span><span class="ant-tag ant-tag-processing">处理中</span><span class="ant-tag ant-tag-warning">警告</span><span class="ant-tag ant-tag-error">高风险</span></div></div></section>
+          <section class="section-card" id="pagination"><div class="section-header"><div><h2 class="section-title">Pagination 分页</h2><p class="section-desc">总数、页码、禁用、当前页、每页条数、跳页输入。</p></div><span class="code-note">Ant: Pagination</span></div><div class="section-body"><div class="ant-pagination"><span style="margin-right:auto">共 128 条</span><span class="ant-pagination-item">1</span><span class="ant-pagination-item">2</span><span class="ant-pagination-item ant-pagination-item-active">3</span><span class="ant-pagination-item">4</span><span>...</span><span class="ant-pagination-item">13</span></div></div></section>
+          <section class="section-card" id="checklist"><div class="section-header"><div><h2 class="section-title">验收清单</h2><p class="section-desc">用于判断 AI 生成结果是否符合组件样式库。</p></div><span class="code-note">Checklist</span></div><div class="section-body"><ul><li>是否补齐完整组件目录索引。</li><li>是否补齐 Token 分类索引。</li><li>是否明确组件与 Ant Design 的映射关系。</li><li>是否明确控件高度 24 / 32 / 40。</li><li>是否明确表格密度 48 / 40。</li><li>是否明确默认、悬浮、聚焦、激活、禁用、错误状态。</li><li>是否统一 iconfont 图标库。</li><li>是否避免 .ant-* 直接污染全局，必要时增加 .backend-kit 命名空间。</li></ul></div></section>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
