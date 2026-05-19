@@ -1,7 +1,7 @@
 # HTML 可演示页面规范
 ## Preview HTML Demo Rules
 
-Keywords: preview html, clickable demo, html demo, frontend preview, backend page, platform frame, font rendering, terminal security frame
+Keywords: preview html, clickable demo, html demo, frontend preview, backend page, platform frame, font rendering, terminal security frame, double top navigation frame
 
 本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证。
 
@@ -36,13 +36,43 @@ HTML 预览
 | 默认后台页面 / 未指定特定产品框架 | `06-vue-code/templates/platform-frame/` |
 | 用户明确说“本地安全大脑 / 本脑 / 基于本脑框架” | `06-vue-code/templates/local-security-brain-frame/` |
 | 用户明确说“终端安全管理系统 / 终端 / 基于终端框架” | `06-vue-code/templates/terminal-security-frame/` |
+| 用户明确说“基于双层导航框架 / 双层顶部导航 / 双层导航页面” | `06-vue-code/templates/double-top-navigation-frame/source.html` |
 
 规则：
 
 ```text
 默认后台页面继续使用通用 platform-frame。
-本脑框架和终端框架只是主线中的特定产品变体。
-只有用户明确指定对应产品框架时，才允许调用对应模板。
+本脑框架、终端框架和双层导航框架只是主线中的特定框架变体。
+只有用户明确指定对应框架时，才允许调用对应模板。
+明确指定双层导航框架时，必须完整复制 double-top-navigation-frame/source.html 作为页面底座。
+```
+
+### 2.2 双层导航框架硬约束
+
+当用户明确提出以下任一描述时：
+
+```text
+基于双层导航框架
+基于双层顶部导航
+双层导航页面
+双层顶部导航页面
+double-top-navigation-frame
+```
+
+必须调用：
+
+```text
+06-vue-code/templates/double-top-navigation-frame/source.html
+```
+
+使用方式：
+
+```text
+1. 读取 source.html。
+2. 完整复制 source.html 作为 HTML demo 底座。
+3. 只替换业务内容、导航文案、菜单数据、页面内容和 mock 数据。
+4. 不重新推导、不重新拼装、不沿用旧双层导航框架。
+5. 保留 source.html 中的 DOM、CSS、JS、iconfont、hover、active、open、展开收起和响应式交互。
 ```
 
 HTML demo 默认必须包含并锁定以下框架：
@@ -105,6 +135,7 @@ HTML 可演示页面必须满足：
 - 必须先遵循 `03-interaction/platform-frame.md` 中的框架样式。
 - 如果用户明确指定“终端安全管理系统 / 终端”，必须调用 `06-vue-code/templates/terminal-security-frame/`，不得用通用框架临时拼装。
 - 如果用户明确指定“本地安全大脑 / 本脑”，必须调用 `06-vue-code/templates/local-security-brain-frame/`，不得用通用框架临时拼装。
+- 如果用户明确指定“基于双层导航框架 / 双层顶部导航 / 双层导航页面”，必须调用 `06-vue-code/templates/double-top-navigation-frame/source.html`，不得用通用框架或旧双层导航框架临时拼装。
 - 必须继承字体渲染规则：`font-synthesis: none`、`font-synthesis-weight: none`、`font-synthesis-style: none`、`-webkit-font-smoothing: antialiased`、`-moz-osx-font-smoothing: grayscale`。
 - 使用浅灰页面背景和白色内容卡片。
 - 使用 `p6 #00AB7A` 作为品牌主色。
