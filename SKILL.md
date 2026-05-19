@@ -1,13 +1,13 @@
 ---
 name: backend-design-standards
-description: Use this skill when the user asks for B-end/backend/admin/management-system UI design, 中后台/后台管理/管理系统页面, dashboard/workbench, list/form/detail/config/user-management pages, clickable HTML demos, high-fidelity previews, AI image prompts for backend UI, or Vue 3 + TypeScript + Ant Design Vue frontend pages. Also use it when reviewing or standardizing generated backend UI against this design standard.
+description: Use this skill when the user asks for B-end/backend/admin/management-system UI design, 中后台/后台管理/管理系统页面, dashboard/workbench, list/form/detail/config/user-management pages, clickable HTML demos, high-fidelity previews, AI image prompts for backend UI, or Vue 3 + TypeScript + Ant Design Vue frontend pages. By default, UI generation should output a single-file HTML demo first; only generate Vue/React/Tailwind/frontend engineering code when the user explicitly requests it. Also use it when reviewing or standardizing generated backend UI against this design standard.
 version: 1.0.0
 ---
 
 # 后台设计规范 Skill
 ## Backend Design Standards Skill
 
-Keywords: backend design, ai routing, html preview, vue codegen, ai image, ant design vue
+Keywords: backend design, ai routing, html preview, html demo first, vue codegen, ai image, ant design vue
 
 ## 1. 默认定位
 
@@ -15,32 +15,35 @@ Keywords: backend design, ai routing, html preview, vue codegen, ai image, ant d
 
 本 Skill 的首轮生成目标是稳定遵循规范，而不是只生成一个通用后台页面。首次生成前必须先完成任务路由、框架选择、页面类型选择和验收清单选择。
 
-默认前端技术栈：
-
-```text
-Vue 3 + TypeScript + Ant Design Vue + Composition API + <script setup lang="ts">
-```
-
 默认演示交付形态：
 
 ```text
-可直接打开预览的单文件 HTML
+可直接打开预览的单文件 HTML Demo
+```
+
+工程代码技术栈仅在用户明确要求“Vue / React / Tailwind / 前端代码 / 工程代码 / 接入项目”时启用。
+
+默认 Vue 工程技术栈：
+
+```text
+Vue 3 + TypeScript + Ant Design Vue + Composition API + <script setup lang="ts">
 ```
 
 ## 2. 首次生成硬约束
 
 以下规则在任何后台页面、HTML demo、Vue 页面代码、高保真界面或页面截图任务中都优先于页面细节：
 
-1. 必须使用固定平台框架；业务内容只能进入 `.platform-page-content`。
-2. 不得改动顶部通用导航、左侧菜单、收起态级联浮层、可返回页头、页面内容区 padding 和背景。
-3. 默认后台页面使用 `06-vue-code/templates/platform-frame/`；只有用户明确指定“本地安全大脑 / 本脑”或“终端安全管理系统 / 终端”时，才使用对应产品模板。
-4. 可返回页头只包含返回按钮和标题；不得加入面包屑、业务按钮或额外筛选控件。
-5. 普通主色使用 `p6 #00AB7A`，hover 使用 `p5 #1DB887`，active 使用 `p7 #039972`；普通按钮不得误用 AI 渐变。
-6. 常规控件默认 32px 高度，紧凑控件 24px，宽松控件 40px；圆角只使用 4 / 6 / 8px 档位。
-7. HTML demo 必须包含 mock 数据、基础点击交互、loading、empty、error、成功 / 失败反馈，不请求真实接口。
-8. 列表页必须包含搜索 / 筛选、工具栏、表格、状态、行操作、分页和总数；表单页必须包含校验、提交 loading 和反馈；详情页必须包含对象识别、状态和关联信息。
-9. 危险操作必须二次确认，并说明动作对象、影响范围和是否可恢复。
-10. 输出完成后必须按 `07-checklists/ai-output.md` 或 `07-checklists/frontend-acceptance.md` 自检，发现不满足项必须先修正。
+1. 默认生成结果必须优先输出为单文件 HTML Demo；除非用户明确要求前端工程代码，否则不得上来就生成 Vue / React / Tailwind / Ant Design Vue 工程代码。
+2. 必须使用固定平台框架；业务内容只能进入 `.platform-page-content`。
+3. 不得改动顶部通用导航、左侧菜单、收起态级联浮层、可返回页头、页面内容区 padding 和背景。
+4. 默认后台页面使用 `06-vue-code/templates/platform-frame/`；只有用户明确指定“本地安全大脑 / 本脑”或“终端安全管理系统 / 终端”时，才使用对应产品模板。
+5. 可返回页头只包含返回按钮和标题；不得加入面包屑、业务按钮或额外筛选控件。
+6. 普通主色使用 `p6 #00AB7A`，hover 使用 `p5 #1DB887`，active 使用 `p7 #039972`；普通按钮不得误用 AI 渐变。
+7. 常规控件默认 32px 高度，紧凑控件 24px，宽松控件 40px；圆角只使用 4 / 6 / 8px 档位。
+8. HTML Demo 必须包含 mock 数据、基础点击交互、loading、empty、error、成功 / 失败反馈，不请求真实接口。
+9. 列表页必须包含搜索 / 筛选、工具栏、表格、状态、行操作、分页和总数；表单页必须包含校验、提交 loading 和反馈；详情页必须包含对象识别、状态和关联信息。
+10. 危险操作必须二次确认，并说明动作对象、影响范围和是否可恢复。
+11. 输出完成后必须按 `07-checklists/ai-output.md` 或 `07-checklists/frontend-acceptance.md` 自检，发现不满足项必须先修正。
 
 ## 3. 默认读取顺序
 
@@ -51,45 +54,72 @@ Vue 3 + TypeScript + Ant Design Vue + Composition API + <script setup lang="ts">
 | 查询设计规则 | `01-foundation/`、`02-components/`、`03-interaction/` |
 | 生成页面结构 | `03-interaction/platform-frame.md` + `04-pages/overview.md` + 对应页面规范 |
 | 生成 AI 生图 Prompt | `05-ai-image/` + 对应页面规范 |
-| 生成可演示页面 / demo / 可点击预览 | `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/preview-html.md` + `07-checklists/ai-output.md` |
+| 生成可演示页面 / demo / 可点击预览 / 未明确要求工程代码的 UI 页面 | `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/preview-html.md` + `07-checklists/ai-output.md` |
 | 生成 Vue 页面代码 / 工程代码 | `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/codegen-rules.md` + `07-checklists/frontend-acceptance.md` |
 | 检查输出质量 | `07-checklists/` |
 
 ## 4. 生成交付规则
 
-### 4.1 可演示页面 / demo / 可点击预览
+### 4.1 默认 HTML Demo 优先
 
-当用户要求“生成可演示页面”“做 demo”“可点击预览”“高保真演示环境”“HTML 预览”时，默认只需要输出：
-
-```text
-一个可直接打开预览的 HTML 文件
-```
-
-HTML 预览文件必须包含完整 HTML、CSS、JavaScript、mock 数据和基础点击交互，不依赖构建工具，不请求真实接口。
-
-### 4.2 Vue 代码 / 工程代码
-
-只有当用户明确要求“生成 Vue 代码”“生成前端代码”“工程代码”“接入项目”“Vue3 + TypeScript + Ant Design Vue”时，才输出：
+当用户要求“生成页面”“生成界面”“做一个后台页面”“做一个管理系统页面”“生成可演示页面”“做 demo”“可点击预览”“高保真演示环境”“HTML 预览”时，只要没有明确要求前端工程代码，默认只输出：
 
 ```text
-1. Vue 3 + TypeScript + Ant Design Vue 页面代码
-2. 一个可直接打开预览的 HTML 文件
+一个可直接打开预览的单文件 HTML Demo
 ```
 
-HTML 预览文件用于快速查看页面效果和基础点击交互；正式工程交付仍以 Vue 代码为准。
+HTML Demo 必须把 HTML、CSS、必要 JavaScript、mock 数据和基础点击交互写在同一个文件中，不依赖构建工具，不请求真实接口。
+
+HTML Demo 的核心目标是先验证页面结构、组件样式、状态反馈、信息层级和交互流程，而不是直接进入研发工程实现。
+
+### 4.2 Vue / React / Tailwind / 工程代码后置
+
+只有当用户明确要求以下内容时，才继续生成前端工程代码：
+
+```text
+生成 Vue 代码
+生成 React 代码
+转成 Tailwind
+生成前端代码
+生成工程代码
+接入项目
+组件化版本
+Vue3 + TypeScript + Ant Design Vue
+Element Plus / @q/design / 其他指定组件库
+```
+
+此时可输出：
+
+```text
+1. Vue / React / Tailwind 等用户指定技术栈代码
+2. 如用户未排除，补充一个可直接打开预览的 HTML Demo
+```
+
+HTML Demo 用于快速查看页面效果和基础点击交互；正式工程交付仍以用户指定技术栈代码为准。
 
 ### 4.3 交付物判定优先级
 
-- 用户只说“demo / 预览 / 可点击 / 高保真演示 / HTML”时，只输出 HTML。
-- 用户明确说“Vue / 前端代码 / 工程代码 / 接入项目”时，输出 Vue 代码；如未明确排除预览，同时补充 HTML 预览。
-- 用户明确说“只要 Vue”时，不输出 HTML。
-- 用户明确说“只要 HTML”时，不输出 Vue。
+- 用户只说“页面 / 界面 / demo / 预览 / 可点击 / 高保真演示 / HTML”时，只输出 HTML Demo。
+- 用户明确说“Vue / React / Tailwind / 前端代码 / 工程代码 / 接入项目”时，输出对应技术栈代码；如未明确排除预览，同时补充 HTML Demo。
+- 用户明确说“只要 Vue / 只要 React / 只要工程代码”时，不输出 HTML。
+- 用户明确说“只要 HTML”时，不输出 Vue / React / Tailwind。
+- 不得因为规范中存在 Vue 技术栈，就默认跳过 HTML Demo 直接生成工程代码。
 
-## 5. 输出约束
+## 5. HTML Demo 样式强约束
 
-- 界面必须专业、清晰、适合企业级 B 端后台。
-- 优先保证信息效率、任务路径和交互完整性。
+- HTML Demo 的样式必须严格按照当前规范文档执行，不允许自由发挥成其他风格。
+- 必须匹配页面整体布局、顶部导航、左侧菜单、内容区比例、颜色变量、字体、字号、行高、间距、圆角、阴影、描边和分割线。
+- 表格、表单、按钮、标签、分页器、弹窗、抽屉、告警提示、状态徽标、状态灯等组件必须与规范样式一致。
+- hover、active、selected、disabled、warning、error、success、loading、empty 等状态必须完整体现。
+- 图标应优先使用规范指定的 iconfont / asset icons，不得大量使用 emoji 代替正式图标。
+- 界面必须专业、清晰、适合企业级 B 端后台，避免大屏风、海报风、营销风、游戏化和过度装饰。
 - 生成可演示页面时，HTML 文件必须能直接打开并支持基础交互。
-- Vue 代码生成时必须优先使用 Ant Design Vue 组件。
 - 页面应包含 loading、empty、error、反馈等基础状态。
 - 首轮输出不得省略固定框架、关键交互状态或验收自检。
+
+## 6. Vue / 工程代码输出约束
+
+- 只有用户明确要求工程代码时才进入本阶段。
+- Vue 代码生成时必须优先使用 Ant Design Vue 组件。
+- 工程代码应复用 HTML Demo 已确认的页面结构、字段、状态、交互和视觉规范。
+- 工程代码不得反向改变已确认 HTML Demo 的核心布局和组件样式。
