@@ -31,12 +31,12 @@
 ## 1. 唯一结构来源
 
 ```text
-source.html
+index.html
 ```
 
-`source.html` 是终端框架的唯一母版来源。AI 生成页面时不得根据 README、INDEX 或其他文字规范重新推导框架结构。
+`index.html` 是终端框架的唯一母版来源。AI 生成页面时不得根据 README、INDEX 或其他文字规范重新推导框架结构。
 
-如果 `source.html` 与文字说明存在差异，以 `source.html` 为准。
+如果 `index.html` 与文字说明存在差异，以 `index.html` 为准。
 
 ## 2. 必须原样保留
 
@@ -92,8 +92,8 @@ iconfont 映射
 生成终端类页面时，按以下顺序执行：
 
 ```text
-1. 读取 source.html
-2. 完整复制 source.html 作为页面底座
+1. 读取 index.html
+2. 完整复制 index.html 作为页面底座
 3. 只在允许替换区域填充业务内容
 4. 保留所有框架结构、样式、脚本和交互
 5. 输出可直接打开预览的 HTML
@@ -105,7 +105,7 @@ iconfont 映射
 
 ```text
 默认后台页面：使用 06-vue-code/templates/platform-frame/
-明确终端场景：使用 06-vue-code/templates/terminal-security-frame/source.html
+明确终端场景：使用 06-vue-code/templates/terminal-security-frame/index.html
 ```
 
 本模板是主线中的特定产品 HTML 母版，不替代默认通用框架。
