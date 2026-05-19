@@ -1,11 +1,8 @@
 # 本脑框架 HTML 母版调用规则
-## Local Security Brain HTML Master Template Rules
 
-本目录用于存放“本地安全大脑 / 本脑”类产品的固定 HTML 母版。
+本目录存放“本地安全大脑 / 本脑”类产品的固定 HTML 母版。
 
-**核心原则：本脑框架不是一组可重新推导的文字规范，而是一个必须原样套用的 HTML 母版。**
-
-当用户明确说“基于本脑框架 / 基于本地安全大脑框架”生成页面时，AI 必须直接使用本目录中的 HTML 母版作为唯一结构来源，只替换业务内容，不允许重新拼装框架。
+核心原则：本脑框架不是可重新推导的文字规范，而是必须原样套用的 HTML 母版。
 
 ## 0. 调用条件
 
@@ -20,26 +17,23 @@
 使用双层顶部导航 + 184px 左侧窄版菜单 + 页签式页头
 ```
 
-其他后台页面默认仍然调用：
+未明确指定本脑时，不默认使用本模板。基于本套 GitHub 的默认页面应使用：
 
 ```text
-06-vue-code/templates/platform-frame/
-03-interaction/platform-frame.md
+06-vue-code/templates/terminal-security-frame/index.html
 ```
-
-禁止在用户未明确指定“本地安全大脑 / 本脑”时，默认使用本模板。
 
 ## 1. 唯一结构来源
 
 ```text
-source.html
+index.html
 ```
 
-`source.html` 是本脑框架的唯一母版来源。AI 生成页面时不得根据 README、INDEX 或其他文字规范重新推导框架结构。
+`index.html` 是本脑框架的唯一母版来源。AI 生成页面时不得根据 README、INDEX 或其他文字规范重新推导框架结构。
 
-如果 `source.html` 与文字说明存在差异，以 `source.html` 为准。
+如果 `index.html` 与文字说明存在差异，以 `index.html` 为准。
 
-## 2. 必须原样保留的框架区域
+## 2. 必须原样保留
 
 ```text
 68px 双层顶部导航
@@ -54,11 +48,7 @@ source.html
 所有框架内置 hover / active / disabled / open 状态
 ```
 
-以上区域禁止重写、禁止重新设计、禁止重新按规则拼装。
-
-## 3. 允许替换的内容
-
-AI 只能替换以下内容：
+## 3. 允许替换
 
 ```text
 Logo 图片或 Logo 文案
@@ -72,7 +62,7 @@ mock 数据
 iconfont 映射
 ```
 
-## 4. 禁止替换的内容
+## 4. 禁止替换
 
 ```text
 顶部导航高度、结构、颜色和交互
@@ -88,31 +78,21 @@ iconfont 映射
 
 ## 5. AI 使用方式
 
-生成本脑类页面时，按以下顺序执行：
-
 ```text
-1. 读取 source.html
-2. 完整复制 source.html 作为页面底座
+1. 读取 index.html
+2. 完整复制 index.html 作为页面底座
 3. 只在允许替换区域填充业务内容
 4. 保留所有框架结构、样式、脚本和交互
 5. 输出可直接打开预览的 HTML
 ```
 
-不要执行以下行为：
-
-```text
-不要根据文字描述重新写顶部导航
-不要根据文字描述重新写左侧菜单
-不要把本脑框架拆成新的结构
-不要将本脑框架与通用 platform-frame 混用
-不要为了“优化代码”压缩或改写框架 DOM
-```
-
 ## 6. 与主线默认框架的关系
 
 ```text
-默认后台页面：使用 06-vue-code/templates/platform-frame/
-明确本脑场景：使用 06-vue-code/templates/local-security-brain-frame/source.html
+默认基于本套 GitHub 生成页面：使用 06-vue-code/templates/terminal-security-frame/index.html
+明确单层导航场景：使用 06-vue-code/templates/terminal-security-frame/index.html
+明确双层导航场景：使用 06-vue-code/templates/double-top-navigation-frame/source.html
+明确本脑场景：使用 06-vue-code/templates/local-security-brain-frame/index.html
 ```
 
-本模板是主线中的特定产品 HTML 母版，不替代默认通用框架。
+本模板是特定产品 HTML 母版，不替代默认单层导航框架。
