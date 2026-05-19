@@ -9,6 +9,41 @@ version: 1.0.0
 
 Keywords: backend design, ai routing, html preview, html demo first, vue codegen, ai image, ant design vue
 
+## 0. 角色限定与代码映射入口
+
+本 Skill 默认以资深 B 端产品 UI/UX 设计师身份执行。详细角色定义见：
+
+```text
+ROLE.md
+```
+
+在任何后台页面、SaaS 页面、HTML Demo、Vue 页面代码或 AI 生图 Prompt 生成任务中，必须先从业务目标、用户任务、页面类型、信息层级、交互路径、组件映射和工程落地角度进行判断，再进入具体生成。
+
+默认工作顺序：
+
+```text
+业务目标判断
+→ 页面类型识别
+→ 信息层级梳理
+→ 交互路径设计
+→ 组件映射
+→ 视觉层级组织
+→ 工程落地约束
+→ 输出前自检
+```
+
+不得直接从配色、阴影、卡片样式开始设计。
+
+生成 HTML Demo 或 Vue 工程代码时，除读取页面规范和组件规范外，必须读取：
+
+```text
+06-vue-code/component-style-code-map.md
+```
+
+并先完成组件映射，再生成代码或 HTML。该文件用于把 `02-components/` 中的组件规范绑定到 Ant Design Vue 组件、HTML Demo 结构、CSS Token、必须状态和验收项。
+
+如果角色判断与具体组件规范、页面规范或代码生成规则冲突，以具体规范文件为准。
+
 ## 1. 默认定位
 
 这是 B 端后台界面设计 Skill 的总入口。AI 应先判断用户任务类型，再读取最少但足够的文档。
@@ -44,19 +79,20 @@ Vue 3 + TypeScript + Ant Design Vue + Composition API + <script setup lang="ts">
 9. 列表页必须包含搜索 / 筛选、工具栏、表格、状态、行操作、分页和总数；表单页必须包含校验、提交 loading 和反馈；详情页必须包含对象识别、状态和关联信息。
 10. 危险操作必须二次确认，并说明动作对象、影响范围和是否可恢复。
 11. 输出完成后必须按 `07-checklists/ai-output.md` 或 `07-checklists/frontend-acceptance.md` 自检，发现不满足项必须先修正。
+12. 输出代码或 HTML 前必须完成组件映射；涉及 Button、Input、Select、Table、Tag、Pagination、Alert 等组件时，必须读取对应 `02-components/` 文档和 `06-vue-code/component-style-code-map.md`。
 
 ## 3. 默认读取顺序
 
-所有任务先读取 `INDEX.md`，然后按任务分流：
+所有任务先读取 `ROLE.md`、`INDEX.md`，然后按任务分流：
 
 | 任务 | 默认读取 |
 |---|---|
-| 查询设计规则 | `01-foundation/`、`02-components/`、`03-interaction/` |
-| 生成页面结构 | `03-interaction/platform-frame.md` + `04-pages/overview.md` + 对应页面规范 |
-| 生成 AI 生图 Prompt | `05-ai-image/` + 对应页面规范 |
-| 生成可演示页面 / demo / 可点击预览 / 未明确要求工程代码的 UI 页面 | `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/preview-html.md` + `07-checklists/ai-output.md` |
-| 生成 Vue 页面代码 / 工程代码 | `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/codegen-rules.md` + `07-checklists/frontend-acceptance.md` |
-| 检查输出质量 | `07-checklists/` |
+| 查询设计规则 | `ROLE.md` + `01-foundation/`、`02-components/`、`03-interaction/` |
+| 生成页面结构 | `ROLE.md` + `03-interaction/platform-frame.md` + `04-pages/overview.md` + 对应页面规范 |
+| 生成 AI 生图 Prompt | `ROLE.md` + `05-ai-image/` + 对应页面规范 |
+| 生成可演示页面 / demo / 可点击预览 / 未明确要求工程代码的 UI 页面 | `ROLE.md` + `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/preview-html.md` + `06-vue-code/component-style-code-map.md` + `07-checklists/ai-output.md` |
+| 生成 Vue 页面代码 / 工程代码 | `ROLE.md` + `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/codegen-rules.md` + `06-vue-code/component-style-code-map.md` + `06-vue-code/antdv-adapter.md` + `07-checklists/frontend-acceptance.md` |
+| 检查输出质量 | `ROLE.md` + `07-checklists/` |
 
 ## 4. 生成交付规则
 
@@ -116,6 +152,7 @@ HTML Demo 用于快速查看页面效果和基础点击交互；正式工程交�
 - 生成可演示页面时，HTML 文件必须能直接打开并支持基础交互。
 - 页面应包含 loading、empty、error、反馈等基础状态。
 - 首轮输出不得省略固定框架、关键交互状态或验收自检。
+- HTML Demo 中的 class、Token 和状态必须遵循 `06-vue-code/component-style-code-map.md` 的映射关系。
 
 ## 6. Vue / 工程代码输出约束
 
@@ -123,3 +160,4 @@ HTML Demo 用于快速查看页面效果和基础点击交互；正式工程交�
 - Vue 代码生成时必须优先使用 Ant Design Vue 组件。
 - 工程代码应复用 HTML Demo 已确认的页面结构、字段、状态、交互和视觉规范。
 - 工程代码不得反向改变已确认 HTML Demo 的核心布局和组件样式。
+- 工程代码必须遵循 `06-vue-code/component-style-code-map.md`，明确组件规范、Ant Design Vue 组件、HTML Demo 结构、Token 和验收项之间的关系。
