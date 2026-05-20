@@ -1,9 +1,24 @@
 # 标签规范
 ## Tag Rules
 
-Keywords: tag, status tag, removable tag, p6
+Keywords: tag, status tag, removable tag, p6, semantic component rules
 
 本文迁移自上传包 `references/component-styles/tag.txt`，用于约束属性标签、状态标签和可删除标签。
+
+## 0. 使用边界
+
+本文只定义标签的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 class / CSS 来源。
+
+HTML Demo 中标签真实 class 与 CSS 必须以以下文件为准：
+
+```text
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
+06-vue-code/component-style-import-rules.md
+```
+
+如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-tag`、`.ant-tag-primary`、`.ant-tag-success`、`.ant-tag-processing`、`.ant-tag-warning`、`.ant-tag-error` 等真实 class 为准。禁止根据本文自行生成 `.tag`、`.tag-status`、`.status-tag`、`.alert-tag` 等旧别名或私有标签 class。
 
 ## 1. 使用场景
 
@@ -49,4 +64,6 @@ Keywords: tag, status tag, removable tag, p6
 
 ## 6. Vue / HTML 生成要求
 
-Vue 使用 `a-tag`。HTML 预览需要模拟普通标签、状态标签、等级标签、可删除标签、hover 和删除反馈。
+Vue 使用 `a-tag`。
+
+HTML 预览需要模拟普通标签、状态标签、等级标签、可删除标签、hover 和删除反馈。HTML 预览的标签 DOM 必须使用组件样式库真实 `.ant-tag` 体系，并确保最终 HTML 已注入对应 `.ant-tag` CSS。
