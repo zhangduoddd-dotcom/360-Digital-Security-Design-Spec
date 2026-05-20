@@ -13,7 +13,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 | [SKILL.md](./SKILL.md) | Skill 总入口：HTML Demo 优先、首次生成硬约束、任务读取顺序、交付物判定 |
 | [DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md) | 文档结构与职责边界：目录分层、组件语义层 / 样式层 / 映射层关系、HTML Demo 读取顺序、冲突优先级 |
 
-任何 B 端页面生成、优化、检查、HTML Demo、Vue 工程代码或 AI 生图 Prompt 任务，默认先读取 `ROLE.md`、`SKILL.md` 与 `DOCS-STRUCTURE.md`，再按本文件分流。
+任何 B 端页面生成、优化、检查、HTML Demo 或 Vue 工程代码任务，默认先读取 `ROLE.md`、`SKILL.md` 与 `DOCS-STRUCTURE.md`，再按本文件分流。
 
 ---
 
@@ -25,8 +25,7 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, ui generati
 | [02-components/](./02-components/) | 组件语义规范：组件使用场景、状态要求、交互规则；不作为 HTML Demo 真实 class / CSS 来源 |
 | [03-interaction/](./03-interaction/) | 交互规范：页面容器、导航、搜索区、表格区、表单录入、权限状态 |
 | [04-pages/](./04-pages/) | 页面规范：总览、工作台、列表页、表单页、详情页、分步流程页、异常页、用户管理、系统设置、系统配置 |
-| [05-ai-image/](./05-ai-image/) | AI 生图：Prompt 规则、页面 Prompt、Negative Prompt、AI 原生平台 |
-| [06-vue-code/](./06-vue-code/) | HTML 演示与 Vue 代码生成：HTML 预览、代码规则、组件样式代码映射、组件 CSS 注入、业务组件复用、固定框架模板 |
+| [06-vue-code/](./06-vue-code/) | HTML 演示与 Vue 代码生成：HTML 预览、代码规则、组件样式代码映射、组件 CSS 注入、业务组件复用、旧 class 黑名单、固定框架模板 |
 | [07-checklists/](./07-checklists/) | 验收清单：设计走查、AI 输出、前端实现 |
 | [docs/component-style-library/](./docs/component-style-library/) | 可运行组件样式库：真实 `.ant-*` class、组件 CSS、组件状态和样式细节 |
 
@@ -57,6 +56,9 @@ docs/component-style-library/*.html / *.md
 
 06-vue-code/component-reading-order-rules.md
 = 组件文档读取顺序规则层
+
+06-vue-code/deprecated-class-blacklist.md
+= 旧别名 class 和页面私有组件 class 黑名单
 
 02-components/*.md
 = 组件语义、状态、交互规则层
@@ -125,10 +127,11 @@ docs/component-style-library/*.html / *.md
 12. 06-vue-code/business-component-reuse-rules.md
 13. 06-vue-code/component-style-import-rules.md
 14. 06-vue-code/component-reading-order-rules.md
-15. 02-components/component-doc-boundary.md
-16. 02-components/overview.md
-17. 对应 02-components 组件语义文档
-18. 07-checklists/ai-output.md
+15. 06-vue-code/deprecated-class-blacklist.md
+16. 02-components/component-doc-boundary.md
+17. 02-components/overview.md
+18. 对应 02-components 组件语义文档
+19. 07-checklists/ai-output.md
 ```
 
 禁止先读取 `02-components` 后自行推导 HTML class。
@@ -181,15 +184,21 @@ JS 交互：导航展开收起、菜单联级浮层、下拉显示隐藏、状�
 
 HTML Demo 中基础组件 class 必须来自组件样式库和映射规则：
 
-| 组件 | 正确基础 class | 禁止旧别名 / 私有 class |
-|---|---|---|
-| Button | `.ant-btn`、`.ant-btn-primary`、`.ant-btn-text`、`.ant-btn-link` | `.btn`、`.btn-primary`、`.alert-button` |
-| Input | `.ant-input`、`.ant-input-affix-wrapper` | `.form-input`、`.search-input`、`.alert-input` |
-| Select | `.ant-select`、`.ant-select-selector` | `.select`、`.select-panel`、`.alert-select` |
-| Table | `.ant-table-wrapper`、`.ant-table`、`.ant-table-compact` | `.data-table`、`.alert-table`、`.risk-table` |
-| Tag | `.ant-tag`、`.ant-tag-success`、`.ant-tag-warning`、`.ant-tag-error` | `.tag`、`.tag-status`、`.status-tag` |
-| Pagination | `.ant-pagination`、`.ant-pagination-item` | `.pagination`、`.alert-pagination` |
-| Toast | `.toast-holder`、`.toast` | `.alert-toast` |
+| 组件 | 正确基础 class |
+|---|---|
+| Button | `.ant-btn`、`.ant-btn-primary`、`.ant-btn-text`、`.ant-btn-link` |
+| Input | `.ant-input`、`.ant-input-affix-wrapper` |
+| Select | `.ant-select`、`.ant-select-selector` |
+| Table | `.ant-table-wrapper`、`.ant-table`、`.ant-table-compact` |
+| Tag | `.ant-tag`、`.ant-tag-success`、`.ant-tag-warning`、`.ant-tag-error` |
+| Pagination | `.ant-pagination`、`.ant-pagination-item` |
+| Toast | `.toast-holder`、`.toast` |
+
+旧别名 class 和页面私有组件 class 统一集中到：
+
+```text
+06-vue-code/deprecated-class-blacklist.md
+```
 
 最终 HTML 的 `<style>` 应按以下顺序组织：
 
@@ -208,13 +217,13 @@ HTML Demo 中基础组件 class 必须来自组件样式库和映射规则：
 | 用户任务 | 优先读取 | 辅助读取 |
 |---|---|---|
 | 任何 B 端页面生成 / 优化 / 检查任务 | [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)、[INDEX.md](./INDEX.md) | 对应页面规范、组件语义规范、代码生成规则、验收清单 |
-| 生成任何后台页面 / HTML demo / Vue 页面 | [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md) | 对应页面规范、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/component-reading-order-rules.md](./06-vue-code/component-reading-order-rules.md) |
+| 生成任何后台页面 / HTML demo / Vue 页面 | [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md) | 对应页面规范、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md)、[docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/component-reading-order-rules.md](./06-vue-code/component-reading-order-rules.md)、[06-vue-code/deprecated-class-blacklist.md](./06-vue-code/deprecated-class-blacklist.md) |
 | 查询组件语义 / 使用场景 / 状态要求 | [02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、[02-components/overview.md](./02-components/overview.md)、[02-components/component-size.md](./02-components/component-size.md) | 对应组件文档，例如 button / input / select / table / tag / pagination |
-| 查询组件真实 class / CSS | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[docs/component-style-library/component_style_library_index.md](./docs/component-style-library/component_style_library_index.md) | [06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md) |
-| 生成列表页 UI | [ROLE.md](./ROLE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md)、[04-pages/list-page.md](./04-pages/list-page.md) | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、[02-components/table.md](./02-components/table.md)、[02-components/tag.md](./02-components/tag.md)、[02-components/pagination.md](./02-components/pagination.md)、[02-components/button.md](./02-components/button.md) |
-| 生成表单页 UI | [ROLE.md](./ROLE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md)、[04-pages/form-page.md](./04-pages/form-page.md) | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、[02-components/form.md](./02-components/form.md)、[02-components/input.md](./02-components/input.md)、[02-components/select.md](./02-components/select.md)、[02-components/button.md](./02-components/button.md) |
-| 生成详情页 UI / 详情抽屉 | [ROLE.md](./ROLE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md)、[04-pages/detail-page.md](./04-pages/detail-page.md) | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、[02-components/table.md](./02-components/table.md)、[02-components/tag.md](./02-components/tag.md)、[02-components/tabs.md](./02-components/tabs.md)、[02-components/button.md](./02-components/button.md) |
-| 生成可演示页面 / demo / 可点击预览 | [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md)、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md) | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[docs/component-style-library/component_style_library_index.md](./docs/component-style-library/component_style_library_index.md)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/component-reading-order-rules.md](./06-vue-code/component-reading-order-rules.md)、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、对应组件文档、[07-checklists/ai-output.md](./07-checklists/ai-output.md) |
+| 查询组件真实 class / CSS | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[docs/component-style-library/component_style_library_index.md](./docs/component-style-library/component_style_library_index.md) | [06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/deprecated-class-blacklist.md](./06-vue-code/deprecated-class-blacklist.md) |
+| 生成列表页 UI | [ROLE.md](./ROLE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md)、[04-pages/list-page.md](./04-pages/list-page.md) | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/deprecated-class-blacklist.md](./06-vue-code/deprecated-class-blacklist.md)、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、[02-components/table.md](./02-components/table.md)、[02-components/tag.md](./02-components/tag.md)、[02-components/pagination.md](./02-components/pagination.md)、[02-components/button.md](./02-components/button.md) |
+| 生成表单页 UI | [ROLE.md](./ROLE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md)、[04-pages/form-page.md](./04-pages/form-page.md) | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/deprecated-class-blacklist.md](./06-vue-code/deprecated-class-blacklist.md)、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、[02-components/form.md](./02-components/form.md)、[02-components/input.md](./02-components/input.md)、[02-components/select.md](./02-components/select.md)、[02-components/button.md](./02-components/button.md) |
+| 生成详情页 UI / 详情抽屉 | [ROLE.md](./ROLE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md)、[04-pages/detail-page.md](./04-pages/detail-page.md) | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/deprecated-class-blacklist.md](./06-vue-code/deprecated-class-blacklist.md)、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、[02-components/table.md](./02-components/table.md)、[02-components/tag.md](./02-components/tag.md)、[02-components/tabs.md](./02-components/tabs.md)、[02-components/button.md](./02-components/button.md) |
+| 生成可演示页面 / demo / 可点击预览 | [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)、[06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)、[04-pages/overview.md](./04-pages/overview.md)、[06-vue-code/preview-html.md](./06-vue-code/preview-html.md) | [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[docs/component-style-library/component_style_library_index.md](./docs/component-style-library/component_style_library_index.md)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/component-reading-order-rules.md](./06-vue-code/component-reading-order-rules.md)、[06-vue-code/deprecated-class-blacklist.md](./06-vue-code/deprecated-class-blacklist.md)、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、对应组件文档、[07-checklists/ai-output.md](./07-checklists/ai-output.md) |
 | 生成 Vue 页面代码 / 工程代码 | [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[06-vue-code/codegen-rules.md](./06-vue-code/codegen-rules.md)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/antdv-adapter.md](./06-vue-code/antdv-adapter.md) | 对应页面规范、[02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md)、对应组件语义文档、[07-checklists/frontend-acceptance.md](./07-checklists/frontend-acceptance.md) |
 | 检查设计输出 / 前端实现 | [ROLE.md](./ROLE.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)、[07-checklists/design-review.md](./07-checklists/design-review.md)、[07-checklists/frontend-acceptance.md](./07-checklists/frontend-acceptance.md) | 对应页面、基础、组件语义、组件样式库和代码生成规范 |
 
@@ -285,15 +294,7 @@ HTML Demo 中基础组件 class 必须来自组件样式库和映射规则：
 - [04-pages/system-settings.md](./04-pages/system-settings.md)
 - [04-pages/system-config.md](./04-pages/system-config.md)
 
-### 8.5 AI 生图
-
-- [05-ai-image/skill.md](./05-ai-image/skill.md)
-- [05-ai-image/prompt-rules.md](./05-ai-image/prompt-rules.md)
-- [05-ai-image/page-prompts.md](./05-ai-image/page-prompts.md)
-- [05-ai-image/negative-prompts.md](./05-ai-image/negative-prompts.md)
-- [05-ai-image/ai-native-platform.md](./05-ai-image/ai-native-platform.md)
-
-### 8.6 HTML 演示与 Vue 代码生成
+### 8.5 HTML 演示与 Vue 代码生成
 
 - [06-vue-code/skill.md](./06-vue-code/skill.md)
 - [06-vue-code/reference.md](./06-vue-code/reference.md)
@@ -302,6 +303,7 @@ HTML Demo 中基础组件 class 必须来自组件样式库和映射规则：
 - [06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)
 - [06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)
 - [06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)
+- [06-vue-code/deprecated-class-blacklist.md](./06-vue-code/deprecated-class-blacklist.md)
 - [06-vue-code/preview-html.md](./06-vue-code/preview-html.md)
 - [06-vue-code/vue-engineering.md](./06-vue-code/vue-engineering.md)
 - [06-vue-code/antdv-adapter.md](./06-vue-code/antdv-adapter.md)
@@ -309,12 +311,12 @@ HTML Demo 中基础组件 class 必须来自组件样式库和映射规则：
 - [06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)
 - [06-vue-code/templates/double-nav-frame.html](./06-vue-code/templates/double-nav-frame.html)
 
-### 8.7 组件样式库
+### 8.6 组件样式库
 
 - [docs/component-style-library/component_style_library_index.md](./docs/component-style-library/component_style_library_index.md)
 - [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)
 
-### 8.8 验收清单
+### 8.7 验收清单
 
 - [07-checklists/design-review.md](./07-checklists/design-review.md)
 - [07-checklists/ai-output.md](./07-checklists/ai-output.md)
@@ -325,15 +327,15 @@ HTML Demo 中基础组件 class 必须来自组件样式库和映射规则：
 ## 9. AI 读取原则
 
 - 不要一次性读取所有文件。
-- 任何 B 端页面生成、优化、检查、HTML Demo、Vue 工程代码或 AI 生图 Prompt 任务，默认先读取 [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)。
+- 任何 B 端页面生成、优化、检查、HTML Demo 或 Vue 工程代码任务，默认先读取 [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)。
 - 基于本套 GitHub / 本仓库规范生成任何后台页面、HTML demo、Vue 页面、页面截图或高保真界面时，默认必须优先读取并完整套用 [06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)。
-- 生成可演示页面、demo、可点击预览时，必须读取组件样式库、组件映射、业务组件复用、组件 CSS 注入和读取顺序规则，不能只读取 02 组件文档。
+- 生成可演示页面、demo、可点击预览时，必须读取组件样式库、组件映射、业务组件复用、组件 CSS 注入、读取顺序规则和旧 class 黑名单，不能只读取 02 组件文档。
 - 只有当用户明确指定“基于双层导航框架 / 双层顶部导航 / 双层导航页面”时，才读取并完整套用 [06-vue-code/templates/double-nav-frame.html](./06-vue-code/templates/double-nav-frame.html)。
 - 只有当用户明确要求“自定义导航框架”时，才允许不使用默认单层导航框架母版。
 - 生成具体页面前，应读取 [04-pages/overview.md](./04-pages/overview.md) 判断页面类型和最小读取路径。
 - 固定底层框架不可改动，只允许替换 Logo 占位、业务文案、菜单数据、mock 数据和母版指定业务内容区内的内容。
 - 涉及组件语义、使用场景、状态要求时，读取 [02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md) 与对应 02 组件文档。
-- 涉及组件真实 class / CSS / HTML Demo 实现时，读取 [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/component-reading-order-rules.md](./06-vue-code/component-reading-order-rules.md)。
+- 涉及组件真实 class / CSS / HTML Demo 实现时，读取 [docs/component-style-library/backend_ai_ui_component_kit_with_index.html](./docs/component-style-library/backend_ai_ui_component_kit_with_index.html)、[06-vue-code/component-style-code-map.md](./06-vue-code/component-style-code-map.md)、[06-vue-code/business-component-reuse-rules.md](./06-vue-code/business-component-reuse-rules.md)、[06-vue-code/component-style-import-rules.md](./06-vue-code/component-style-import-rules.md)、[06-vue-code/component-reading-order-rules.md](./06-vue-code/component-reading-order-rules.md)、[06-vue-code/deprecated-class-blacklist.md](./06-vue-code/deprecated-class-blacklist.md)。
 - 涉及视觉基础、Token、投影或响应式时，读取 [01-foundation/layout.md](./01-foundation/layout.md)、[01-foundation/tokens.md](./01-foundation/tokens.md)、[01-foundation/shadow.md](./01-foundation/shadow.md)。
 - 涉及图标、图标按钮、操作 icon 或状态 icon 时，读取 [02-components/icon.md](./02-components/icon.md)。
 - 只有明确要求 Vue 代码、前端代码、工程代码或接入项目时，才读取完整 Vue 代码生成规则并输出 Vue 代码。
