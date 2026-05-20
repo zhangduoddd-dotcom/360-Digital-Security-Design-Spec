@@ -1,9 +1,24 @@
 # 按钮规范
 ## Button Rules
 
-Keywords: button, icon button, primary action, ai button, p6
+Keywords: button, icon button, primary action, ai button, p6, semantic component rules
 
 本文合并上传包按钮细节，并统一到主线的 Vue / HTML 生成规范。普通品牌主色统一为科技绿 `p6 #00AB7A`，原有 AI 渐变 Token 保持不变。
+
+## 0. 使用边界
+
+本文只定义按钮的语义、使用场景、优先级、状态要求和交互规则，不作为 HTML Demo 的真实 class / CSS 来源。
+
+HTML Demo 中按钮真实 class 与 CSS 必须以以下文件为准：
+
+```text
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
+06-vue-code/component-style-import-rules.md
+```
+
+如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-btn`、`.ant-btn-primary`、`.ant-btn-text`、`.ant-btn-link`、`.ant-btn-ai` 等真实 class 为准。禁止根据本文自行生成 `.btn`、`.btn-primary`、`.alert-button` 等旧别名或私有按钮 class。
 
 ## 1. 使用原则
 
@@ -85,4 +100,6 @@ AI 按钮只用于智能生成、AI 分析、智能推荐、自动填充、重�
 
 ## 9. Vue / HTML 生成要求
 
-Vue 使用 `a-button`，普通主按钮使用 `type="primary"` 并映射到 `p6 #00AB7A`。HTML 预览必须模拟 default、hover、active、disabled、loading、danger、AI 状态。
+Vue 使用 `a-button`，普通主按钮使用 `type="primary"` 并映射到 `p6 #00AB7A`。
+
+HTML 预览必须模拟 default、hover、active、disabled、loading、danger、AI 状态。HTML 预览的按钮 DOM 必须使用组件样式库真实 `.ant-btn` 体系，并确保最终 HTML 已注入对应 `.ant-btn` CSS。
