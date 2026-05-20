@@ -12,8 +12,9 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, component d
 | [ROLE.md](./ROLE.md) | B 端产品 UI/UX 设计师角色限定 |
 | [SKILL.md](./SKILL.md) | Skill 总入口：HTML Demo 优先、首次生成硬约束、任务读取顺序 |
 | [DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md) | 文档结构与职责边界：组件语义层 / DOM 抽取层 / 样式层 / 映射层关系 |
+| [RULE-OWNERSHIP.md](./RULE-OWNERSHIP.md) | 规则唯一真源：重复规则归属、冲突处理和清理边界 |
 
-任何 B 端页面生成、优化、检查、HTML Demo 或 Vue 工程代码任务，默认先读取 `ROLE.md`、`SKILL.md` 与 `DOCS-STRUCTURE.md`，再按本文件分流。
+任何 B 端页面生成、优化、检查、HTML Demo 或 Vue 工程代码任务，默认先读取 `ROLE.md`、`SKILL.md`、`DOCS-STRUCTURE.md` 与 `RULE-OWNERSHIP.md`，再按本文件分流。
 
 ## 1. 目录地图
 
@@ -26,6 +27,12 @@ Keywords: index, ai routing, backend design, html demo, vue codegen, component d
 | [06-vue-code/](./06-vue-code/) | HTML 演示与 Vue 代码生成：DOM 抽取、样式注入、组件映射、业务组件复用、旧 class 黑名单、固定框架模板 |
 | [07-checklists/](./07-checklists/) | 验收清单：设计走查、AI 输出、前端实现 |
 | [docs/component-style-library/](./docs/component-style-library/) | 可运行组件样式库：真实组件 DOM、`.ant-*` class、CSS、Token、组件状态 |
+
+## 1.1 规则唯一真源
+
+同一规则只维护一份唯一真源。新增、修改或清理规则时，先读取 [RULE-OWNERSHIP.md](./RULE-OWNERSHIP.md)，确认规则归属后再编辑对应文件。
+
+当页面规范、组件语义规范、HTML 母版、组件样式库和验收清单发生冲突时，按 `RULE-OWNERSHIP.md` 的冲突处理执行；验收清单只负责检查结果，不反向创造新的生成规则。
 
 ## 2. 文档职责分层
 
@@ -84,23 +91,24 @@ docs/component-style-library/*.html / *.md
 1. ROLE.md
 2. SKILL.md
 3. DOCS-STRUCTURE.md
-4. INDEX.md
-5. 06-vue-code/templates/README.md
-6. 06-vue-code/templates/common-single-nav.html 或 double-nav-frame.html
-7. 04-pages/overview.md
-8. 对应页面规范，例如 04-pages/list-page.md
-9. docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-10. docs/component-style-library/component_style_library_index.md
-11. 06-vue-code/component-dom-extraction-rules.md
-12. 06-vue-code/component-style-code-map.md
-13. 06-vue-code/business-component-reuse-rules.md
-14. 06-vue-code/component-style-import-rules.md
-15. 06-vue-code/component-reading-order-rules.md
-16. 06-vue-code/deprecated-class-blacklist.md
-17. 02-components/component-doc-boundary.md
-18. 02-components/overview.md
-19. 对应 02-components 组件语义文档
-20. 07-checklists/ai-output.md
+4. RULE-OWNERSHIP.md
+5. INDEX.md
+6. 06-vue-code/templates/README.md
+7. 06-vue-code/templates/common-single-nav.html 或 double-nav-frame.html
+8. 04-pages/overview.md
+9. 对应页面规范，例如 04-pages/list-page.md
+10. docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+11. docs/component-style-library/component_style_library_index.md
+12. 06-vue-code/component-dom-extraction-rules.md
+13. 06-vue-code/component-style-code-map.md
+14. 06-vue-code/business-component-reuse-rules.md
+15. 06-vue-code/component-style-import-rules.md
+16. 06-vue-code/component-reading-order-rules.md
+17. 06-vue-code/deprecated-class-blacklist.md
+18. 02-components/component-doc-boundary.md
+19. 02-components/overview.md
+20. 对应 02-components 组件语义文档
+21. 07-checklists/ai-output.md
 ```
 
 禁止先读取 `02-components` 后自行推导 HTML class 或组件 DOM。
@@ -165,6 +173,7 @@ HTML Demo 中基础组件必须来自组件样式库：
 - [SKILL.md](./SKILL.md)
 - [INDEX.md](./INDEX.md)
 - [DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)
+- [RULE-OWNERSHIP.md](./RULE-OWNERSHIP.md)
 
 ### 7.1 基础规范
 
@@ -255,6 +264,7 @@ HTML Demo 中基础组件必须来自组件样式库：
 
 - 不要一次性读取所有文件。
 - 任何 B 端页面生成、优化、检查、HTML Demo 或 Vue 工程代码任务，默认先读取 [ROLE.md](./ROLE.md)、[SKILL.md](./SKILL.md)、[DOCS-STRUCTURE.md](./DOCS-STRUCTURE.md)。
+- 修改、合并或删除规则前，先读取 [RULE-OWNERSHIP.md](./RULE-OWNERSHIP.md)，避免同一规则在多个文件中重复维护。
 - 基于本套 GitHub / 本仓库规范生成任何后台页面、HTML demo、Vue 页面、页面截图或高保真界面时，默认必须优先读取并完整套用 [06-vue-code/templates/common-single-nav.html](./06-vue-code/templates/common-single-nav.html)。
 - 生成可演示页面、demo、可点击预览时，必须读取组件样式库、组件 DOM 抽取、组件映射、业务组件复用、组件 CSS 注入、读取顺序规则和旧 class 黑名单，不能只读取 02 组件文档。
 - 涉及组件语义、使用场景、状态要求时，读取 [02-components/component-doc-boundary.md](./02-components/component-doc-boundary.md) 与对应 02 组件文档。
