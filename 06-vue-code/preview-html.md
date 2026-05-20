@@ -1,7 +1,7 @@
 # HTML 可演示页面规范
 ## Preview HTML Demo Rules
 
-Keywords: preview html, clickable demo, html demo, frontend preview, backend page, single navigation frame, double navigation frame
+Keywords: preview html, clickable demo, html demo, frontend preview, backend page, single navigation frame, double navigation frame, business component reuse
 
 本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证。
 
@@ -142,7 +142,48 @@ mock 数据
 框架 CSS 类名和 JS 交互逻辑
 ```
 
-## 6. 文件要求
+## 6. 业务组件复用硬约束
+
+HTML demo 不能只继承框架外壳。页面内容区内的业务组件也必须继承基础组件 class。
+
+生成 HTML demo 时必须读取并执行：
+
+```text
+06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
+```
+
+核心原则：
+
+```text
+框架母版必须继承，业务组件 class 也必须继承。
+```
+
+业务组件必须采用“基础组件 class + 业务修饰 class”的组合方式：
+
+```html
+<button class="btn btn-primary threat-action-btn">批量处置</button>
+<input class="form-input search-input threat-search-input" />
+<table class="data-table threat-alert-table"></table>
+<span class="tag tag-status status-danger">高危</span>
+<div class="pagination table-pagination"></div>
+```
+
+禁止只使用页面私有组件 class：
+
+```html
+<button class="alert-button">批量处置</button>
+<input class="alert-input" />
+<table class="alert-table"></table>
+<span class="alert-status-tag">高危</span>
+<div class="alert-pagination"></div>
+```
+
+页面私有 class 只能用于外层命名空间、布局钩子、业务状态修饰或局部间距，不得替代 `.btn`、`.form-input`、`.select`、`.data-table`、`.tag`、`.tag-status`、`.pagination`、`.alert`、`.drawer`、`.modal`、`.toast` 等基础组件 class。
+
+如果发现业务区出现 `.alert-button`、`.alert-table`、`.alert-input`、`.xxx-btn`、`.xxx-table`、`.xxx-pagination` 等同义私有组件样式，必须先改回基础组件 class 后再交付。
+
+## 7. 文件要求
 
 HTML 可演示页面必须满足：
 
@@ -154,12 +195,13 @@ HTML 可演示页面必须满足：
 - 支持基础点击交互。
 - 必须完整实现所调用的固定框架母版。
 - 业务内容只能写入母版指定的业务内容区。
+- 业务组件必须复用基础 HTML 组件 class，不能另写一套私有组件样式。
 - 视觉风格应接近正式 Ant Design Vue 页面。
 - 体现品牌色、Token、组件尺寸、交互状态和反馈规则。
 - 使用规范指定的 iconfont Font Class，不用字符、emoji 或 CSS 自造图标。
 - 必须继承字体渲染基线，避免伪粗体、伪斜体和浏览器字体合成。
 
-## 7. 基础交互要求
+## 8. 基础交互要求
 
 | 页面类型 | HTML 预览交互 |
 |---|---|
@@ -171,11 +213,12 @@ HTML 可演示页面必须满足：
 | 异常页 | 刷新重试、返回首页、申请权限等可恢复操作 |
 | AI 原生页面 | 执行中、生成结果、编辑结果、重新生成、应用结果、查看依据 |
 
-## 8. 样式要求
+## 9. 样式要求
 
 - 基于本套 GitHub 生成页面时，默认调用 `06-vue-code/templates/common-single-nav.html`，不得临时拼装导航框架。
 - 明确指定“基于单层导航框架 / 单层顶部导航 / 单层导航页面”时，必须调用 `06-vue-code/templates/common-single-nav.html`。
 - 明确指定“基于双层导航框架 / 双层顶部导航 / 双层导航页面”时，必须调用 `06-vue-code/templates/double-nav-frame.html`。
+- 必须读取并执行 `06-vue-code/business-component-reuse-rules.md`。
 - 必须继承字体渲染规则：`font-synthesis: none`、`font-synthesis-weight: none`、`font-synthesis-style: none`、`-webkit-font-smoothing: antialiased`、`-moz-osx-font-smoothing: grayscale`。
 - 使用浅灰页面背景和白色内容卡片。
 - 使用 `p6 #00AB7A` 作为品牌主色。
@@ -183,12 +226,31 @@ HTML 可演示页面必须满足：
 - 输入框 focus 使用 p6 边框和 p1 外发光。
 - 普通业务按钮不能误用 AI 渐变。
 - 保持 4px 间距基准。
-- 表格、表单、按钮、标签样式与规范一致。
+- 表格、表单、按钮、标签样式与规范一致，并复用基础组件 class。
 - 不使用过强装饰、营销视觉或夸张动效。
 - 不新增平台框架规范外的游离色值。
 - 表格、列表、表单、按钮、输入框、抽屉、提示说明等高密度文本区域不得出现伪粗体。
 
-## 9. 与 Vue 代码的关系
+## 10. 输出前自检
+
+输出 HTML demo 前必须检查：
+
+- 是否完整复制对应 HTML 母版。
+- 是否保留母版 DOM、CSS、JS、iconfont、hover、active、open、collapsed 和响应式规则。
+- 业务内容是否只进入母版业务内容区。
+- 是否读取 `06-vue-code/component-style-code-map.md`。
+- 是否读取 `06-vue-code/business-component-reuse-rules.md`。
+- Button 是否使用 `.btn` 系列基础 class。
+- Input / Search 是否使用 `.form-input` / `.search-input`。
+- Select 是否使用 `.select` 系列基础 class。
+- Table 是否使用 `.data-table`。
+- Tag / 状态标签是否使用 `.tag` / `.tag-status`。
+- Pagination 是否使用 `.pagination`。
+- Alert / Drawer / Modal / Toast 是否使用 `.alert` / `.drawer` / `.modal` / `.toast`。
+- 是否存在 `.alert-button`、`.alert-table`、`.alert-input`、`.xxx-btn`、`.xxx-table`、`.xxx-pagination` 等同义私有组件样式。
+- 页面私有 class 是否只是追加修饰，而不是替代基础组件 class。
+
+## 11. 与 Vue 代码的关系
 
 HTML 可演示页面用于快速查看和调整界面。
 
@@ -201,4 +263,4 @@ Vue 代码
 接入项目
 ```
 
-如果同时输出 Vue 和 HTML，两者应在页面结构、字段、状态、文案和主要视觉风格上保持一致；固定框架和字体渲染规则必须保持一致。
+如果同时输出 Vue 和 HTML，两者应在页面结构、字段、状态、文案和主要视觉风格上保持一致；固定框架、业务组件 class 复用和字体渲染规则必须保持一致。
