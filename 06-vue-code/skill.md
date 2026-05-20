@@ -46,22 +46,29 @@ HTML 文件必须能直接打开，支持基础点击交互，不依赖构建工
 
 ### 2.2 生成 Vue 代码 / 工程代码
 
-当用户明确要求生成 Vue 代码、前端代码、工程代码、接入项目或 Vue3 + TypeScript + Ant Design Vue 页面时，输出：
+当用户明确要求生成 Vue 代码、前端代码、工程代码、接入项目或 Vue3 + TypeScript + Ant Design Vue 页面时，输出 Vue 3 + TypeScript + Ant Design Vue 页面代码；如用户未排除，可补充可直接打开预览的 HTML 文件。
+
+## 3. HTML Demo 最高优先级
+
+生成 HTML Demo 时，CSS 注入是硬门槛，优先级高于“使用 .ant-* class”。
 
 ```text
-1. Vue 3 + TypeScript + Ant Design Vue 页面代码
-2. 如用户未排除，补充可直接打开预览的 HTML 文件
+没有对应组件 CSS，就不允许使用对应 .ant-* class。
+没有完成组件 CSS 注入校验，就不允许输出最终 HTML。
 ```
 
-HTML 文件用于设计预览和快速调整，不替代正式 Vue 工程代码。
+必须先完成：
 
-## 3. 判断原则
-
-- “演示、demo、预览、可点击、高保真演示环境”默认走 HTML 预览。
-- “代码、工程、Vue、组件、接入项目、TypeScript”默认走 Vue 代码 + HTML 预览。
-- 用户明确只要 HTML 时，不输出 Vue。
-- 用户明确只要 Vue 时，可以不输出 HTML。
-- 不得因为存在 Vue 技术栈，就跳过 HTML Demo 的组件样式验证。
+```text
+完整复制框架母版
+→ 读取组件样式库
+→ 确认业务组件清单
+→ 注入对应组件 CSS
+→ 生成业务组件 DOM
+→ 追加页面业务 CSS
+→ 黑名单校验
+→ 输出验收
+```
 
 ## 4. HTML Demo 必读文件
 
@@ -83,13 +90,14 @@ docs/component-style-library/component_style_library_index.md
 06-vue-code/business-component-reuse-rules.md
 06-vue-code/component-style-import-rules.md
 06-vue-code/component-reading-order-rules.md
+06-vue-code/deprecated-class-blacklist.md
 02-components/component-doc-boundary.md
 02-components/overview.md
 对应 02-components 组件语义文档
 07-checklists/ai-output.md
 ```
 
-禁止只读取 `02-components/` 后自行推导 HTML class。
+禁止只读取 `02-components/` 后自行推导 HTML class。禁止只复制框架母版 CSS，却在业务区直接写 `.ant-*` class。
 
 ## 5. Vue 工程代码必读文件
 
@@ -105,6 +113,7 @@ INDEX.md
 06-vue-code/antdv-adapter.md
 06-vue-code/business-component-reuse-rules.md
 06-vue-code/component-reading-order-rules.md
+06-vue-code/deprecated-class-blacklist.md
 02-components/component-doc-boundary.md
 对应 02-components 组件语义文档
 07-checklists/frontend-acceptance.md
@@ -136,22 +145,10 @@ HTML Demo 不强制真实引入 Ant Design Vue，但必须模拟 Ant Design Vue 
 .toast
 ```
 
-禁止使用旧别名或私有组件 class：
+旧别名 class 和页面私有组件 class 统一按以下文件检查：
 
 ```text
-.btn
-.btn-primary
-.form-input
-.search-input
-.select
-.data-table
-.tag
-.tag-status
-.status-tag
-.pagination
-alert-button
-alert-table
-alert-input
+06-vue-code/deprecated-class-blacklist.md
 ```
 
 业务 class 只能追加修饰：
@@ -212,13 +209,15 @@ HTML Demo 输出前必须检查：
 - 是否读取 `business-component-reuse-rules.md`。
 - 是否读取 `component-style-import-rules.md`。
 - 是否读取 `component-reading-order-rules.md`。
+- 是否读取 `deprecated-class-blacklist.md`。
 - 是否读取 `02-components/component-doc-boundary.md`。
 - 业务组件是否使用真实 `.ant-*` class。
 - 最终 HTML 中使用的 `.ant-*` class 是否有对应 CSS。
-- 是否存在 `.btn`、`.form-input`、`.data-table`、`.tag-status`、`.pagination` 等旧别名基础 class。
-- 是否存在 `.alert-button`、`.alert-table`、`.alert-input` 等私有重造组件样式。
+- 最终 HTML 是否没有命中 `deprecated-class-blacklist.md` 中的黑名单 class。
 - 页面业务 CSS 是否只做局部修饰，没有重写基础组件。
 - 是否包含 loading、empty、error、success、confirm 等必要状态。
+
+只要 CSS 注入检查或黑名单检查不通过，禁止交付最终 HTML。
 
 ## 10. 冲突优先级
 
@@ -231,7 +230,8 @@ HTML Demo 输出前必须检查：
 4. 业务组件复用：以 06-vue-code/business-component-reuse-rules.md 为准。
 5. 组件 CSS 注入：以 06-vue-code/component-style-import-rules.md 为准。
 6. 组件读取顺序：以 06-vue-code/component-reading-order-rules.md 为准。
-7. 组件语义和状态：以 02-components/*.md 为准。
-8. 页面结构：以 04-pages/*.md 为准。
-9. 输出验收：以 07-checklists/*.md 为准。
+7. 旧 class 黑名单：以 06-vue-code/deprecated-class-blacklist.md 为准。
+8. 组件语义和状态：以 02-components/*.md 为准。
+9. 页面结构：以 04-pages/*.md 为准。
+10. 输出验收：以 07-checklists/*.md 为准。
 ```
