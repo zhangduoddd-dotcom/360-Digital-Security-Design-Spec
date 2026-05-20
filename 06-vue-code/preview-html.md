@@ -1,7 +1,7 @@
 # HTML 可演示页面规范
 ## Preview HTML Demo Rules
 
-Keywords: preview html, clickable demo, html demo, frontend preview, backend page, single navigation frame, double navigation frame, business component reuse
+Keywords: preview html, clickable demo, html demo, frontend preview, backend page, single navigation frame, double navigation frame, business component reuse, ant class
 
 本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证。
 
@@ -144,11 +144,13 @@ mock 数据
 
 ## 6. 业务组件复用硬约束
 
-HTML demo 不能只继承框架外壳。页面内容区内的业务组件也必须继承基础组件 class。
+HTML demo 不能只继承框架外壳。页面内容区内的业务组件也必须继承组件样式库中真实可生效的 Ant 风格基础组件 class。
 
 生成 HTML demo 时必须读取并执行：
 
 ```text
+docs/component-style-library/component_style_library_index.md
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 06-vue-code/component-style-code-map.md
 06-vue-code/business-component-reuse-rules.md
 ```
@@ -156,20 +158,28 @@ HTML demo 不能只继承框架外壳。页面内容区内的业务组件也必�
 核心原则：
 
 ```text
-框架母版必须继承，业务组件 class 也必须继承。
+框架母版必须继承，业务组件必须继承真实可生效的 .ant-* 基础 class。
 ```
 
-业务组件必须采用“基础组件 class + 业务修饰 class”的组合方式：
+业务组件必须采用“真实基础 class + 业务修饰 class”的组合方式：
 
 ```html
-<button class="btn btn-primary threat-action-btn">批量处置</button>
-<input class="form-input search-input threat-search-input" />
-<table class="data-table threat-alert-table"></table>
-<span class="tag tag-status status-danger">高危</span>
-<div class="pagination table-pagination"></div>
+<button class="ant-btn ant-btn-primary threat-action-btn">批量处置</button>
+<div class="ant-input-affix-wrapper threat-search-input">
+  <i class="iconfont icon-a-sousuofangdajing"></i>
+  <input class="ant-input" placeholder="搜索告警名称 / IP" />
+</div>
+<div class="ant-select asset-filter-select">
+  <div class="ant-select-selector">全部状态</div>
+</div>
+<div class="ant-table-wrapper threat-alert-table">
+  <table class="ant-table ant-table-compact"></table>
+</div>
+<span class="ant-tag ant-tag-error risk-high">高危</span>
+<div class="ant-pagination table-pagination"></div>
 ```
 
-禁止只使用页面私有组件 class：
+禁止只使用页面私有组件 class 或旧别名 class：
 
 ```html
 <button class="alert-button">批量处置</button>
@@ -179,9 +189,9 @@ HTML demo 不能只继承框架外壳。页面内容区内的业务组件也必�
 <div class="alert-pagination"></div>
 ```
 
-页面私有 class 只能用于外层命名空间、布局钩子、业务状态修饰或局部间距，不得替代 `.btn`、`.form-input`、`.select`、`.data-table`、`.tag`、`.tag-status`、`.pagination`、`.alert`、`.drawer`、`.modal`、`.toast` 等基础组件 class。
+页面私有 class 只能用于外层命名空间、布局钩子、业务状态修饰或局部间距，不得替代 `.ant-btn`、`.ant-input`、`.ant-select`、`.ant-table`、`.ant-tag`、`.ant-pagination`、`.toast` 等真实基础组件 class。
 
-如果发现业务区出现 `.alert-button`、`.alert-table`、`.alert-input`、`.xxx-btn`、`.xxx-table`、`.xxx-pagination` 等同义私有组件样式，必须先改回基础组件 class 后再交付。
+如果发现业务区出现 `.alert-button`、`.alert-table`、`.alert-input`、`.xxx-btn`、`.xxx-table`、`.xxx-pagination`，或错误使用 `.btn`、`.form-input`、`.data-table`、`.tag-status`、`.status-tag`、`.pagination` 等旧别名 class，必须先改回真实 `.ant-*` 基础 class 后再交付。
 
 ## 7. 文件要求
 
@@ -195,7 +205,7 @@ HTML 可演示页面必须满足：
 - 支持基础点击交互。
 - 必须完整实现所调用的固定框架母版。
 - 业务内容只能写入母版指定的业务内容区。
-- 业务组件必须复用基础 HTML 组件 class，不能另写一套私有组件样式。
+- 业务组件必须复用组件样式库中的真实基础 class，不能另写一套私有组件样式。
 - 视觉风格应接近正式 Ant Design Vue 页面。
 - 体现品牌色、Token、组件尺寸、交互状态和反馈规则。
 - 使用规范指定的 iconfont Font Class，不用字符、emoji 或 CSS 自造图标。
@@ -218,7 +228,7 @@ HTML 可演示页面必须满足：
 - 基于本套 GitHub 生成页面时，默认调用 `06-vue-code/templates/common-single-nav.html`，不得临时拼装导航框架。
 - 明确指定“基于单层导航框架 / 单层顶部导航 / 单层导航页面”时，必须调用 `06-vue-code/templates/common-single-nav.html`。
 - 明确指定“基于双层导航框架 / 双层顶部导航 / 双层导航页面”时，必须调用 `06-vue-code/templates/double-nav-frame.html`。
-- 必须读取并执行 `06-vue-code/business-component-reuse-rules.md`。
+- 必须读取并执行 `docs/component-style-library/backend_ai_ui_component_kit_with_index.html` 与 `06-vue-code/business-component-reuse-rules.md`。
 - 必须继承字体渲染规则：`font-synthesis: none`、`font-synthesis-weight: none`、`font-synthesis-style: none`、`-webkit-font-smoothing: antialiased`、`-moz-osx-font-smoothing: grayscale`。
 - 使用浅灰页面背景和白色内容卡片。
 - 使用 `p6 #00AB7A` 作为品牌主色。
@@ -226,7 +236,7 @@ HTML 可演示页面必须满足：
 - 输入框 focus 使用 p6 边框和 p1 外发光。
 - 普通业务按钮不能误用 AI 渐变。
 - 保持 4px 间距基准。
-- 表格、表单、按钮、标签样式与规范一致，并复用基础组件 class。
+- 表格、表单、按钮、标签样式与规范一致，并复用真实基础组件 class。
 - 不使用过强装饰、营销视觉或夸张动效。
 - 不新增平台框架规范外的游离色值。
 - 表格、列表、表单、按钮、输入框、抽屉、提示说明等高密度文本区域不得出现伪粗体。
@@ -238,16 +248,18 @@ HTML 可演示页面必须满足：
 - 是否完整复制对应 HTML 母版。
 - 是否保留母版 DOM、CSS、JS、iconfont、hover、active、open、collapsed 和响应式规则。
 - 业务内容是否只进入母版业务内容区。
+- 是否读取 `docs/component-style-library/backend_ai_ui_component_kit_with_index.html`。
 - 是否读取 `06-vue-code/component-style-code-map.md`。
 - 是否读取 `06-vue-code/business-component-reuse-rules.md`。
-- Button 是否使用 `.btn` 系列基础 class。
-- Input / Search 是否使用 `.form-input` / `.search-input`。
-- Select 是否使用 `.select` 系列基础 class。
-- Table 是否使用 `.data-table`。
-- Tag / 状态标签是否使用 `.tag` / `.tag-status`。
-- Pagination 是否使用 `.pagination`。
-- Alert / Drawer / Modal / Toast 是否使用 `.alert` / `.drawer` / `.modal` / `.toast`。
+- Button 是否使用 `.ant-btn` 系列真实基础 class。
+- Input / Search 是否使用 `.ant-input` / `.ant-input-affix-wrapper`。
+- Select 是否使用 `.ant-select` 系列真实基础 class。
+- Table 是否使用 `.ant-table-wrapper` + `.ant-table`。
+- Tag / 状态标签是否使用 `.ant-tag` 与 `.ant-tag-success` / `.ant-tag-warning` / `.ant-tag-error` 等语义 class。
+- Pagination 是否使用 `.ant-pagination`。
+- Toast 是否使用 `.toast-holder` / `.toast`。
 - 是否存在 `.alert-button`、`.alert-table`、`.alert-input`、`.xxx-btn`、`.xxx-table`、`.xxx-pagination` 等同义私有组件样式。
+- 是否错误使用 `.btn`、`.form-input`、`.data-table`、`.tag-status`、`.status-tag`、`.pagination` 等旧别名 class。
 - 页面私有 class 是否只是追加修饰，而不是替代基础组件 class。
 
 ## 11. 与 Vue 代码的关系
