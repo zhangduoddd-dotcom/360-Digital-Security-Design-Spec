@@ -235,3 +235,31 @@ HTML Demo 输出前必须检查：
 9. 页面结构：以 04-pages/*.md 为准。
 10. 输出验收：以 07-checklists/*.md 为准。
 ```
+
+## 11. 交互规范落地硬约束
+
+HTML Demo 和 Vue 页面代码都必须落实已读取的交互规范。
+
+生成页面前，必须把页面类型对应的 `03-interaction/*` 文档转换为当前页面内部验收清单。
+生成页面后，必须逐项自检该验收清单。
+任一当前页面适用的硬性项未实现时，视为生成失败，必须补齐后再交付。
+
+对于列表页，至少必须把以下文档转为验收清单：
+
+```text
+03-interaction/list-search.md
+03-interaction/list-table.md
+06-vue-code/list-page-interaction-enforcement.md
+07-checklists/frontend-acceptance.md
+```
+
+列表页不得只实现“搜索 + 表格 + 分页”的粗结构。
+排序、筛选、固定列、勾选联动、禁用 Tooltip、loading、empty、confirm、Toast 等均属于必须落地的交互能力。
+
+输出前还必须检查：
+
+- 是否把已读取的 `03-interaction/*` 交互规范转换为当前页面内部验收清单。
+- 列表页是否通过 `list-search.md`、`list-table.md`、`list-page-interaction-enforcement.md` 和 `frontend-acceptance.md` 的逐项验收。
+- HTML Demo 是否没有降级省略排序、筛选、固定列、分页、loading、empty、confirm、Toast 等交互。
+
+只要当前页面适用的交互验收项未落地，禁止交付最终 HTML 或 Vue 页面代码。
