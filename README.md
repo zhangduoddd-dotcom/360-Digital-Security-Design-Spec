@@ -38,6 +38,7 @@ Backend-Design-Standards/
 - AI 按任务读取少量文档，但首次生成必须先读取固定框架、页面类型、组件样式库、组件映射和验收清单。
 - demo / 预览 / 可点击页面默认只输出 HTML；明确要求 Vue / 前端代码 / 工程接入时输出 Vue 代码，并可同时提供 HTML 预览。
 - HTML Demo 必须完整继承框架母版，业务组件必须使用组件样式库真实 `.ant-*` class，并注入对应组件 CSS。
+- 列表页不得只实现“搜索区 + 表格 + 分页”的粗结构；读取搜索区、表格区交互文档后，必须按 `06-vue-code/list-page-interaction-enforcement.md` 和 `07-checklists/frontend-acceptance.md` 逐项落地验收。
 - `02-components/` 只作为组件语义、状态和交互规则来源，不作为 HTML Demo 的真实 class / CSS 来源。
 
 ## 4. 常用读取路径
@@ -59,6 +60,15 @@ SKILL.md
 → 06-vue-code/deprecated-class-blacklist.md
 → 02-components/component-doc-boundary.md
 → 07-checklists/ai-output.md
+```
+
+生成列表页 HTML Demo / Vue 页面时额外读取：
+
+```text
+03-interaction/list-search.md
+→ 03-interaction/list-table.md
+→ 06-vue-code/list-page-interaction-enforcement.md
+→ 07-checklists/frontend-acceptance.md
 ```
 
 生成 Vue 页面代码：
