@@ -16,7 +16,7 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 标准列表页应遵循：
 
 ```text
-固定 ReturnHeader 页面标题
+母版页头页面标题
 → 查询区 / 高级筛选区
 → 工具栏 / 批量操作区 / 右侧功能按钮
 → 表格主体
@@ -26,7 +26,7 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 复杂列表页可扩展为：
 
 ```text
-固定 ReturnHeader 页面标题
+母版页头页面标题
 → 页面内容区顶部标签页
 → 查询区
 → 左侧分类筛选栏 + 右侧结果表格
@@ -36,8 +36,8 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 
 通用规则：
 
-- 列表页不得在 `.platform-page-content` 内重新生成面包屑或额外顶层页头。
-- 页面标题由固定 ReturnHeader 承载，业务模块标题只能出现在内容区内部。
+- 列表页不得在母版业务内容区内重新生成面包屑或额外顶层页头。
+- 页面标题由母版页头承载，业务模块标题只能出现在内容区内部。
 - 页面背景使用浅灰，主体卡片使用白色。
 - 查询区、工具栏、表格区、分页区应分层清楚。
 - 表格始终是列表页的核心主体。
