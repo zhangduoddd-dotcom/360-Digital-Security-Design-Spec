@@ -8,8 +8,8 @@ Keywords: ai output, checklist, html demo, backend, component dom extraction, co
 ## 1. 结构完整性
 
 - [ ] 页面类型明确。
-- [ ] 已使用固定平台框架。
-- [ ] 顶部通用导航、左侧菜单、可返回页头、页面内容区完整。
+- [ ] 已按 `06-vue-code/templates/README.md` 选择并继承固定 HTML 母版。
+- [ ] 顶部通用导航、左侧菜单、母版页头、母版业务内容区完整。
 - [ ] 业务内容只出现在母版指定业务内容区内。
 - [ ] 未改动固定框架的高度、宽度、颜色、icon、收起态和级联浮层。
 - [ ] 核心业务模块完整出现。
@@ -20,7 +20,7 @@ Keywords: ai output, checklist, html demo, backend, component dom extraction, co
 - [ ] 默认后台页面使用 `06-vue-code/templates/common-single-nav.html`，除非用户明确指定双层导航或自定义导航。
 - [ ] 用户明确指定双层导航时，才使用 `06-vue-code/templates/double-nav-frame.html`。
 - [ ] 完整保留母版 DOM、CSS、JS、iconfont、hover、active、open、collapsed 和响应式规则。
-- [ ] 业务内容区内没有重新生成面包屑或额外顶层页头。
+- [ ] 母版业务内容区内没有重新生成面包屑或额外顶层页头。
 - [ ] 左侧菜单展开态和收起态来自同一份菜单数据。
 - [ ] 收起态菜单支持逐层级联浮层，而不是把二级 / 三级堆在一个浮层。
 
@@ -47,7 +47,7 @@ Keywords: ai output, checklist, html demo, backend, component dom extraction, co
 
 - [ ] 包含对象摘要、对象状态、关键识别信息。
 - [ ] 包含基础信息、关联信息、操作记录或关联列表。
-- [ ] 对象名称、状态标签和业务操作在内容区内表达，不替代固定 ReturnHeader。
+- [ ] 对象名称、状态标签和业务操作在内容区内表达，不替代母版页头。
 - [ ] 支持标签页切换、展开收起、抽屉 / 弹窗查看或操作反馈中的必要项。
 
 ### 3.4 工作台 / Dashboard
@@ -110,6 +110,6 @@ Keywords: ai output, checklist, html demo, backend, component dom extraction, co
 
 ## 6. 修正顺序
 
-按以下顺序修正：固定框架、组件 DOM 抽取、组件 CSS 注入、Token 同步、旧 class 黑名单、页面类型、模块结构、业务字段、组件语义、交互状态、Token 与字体、视觉风格。
+按以下顺序修正：固定 HTML 母版、组件 DOM 抽取、组件 CSS 注入、Token 同步、旧 class 黑名单、页面类型、模块结构、业务字段、组件语义、交互状态、Token 与字体、视觉风格。
 
 只要组件 DOM / CSS / Token 成对抽取或旧 class 黑名单检查不通过，禁止交付最终 HTML。
