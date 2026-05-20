@@ -1,9 +1,24 @@
 # 分页规范
 ## Pagination Rules
 
-Keywords: pagination, page size, total count, jump page, table
+Keywords: pagination, page size, total count, jump page, table, semantic component rules
 
 本文迁移自上传包 `references/component-styles/pagination.txt`，用于约束列表、表格和结果页中的分页组件。
+
+## 0. 使用边界
+
+本文只定义分页的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 class / CSS 来源。
+
+HTML Demo 中分页真实 class 与 CSS 必须以以下文件为准：
+
+```text
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
+06-vue-code/component-style-import-rules.md
+```
+
+如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-pagination`、`.ant-pagination-item`、`.ant-pagination-item-active`、`.ant-pagination-prev`、`.ant-pagination-next`、`.ant-pagination-options` 等真实 class 为准。禁止根据本文自行生成 `.pagination`、`.alert-pagination` 等旧别名或私有分页 class。
 
 ## 1. 使用场景
 
@@ -50,4 +65,6 @@ Default / Hover / Active Page / Disabled / Page Size Change / Jump Page
 
 ## 6. Vue / HTML 生成要求
 
-Vue 使用 `a-pagination`。HTML 预览需要模拟页码切换、每页条数切换、上一页下一页、跳页和禁用态。
+Vue 使用 `a-pagination`。
+
+HTML 预览需要模拟页码切换、每页条数切换、上一页下一页、跳页和禁用态。HTML 预览的分页 DOM 必须使用组件样式库真实 `.ant-pagination` 体系，并确保最终 HTML 已注入对应 `.ant-pagination` CSS。
