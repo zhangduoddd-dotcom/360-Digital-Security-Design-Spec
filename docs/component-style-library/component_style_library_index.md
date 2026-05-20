@@ -1,21 +1,22 @@
 # 组件基础样式库索引说明
 
-> 本索引根据上传的完整 HTML 文件 `backend_ai_ui_component_kit_integrated(1).html` 自动提取生成。HTML 文件本身应作为可运行 Demo 原文保留，不压缩、不重写、不裁剪；本索引用于规范文档阅读、AI 检索和研发落地引用。
+> 本索引根据主分支中的完整 HTML Demo `backend_ai_ui_component_kit_with_index.html` 维护。HTML 文件本身应作为可运行 Demo 保留，不压缩、不重写、不裁剪；本索引用于规范文档阅读、AI 检索和研发落地引用。
 
 ## 1. 源文件信息
 
 - 页面标题：`360组件样式`
-- HTML 字节大小：`79847` bytes
-- SHA-256：`f7395b3f6a2af832b4ebbe2449b07f560b4f49b25782660cb20dc7a6ba69b707`
-- Git Blob SHA：`5f127286d16054693789320051107b2faa158d23`
-- 外部图标样式：`https://at.alicdn.com/t/c/font_5177816_bhdsh3zh4q.css`
-- CSS Token 数量：43 个
+- HTML 字节大小：以 GitHub 当前文件为准
+- SHA-256：已因 iconfont 与 Token 最小修复发生变化；后续如需严格校验，应重新计算当前 HTML 的 SHA-256
+- Git Blob SHA：`1a5004f327c2c32e3a436ef9687254943beadc4e`
+- 图标字体来源：内联 `@font-face`，使用 iconfont 项目 `5177816` 的 `font_5177816_df7h6mjlznn`
+- CSS Token 数量：44 个
 - 组件章节数量：11 个
 - 内联交互脚本长度：6582 字符
+- 最近最小修复：移除旧 `font_5177816_bhdsh3zh4q.css` 外链，统一最新 iconfont；补充 `--text-tertiary: #AEB2B8;`
 
 ## 2. 合并原则
 
-- 主分支中的 HTML 文件必须使用上传文件原文覆盖。
+- 主分支中的 HTML 文件必须作为完整可运行 Demo 维护。
 - 不允许为了整理索引而重写、压缩、删减 HTML。
 - 索引说明单独维护为 Markdown 文件，避免破坏 HTML Demo。
 - 后续如需补充规范，应优先更新 Markdown 索引或另建扩展文档，不直接修改该基准 HTML。
@@ -81,6 +82,7 @@
 - `--text-title`：`#242933`
 - `--text-body`：`#525966`
 - `--text-secondary`：`#8A9099`
+- `--text-tertiary`：`#AEB2B8`
 - `--text-disabled`：`#AEB2B8`
 - `--text-inverse`：`#FFFFFF`
 - `--text-inverse-secondary`：`#D3D4D6`
@@ -148,7 +150,7 @@
 - 表格必须覆盖 selected / disabled / hover / loading / empty / error 状态。
 - 标签必须保留文字，不允许只用颜色或图标表达状态。
 - Tooltip 只用于短说明，不承载复杂内容。
-- 图标统一走 iconfont，不允许混用 emoji 或其他图标库。
+- 图标统一使用 iconfont 项目 `5177816`，当前 HTML Demo 使用内联 `@font-face` 指向 `font_5177816_df7h6mjlznn`。
 - 页面结构优先使用：顶部导航 + 左侧导航 + 页面头 + 内容卡片。
 
 ## 10. 后续补齐建议
@@ -173,12 +175,12 @@
 
 ## 11. 验收清单
 
-- [ ] GitHub 中的 HTML 文件是否与上传源文件字节级一致。
 - [ ] HTML 是否未被压缩、改写、删减。
 - [ ] 是否保留 11 个组件章节。
-- [ ] 是否保留 43 个 CSS Token。
+- [ ] 是否保留 44 个 CSS Token。
 - [ ] 是否保留内联 `<script>` 交互。
-- [ ] 是否保留 iconfont 外链。
+- [ ] 是否统一使用 iconfont 项目 `5177816` 的 `font_5177816_df7h6mjlznn`。
+- [ ] 是否补充 `--text-tertiary: #AEB2B8;`。
 - [ ] 是否保留 Table 的常规 / 紧凑 / loading / empty / error 示例。
 - [ ] 是否保留 DatePicker、Select、Tabs、Checkbox、Pagination 的交互结构。
 - [ ] 是否保留 Toast 反馈触发入口。
