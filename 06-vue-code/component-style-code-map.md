@@ -12,6 +12,7 @@ AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还
 ## 2. 通用规则
 
 - 组件样式来源以 `02-components/` 为准。
+- `docs/component-style-library/` 提供可运行的组件样式 Demo 与状态覆盖参考，用于校验 HTML Demo 中组件视觉、交互状态和 Token 是否落地一致。
 - Vue 工程代码优先使用 Ant Design Vue 组件。
 - HTML Demo 可以不真实引入 Ant Design Vue，但结构、状态和视觉必须模拟正式 Vue 页面。
 - 样式优先调用 `01-foundation/tokens.md` 中的 Token。
@@ -145,6 +146,22 @@ AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还
 
 代码或 HTML Demo 必须包含核心指标、风险入口、趋势 / 分布 / 排行、待办任务、快捷入口和最近动态或处理建议。
 
+### 4.5 组件样式库校验
+
+检查或修正 HTML Demo 的组件样式、组件状态、控件高度、Token 使用、状态标签、分页器、表格状态、日期选择器、下拉选择器等内容时，必须补充读取：
+
+```text
+docs/component-style-library/component_style_library_index.md
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+```
+
+使用原则：
+
+- `02-components/` 负责定义组件设计原则与文字规范。
+- `06-vue-code/component-style-code-map.md` 负责把文字规范映射到 HTML / Vue 代码结构。
+- `docs/component-style-library/` 负责提供完整可运行 Demo，用于对照组件视觉、状态覆盖和样式细节。
+- 如果 Markdown 文字说明与可运行组件样式库 Demo 存在细节差异，应先记录差异；涉及页面框架时以 `06-vue-code/templates/` 母版为准，涉及组件状态细节时以组件样式库 Demo 为视觉参考。
+
 ## 5. Vue 代码生成规则
 
 生成 Vue 代码时，必须：
@@ -190,12 +207,15 @@ HTML Demo class 命名建议：
 .modal
 ```
 
+当生成内容涉及 Button、Tabs、Input、Select、Checkbox、Radio、Table、Tag、Tooltip、DatePicker、Pagination 等基础组件的细节样式时，应参考 `docs/component-style-library/` 中的完整 HTML Demo。该 Demo 用于校验视觉和状态，不替代 `06-vue-code/templates/` 页面框架母版。
+
 ## 7. 输出前自检
 
 生成完成后必须检查：
 
 - 是否使用了正确 Ant Design Vue 组件？
 - 是否读取了对应 `02-components` 组件规范？
+- 是否在涉及组件细节时读取了 `docs/component-style-library/` 的索引和 Demo？
 - 普通主色是否使用 `p6 #00AB7A`？
 - AI 渐变是否保持原 Token？
 - 是否存在用 div 伪造基础组件？
@@ -218,6 +238,7 @@ ROLE.md
 → 页面规范
 → 组件规范
 → 06-vue-code/component-style-code-map.md
+→ docs/component-style-library/component_style_library_index.md（涉及组件细节时）
 → 06-vue-code/antdv-adapter.md
 → 07-checklists/frontend-acceptance.md
 ```
