@@ -68,6 +68,21 @@ Keywords: ai output, checklist, ui generation, backend
 - [ ] icon 优先使用规范 SVG 或项目图标体系，未使用 emoji 或字符临时替代。
 - [ ] 字体渲染基线已包含 `font-synthesis: none` 和字体平滑规则。
 
+## 4.1 业务组件 class 复用专项
+
+- [ ] 已读取 `06-vue-code/component-style-code-map.md`。
+- [ ] 已读取 `06-vue-code/business-component-reuse-rules.md`。
+- [ ] 业务区 Button 使用 `.btn` / `.btn-primary` / `.btn-secondary` / `.btn-danger` 等基础 class，而不是页面私有按钮 class。
+- [ ] 业务区 Input / Search 使用 `.form-input` / `.search-input` 等基础 class。
+- [ ] 业务区 Select 使用 `.select` / `.select-panel` / `.select-option` 等基础 class。
+- [ ] 业务区 Table 使用 `.data-table` 基础 class。
+- [ ] 业务区 Tag / 状态标签使用 `.tag` / `.tag-status` 基础 class。
+- [ ] 业务区 Pagination 使用 `.pagination` 基础 class。
+- [ ] 业务区 Alert / Drawer / Modal / Toast 使用 `.alert` / `.drawer` / `.modal` / `.toast` 基础 class。
+- [ ] 页面业务 class 只作为外层命名空间、布局钩子或修饰类追加，没有替代基础组件 class。
+- [ ] 没有出现与基础组件同义的私有 class，例如 `.alert-button`、`.alert-table`、`.alert-input`、`.xxx-btn`、`.xxx-table`、`.xxx-pagination`。
+- [ ] 新增 CSS 只补充业务布局、列宽、局部间距或特殊语义状态，没有重写基础组件的高度、字号、圆角、边框、hover、active、disabled、loading 等核心状态。
+
 ## 5. 交互与状态专项
 
 - [ ] 包含 loading、empty、error、无权限、禁用、成功 / 失败反馈中的必要项。
@@ -80,4 +95,4 @@ Keywords: ai output, checklist, ui generation, backend
 
 ## 6. 修正顺序
 
-按以下顺序修正：固定框架、页面类型、模块结构、业务字段、组件清单、交互状态、Token 与字体、视觉风格、负向约束。
+按以下顺序修正：固定框架、业务组件 class 继承、页面类型、模块结构、业务字段、组件清单、交互状态、Token 与字体、视觉风格、负向约束。
