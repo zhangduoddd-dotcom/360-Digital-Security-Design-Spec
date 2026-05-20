@@ -9,6 +9,14 @@ Keywords: component mapping, ant design vue, html demo, css token, style impleme
 
 AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还必须读取本文完成组件到代码的映射。
 
+同时，生成 HTML Demo 时还必须读取：
+
+```text
+06-vue-code/business-component-reuse-rules.md
+```
+
+该文件用于约束业务区组件必须复用基础 HTML 组件 class，避免只继承框架外壳但在业务内容区重新写一套私有组件样式。
+
 ## 2. 通用规则
 
 - 组件样式来源以 `02-components/` 为准。
@@ -21,6 +29,7 @@ AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还
 - 不要用普通 div 模拟 Button、Table、Form、Select、Modal、Drawer 等成熟组件。
 - 不要散落大量 inline style。
 - 每个交互组件必须覆盖 default、hover、focus、disabled、loading、error 等必要状态。
+- 业务区组件必须采用“基础组件 class + 业务修饰 class”的组合方式，不得只使用页面私有 class 替代基础组件 class。
 
 ## 3. 组件映射总表
 
@@ -58,6 +67,7 @@ AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还
 02-components/button.md
 02-components/motion.md
 06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
 07-checklists/frontend-acceptance.md
 ```
 
@@ -90,6 +100,7 @@ AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还
 02-components/alert.md
 02-components/motion.md
 06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
 07-checklists/frontend-acceptance.md
 ```
 
@@ -117,6 +128,7 @@ AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还
 02-components/alert.md
 02-components/motion.md
 06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
 07-checklists/frontend-acceptance.md
 ```
 
@@ -141,6 +153,7 @@ AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还
 02-components/alert.md
 02-components/motion.md
 06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
 07-checklists/frontend-acceptance.md
 ```
 
@@ -153,12 +166,14 @@ AI 生成页面代码或 HTML Demo 时，不能只读取组件设计规范，还
 ```text
 docs/component-style-library/component_style_library_index.md
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/business-component-reuse-rules.md
 ```
 
 使用原则：
 
 - `02-components/` 负责定义组件设计原则与文字规范。
 - `06-vue-code/component-style-code-map.md` 负责把文字规范映射到 HTML / Vue 代码结构。
+- `06-vue-code/business-component-reuse-rules.md` 负责约束业务区组件必须复用基础组件 class，禁止用页面私有 class 重造基础组件。
 - `docs/component-style-library/` 负责提供完整可运行 Demo，用于对照组件视觉、状态覆盖和样式细节。
 - 如果 Markdown 文字说明与可运行组件样式库 Demo 存在细节差异，应先记录差异；涉及页面框架时以 `06-vue-code/templates/` 母版为准，涉及组件状态细节时以组件样式库 Demo 为视觉参考。
 
@@ -177,6 +192,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 - 包含 loading、empty、error、success、confirm 等状态。
 - 高风险操作使用 `Modal.confirm` 或 `Popconfirm`。
 - 表格使用 `rowKey`、`columns`、`dataSource`、`pagination`、`loading`。
+- 页面私有 class 只能作为业务模块命名空间或修饰 class，不能替代 Ant Design Vue 基础组件或 HTML Demo 基础组件 class。
 
 ## 6. HTML Demo 生成规则
 
@@ -190,24 +206,52 @@ HTML Demo 不强制真实引入 Ant Design Vue，但必须模拟：
 - mock 数据。
 - loading / empty / error。
 - 高风险确认操作。
+- 基础组件 class 继承。
 
-HTML Demo class 命名建议：
+HTML Demo class 命名必须优先使用：
 
 ```text
 .btn
 .btn-primary
+.btn-secondary
+.btn-danger
 .form-input
+.search-input
 .form-select
+.select
 .data-table
-.status-tag
+.tag
+.tag-status
 .pagination
 .alert
 .toast
-.drawer
+drawer
 .modal
 ```
 
-当生成内容涉及 Button、Tabs、Input、Select、Checkbox、Radio、Table、Tag、Tooltip、DatePicker、Pagination 等基础组件的细节样式时，应参考 `docs/component-style-library/` 中的完整 HTML Demo。该 Demo 用于校验视觉和状态，不替代 `06-vue-code/templates/` 页面框架母版。
+业务语义 class 只能追加，例如：
+
+```text
+.btn.btn-primary.threat-action-btn
+.data-table.threat-alert-table
+.tag.tag-status.status-danger
+.pagination.table-pagination
+```
+
+禁止只使用以下同义私有组件 class：
+
+```text
+.alert-button
+.alert-table
+.alert-input
+.alert-pagination
+.xxx-btn
+.xxx-table
+.xxx-tag
+.xxx-pagination
+```
+
+当生成内容涉及 Button、Tabs、Input、Select、Checkbox、Radio、Table、Tag、Tooltip、DatePicker、Pagination 等基础组件的细节样式时，应参考 `docs/component-style-library/` 中的完整 HTML Demo，并同时遵循 `06-vue-code/business-component-reuse-rules.md`。该 Demo 用于校验视觉和状态，不替代 `06-vue-code/templates/` 页面框架母版。
 
 ## 7. 输出前自检
 
@@ -216,9 +260,12 @@ HTML Demo class 命名建议：
 - 是否使用了正确 Ant Design Vue 组件？
 - 是否读取了对应 `02-components` 组件规范？
 - 是否在涉及组件细节时读取了 `docs/component-style-library/` 的索引和 Demo？
+- 是否读取并执行了 `06-vue-code/business-component-reuse-rules.md`？
 - 普通主色是否使用 `p6 #00AB7A`？
 - AI 渐变是否保持原 Token？
 - 是否存在用 div 伪造基础组件？
+- 是否存在只用页面私有 class 重造 Button、Input、Table、Tag、Pagination、Alert、Drawer、Modal？
+- 业务组件是否采用“基础组件 class + 业务修饰 class”的组合方式？
 - 是否覆盖 loading / empty / error？
 - 是否有 hover / focus / disabled？
 - 表格是否有分页、空状态、行操作？
@@ -238,6 +285,7 @@ ROLE.md
 → 页面规范
 → 组件规范
 → 06-vue-code/component-style-code-map.md
+→ 06-vue-code/business-component-reuse-rules.md
 → docs/component-style-library/component_style_library_index.md（涉及组件细节时）
 → 06-vue-code/antdv-adapter.md
 → 07-checklists/frontend-acceptance.md
