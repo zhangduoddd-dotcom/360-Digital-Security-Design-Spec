@@ -58,12 +58,13 @@ ROLE.md
 - 如需补充规范说明，优先修改 Markdown 文档。
 - 如需修复 HTML 内部 bug，只做最小修改，并在索引中记录原因。
 
-## 5. 当前已知注意点
+## 5. 当前已处理事项
 
-- 该 HTML 当前使用 iconfont 项目 `5177816` 的 `font_5177816_bhdsh3zh4q.css` 版本。
-- 全局图标规范 `02-components/icon.md` 当前使用 `font_5177816_df7h6mjlznn.css` 版本。
-- 两者同属 iconfont 项目 `5177816`，但在线 CSS 版本号不同。若后续需要统一，应先确认图标 class 与 unicode 是否完全兼容，再替换 HTML 外链。
-- HTML 中 DatePicker 后缀图标引用了 `--text-tertiary`。若直接修改 HTML，应补充 `--text-tertiary: #AEB2B8;`；若保持原文不动，应在后续版本中作为最小修复项处理。
+- HTML 已统一使用 iconfont 项目 `5177816` 的最新 `font_5177816_df7h6mjlznn` 字体文件。
+- HTML 已移除旧的 `font_5177816_bhdsh3zh4q.css` 外链。
+- HTML 已采用内联 `@font-face` 方式声明 iconfont，减少外链 CSS 版本不一致带来的影响。
+- HTML 已补充 `--text-tertiary: #AEB2B8;`，用于 DatePicker 后缀图标等弱层级文本 / 图标颜色。
+- 后续维护 HTML 时仍应遵循最小修改原则，不压缩、不重写、不裁剪已有组件章节、CSS、JS 或 mock 数据。
 
 ## 6. 验收清单
 
@@ -71,6 +72,7 @@ ROLE.md
 - [ ] Button / Tabs / Input / Select / Checkbox / Radio / Table / Tag / Tooltip / DatePicker / Pagination 是否完整保留。
 - [ ] CSS Token 是否未被批量重写。
 - [ ] JS 交互是否未被删除。
-- [ ] iconfont 版本是否有明确说明。
+- [ ] iconfont 是否统一使用 `font_5177816_df7h6mjlznn`。
+- [ ] `--text-tertiary` 是否存在并可用于弱层级图标 / 文本。
 - [ ] 索引说明是否与 HTML 实际内容一致。
 - [ ] AI 生成或检查任务是否能从本目录找到组件样式库入口。
