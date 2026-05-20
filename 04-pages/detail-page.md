@@ -113,11 +113,11 @@ Keywords: detail page, drawer detail, object detail, timeline, audit, backend, a
 
 ## 6. 独立详情页规范
 
-独立详情页适合承载完整业务对象的信息，通常由固定 ReturnHeader、对象摘要、分组模块、图表、表格和操作建议组成。
+独立详情页适合承载完整业务对象的信息，通常由母版页头、对象摘要、分组模块、图表、表格和操作建议组成。
 
 ```text
 顶部导航 / 侧边导航
-→ 固定 ReturnHeader 页面标题
+→ 母版页头页面标题
 → 对象摘要区
 → 标签页 / 锚点导航 / 分组导航
 → 详情内容区
@@ -132,7 +132,7 @@ Keywords: detail page, drawer detail, object detail, timeline, audit, backend, a
 
 ```text
 顶部导航 + 左侧导航
-→ 固定 ReturnHeader 页面标题
+→ 母版页头页面标题
 → 标题区：对象名称 + 状态标签 + 操作按钮
 → 摘要信息区
 → 风险行为时间轴
@@ -141,7 +141,7 @@ Keywords: detail page, drawer detail, object detail, timeline, audit, backend, a
 → 嵌套表格 / 关联记录
 ```
 
-详情页不得在 `.platform-page-content` 内重新生成面包屑或替代固定 ReturnHeader 的顶层页头；对象名称、状态标签和业务操作应作为内容区内的对象摘要或模块标题出现。
+详情页不得在母版业务内容区内重新生成面包屑或替代母版页头的顶层页头；对象名称、状态标签和业务操作应作为内容区内的对象摘要或模块标题出现。
 
 规则：
 
