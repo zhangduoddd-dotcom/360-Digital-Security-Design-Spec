@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>通用单层导航框架模板</title>
+  <title>单层导航框架模板</title>
   <style>
 
 /* ===== iconfont official font class from project 5177816 ===== */
 @font-face {
   font-family: "iconfont"; /* Project id 5177816 */
   src: url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff2?t=1779186015229') format('woff2'),
-     url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff?t=1779186015229') format('woff'),
-     url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.ttf?t=1779186015229') format('truetype');
+       url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff?t=1779186015229') format('woff'),
+       url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.ttf?t=1779186015229') format('truetype');
 }
 
 .iconfont {
@@ -3163,7 +3163,7 @@
 }
 
 .icon-a-quanjucaidan1:before {
-  content: "\e728";
+  content: "\eacc";
 }
 
 .icon-xiazai:before {
@@ -5530,12 +5530,473 @@
        常规接入只需要修改 FRAME_CONFIG、顶部 logo、.terminal-right-panel 页面内容。
        下面的 class hook 负责固定框架交互，建议保持稳定。 */
     :root {
+      /* 组件品牌与状态色 */
       --frame-brand-color: #039972;
+      --frame-brand-icon-color: #00AB7A;
       --frame-active-bg: #D9F4EE;
-      --frame-popover-z-index: 10000;
+      --frame-hover-bg: #F2F3F5;
+      --frame-card-bg: #FFFFFF;
+      --frame-border-color: #E8EAED;
+      --frame-text-title: #242933;
+      --frame-text-body: #525966;
+      --frame-text-muted: #8A9099;
+      --frame-top-muted: #AEB2B8;
+      --frame-top-white: #FFFFFF;
+      --frame-badge-bg: #F0131E;
+      --frame-shadow-layer: 0 8px 24px rgba(36, 41, 51, .14);
+
+      /* 全局框架硬约束 */
+      --frame-min-width: 1280px;
+      --frame-header-height: 56px;
+      --frame-header-z-index: 100;
+      --frame-header-padding-right: 24px;
+      --frame-logo-height: 24px;
+      --frame-logo-margin-left: 20px;
+      --frame-logo-margin-right: 24px;
+      --frame-transition-fast: .16s ease;
+      --frame-transition-width: .18s ease;
+
+      /* 顶部导航硬约束 */
+      --frame-top-trigger-height: 28px;
+      --frame-top-trigger-font-size: 12px;
+      --frame-top-trigger-line-height: 20px;
+      --frame-top-trigger-radius: 4px;
+      --frame-top-brand-icon-size: 16px;
+      --frame-top-brand-icon-gap: 8px;
       --frame-top-icon-size: 16px;
       --frame-top-icon-gap: 12px;
       --frame-top-section-gap: 16px;
+      --frame-top-arrow-size: 12px;
+      --frame-top-arrow-gap: 4px;
+      --frame-user-font-size: 14px;
+      --frame-user-line-height: 22px;
+      --frame-user-gap: 4px;
+      --frame-number-gap: 2px;
+      --frame-badge-size: 14px;
+      --frame-badge-offset: -7px;
+      --frame-badge-font-size: 10px;
+
+      /* 左侧菜单硬约束 */
+      --frame-sidebar-width: 216px;
+      --frame-sidebar-collapsed-width: 56px;
+      --frame-sidebar-scroll-padding: 8px 0;
+      --frame-sidebar-footer-height: 42px;
+      --frame-sidebar-footer-padding: 12px 20px;
+      --frame-sidebar-footer-collapsed-padding: 12px 19px;
+      --frame-sidebar-footer-line-height: 18px;
+      --frame-menu-row-height: 40px;
+      --frame-menu-row-padding-x: 8px;
+      --frame-menu-item-width: 200px;
+      --frame-menu-collapsed-item-size: 40px;
+      --frame-menu-radius: 4px;
+      --frame-menu-level-1-padding: 9px 12px;
+      --frame-menu-level-2-padding: 9px 12px 9px 38px;
+      --frame-menu-level-3-padding: 9px 12px 9px 56px;
+      --frame-menu-main-gap: 8px;
+      --frame-menu-icon-size: 18px;
+      --frame-menu-arrow-size: 14px;
+      --frame-menu-font-size: 14px;
+      --frame-menu-line-height: 22px;
+      --frame-collapse-icon-size: 18px;
+
+      /* 页面内容区硬约束 */
+      --frame-page-header-height: 48px;
+      --frame-page-header-padding-x: 24px;
+      --frame-page-title-font-size: 16px;
+      --frame-page-title-line-height: 28px;
+      --frame-page-action-gap: 8px;
+      --frame-page-button-height: 32px;
+      --frame-page-button-padding-x: 14px;
+      --frame-page-button-radius: 6px;
+      --frame-page-button-font-size: 14px;
+      --frame-page-button-line-height: 22px;
+      --frame-content-padding: 16px;
+      --frame-content-card-padding: 20px;
+      --frame-content-card-radius: 8px;
+      --frame-content-title-gap: 8px;
+      --frame-content-title-font-size: 18px;
+      --frame-content-title-line-height: 26px;
+      --frame-content-desc-font-size: 14px;
+      --frame-content-desc-line-height: 22px;
+
+      /* 下拉/浮层硬约束 */
+      --frame-popover-z-index: 10000;
+      --frame-dropdown-z-index: 9999;
+      --frame-popover-radius: 6px;
+      --frame-popover-padding: 4px;
+      --frame-popover-edge-gap: 16px;
+      --frame-user-popover-width: 156px;
+      --frame-subscription-popover-width: 590px;
+      --frame-subscription-popover-max-height: 620px;
+      --frame-cascade-width: 180px;
+      --frame-dropdown-option-height: 36px;
+      --frame-dropdown-option-padding: 7px 12px;
+      --frame-dropdown-option-radius: 4px;
+      --frame-dropdown-option-font-size: 14px;
+      --frame-dropdown-option-line-height: 22px;
+      --frame-cascade-arrow-gap: 8px;
+
+      /* 滚动条硬约束 */
+      --frame-scrollbar-size: 6px;
+      --frame-scrollbar-thumb: #C8CCD3;
+    }
+
+    /* ===== 单层导航框架硬约束入口 ===== */
+    body,
+    .terminal-frame {
+      min-width: var(--frame-min-width) !important;
+    }
+
+    .terminal-frame {
+      --terminal-sidebar-width: var(--frame-sidebar-width) !important;
+    }
+
+    .terminal-frame.sidebar-collapsed,
+    .terminal-frame.frame-sidebar-collapsed {
+      --terminal-sidebar-width: var(--frame-sidebar-collapsed-width) !important;
+    }
+
+    .s-header,
+    .s-header-left,
+    .s-header-nav {
+      height: var(--frame-header-height) !important;
+    }
+
+    .s-header {
+      z-index: var(--frame-header-z-index) !important;
+    }
+
+    .s-header-nav {
+      padding-right: var(--frame-header-padding-right) !important;
+    }
+
+    .terminal-logo,
+    .s-header-logo,
+    .top-logo {
+      height: var(--frame-logo-height) !important;
+      width: auto !important;
+      margin-left: var(--frame-logo-margin-left) !important;
+      margin-right: var(--frame-logo-margin-right) !important;
+    }
+
+    .terminal-body {
+      height: calc(100vh - var(--frame-header-height)) !important;
+    }
+
+    .terminal-page-header {
+      height: var(--frame-page-header-height) !important;
+      padding: 0 var(--frame-page-header-padding-x) !important;
+    }
+
+    .terminal-page-title {
+      font-size: var(--frame-page-title-font-size) !important;
+      line-height: var(--frame-page-title-line-height) !important;
+    }
+
+    .terminal-page-actions {
+      gap: var(--frame-page-action-gap) !important;
+    }
+
+    .terminal-page-button {
+      height: var(--frame-page-button-height) !important;
+      padding: 0 var(--frame-page-button-padding-x) !important;
+      border-radius: var(--frame-page-button-radius) !important;
+      font-size: var(--frame-page-button-font-size) !important;
+      line-height: var(--frame-page-button-line-height) !important;
+    }
+
+    .main-content {
+      padding: var(--frame-content-padding) !important;
+    }
+
+    .content-card {
+      background: var(--frame-card-bg) !important;
+      border-color: var(--frame-border-color) !important;
+      border-radius: var(--frame-content-card-radius) !important;
+      padding: var(--frame-content-card-padding) !important;
+    }
+
+    .content-title {
+      margin-bottom: var(--frame-content-title-gap) !important;
+      color: var(--frame-text-title) !important;
+      font-size: var(--frame-content-title-font-size) !important;
+      line-height: var(--frame-content-title-line-height) !important;
+    }
+
+    .content-desc {
+      color: var(--frame-text-body) !important;
+      font-size: var(--frame-content-desc-font-size) !important;
+      line-height: var(--frame-content-desc-line-height) !important;
+    }
+
+    .local-brain-sidebar {
+      width: var(--frame-sidebar-width) !important;
+      min-width: var(--frame-sidebar-width) !important;
+      max-width: var(--frame-sidebar-width) !important;
+      flex: 0 0 var(--frame-sidebar-width) !important;
+      background: var(--frame-card-bg) !important;
+      border-right-color: var(--frame-border-color) !important;
+      transition: width var(--frame-transition-width), flex-basis var(--frame-transition-width) !important;
+    }
+
+    .local-sidebar-scroll {
+      padding: var(--frame-sidebar-scroll-padding) !important;
+    }
+
+    .local-menu-row {
+      width: var(--frame-sidebar-width) !important;
+      height: var(--frame-menu-row-height) !important;
+      padding: 0 var(--frame-menu-row-padding-x) !important;
+      background: var(--frame-card-bg) !important;
+    }
+
+    .local-menu-item {
+      width: var(--frame-menu-item-width) !important;
+      height: var(--frame-menu-row-height) !important;
+      border-radius: var(--frame-menu-radius) !important;
+      color: var(--frame-text-title) !important;
+      font-size: var(--frame-menu-font-size) !important;
+      line-height: var(--frame-menu-line-height) !important;
+      transition: color var(--frame-transition-fast), background-color var(--frame-transition-fast) !important;
+    }
+
+    .local-menu-item.level-1 {
+      padding: var(--frame-menu-level-1-padding) !important;
+    }
+
+    .local-menu-item.level-2 {
+      padding: var(--frame-menu-level-2-padding) !important;
+      color: var(--frame-text-body) !important;
+    }
+
+    .local-menu-item.level-3 {
+      padding: var(--frame-menu-level-3-padding) !important;
+      color: var(--frame-text-body) !important;
+    }
+
+    .local-menu-main {
+      gap: var(--frame-menu-main-gap) !important;
+    }
+
+    .local-menu-icon {
+      width: var(--frame-menu-icon-size) !important;
+      height: var(--frame-menu-icon-size) !important;
+      color: var(--frame-text-muted) !important;
+      font-size: var(--frame-menu-icon-size) !important;
+      transition: color var(--frame-transition-fast) !important;
+    }
+
+    .local-menu-arrow-wrap,
+    .local-menu-arrow {
+      width: var(--frame-menu-arrow-size) !important;
+      height: var(--frame-menu-arrow-size) !important;
+      color: var(--frame-text-muted) !important;
+      font-size: var(--frame-menu-arrow-size) !important;
+    }
+
+    .local-menu-item:hover {
+      color: var(--frame-brand-color) !important;
+      background: transparent !important;
+    }
+
+    .local-menu-item:hover .local-menu-icon,
+    .local-menu-item:hover .local-menu-arrow {
+      color: var(--frame-brand-color) !important;
+    }
+
+    .local-menu-item.active {
+      color: var(--frame-brand-color) !important;
+      background: var(--frame-active-bg) !important;
+    }
+
+    .local-menu-item.active .local-menu-icon,
+    .local-menu-item.active .local-menu-arrow {
+      color: var(--frame-brand-color) !important;
+    }
+
+    .local-sidebar-footer {
+      width: var(--frame-sidebar-width) !important;
+      height: var(--frame-sidebar-footer-height) !important;
+      padding: var(--frame-sidebar-footer-padding) !important;
+      color: var(--frame-text-muted) !important;
+      border-top-color: var(--frame-hover-bg) !important;
+      font-size: var(--frame-menu-font-size) !important;
+      line-height: var(--frame-sidebar-footer-line-height) !important;
+    }
+
+    .local-collapse-button {
+      width: var(--frame-collapse-icon-size) !important;
+      height: var(--frame-collapse-icon-size) !important;
+      border-radius: var(--frame-menu-radius) !important;
+      color: var(--frame-text-muted) !important;
+    }
+
+    .local-collapse-button:hover,
+    .frame-sidebar-collapsed .local-menu-row:hover .local-menu-item {
+      color: var(--frame-brand-color) !important;
+      background: var(--frame-hover-bg) !important;
+    }
+
+    .frame-sidebar-collapsed .local-brain-sidebar {
+      width: var(--frame-sidebar-collapsed-width) !important;
+      min-width: var(--frame-sidebar-collapsed-width) !important;
+      max-width: var(--frame-sidebar-collapsed-width) !important;
+      flex-basis: var(--frame-sidebar-collapsed-width) !important;
+    }
+
+    .frame-sidebar-collapsed .local-sidebar-scroll {
+      padding: var(--frame-sidebar-scroll-padding) !important;
+    }
+
+    .frame-sidebar-collapsed .local-menu-node,
+    .frame-sidebar-collapsed .local-menu-row {
+      width: var(--frame-sidebar-collapsed-width) !important;
+      min-height: var(--frame-menu-row-height) !important;
+    }
+
+    .frame-sidebar-collapsed .local-menu-row {
+      height: var(--frame-menu-row-height) !important;
+      padding: 0 var(--frame-menu-row-padding-x) !important;
+    }
+
+    .frame-sidebar-collapsed .local-menu-item {
+      width: var(--frame-menu-collapsed-item-size) !important;
+      height: var(--frame-menu-collapsed-item-size) !important;
+      min-width: var(--frame-menu-collapsed-item-size) !important;
+    }
+
+    .frame-sidebar-collapsed .local-menu-main,
+    .frame-sidebar-collapsed .local-menu-icon {
+      width: var(--frame-menu-icon-size) !important;
+      min-width: var(--frame-menu-icon-size) !important;
+      max-width: var(--frame-menu-icon-size) !important;
+      flex-basis: var(--frame-menu-icon-size) !important;
+    }
+
+    .frame-sidebar-collapsed .local-sidebar-footer {
+      width: var(--frame-sidebar-collapsed-width) !important;
+      min-width: var(--frame-sidebar-collapsed-width) !important;
+      max-width: var(--frame-sidebar-collapsed-width) !important;
+      padding: var(--frame-sidebar-footer-collapsed-padding) !important;
+    }
+
+    .dropdown-panel,
+    .nav-right-popover {
+      top: var(--frame-header-height) !important;
+      border-radius: var(--frame-popover-radius) !important;
+      border-color: var(--frame-border-color) !important;
+      box-shadow: var(--frame-shadow-layer) !important;
+      background: var(--frame-card-bg) !important;
+      color: var(--frame-text-title) !important;
+    }
+
+    .dropdown-panel {
+      z-index: var(--frame-dropdown-z-index) !important;
+    }
+
+    .nav-right-popover {
+      min-width: var(--frame-user-popover-width) !important;
+      max-width: min(var(--frame-subscription-popover-width), calc(100vw - var(--frame-popover-edge-gap))) !important;
+      padding: var(--frame-popover-padding) !important;
+      z-index: var(--frame-popover-z-index) !important;
+    }
+
+    .nav-right-popover.user-popover {
+      width: var(--frame-user-popover-width) !important;
+    }
+
+    .nav-right-popover.subscription-popover {
+      width: var(--frame-subscription-popover-width) !important;
+      max-height: var(--frame-subscription-popover-max-height) !important;
+      padding: 0 !important;
+    }
+
+    .nav-right-popover .popover-option,
+    .local-cascade-option,
+    .local-cascade-title {
+      min-height: var(--frame-dropdown-option-height) !important;
+      padding: var(--frame-dropdown-option-padding) !important;
+      border-radius: var(--frame-dropdown-option-radius) !important;
+      color: var(--frame-text-title) !important;
+      font-size: var(--frame-dropdown-option-font-size) !important;
+      line-height: var(--frame-dropdown-option-line-height) !important;
+    }
+
+    .nav-right-popover .popover-option:hover,
+    .local-cascade-option:hover {
+      background: var(--frame-hover-bg) !important;
+      color: var(--frame-text-title) !important;
+    }
+
+    .nav-right-popover .popover-option.active,
+    .local-cascade-option.active {
+      background: var(--frame-active-bg) !important;
+      color: var(--frame-brand-color) !important;
+    }
+
+    .local-cascade-layer {
+      width: var(--frame-cascade-width) !important;
+      padding: var(--frame-popover-padding) !important;
+      border-radius: var(--frame-popover-radius) !important;
+      border-color: var(--frame-border-color) !important;
+      box-shadow: var(--frame-shadow-layer) !important;
+      z-index: var(--frame-dropdown-z-index) !important;
+      background: var(--frame-card-bg) !important;
+    }
+
+    .local-cascade-arrow {
+      margin-left: var(--frame-cascade-arrow-gap) !important;
+    }
+
+    .local-sidebar-scroll,
+    .local-cascade-layer,
+    .platform-page-content,
+    .mock-content,
+    .main-content,
+    .safe-brain-content,
+    .subscription-content,
+    .screen-drawer,
+    .main-nav-more-dropdown,
+    .center-dropdown,
+    .user-dropdown,
+    .dropdown-panel,
+    .nav-right-popover {
+      scrollbar-width: thin !important;
+      scrollbar-color: var(--frame-scrollbar-thumb) transparent !important;
+    }
+
+    .local-sidebar-scroll::-webkit-scrollbar,
+    .local-cascade-layer::-webkit-scrollbar,
+    .platform-page-content::-webkit-scrollbar,
+    .mock-content::-webkit-scrollbar,
+    .main-content::-webkit-scrollbar,
+    .safe-brain-content::-webkit-scrollbar,
+    .subscription-content::-webkit-scrollbar,
+    .screen-drawer::-webkit-scrollbar,
+    .main-nav-more-dropdown::-webkit-scrollbar,
+    .center-dropdown::-webkit-scrollbar,
+    .user-dropdown::-webkit-scrollbar,
+    .dropdown-panel::-webkit-scrollbar,
+    .nav-right-popover::-webkit-scrollbar {
+      width: var(--frame-scrollbar-size) !important;
+      height: var(--frame-scrollbar-size) !important;
+    }
+
+    .local-sidebar-scroll::-webkit-scrollbar-thumb,
+    .local-cascade-layer::-webkit-scrollbar-thumb,
+    .platform-page-content::-webkit-scrollbar-thumb,
+    .mock-content::-webkit-scrollbar-thumb,
+    .main-content::-webkit-scrollbar-thumb,
+    .safe-brain-content::-webkit-scrollbar-thumb,
+    .subscription-content::-webkit-scrollbar-thumb,
+    .screen-drawer::-webkit-scrollbar-thumb,
+    .main-nav-more-dropdown::-webkit-scrollbar-thumb,
+    .center-dropdown::-webkit-scrollbar-thumb,
+    .user-dropdown::-webkit-scrollbar-thumb,
+    .dropdown-panel::-webkit-scrollbar-thumb,
+    .nav-right-popover::-webkit-scrollbar-thumb {
+      background: var(--frame-scrollbar-thumb) !important;
+      border-radius: var(--frame-scrollbar-size) !important;
     }
 
     .local-menu-node > .local-menu-row .local-menu-arrow-wrap .iconfont {
@@ -5581,7 +6042,33 @@
     }
 
     .s-header .safe-brain-trigger {
+      height: var(--frame-top-trigger-height) !important;
       margin-right: var(--frame-top-section-gap) !important;
+      border-radius: var(--frame-top-trigger-radius) !important;
+      color: var(--frame-top-muted) !important;
+      font-size: var(--frame-top-trigger-font-size) !important;
+      line-height: var(--frame-top-trigger-line-height) !important;
+      transition: color var(--frame-transition-fast), background-color var(--frame-transition-fast) !important;
+    }
+
+    .s-header .safe-brain-trigger:hover,
+    .s-header .safe-brain-trigger.open {
+      color: var(--frame-top-white) !important;
+    }
+
+    .s-header .safe-brain-iconfont,
+    .s-header .top-security-icon {
+      width: var(--frame-top-brand-icon-size) !important;
+      height: var(--frame-top-brand-icon-size) !important;
+      margin-right: var(--frame-top-brand-icon-gap) !important;
+      color: var(--frame-brand-icon-color) !important;
+      font-size: var(--frame-top-brand-icon-size) !important;
+      line-height: 1 !important;
+    }
+
+    .s-header .num-subscription,
+    .s-header .subscription-trigger-copy strong {
+      margin: 0 var(--frame-number-gap) !important;
     }
 
     .s-header .icon-button {
@@ -5591,7 +6078,7 @@
       padding: 0 !important;
       border-radius: 0 !important;
       background: transparent !important;
-      color: var(--top-muted) !important;
+      color: var(--frame-top-muted) !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
@@ -5600,7 +6087,7 @@
     .s-header .icon-button:hover,
     .s-header .icon-button.open {
       background: transparent !important;
-      color: #FFFFFF !important;
+      color: var(--frame-top-white) !important;
     }
 
     .s-header .icon-button .iconfont,
@@ -5619,11 +6106,13 @@
     .s-header .user-dropdown {
       position: relative !important;
       top: 0 !important;
-      height: 28px !important;
+      height: var(--frame-top-trigger-height) !important;
       padding: 0 !important;
       background: transparent !important;
-      color: var(--top-muted) !important;
-      gap: 4px !important;
+      color: var(--frame-top-muted) !important;
+      gap: var(--frame-user-gap) !important;
+      font-size: var(--frame-user-font-size) !important;
+      line-height: var(--frame-user-line-height) !important;
       display: inline-flex !important;
       align-items: center !important;
     }
@@ -5631,7 +6120,7 @@
     .s-header .user-dropdown:hover,
     .s-header .user-dropdown.open {
       background: transparent !important;
-      color: #FFFFFF !important;
+      color: var(--frame-top-white) !important;
     }
 
     .s-header .user-dropdown .dropdown-state {
@@ -5639,12 +6128,32 @@
     }
 
     .s-header .badge-dot {
-      top: -7px !important;
-      right: -7px !important;
-      min-width: 14px !important;
-      height: 14px !important;
-      line-height: 14px !important;
+      top: var(--frame-badge-offset) !important;
+      right: var(--frame-badge-offset) !important;
+      min-width: var(--frame-badge-size) !important;
+      height: var(--frame-badge-size) !important;
+      line-height: var(--frame-badge-size) !important;
+      background: var(--frame-badge-bg) !important;
+      font-size: var(--frame-badge-font-size) !important;
       pointer-events: none !important;
+    }
+
+    .s-header .down-icon {
+      width: var(--frame-top-arrow-size) !important;
+      height: var(--frame-top-arrow-size) !important;
+      margin-left: var(--frame-top-arrow-gap) !important;
+      transition: transform var(--frame-transition-fast) !important;
+    }
+
+    .local-menu-label {
+      display: block !important;
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      text-align: left !important;
     }
   </style>
 
@@ -5702,7 +6211,7 @@
 
         <main class="main-content">
           <div class="content-card">
-            <h1 class="content-title">通用基础页面框架</h1>
+            <h1 class="content-title">122</h1>
             <p class="content-desc">通用基础页面框架</p>
           </div>
         </main>
@@ -5845,7 +6354,7 @@
           '<button class="' + itemClasses + '" type="button" data-local-menu="' + escapeHTML(item.id) + '" title="' + escapeHTML(item.label) + '">' +
           '<span class="local-menu-main">' +
           (level === 1 ? getMenuIcon() : '') +
-          '<span class="local-menu-label">' + escapeHTML(item.label) + '</span>' +
+          '<span class="local-menu-label" title="' + escapeHTML(item.label) + '">' + escapeHTML(item.label) + '</span>' +
           '</span>' +
           (children ? getArrow() : '') +
           '</button>' +
