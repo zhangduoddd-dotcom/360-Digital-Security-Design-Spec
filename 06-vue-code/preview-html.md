@@ -42,7 +42,7 @@ HTML 预览
 页面原型演示
 ```
 
-不需要同时输出 Vue 代码，除非用户明确要求“Vue 代码 / 工程代码 / 前端代码 / 接入项目”。
+本规范只服务 HTML Demo 生成和验收，不提供 Vue / React / Tailwind / 前端工程代码生成要求。
 
 ## 2. 必读文件
 
@@ -138,7 +138,7 @@ HTML 可演示页面必须满足：
 
 | 页面类型 | HTML 预览交互 |
 |---|---|
-| 列表页 | 搜索、重置、分页切换、勾选、已选 N 项、行操作、弹窗确认、Toast 反馈 |
+| 列表页 | 搜索、清空、排序、筛选、分页切换、勾选、已选 N 项、行操作、更多菜单、弹窗确认、Toast 反馈 |
 | 表单页 | 字段输入、必填校验、格式提示、条件显隐、提交 loading、成功提示 |
 | 详情页 | 标签页切换、展开收起、抽屉或弹窗查看、操作反馈 |
 | 工作台 | 卡片 hover、快捷入口点击、简单筛选或标签切换 |
@@ -163,12 +163,6 @@ HTML 可演示页面必须满足：
 - 组件 CSS 是否位于框架母版 CSS 之后、页面业务 CSS 之前。
 - 页面业务 CSS 是否只做局部修饰。
 - 是否包含 loading、empty、error、success、confirm 等必要状态。
-- 是否通过 `07-checklists/ai-output.md` 或 `07-checklists/frontend-acceptance.md` 验收。
+- 是否通过 `07-checklists/html-demo-acceptance.md` 验收。
 
 只要 DOM、CSS、Token 成对抽取检查不通过，禁止交付最终 HTML。
-
-## 9. 与 Vue 代码的关系
-
-HTML 可演示页面用于快速查看和调整界面。
-
-只有用户明确要求 Vue 代码、工程代码、前端代码或接入项目时，才额外输出 Vue 3 + TypeScript + Ant Design Vue 代码。

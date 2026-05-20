@@ -3,10 +3,18 @@
 
 本文是本仓库唯一目录导读和 AI 最小读取路径索引。01～08 目录内不再维护 overview、reference、README 或子级导读文件。
 
+本仓库当前只服务：
+
+```text
+高保真可点击 HTML Demo 生成与验收
+```
+
+不维护 Vue / React / Tailwind / 前端工程代码生成规范。
+
 ## 1. 最小读取原则
 
 - 不要一次性读取全仓库。
-- 先识别任务类型，再读取对应 profile。
+- 先识别页面类型，再读取对应 HTML Demo profile。
 - 只读取当前任务需要的页面规范、交互规范、组件样式库和验收清单。
 - 组件真实 DOM / class / CSS / Token 只从组件样式库和 06-vue-code 抽取注入规则获取。
 - `02-components/` 只用于组件语义、状态和交互说明，不作为 HTML DOM / class / CSS 来源。
@@ -29,36 +37,61 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 06-vue-code/component-style-import-rules.md
 06-vue-code/component-style-code-map.md
 06-vue-code/deprecated-class-blacklist.md
-07-checklists/frontend-acceptance.md
+07-checklists/html-demo-acceptance.md
 ```
 
-### 2.2 vue-list-page
+### 2.2 html-demo-form-page
 
-用于生成 Vue 3 + TypeScript + Ant Design Vue 列表页工程代码。
+用于生成表单页 HTML Demo / 高保真可点击预览。
 
 ```text
 SKILL.md
-04-pages/list-page.md
-03-interaction/list-search.md
-03-interaction/list-table.md
-06-vue-code/codegen-rules.md
-06-vue-code/antdv-adapter.md
+06-vue-code/templates/common-single-nav.html
+04-pages/form-page.md
+03-interaction/form-entry.md
+06-vue-code/preview-html.md
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-dom-extraction-rules.md
+06-vue-code/component-style-import-rules.md
 06-vue-code/component-style-code-map.md
-07-checklists/frontend-acceptance.md
+06-vue-code/deprecated-class-blacklist.md
+07-checklists/html-demo-acceptance.md
 ```
 
-### 2.3 page-review
+### 2.3 html-demo-detail-page
 
-用于检查页面是否符合规范。
+用于生成详情页 / 详情抽屉 HTML Demo。
+
+```text
+SKILL.md
+06-vue-code/templates/common-single-nav.html
+04-pages/detail-page.md
+03-interaction/page-container.md
+06-vue-code/preview-html.md
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-dom-extraction-rules.md
+06-vue-code/component-style-import-rules.md
+06-vue-code/component-style-code-map.md
+06-vue-code/deprecated-class-blacklist.md
+07-checklists/html-demo-acceptance.md
+```
+
+### 2.4 html-demo-review
+
+用于检查 HTML Demo 是否符合规范。
 
 ```text
 SKILL.md
 对应页面规范
 对应交互规范
-07-checklists/frontend-acceptance.md
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-dom-extraction-rules.md
+06-vue-code/component-style-import-rules.md
+06-vue-code/deprecated-class-blacklist.md
+07-checklists/html-demo-acceptance.md
 ```
 
-### 2.4 docs-maintenance
+### 2.5 docs-maintenance
 
 用于修改、合并、删除规范文档。
 
@@ -75,15 +108,15 @@ INDEX.md
 
 | 页面类型 | 页面规范 | 交互规范 | 验收 |
 |---|---|---|---|
-| 列表页 | `04-pages/list-page.md` | `03-interaction/list-search.md`、`03-interaction/list-table.md` | `07-checklists/frontend-acceptance.md` |
-| 表单页 | `04-pages/form-page.md` | `03-interaction/form-entry.md` | `07-checklists/frontend-acceptance.md` |
-| 详情页 | `04-pages/detail-page.md` | `03-interaction/page-container.md` | `07-checklists/frontend-acceptance.md` |
-| 工作台 | `04-pages/dashboard.md` | 按需读取组件和反馈规则 | `07-checklists/frontend-acceptance.md` |
-| 分步流程页 | `04-pages/step-flow-page.md` | 按需读取表单和反馈规则 | `07-checklists/frontend-acceptance.md` |
-| 异常页 | `04-pages/exception-page.md` | 按需读取反馈规则 | `07-checklists/frontend-acceptance.md` |
-| 用户管理 | `04-pages/user-management.md` | 列表、表格、表单规则 | `07-checklists/frontend-acceptance.md` |
-| 系统设置 | `04-pages/system-settings.md` | 表单、确认、权限状态 | `07-checklists/frontend-acceptance.md` |
-| 系统配置 | `04-pages/system-config.md` | 表单、表格、确认、权限状态 | `07-checklists/frontend-acceptance.md` |
+| 列表页 | `04-pages/list-page.md` | `03-interaction/list-search.md`、`03-interaction/list-table.md` | `07-checklists/html-demo-acceptance.md` |
+| 表单页 | `04-pages/form-page.md` | `03-interaction/form-entry.md` | `07-checklists/html-demo-acceptance.md` |
+| 详情页 | `04-pages/detail-page.md` | `03-interaction/page-container.md` | `07-checklists/html-demo-acceptance.md` |
+| 工作台 | `04-pages/dashboard.md` | 按需读取组件和反馈规则 | `07-checklists/html-demo-acceptance.md` |
+| 分步流程页 | `04-pages/step-flow-page.md` | 按需读取表单和反馈规则 | `07-checklists/html-demo-acceptance.md` |
+| 异常页 | `04-pages/exception-page.md` | 按需读取反馈规则 | `07-checklists/html-demo-acceptance.md` |
+| 用户管理 | `04-pages/user-management.md` | 列表、表格、表单规则 | `07-checklists/html-demo-acceptance.md` |
+| 系统设置 | `04-pages/system-settings.md` | 表单、确认、权限状态 | `07-checklists/html-demo-acceptance.md` |
+| 系统配置 | `04-pages/system-config.md` | 表单、表格、确认、权限状态 | `07-checklists/html-demo-acceptance.md` |
 
 ## 4. 组件实现索引
 
@@ -109,14 +142,14 @@ INDEX.md
 | 路径 | 职责 |
 |---|---|
 | `README.md` | 给人看的项目简介和目录说明 |
-| `SKILL.md` | AI 生成高保真页面的执行契约 |
+| `SKILL.md` | AI 生成高保真 HTML Demo 的执行契约 |
 | `INDEX.md` | 唯一文档索引和最小读取路径 |
 | `01-foundation/` | Token、颜色、字体、布局、投影等基础规则 |
 | `02-components/` | 组件语义、状态、行为说明；不提供真实 DOM / class / CSS |
 | `03-interaction/` | 页面交互规则，例如搜索区、表格区、表单录入、权限状态 |
 | `04-pages/` | 页面类型结构和信息层级 |
-| `06-vue-code/` | HTML / Vue 生成、组件 DOM 抽取、CSS 注入、旧 class 黑名单、母版 |
-| `07-checklists/` | 输出验收清单 |
+| `06-vue-code/` | 历史目录名；当前只保留 HTML Demo、组件 DOM 抽取、CSS 注入、旧 class 黑名单、母版 |
+| `07-checklists/` | HTML Demo 输出验收清单 |
 | `docs/component-style-library/` | 真实组件 DOM / class / CSS / Token |
 
 ## 6. 唯一真源归属
@@ -130,7 +163,7 @@ INDEX.md
 | 组件真实 DOM / class / CSS / Token | `docs/component-style-library/backend_ai_ui_component_kit_with_index.html` |
 | 组件 DOM 抽取 | `06-vue-code/component-dom-extraction-rules.md` |
 | 组件 CSS / Token 注入 | `06-vue-code/component-style-import-rules.md` |
-| 组件语义到实现映射 | `06-vue-code/component-style-code-map.md` |
+| 组件语义到 HTML 实现映射 | `06-vue-code/component-style-code-map.md` |
 | 业务组件复用边界 | `06-vue-code/business-component-reuse-rules.md` |
 | 旧 class 与私有组件 class 黑名单 | `06-vue-code/deprecated-class-blacklist.md` |
 | 组件语义、状态、行为 | `02-components/*.md` |
@@ -138,7 +171,7 @@ INDEX.md
 | 表格区交互 | `03-interaction/list-table.md` |
 | 表单录入交互 | `03-interaction/form-entry.md` |
 | 页面类型结构 | `04-pages/*.md` |
-| 输出验收 | `07-checklists/*.md` |
+| HTML Demo 输出验收 | `07-checklists/html-demo-acceptance.md` |
 
 ## 7. 内层导读规则
 

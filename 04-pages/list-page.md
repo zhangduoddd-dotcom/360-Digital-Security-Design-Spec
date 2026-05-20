@@ -1,9 +1,9 @@
 # 列表页规范
 ## List Page Standard
 
-Keywords: list page, search, table, pagination, batch action, backend, ai readable, html preview, vue codegen
+Keywords: list page, search, table, pagination, batch action, backend, ai readable, html preview
 
-> 本文件是 `04-pages/` 页面规范的一部分，用于约束 AI 生成后台列表页、HTML 预览和 Vue 3 + TypeScript + Ant Design Vue 页面代码。
+> 本文件是 `04-pages/` 页面规范的一部分，用于约束 AI 生成后台列表页 HTML Demo。
 >
 > 全局框架、导航、页面容器、颜色、间距、圆角、投影、组件尺寸等通用规则，应优先遵循 `03-interaction/platform-frame.md`、`03-interaction/page-container.md`、`01-foundation/tokens.md`、`02-components/component-size.md`。
 
@@ -286,19 +286,9 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 | 使用条件 | 快速查看补充信息，不需要进入详情页 |
 | 限制 | 不适合承载复杂编辑流程 |
 
-## 14. AI 生图要求
+## 14. HTML Demo 生成要求
 
-- 表格面积应明显大于搜索区。
-- 不要加入大面积图表。
-- 不要把列表页做成 Dashboard。
-- 不要让按钮层级混乱。
-- 主要中文标题、字段和状态应可读。
-- 状态标签需文字与颜色共同表达。
-- 复杂列表应体现横向滚动、字段配置或左侧筛选等结构。
-
-## 15. Vue / HTML 生成要求
-
-生成列表页代码时，必须包含：
+生成列表页 HTML Demo 时，必须包含：
 
 - 搜索表单。
 - 表格。
@@ -313,9 +303,9 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 - 反馈提示。
 - 删除或高风险操作确认。
 
-HTML 预览需支持搜索、重置、分页、行操作、删除确认、勾选联动和基础字段配置切换。
+HTML Demo 需支持搜索、清空、分页、行操作、删除确认、勾选联动和基础字段配置切换。
 
-## 16. 验收检查清单
+## 15. 验收检查清单
 
 | 检查项 | 要求 |
 |---|---|
@@ -327,19 +317,19 @@ HTML 预览需支持搜索、重置、分页、行操作、删除确认、勾选
 | 批量操作 | 已选数量、禁用态、确认反馈完整 |
 | 状态标签 | 颜色和文字同时表达 |
 | 分页 | 总数、页码、每页条数和跳页完整 |
-| 预览交互 | 搜索、重置、分页、删除确认可操作 |
+| 预览交互 | 搜索、清空、分页、删除确认可操作 |
 
-## 17. 列表页交付总控规则
+## 16. 列表页交付总控规则
 
 列表页交付不得只满足“搜索区 + 表格 + 分页”的粗粒度结构。
 
-生成列表页、HTML Demo 或 Vue 页面代码时，必须同时满足：
+生成列表页 HTML Demo 时，必须同时满足：
 
 ```text
 03-interaction/list-search.md
 03-interaction/list-table.md
 06-vue-code/list-page-interaction-enforcement.md
-07-checklists/frontend-acceptance.md
+07-checklists/html-demo-acceptance.md
 ```
 
 列表页必须完整落实搜索、清空、loading、empty、排序、列筛选、勾选联动、固定列、行操作、更多菜单、分页、禁用 Tooltip、二次确认和 Toast 反馈等交互规则。
@@ -348,4 +338,4 @@ HTML 预览需支持搜索、重置、分页、行操作、删除确认、勾选
 生成完成后，必须逐项自检。
 缺少任一当前业务适用的硬性项时，不得交付。
 
-HTML 预览不得降级为静态展示。排序、列筛选、分页切换、勾选联动、更多菜单、禁用 Tooltip、确认弹窗和 Toast 反馈必须可点击验证。
+HTML Demo 不得降级为静态展示。排序、列筛选、分页切换、勾选联动、更多菜单、禁用 Tooltip、确认弹窗和 Toast 反馈必须可点击验证。

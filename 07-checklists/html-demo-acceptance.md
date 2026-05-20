@@ -1,56 +1,58 @@
-# 前端验收清单
-## Frontend Acceptance Checklist
+# HTML Demo 验收清单
+## HTML Demo Acceptance Checklist
 
-Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, backend, font rendering
+Keywords: html demo acceptance, checklist, high fidelity preview, token, responsive, backend, interaction
 
-本文用于检查 Vue 页面代码和 HTML 预览文件是否符合设计规范、交互规则和工程落地要求。
+本文用于检查 HTML Demo 是否符合设计规范、交互规则和高保真预览要求。
 
 ## 1. 交付物完整性
 
-- [ ] 已提供 Vue 3 + TypeScript + Ant Design Vue 页面代码。
-- [ ] 已提供可直接打开预览的 HTML 文件。
-- [ ] Vue 页面和 HTML 预览在结构、字段、文案和主要视觉风格上保持一致。
-- [ ] HTML 预览文件支持基础点击交互。
+- [ ] 已提供可直接打开预览的单文件 HTML。
+- [ ] HTML 文件包含完整 HTML、CSS、JavaScript。
+- [ ] 不依赖构建工具。
+- [ ] 不请求真实接口。
+- [ ] 使用 mock 数据。
+- [ ] 支持主要点击交互。
 - [ ] 没有只给静态页面而缺少 loading、empty、error、反馈状态。
-- [ ] 代码中包含 mock 数据，且不请求真实接口。
-- [ ] 主要业务路径可以通过 HTML 预览验证。
+- [ ] 主要业务路径可以通过 HTML Demo 验证。
 
-## 2. 布局实现
+## 2. 母版与布局
 
+- [ ] 已完整继承指定 HTML 母版。
+- [ ] 未重写顶部导航、侧边导航、页头和内容容器结构。
 - [ ] 页面整体宽度、边距、栅格、内容区符合设计规范。
 - [ ] 顶部导航、侧边导航、主内容区位置稳定。
 - [ ] 页面最小宽度和横向滚动策略正确。
 - [ ] 1920px、1440px、1366px、1280px 下布局可用。
-- [ ] 侧边栏在 992px 默认断点下可收起。
-- [ ] 收起态侧边栏宽度为 56px。
+- [ ] 侧边栏收起态和展开态可用。
 - [ ] 表格列多时横向滚动和固定列正确。
-- [ ] Dashboard 图表和卡片有最小宽度，不被压缩到不可读。
 - [ ] 内容区域宽度不足时，通过换行、堆叠或横向滚动处理，而不是强行压缩到不可读。
 
 ## 3. 组件实现
 
+- [ ] 基础组件 DOM 来自 `docs/component-style-library/backend_ai_ui_component_kit_with_index.html`。
+- [ ] 基础组件 CSS 与依赖 Token 已同步抽取。
+- [ ] 最终样式顺序为：母版 CSS → 组件样式库 CSS → 页面业务 CSS。
+- [ ] 页面业务 class 只做命名空间、布局钩子或业务修饰。
+- [ ] 没有用 div 伪造 Button、Input、Select、Table、Tag、Pagination、Toast 等基础组件。
+- [ ] 没有命中 `deprecated-class-blacklist.md` 中的旧 class 或私有组件 class。
 - [ ] 按钮尺寸、颜色、hover、active、disabled、loading 状态正确。
-- [ ] 输入框、选择器、日期控件、上传控件状态完整。
+- [ ] 输入框、选择器、日期控件状态完整。
 - [ ] 表格表头、行高、单元格 padding、hover、固定列表现正确。
-- [ ] 表头和单元格行高统一为 40px。
-- [ ] 表格文字符合高密度场景 12px 规范。
-- [ ] 分页器位置、间距、每页条数、跳页功能正确。
-- [ ] 标签、徽标、状态点颜色与语义一致。
-- [ ] 弹窗、抽屉、Popover、下拉菜单的层级和投影正确。
+- [ ] 标签、状态点颜色与语义一致。
 - [ ] Tooltip、帮助说明、错误提示的位置和触发方式正确。
 
 ## 4. 交互状态
 
-- [ ] 搜索、重置、筛选、排序逻辑正确。
+- [ ] 搜索、清空、筛选、排序逻辑正确。
 - [ ] 勾选行相关操作与勾选状态联动。
 - [ ] 勾选后展示 `已选 N 项`，未勾选时不展示。
 - [ ] 关键操作有确认。
-- [ ] 异步请求有 loading。
+- [ ] 异步操作有 loading。
 - [ ] 成功、失败、异常、空状态反馈完整。
 - [ ] 空状态和异常状态有下一步操作。
-- [ ] 表单脏状态离开有确认提示。
-- [ ] 高风险操作不能只用 Message / Toast 提示。
 - [ ] 删除、禁用、还原、覆盖、发布、重置等操作有二次确认。
+- [ ] 高风险操作不能只用 Toast 提示。
 
 ## 5. 数据与文案
 
@@ -75,8 +77,6 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 | 风险等级色 | 致命、严重、高危、中危、低危、安全按 Deep red / Red / Orange red / Orange / Yellow / Green 映射 |
 | Focus ring | 表单聚焦、错误、成功、警告状态使用 2px 外描边 Token，不改变组件尺寸 |
 | 投影 | 卡片使用一级投影；弹窗 / 抽屉使用二级投影；AI 超级输入框 hover 使用专门阴影 |
-| 变量重复 | 清理 `P6/P7`、重复 `Blue-7`、重复 `gray-*` 等冗余声明 |
-| 工程命名 | 为中文 Token 建立英文 alias，避免工程兼容问题 |
 | 硬编码 | 关键颜色、阴影、字号、间距不应大量散乱硬编码 |
 | 字体渲染 | 必须继承字体渲染基线，关闭浏览器伪粗体 / 伪斜体 |
 
@@ -85,7 +85,6 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 全局设置统一 `font-family`。
 - [ ] 页面标题、模块标题、正文、辅助文本、高密度表格文本符合字体规范。
 - [ ] 图表、表格、弹窗、抽屉中的字体与页面字体一致。
-- [ ] 不同组件没有散乱使用不同字体族。
 - [ ] 已设置 `font-synthesis: none`。
 - [ ] 已设置 `font-synthesis-weight: none`。
 - [ ] 已设置 `font-synthesis-style: none`。
@@ -93,47 +92,8 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 - [ ] 已设置 `-moz-osx-font-smoothing: grayscale`。
 - [ ] 表格、列表、配置抽屉等高密度信息区域没有出现正文视觉接近标题字重的情况。
 - [ ] 正文、表单、列表、按钮、输入框、选择器、抽屉内容、提示说明没有依赖浏览器伪粗体。
-- [ ] macOS 下中文呈现清晰、轻量，不出现异常变粗。
-- [ ] 错误提示说明原因和修正方式。
 
-## 8. AI 原生页面验收
-
-- [ ] AI 操作说明生成内容和影响范围。
-- [ ] AI 执行中有 loading 或进度反馈。
-- [ ] AI 结果包含来源、时间、模型或来源数据。
-- [ ] AI 结果包含结论、依据、风险提示和可执行操作。
-- [ ] AI 结果支持复制、编辑、重新生成、应用结果。
-- [ ] 应用 AI 结果前允许用户编辑。
-- [ ] 重要 AI 操作需要人工确认。
-- [ ] 保留操作日志和审计信息。
-- [ ] 多智能体协作页面展示每个智能体的状态、贡献或执行进度。
-- [ ] AI 结果应用后可追溯操作者、时间和应用范围。
-
-## 9. HTML 预览文件验收
-
-- [ ] 单文件可打开。
-- [ ] 不依赖构建工具。
-- [ ] 不请求真实接口。
-- [ ] 使用 mock 数据。
-- [ ] 支持基础点击交互。
-- [ ] 与 Vue 页面结构、字段、状态、文案一致。
-- [ ] 可模拟搜索、重置、分页、弹窗、抽屉、表单校验、loading 和成功反馈。
-- [ ] 可模拟至少一种异常或空状态。
-- [ ] 可模拟至少一种高风险确认操作。
-- [ ] HTML 预览文件继承平台固定框架的字体渲染规则。
-
-## 10. 工程落地建议
-
-前端实现时，应优先保证规范可维护，而不是只还原视觉截图。
-
-- Token 应集中维护，不要分散在页面私有样式中。
-- 页面级 mock 数据应结构清晰，便于后续替换真实接口。
-- 状态枚举应与规范命名一致。
-- 危险操作、AI 结果应用、权限控制等逻辑应可复用。
-- HTML 预览和 Vue 页面应尽量保持字段、状态、交互一致，避免 demo 与正式代码割裂。
-- 字体渲染基线应放在全局样式或平台固定框架中，不要分散在页面私有样式里。
-
-## 11. 列表页专项验收清单
+## 8. 列表页专项验收清单
 
 生成列表页、查询结果列表页、高级搜索列表页、左筛选 + 右列表页时，必须逐项检查。
 
@@ -212,5 +172,5 @@ Keywords: frontend acceptance, checklist, vue, html preview, token, responsive, 
 ### G. HTML Demo 可验证性
 
 - [ ] HTML Demo 中搜索、清空、分页、排序、筛选、勾选、更多菜单、确认弹窗、Toast 均可点击验证。
-- [ ] HTML Demo 不得以“正式 Vue 工程再实现”为理由省略交互。
+- [ ] HTML Demo 不得以静态视觉替代真实交互。
 - [ ] 缺少任一当前页面适用的硬性项，视为列表页验收失败。

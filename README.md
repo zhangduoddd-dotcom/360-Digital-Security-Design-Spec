@@ -1,7 +1,15 @@
 # 后台设计规范
 ## Backend Design Standards
 
-这是面向 B 端后台产品的设计规范仓库，用于帮助设计师、产品、AI Agent 和前端工程师生成、检查和统一后台 UI、HTML Demo 与 Vue 页面代码。
+这是面向 B 端后台产品的设计规范仓库，用于帮助设计师、产品和 AI Agent 生成、检查和统一后台高保真 HTML Demo。
+
+本仓库当前目标：
+
+```text
+生成符合设计规范、组件规范和交互规范的高保真可点击 HTML 页面。
+```
+
+不再维护 Vue 工程代码生成规范。
 
 ## 1. 使用方式
 
@@ -14,7 +22,7 @@ INDEX.md
 
 其中：
 
-- `SKILL.md`：AI 生成高保真页面时的执行契约、默认交付方式、硬约束和冲突优先级。
+- `SKILL.md`：AI 生成高保真 HTML Demo 时的执行契约、默认交付方式、硬约束和冲突优先级。
 - `INDEX.md`：唯一文档索引，负责“任务 → 最小读取路径”和“目录职责”。
 
 不要从各目录内寻找 overview、reference、README 或子级导读文件。目录导读唯一维护在根目录 `INDEX.md`。
@@ -29,12 +37,12 @@ INDEX.md
 → 按 profile 读取对应页面、交互、组件样式库和验收文件
 ```
 
-生成 Vue 页面代码：
+检查 HTML Demo 是否符合规范：
 
 ```text
 读取 SKILL.md
-→ 读取 INDEX.md 中的 vue-* profile
-→ 按 profile 读取工程规则、页面规范和验收文件
+→ 读取 INDEX.md
+→ 读取对应页面规范、交互规范和 html-demo-acceptance.md
 ```
 
 维护或调整规范文档：
@@ -56,8 +64,8 @@ Backend-Design-Standards/
 ├── 02-components/                 # 组件语义、状态、交互说明
 ├── 03-interaction/                # 页面交互规则
 ├── 04-pages/                      # 页面类型结构
-├── 06-vue-code/                   # HTML / Vue 生成、组件抽取与注入规则
-├── 07-checklists/                 # 输出验收清单
+├── 06-vue-code/                   # 历史目录名；当前只保留 HTML Demo、组件抽取与注入规则
+├── 07-checklists/                 # HTML Demo 输出验收清单
 └── docs/component-style-library/  # 真实组件 DOM / class / CSS / Token
 ```
 
@@ -70,7 +78,7 @@ Backend-Design-Standards/
 - 交互规则归 `03-interaction/`。
 - 组件语义归 `02-components/`。
 - 真实组件 DOM / class / CSS / Token 归 `docs/component-style-library/`。
-- HTML / Vue 生成和组件抽取注入规则归 `06-vue-code/`。
+- HTML Demo 生成、组件抽取和 CSS 注入规则归 `06-vue-code/`。
 - 验收只放 `07-checklists/`，不反向创造生成规则。
 
 ## License
