@@ -7,9 +7,9 @@ version: 1.0.0
 # 后台设计规范 Skill
 ## Backend Design Standards Skill
 
-Keywords: backend design, ai routing, html preview, html demo first, vue codegen, ai image, ant design vue
+Keywords: backend design, ai routing, template first, html preview, html demo first, vue codegen, ai image, ant design vue
 
-## 0. 角色限定与代码映射入口
+## 0. 总执行原则
 
 本 Skill 默认以资深 B 端产品 UI/UX 设计师身份执行。详细角色定义见：
 
@@ -17,38 +17,74 @@ Keywords: backend design, ai routing, html preview, html demo first, vue codegen
 ROLE.md
 ```
 
-在任何后台页面、SaaS 页面、HTML Demo、Vue 页面代码或 AI 生图 Prompt 生成任务中，必须先从业务目标、用户任务、页面类型、信息层级、交互路径、组件映射和工程落地角度进行判断，再进入具体生成。
-
-默认工作顺序：
+所有后台页面、HTML Demo、Vue 页面代码或高保真界面生成任务，都必须遵循：
 
 ```text
-业务目标判断
-→ 页面类型识别
-→ 信息层级梳理
-→ 交互路径设计
-→ 组件映射
-→ 视觉层级组织
-→ 工程落地约束
-→ 输出前自检
+模板驱动继承框架，规范驱动业务内容和组件校验。
 ```
 
-不得直接从配色、阴影、卡片样式开始设计。
-
-生成 HTML Demo 或 Vue 工程代码时，除读取页面规范和组件规范外，必须读取：
+也就是：
 
 ```text
-06-vue-code/component-style-code-map.md
+1. 先选择并完整复制 06-vue-code/templates/ 中最匹配的 HTML 母版。
+2. 再识别页面类型和业务目标。
+3. 再替换业务内容、菜单数据、页面标题和 mock 数据。
+4. 最后用页面规范、组件规范和验收清单做校验。
 ```
 
-并先完成组件映射，再生成代码或 HTML。该文件用于把 `02-components/` 中的组件规范绑定到 Ant Design Vue 组件、HTML Demo 结构、CSS Token、必须状态和验收项。
+禁止反向执行：
 
-如果角色判断与具体组件规范、页面规范或代码生成规则冲突，以具体规范文件为准。
+```text
+先读规范文字 → 自行手写顶部导航 / 左侧菜单 / 页头 / 内容容器 → 拼出一个“看起来像”的框架。
+```
 
-## 1. 默认定位
+HTML 母版是实现基座，不是视觉参考稿。
+
+## 1. 固定模板调用规则
+
+生成后台页面、HTML Demo、Vue 页面代码、高保真界面或页面截图时，必须先从以下模板中选择页面基座：
+
+| 场景 | 必须调用 |
+|---|---|
+| 基于本套 GitHub 生成页面 / 按本仓库规范生成页面 / 未明确指定导航框架 | `06-vue-code/templates/common-single-nav.html` |
+| 明确说“基于单层导航框架 / 单层顶部导航 / 单层导航页面” | `06-vue-code/templates/common-single-nav.html` |
+| 明确说“基于双层导航框架 / 双层顶部导航 / 双层导航页面” | `06-vue-code/templates/double-nav-frame.html` |
+| 明确要求自定义导航框架 | 按用户指定方案处理 |
+
+判断优先级：
+
+```text
+1. 用户明确要求自定义导航框架 → 按用户指定方案处理。
+2. 用户明确要求双层导航框架 → 使用 double-nav-frame.html。
+3. 用户明确要求单层导航框架 → 使用 common-single-nav.html。
+4. 用户只说“基于本套 GitHub / 本仓库规范 / 本套设计规范” → 默认使用 common-single-nav.html。
+5. 用户没有说明导航框架 → 默认使用 common-single-nav.html。
+```
+
+必须读取模板说明：
+
+```text
+06-vue-code/templates/README.md
+```
+
+## 2. 框架继承硬约束
+
+以下规则在任何页面细节、页面类型规范、组件规范、视觉优化之前优先生效：
+
+1. 生成页面时，必须先完整复制对应 HTML 母版作为页面底座。
+2. 不得自行重写顶部导航、左侧菜单、页头、页面内容容器、下拉浮层、级联菜单或响应式逻辑。
+3. 不得把 `03-interaction/platform-frame.md` 当作可重新实现框架的蓝图；它只解释框架原则和边界。
+4. 不得把文字规范中的尺寸、颜色、结构描述转译成一套新的框架实现。
+5. 只允许替换模板允许变化的业务内容、菜单数据、导航文案、页面标题、mock 数据和页面主体内容。
+6. 母版中的 DOM、CSS、JS、iconfont、hover、active、open、disabled、collapsed、级联浮层和响应式规则必须保留。
+7. 如果文字规范与 HTML 母版存在差异，以 HTML 母版为准。
+8. 如果用户需求与母版固定结构冲突，必须先说明冲突点；只有用户明确确认“自定义导航框架”后，才允许脱离默认母版。
+
+## 3. 默认定位
 
 这是 B 端后台界面设计 Skill 的总入口。AI 应先判断用户任务类型，再读取最少但足够的文档。
 
-本 Skill 的首轮生成目标是稳定遵循规范，而不是只生成一个通用后台页面。首次生成前必须先完成任务路由、框架选择、页面类型选择和验收清单选择。
+首轮生成目标是稳定继承固定模板并符合规范，而不是只生成一个通用后台页面。
 
 默认演示交付形态：
 
@@ -64,15 +100,34 @@ ROLE.md
 Vue 3 + TypeScript + Ant Design Vue + Composition API + <script setup lang="ts">
 ```
 
-## 2. 首次生成硬约束
+## 4. 生成前判断顺序
 
-以下规则在任何后台页面、HTML demo、Vue 页面代码、高保真界面或页面截图任务中都优先于页面细节：
+任何后台页面、SaaS 页面、HTML Demo、Vue 页面代码或 AI 生图 Prompt 生成任务中，必须按以下顺序判断：
+
+```text
+业务目标判断
+→ 导航框架选择
+→ HTML 母版锁定
+→ 页面类型识别
+→ 信息层级梳理
+→ 交互路径设计
+→ 组件映射
+→ 视觉层级组织
+→ 工程落地约束
+→ 输出前自检
+```
+
+不得直接从配色、阴影、卡片样式或页面局部组件开始设计。
+
+## 5. 首次生成硬约束
+
+以下规则在任何后台页面、HTML Demo、Vue 页面代码、高保真界面或页面截图任务中都优先于页面细节：
 
 1. 默认生成结果必须优先输出为单文件 HTML Demo；除非用户明确要求前端工程代码，否则不得上来就生成 Vue / React / Tailwind / Ant Design Vue 工程代码。
-2. 必须使用固定平台框架；业务内容只能进入 `.platform-page-content`。
-3. 不得改动顶部通用导航、左侧菜单、收起态级联浮层、可返回页头、页面内容区 padding 和背景。
-4. 默认后台页面使用 `06-vue-code/templates/platform-frame/`；只有用户明确指定“本地安全大脑 / 本脑”或“终端安全管理系统 / 终端”时，才使用对应产品模板。
-5. 可返回页头只包含返回按钮和标题；不得加入面包屑、业务按钮或额外筛选控件。
+2. 必须使用 `06-vue-code/templates/` 中的固定 HTML 母版；默认使用 `common-single-nav.html`。
+3. 明确双层导航场景才使用 `double-nav-frame.html`。
+4. 业务内容只能进入母版指定的业务内容区，不得侵入顶部导航、左侧菜单、页头或框架固定结构。
+5. 不得改动顶部导航、左侧菜单、收起态级联浮层、页头、页面内容区 padding、背景、响应式规则和 JS 交互。
 6. 普通主色使用 `p6 #00AB7A`，hover 使用 `p5 #1DB887`，active 使用 `p7 #039972`；普通按钮不得误用 AI 渐变。
 7. 常规控件默认 32px 高度，紧凑控件 24px，宽松控件 40px；圆角只使用 4 / 6 / 8px 档位。
 8. HTML Demo 必须包含 mock 数据、基础点击交互、loading、empty、error、成功 / 失败反馈，不请求真实接口。
@@ -81,22 +136,42 @@ Vue 3 + TypeScript + Ant Design Vue + Composition API + <script setup lang="ts">
 11. 输出完成后必须按 `07-checklists/ai-output.md` 或 `07-checklists/frontend-acceptance.md` 自检，发现不满足项必须先修正。
 12. 输出代码或 HTML 前必须完成组件映射；涉及 Button、Input、Select、Table、Tag、Pagination、Alert 等组件时，必须读取对应 `02-components/` 文档和 `06-vue-code/component-style-code-map.md`。
 
-## 3. 默认读取顺序
+## 6. 默认读取顺序
 
-所有任务先读取 `ROLE.md`、`INDEX.md`，然后按任务分流：
+所有任务先读取：
+
+```text
+ROLE.md
+SKILL.md
+INDEX.md
+```
+
+然后按任务分流：
 
 | 任务 | 默认读取 |
 |---|---|
-| 查询设计规则 | `ROLE.md` + `01-foundation/`、`02-components/`、`03-interaction/` |
-| 生成页面结构 | `ROLE.md` + `03-interaction/platform-frame.md` + `04-pages/overview.md` + 对应页面规范 |
+| 查询设计规则 | `ROLE.md` + `INDEX.md` + 对应 `01-foundation/`、`02-components/`、`03-interaction/` |
+| 生成页面结构 | `ROLE.md` + `06-vue-code/templates/README.md` + 对应 HTML 母版 + `04-pages/overview.md` + 对应页面规范 |
 | 生成 AI 生图 Prompt | `ROLE.md` + `05-ai-image/` + 对应页面规范 |
-| 生成可演示页面 / demo / 可点击预览 / 未明确要求工程代码的 UI 页面 | `ROLE.md` + `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/preview-html.md` + `06-vue-code/component-style-code-map.md` + `07-checklists/ai-output.md` |
-| 生成 Vue 页面代码 / 工程代码 | `ROLE.md` + `03-interaction/platform-frame.md` + `04-pages/overview.md` + `06-vue-code/codegen-rules.md` + `06-vue-code/component-style-code-map.md` + `06-vue-code/antdv-adapter.md` + `07-checklists/frontend-acceptance.md` |
-| 检查输出质量 | `ROLE.md` + `07-checklists/` |
+| 生成可演示页面 / demo / 可点击预览 / 未明确要求工程代码的 UI 页面 | `ROLE.md` + `06-vue-code/templates/README.md` + 对应 HTML 母版 + `04-pages/overview.md` + `06-vue-code/preview-html.md` + `06-vue-code/component-style-code-map.md` + `07-checklists/ai-output.md` |
+| 生成 Vue 页面代码 / 工程代码 | `ROLE.md` + `06-vue-code/templates/README.md` + 对应 HTML 母版 + `04-pages/overview.md` + `06-vue-code/codegen-rules.md` + `06-vue-code/component-style-code-map.md` + `06-vue-code/antdv-adapter.md` + `07-checklists/frontend-acceptance.md` |
+| 检查输出质量 | `ROLE.md` + 对应 HTML 母版 + `07-checklists/` |
 
-## 4. 生成交付规则
+## 7. 组件映射入口
 
-### 4.1 默认 HTML Demo 优先
+生成 HTML Demo 或 Vue 工程代码时，除读取页面规范和组件规范外，必须读取：
+
+```text
+06-vue-code/component-style-code-map.md
+```
+
+并先完成组件映射，再生成代码或 HTML。该文件用于把 `02-components/` 中的组件规范绑定到 Ant Design Vue 组件、HTML Demo 结构、CSS Token、必须状态和验收项。
+
+如果角色判断与具体组件规范、页面规范或代码生成规则冲突，以具体规范文件为准；如果这些规范与 HTML 母版冲突，以 HTML 母版为准。
+
+## 8. 生成交付规则
+
+### 8.1 默认 HTML Demo 优先
 
 当用户要求“生成页面”“生成界面”“做一个后台页面”“做一个管理系统页面”“生成可演示页面”“做 demo”“可点击预览”“高保真演示环境”“HTML 预览”时，只要没有明确要求前端工程代码，默认只输出：
 
@@ -108,7 +183,7 @@ HTML Demo 必须把 HTML、CSS、必要 JavaScript、mock 数据和基础点击�
 
 HTML Demo 的核心目标是先验证页面结构、组件样式、状态反馈、信息层级和交互流程，而不是直接进入研发工程实现。
 
-### 4.2 Vue / React / Tailwind / 工程代码后置
+### 8.2 Vue / React / Tailwind / 工程代码后置
 
 只有当用户明确要求以下内容时，才继续生成前端工程代码：
 
@@ -133,7 +208,7 @@ Element Plus / @q/design / 其他指定组件库
 
 HTML Demo 用于快速查看页面效果和基础点击交互；正式工程交付仍以用户指定技术栈代码为准。
 
-### 4.3 交付物判定优先级
+### 8.3 交付物判定优先级
 
 - 用户只说“页面 / 界面 / demo / 预览 / 可点击 / 高保真演示 / HTML”时，只输出 HTML Demo。
 - 用户明确说“Vue / React / Tailwind / 前端代码 / 工程代码 / 接入项目”时，输出对应技术栈代码；如未明确排除预览，同时补充 HTML Demo。
@@ -141,23 +216,25 @@ HTML Demo 用于快速查看页面效果和基础点击交互；正式工程交�
 - 用户明确说“只要 HTML”时，不输出 Vue / React / Tailwind。
 - 不得因为规范中存在 Vue 技术栈，就默认跳过 HTML Demo 直接生成工程代码。
 
-## 5. HTML Demo 样式强约束
+## 9. HTML Demo 样式强约束
 
-- HTML Demo 的样式必须严格按照当前规范文档执行，不允许自由发挥成其他风格。
+- HTML Demo 的框架外壳必须来自 `06-vue-code/templates/` 中的对应 HTML 母版。
+- HTML Demo 的业务内容必须严格按照当前规范文档执行，不允许自由发挥成其他风格。
 - 必须匹配页面整体布局、顶部导航、左侧菜单、内容区比例、颜色变量、字体、字号、行高、间距、圆角、阴影、描边和分割线。
 - 表格、表单、按钮、标签、分页器、弹窗、抽屉、告警提示、状态徽标、状态灯等组件必须与规范样式一致。
 - hover、active、selected、disabled、warning、error、success、loading、empty 等状态必须完整体现。
-- 图标应优先使用规范指定的 iconfont / asset icons，不得大量使用 emoji 代替正式图标。
+- 图标应优先使用规范指定的 iconfont，不得大量使用 emoji 代替正式图标。
 - 界面必须专业、清晰、适合企业级 B 端后台，避免大屏风、海报风、营销风、游戏化和过度装饰。
 - 生成可演示页面时，HTML 文件必须能直接打开并支持基础交互。
 - 页面应包含 loading、empty、error、反馈等基础状态。
 - 首轮输出不得省略固定框架、关键交互状态或验收自检。
 - HTML Demo 中的 class、Token 和状态必须遵循 `06-vue-code/component-style-code-map.md` 的映射关系。
 
-## 6. Vue / 工程代码输出约束
+## 10. Vue / 工程代码输出约束
 
 - 只有用户明确要求工程代码时才进入本阶段。
 - Vue 代码生成时必须优先使用 Ant Design Vue 组件。
 - 工程代码应复用 HTML Demo 已确认的页面结构、字段、状态、交互和视觉规范。
 - 工程代码不得反向改变已确认 HTML Demo 的核心布局和组件样式。
 - 工程代码必须遵循 `06-vue-code/component-style-code-map.md`，明确组件规范、Ant Design Vue 组件、HTML Demo 结构、Token 和验收项之间的关系。
+- 工程代码中的 layout / shell / navigation 组件必须与所调用 HTML 母版结构一致，不得重新设计。
