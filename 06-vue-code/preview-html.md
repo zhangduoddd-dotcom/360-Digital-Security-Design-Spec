@@ -248,3 +248,50 @@ Vue 代码
 ```
 
 如果同时输出 Vue 和 HTML，两者应在页面结构、字段、状态、文案和主要视觉风格上保持一致；固定框架、业务组件 class 复用和字体渲染规则必须保持一致。
+
+## 10. HTML Demo 不得降级实现交互规范
+
+HTML Demo 是交互验证文件，不是静态视觉截图。
+
+当页面类型对应的 `03-interaction/*` 文档中定义了交互规则时，HTML Demo 必须实现可验证的模拟交互，不得以“正式 Vue 工程再实现”为理由降级。
+
+生成列表页 HTML Demo 时，必须额外读取并执行：
+
+```text
+03-interaction/list-search.md
+03-interaction/list-table.md
+06-vue-code/list-page-interaction-enforcement.md
+07-checklists/frontend-acceptance.md
+```
+
+“已读取交互文档”不等于“已完成交互落地”。生成 HTML Demo 前，必须把相关交互文档转换为当前页面的内部验收清单；生成后必须逐项自检，不通过不得交付。
+
+列表页 HTML Demo 至少必须落实：
+
+- 搜索与清空。
+- 搜索 loading。
+- 空状态。
+- 分页切换。
+- 每页条数切换。
+- 表头排序切换。
+- 列筛选弹层。
+- 行勾选。
+- 勾选后展示 `已选 N 项`。
+- 未勾选时批量按钮禁用。
+- 禁用按钮 hover 展示 Tooltip。
+- 首列和操作列固定的视觉表达。
+- 行 hover 高亮。
+- 行操作“更多”菜单。
+- 删除、停用等风险操作二次确认。
+- Toast 成功 / 失败反馈。
+
+以上能力属于 HTML 预览必交互，不是 Vue 工程专属要求。
+缺少任一当前页面适用的硬性项，HTML Demo 不得交付。
+
+输出前还必须检查：
+
+- 是否把已读取的 `03-interaction/*` 文档转换为当前页面验收清单并逐项落地。
+- 列表页是否完整实现搜索、清空、loading、empty、排序、列筛选、勾选联动、固定列、行操作、更多菜单、分页、禁用 Tooltip、二次确认和 Toast 反馈。
+- 是否通过 `07-checklists/frontend-acceptance.md` 中对应页面专项验收。
+
+只要当前页面适用的交互验收项未落地，禁止交付最终 HTML。
