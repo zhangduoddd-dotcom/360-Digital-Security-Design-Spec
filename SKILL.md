@@ -65,16 +65,105 @@ HTML Demo 必须是可打开、可点击、可验证主要交互的高保真演�
 
 不提供 Vue、React、Tailwind、前端工程代码或框架项目代码生成要求。
 
-## 3. 首要硬约束
+## 3. HTML Demo 三大硬约束
 
-1. 必须先使用固定 HTML 母版；默认使用 `06-vue-code/templates/common-single-nav.html`。
-2. 不得自行重写顶部导航、侧边导航、页头、内容容器和母版交互。
-3. 业务组件 DOM / class / CSS / Token 必须从组件样式库成对抽取。
-4. 不得从 `02-components/` 推导真实 HTML DOM、class 或 CSS。
-5. 页面业务 class 只能追加修饰，不得替代基础组件 DOM 或基础 class。
-6. 已读取的交互规范必须转换为当前页面内部验收清单。
-7. HTML Demo 不得降级交互，不得只做静态视觉壳子。
-8. 任一当前页面适用的硬性验收项缺失时，不得交付。
+最终 HTML Demo 必须由三部分组成：
+
+```text
+框架母版 HTML
++ 组件样式库真实组件 DOM / CSS / Token
++ 当前页面业务内容、mock 数据和交互 JS
+```
+
+不得脱离框架母版重新写页面。
+不得脱离组件样式库重新写基础组件。
+不得读取交互规范后只做静态视觉展示。
+
+### 3.1 框架必须继承母版
+
+所有页面必须完整继承指定框架母版 HTML，不得自行重写顶部导航、侧边导航、页头和内容容器。
+
+默认母版：
+
+```text
+06-vue-code/templates/common-single-nav.html
+```
+
+框架母版不是视觉参考稿，而是页面底座。
+
+必须保留：
+
+- 顶部导航结构。
+- 左侧导航结构。
+- 页面头部结构。
+- 内容容器结构。
+- 框架 CSS。
+- 框架 JS。
+- iconfont。
+- hover / active / collapsed / open 等框架交互。
+
+只允许替换：
+
+- Logo。
+- 顶部导航文案。
+- 左侧菜单文案。
+- 页面标题。
+- 业务内容区内容。
+- mock 数据。
+
+未完整继承框架母版时，HTML Demo 视为生成失败。
+
+### 3.2 组件必须来自组件样式库
+
+所有基础组件必须从组件样式库 HTML 中按需抽取真实 DOM、class、CSS 和 Token，不得自行拼装或仿写组件。
+
+组件样式库唯一来源：
+
+```text
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+```
+
+当页面使用 Button、Input、Select、Table、Tag、Pagination、Toast 等基础组件时，必须从组件样式库中按需抽取：
+
+1. 真实组件 DOM。
+2. 真实基础 class。
+3. 对应组件 CSS。
+4. 依赖 Token。
+5. 必要状态节点。
+
+禁止：
+
+- 只写 `.ant-*` class 但不抽取真实 DOM。
+- 只复制组件 CSS 但自行拼 DOM。
+- 用 div 自造 Button、Table、Select、Pagination。
+- 根据组件语义文档自行推导 HTML 结构。
+- 用页面业务 CSS 临时重写一套组件样式。
+- 只参考组件样式库视觉，不复用组件样式库结构。
+
+页面业务 class 只能追加在组件真实 DOM 上作为业务修饰，不得替代基础组件 class。
+
+未完成组件 DOM / CSS / Token 成对抽取时，HTML Demo 视为生成失败。
+
+### 3.3 交互必须逐项落地
+
+已读取的页面交互规范必须转换为当前页面验收清单，生成后逐项自检；任一硬性项缺失，不得交付。
+
+列表页至少必须验证：
+
+- 搜索。
+- 清空。
+- loading。
+- empty。
+- 排序。
+- 列筛选。
+- 勾选联动。
+- 固定列。
+- 行操作。
+- 更多菜单。
+- 分页。
+- 禁用 Tooltip。
+- 二次确认。
+- Toast 反馈。
 
 ## 4. 生成流程
 

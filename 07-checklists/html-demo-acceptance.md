@@ -5,6 +5,19 @@ Keywords: html demo acceptance, checklist, high fidelity preview, token, respons
 
 本文用于检查 HTML Demo 是否符合设计规范、交互规则和高保真预览要求。
 
+## 0. HTML Demo 三大硬约束验收
+
+- [ ] HTML Demo 是否由“框架母版 HTML + 组件样式库真实组件 DOM / CSS / Token + 当前页面业务内容、mock 数据和交互 JS”组成。
+- [ ] 是否完整继承指定框架母版 HTML。
+- [ ] 是否未自行重写顶部导航、侧边导航、页头和内容容器。
+- [ ] 是否从组件样式库 HTML 中按需抽取真实组件 DOM、class、CSS 和 Token。
+- [ ] 是否未自行拼装或仿写 Button、Input、Select、Table、Tag、Pagination、Toast 等基础组件。
+- [ ] 是否把已读取的页面交互规范转换为当前页面验收清单。
+- [ ] 是否逐项落地当前页面适用的交互规则。
+- [ ] 是否不存在“只读了规范但未实现”的情况。
+
+任一项不通过时，HTML Demo 视为验收失败。
+
 ## 1. 交付物完整性
 
 - [ ] 已提供可直接打开预览的单文件 HTML。
