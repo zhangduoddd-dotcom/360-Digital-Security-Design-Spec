@@ -4,8 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360组件样式</title>
-  <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_5177816_bhdsh3zh4q.css">
   <style>
+    @font-face {
+      font-family: "iconfont"; /* Project id 5177816 */
+      src: url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff2?t=1779186015229') format('woff2'),
+           url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff?t=1779186015229') format('woff'),
+           url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.ttf?t=1779186015229') format('truetype');
+    }
+
     :root {
       --frame-top-height: 56px;
       --sidebar-expanded-width: 216px;
@@ -20,6 +26,7 @@
       --text-title: #242933;
       --text-body: #525966;
       --text-secondary: #8A9099;
+      --text-tertiary: #AEB2B8;
       --text-disabled: #AEB2B8;
       --text-inverse: #FFFFFF;
       --text-inverse-secondary: #D3D4D6;
@@ -125,15 +132,48 @@
       color: var(--text-inverse);
     }
     .iconfont {
+      font-family: "iconfont" !important;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 1em;
       height: 1em;
       font-size: 16px;
+      font-style: normal;
       line-height: 1;
       color: currentColor;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+    .icon-a-cuoguanbi:before { content: "\ec59"; }
+    .icon-a-quanjucaidan1:before { content: "\eacc"; }
+    .icon-a-riqirili:before { content: "\e72d"; }
+    .icon-a-shezhixitong:before { content: "\e720"; }
+    .icon-a-shuaxingengxinzhongzhi:before { content: "\e722"; }
+    .icon-a-sousuofangdajing:before { content: "\e723"; }
+    .icon-a-tongguochenggong:before { content: "\ec35"; }
+    .icon-add:before { content: "\e79d"; }
+    .icon-anquandanao:before { content: "\e8dc"; }
+    .icon-biaoqianye:before { content: "\e892"; }
+    .icon-biaoqianye-2:before { content: "\e893"; }
+    .icon-dui:before { content: "\ec41"; }
+    .icon-gerenzhongxin:before { content: "\e8db"; }
+    .icon-gongsi:before { content: "\e8dd"; }
+    .icon-liebiaoshitu:before { content: "\e8a7"; }
+    .icon-moren:before { content: "\e78f"; }
+    .icon-qingdan:before { content: "\e758"; }
+    .icon-qingdan1:before { content: "\e90b"; }
+    .icon-shaixuan:before { content: "\e760"; }
+    .icon-shangjiantou:before { content: "\e8de"; }
+    .icon-wentifankui:before { content: "\e8b9"; }
+    .icon-wenzi:before { content: "\e820"; }
+    .icon-xiajiantou:before { content: "\e8e0"; }
+    .icon-xiangyouzhankai:before { content: "\e8e1"; }
+    .icon-xiangzuozhankai:before { content: "\e8df"; }
+    .icon-xiazai:before { content: "\e729"; }
+    .icon-you-jiantou:before { content: "\ec2a"; }
+    .icon-zhinengfenxi:before { content: "\e745"; }
+    .icon-zuo-jiantou:before { content: "\ec2e"; }
     .top-brand-title { font-size: 16px; line-height: 24px; font-weight: 600; }
     .top-brand-sub { color: var(--text-inverse-secondary); font-size: 12px; line-height: 20px; }
     .top-nav-right { height: var(--frame-top-height); display: flex; align-items: center; flex-shrink: 0; }
