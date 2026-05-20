@@ -4648,18 +4648,6 @@
       display: block !important;
     }
 
-    .local-cascade-title {
-      min-height: 36px !important;
-      padding: 7px 12px !important;
-      border-radius: 4px !important;
-      color: #242933 !important;
-      font-size: 14px !important;
-      line-height: 22px !important;
-      font-weight: 500 !important;
-      white-space: nowrap !important;
-      background: #F8F9FA !important;
-    }
-
     .local-cascade-option {
       min-height: 36px !important;
       padding: 7px 12px !important;
@@ -5270,18 +5258,6 @@
       display: none !important;
     }
 
-    .local-cascade-title {
-      min-height: 36px !important;
-      padding: 7px 12px !important;
-      border-radius: 4px !important;
-      color: #242933 !important;
-      font-size: 14px !important;
-      line-height: 22px !important;
-      font-weight: 500 !important;
-      white-space: nowrap !important;
-      background: #F8F9FA !important;
-    }
-
     /* 滚动条统一简约样式 */
     .local-sidebar-scroll,
     .local-cascade-layer,
@@ -5763,8 +5739,7 @@
         layer.dataset.level = '1';
         layer.style.setProperty('--cascade-top', top + 'px');
         layer.style.setProperty('--cascade-left', left + 'px');
-        layer.innerHTML = '<div class="local-cascade-title">' + escapeHTML(rootItem.label) + '</div>' +
-          rootItem.children.map(cascadeOption).join('');
+        layer.innerHTML = rootItem.children.map(cascadeOption).join('');
         document.body.appendChild(layer);
         bindCascadeLayer(layer, 1);
       }
