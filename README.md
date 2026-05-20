@@ -1,7 +1,7 @@
 # 后台设计规范
 ## Backend Design Standards
 
-Keywords: backend design, design skill, ai readable, html demo, vue codegen, ant design vue
+Keywords: backend design, design skill, ai readable, html demo, vue codegen, component dom extraction
 
 这是面向 B 端后台产品的一份当前有效设计 Skill，用于帮助设计师、产品、AI Agent 和前端工程师生成、检查和统一后台 UI、HTML Demo 与 Vue 页面代码。
 
@@ -35,11 +35,11 @@ Backend-Design-Standards/
 
 - 线上文档即最新最准版本，不保留历史规范目录。
 - 文档使用英文短路径、中文正文、中英标题和英文 Keywords。
-- AI 按任务读取少量文档，但首次生成必须先读取固定框架、页面类型、组件样式库、组件映射和验收清单。
+- AI 按任务读取少量文档，但首次生成必须先读取固定框架、页面类型、组件样式库、组件 DOM 抽取、组件样式注入、组件映射和验收清单。
 - demo / 预览 / 可点击页面默认只输出 HTML；明确要求 Vue / 前端代码 / 工程接入时输出 Vue 代码，并可同时提供 HTML 预览。
-- HTML Demo 必须完整继承框架母版，业务组件必须使用组件样式库真实 `.ant-*` class，并注入对应组件 CSS。
+- HTML Demo 必须完整继承框架母版，业务组件 DOM / class / CSS / Token 必须从组件样式库成对抽取。
 - 列表页不得只实现“搜索区 + 表格 + 分页”的粗结构；读取搜索区、表格区交互文档后，必须按 `06-vue-code/list-page-interaction-enforcement.md` 和 `07-checklists/frontend-acceptance.md` 逐项落地验收。
-- `02-components/` 只作为组件语义、状态和交互规则来源，不作为 HTML Demo 的真实 class / CSS 来源。
+- `02-components/` 只作为组件语义、状态和交互规则来源，不作为 HTML Demo 的真实 DOM / class / CSS 来源。
 
 ## 4. 常用读取路径
 
@@ -53,6 +53,8 @@ SKILL.md
 → 04-pages/overview.md
 → 对应页面规范
 → docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+→ docs/component-style-library/component_style_library_index.md
+→ 06-vue-code/component-dom-extraction-rules.md
 → 06-vue-code/component-style-code-map.md
 → 06-vue-code/business-component-reuse-rules.md
 → 06-vue-code/component-style-import-rules.md
