@@ -1,9 +1,24 @@
 # 输入框规范
 ## Input Rules
 
-Keywords: input, form control, validation, focus, p6
+Keywords: input, form control, validation, focus, p6, semantic component rules
 
 本文迁移自上传包 `references/component-styles/input.txt`，用于约束后台页面中的单行输入框、搜索框和带操作输入框。
+
+## 0. 使用边界
+
+本文只定义输入框的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 class / CSS 来源。
+
+HTML Demo 中输入框真实 class 与 CSS 必须以以下文件为准：
+
+```text
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
+06-vue-code/component-style-import-rules.md
+```
+
+如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-input`、`.ant-input-affix-wrapper`、`.ant-input-status-error` 等真实 class 为准。禁止根据本文自行生成 `.form-input`、`.search-input`、`.alert-input` 等旧别名或私有输入框 class。
 
 ## 1. 使用场景
 
@@ -56,4 +71,6 @@ Default / Hover / Focus / Filled / Disabled / Error / Success / Loading / Cleara
 
 ## 6. Vue / HTML 生成要求
 
-Vue 使用 `a-input`、`a-input-search` 或 `a-input-password`。HTML 预览需要模拟 placeholder、hover、focus、filled、disabled、error、clearable 和搜索触发。
+Vue 使用 `a-input`、`a-input-search` 或 `a-input-password`。
+
+HTML 预览需要模拟 placeholder、hover、focus、filled、disabled、error、clearable 和搜索触发。HTML 预览的输入框 DOM 必须使用组件样式库真实 `.ant-input` / `.ant-input-affix-wrapper` 体系，并确保最终 HTML 已注入对应 `.ant-input` CSS。
