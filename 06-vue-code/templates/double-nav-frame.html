@@ -4,14 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>双层导航框架模板</title>
+  <!--
+  AI 使用硬约束：
+  1. 本文件是通用双层导航框架 HTML 母版，不是视觉参考稿。
+  2. 生成页面时必须完整复制本文件作为基座。
+  3. 只允许修改 navItems、localBrainMenus、顶部 logo、页签文案、.mock-content 内业务内容、mock 数据和必要业务文案。
+  4. 不得重写双层顶部导航、左侧菜单、收起态级联浮层、.mock-body、.mock-main-panel、页签式内容容器外层结构、iconfont、CSS 变量和 JS 交互。
+  5. 若文字规范与本 HTML 母版冲突，以本文件为准。
+  -->
   <style>
 
 /* ===== iconfont official font class from project 5177816 ===== */
 @font-face {
   font-family: "iconfont"; /* Project id 5177816 */
   src: url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff2?t=1779186015229') format('woff2'),
-     url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff?t=1779186015229') format('woff'),
-     url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.ttf?t=1779186015229') format('truetype');
+       url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff?t=1779186015229') format('woff'),
+       url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.ttf?t=1779186015229') format('truetype');
 }
 
 .iconfont {
@@ -3163,7 +3171,7 @@
 }
 
 .icon-a-quanjucaidan1:before {
-  content: "\e728";
+  content: "\eacc";
 }
 
 .icon-xiazai:before {
@@ -4346,7 +4354,7 @@
     }
 
     /* 双层顶部：主导航响应式，隐藏项合并到“更多” */
-    .main-nav {
+    .main-nav-row {
       min-width: 0 !important;
       flex: 1 !important;
       overflow: hidden !important;
@@ -4601,9 +4609,9 @@
     }
 
 
-    /* icon-a-quanjucaidan1 兼容定义：若 iconfont 项目未导出该 class，临时指向列表视图图标 */
+    /* 强制修正：双层导航全局菜单必须使用新版 icon-a-quanjucaidan1 = \eacc */
     .icon-a-quanjucaidan1:before {
-      content: "\eacc";
+      content: "\eacc" !important;
     }
 
 
@@ -5896,9 +5904,7 @@
             <div class="top-split"></div>
 
             <div class="top-info-item icon-only" title="通知">
-              <svg class="icon-14 secondary-icon" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3.1 5.3A4 4 0 0 1 7.2 1a4 4 0 0 1 4.2 4.3V9c.38.43.62 1 .64 1.63.01.24-.18.47-.43.47H9.32v.06a1.8 1.8 0 0 1-1.8 1.8H7.4a1.8 1.8 0 0 1-1.8-1.8v-.06H2.74a.43.43 0 0 1-.43-.44c0-.71.29-1.35.75-1.81V5.3Z" stroke="currentColor" stroke-width="1.1" fill="none"/>
-              </svg>
+              <i class="iconfont icon-a-tixinglingdang icon-14 secondary-icon nav-icon-14" aria-hidden="true"></i>
             </div>
 
             <div class="top-split"></div>
@@ -6127,86 +6133,10 @@
     function renderLocalBrainMenu() {
       const root = document.getElementById('localBrainSidebar');
       root.innerHTML = localBrainMenus.map(item => renderLocalBrainItem(item, 1)).join('');
-
-      root.querySelectorAll('[data-local-menu]').forEach(button => {
-        button.addEventListener('click', () => {
-          const id = button.dataset.localMenu;
-          const item = findLocalItem(localBrainMenus, id);
-          if (!item) return;
-
-          if (item.children) {
-            item.expanded = !item.expanded;
-        
-    function getFrameRootForSidebar() {
-      return document.querySelector('.double-navigation-frame') ||
-             document.querySelector('.terminal-frame') ||
-             document.querySelector('.single-navigation-frame') ||
-             document.body;
     }
-
-    function bindLocalSidebarCollapse() {
-      const button = document.getElementById('localSidebarCollapse');
-      if (!button) return;
-      button.addEventListener('click', event => {
-        event.stopPropagation();
-        getFrameRootForSidebar().classList.toggle('frame-sidebar-collapsed');
-        removeLocalCascadeLayers(1);
-      });
-    }
-
-    function bindCollapsedSidebarCascade() {
-      const root = document.getElementById('localBrainSidebar');
-      if (!root) return;
-      root.querySelectorAll('[data-local-root]').forEach(row => {
-        row.addEventListener('mouseenter', () => {
-          if (!getFrameRootForSidebar().classList.contains('frame-sidebar-collapsed')) return;
-          const id = row.dataset.localRoot;
-          const item = findLocalItem(localBrainMenus, id);
-          if (!item) return;
-          const rect = row.getBoundingClientRect();
-          showLocalCascade(item.children || [item], rect.top, 56, 1);
-        });
-      });
-    }
-
-    function showLocalCascade(items, top, left, level) {
-      removeLocalCascadeLayers(level);
-      if (!items || !items.length) return;
-
-      const layer = document.createElement('div');
-      layer.className = 'local-cascade-layer visible';
-      layer.dataset.level = String(level);
-      layer.style.setProperty('--cascade-top', top + 'px');
-      layer.style.setProperty('--cascade-left', left + 'px');
-      layer.innerHTML = items.map(item => {
-        const hasChildren = item.children && item.children.length;
-        const activeClass = !hasChildren && localActiveMenu === item.id ? ' active' : '';
-        return `<div class="local-cascade-option${activeClass}" data-cascade-id="${item.id}">
-          <span>${item.label}</span>
-          ${hasChildren ? '<i class="iconfont icon-xiajiantou local-cascade-arrow nav-icon-14" aria-hidden="true"></i>' : ''}
-        </div>`;
-      }).join('');
-      document.body.appendChild(layer);
-
-      layer.querySelectorAll('[data-cascade-id]').forEach(option => {
-        const item = findLocalItem(localBrainMenus, option.dataset.cascadeId);
-        option.addEventListener('mouseenter', () => {
-          const rect = option.getBoundingClientRect();
-          if (item && item.children && item.children.length) {
-            showLocalCascade(item.children, rect.top, rect.right + 8, level + 1);
-          } else {
-            removeLocalCascadeLayers(level + 1);
-          }
-        });
-        option.addEventListener('click', event => {
-          event.stopPropagation();
-          if (item && !(item.children && item.children.length)) {
-            localActiveMenu = item.id;
-            const pageHeaderTitle = document.getElementById('pageHeaderTitle');
-            if (pageHeaderTitle) pageHeaderTitle.textContent = item.label;
         
     function setupMainNavResponsive() {
-      const nav = document.querySelector('.main-nav');
+      const nav = document.getElementById('mainNav') || document.querySelector('.main-nav-row');
       if (!nav) return;
 
       let more = document.querySelector('.main-nav-more');
@@ -6288,40 +6218,6 @@
       setTimeout(recalc, 200);
     }
 
-
-    renderLocalBrainMenu();
-            removeLocalCascadeLayers(1);
-          }
-        });
-      });
-    }
-
-    function removeLocalCascadeLayers(fromLevel = 1) {
-      document.querySelectorAll('.local-cascade-layer').forEach(layer => {
-        if (Number(layer.dataset.level || '1') >= fromLevel) layer.remove();
-      });
-    }
-
-    document.addEventListener('mousemove', event => {
-      if (!getFrameRootForSidebar().classList.contains('frame-sidebar-collapsed')) return;
-      if (!event.target.closest('.local-brain-sidebar') && !event.target.closest('.local-cascade-layer')) {
-        removeLocalCascadeLayers(1);
-      }
-    });
-
-
-    renderLocalBrainMenu();
-    bindLocalSidebarCollapse();
-    bindCollapsedSidebarCascade();
-    setupMainNavResponsive();
-          } else {
-            localActiveMenu = id;
-            renderLocalBrainMenu();
-          }
-        });
-      });
-    }
-
     function renderLocalBrainItem(item, level) {
       const hasChildren = item.children && item.children.length;
       const isExpanded = !!item.expanded;
@@ -6343,17 +6239,6 @@
           ${hasChildren ? `<div class="local-menu-children">${item.children.map(child => renderLocalBrainItem(child, level + 1)).join('')}</div>` : ''}
         </div>
       `;
-    }
-
-    function findLocalItem(items, id) {
-      for (const item of items) {
-        if (item.id === id) return item;
-        if (item.children) {
-          const found = findLocalItem(item.children, id);
-          if (found) return found;
-        }
-      }
-      return null;
     }
 
     const tabConfig = {
@@ -6378,248 +6263,277 @@
       });
     });
 
-    renderLocalBrainMenu();
     renderNav();
+    renderLocalBrainMenu();
+    setupMainNavResponsive();
   </script>
-
-
-<script>
-(function () {
-  const subscriptionDays = 328;
-  const subscriptionCount = 8;
-
-  function getFrameRoot() {
-    return document.querySelector('.product-frame') ||
-      document.querySelector('.terminal-frame') ||
-      document.querySelector('.single-navigation-frame') ||
-      document.body;
-  }
-
-  function getArrowHTML() {
-    return '<span class="local-menu-arrow-wrap left-menu-dropdown-state" aria-hidden="true">' +
-      '<i class="iconfont icon-xiajiantou nav-icon-14 icon-state-collapsed icon-menu-collapsed"></i>' +
-      '<i class="iconfont icon-shangjiantou nav-icon-14 icon-state-expanded icon-menu-expanded"></i>' +
-      '</span>';
-  }
-
-  function normalizeLeftMenuArrows() {
-    const root = document.getElementById('localBrainSidebar');
-    if (!root) return;
-
-    root.querySelectorAll('.local-menu-node').forEach(node => {
-      const children = node.querySelector(':scope > .local-menu-children');
-      const button = node.querySelector(':scope > .local-menu-row .local-menu-item');
-      if (!button) return;
-
-      button.querySelectorAll('.local-menu-arrow-wrap, .left-menu-dropdown-state').forEach(arrow => arrow.remove());
-      button.querySelectorAll('svg.local-menu-arrow').forEach(arrow => arrow.remove());
-
-      if (children) {
-        button.insertAdjacentHTML('beforeend', getArrowHTML());
-      }
-    });
-  }
-
-  function patchSidebarRenderHook() {
-    const root = document.getElementById('localBrainSidebar');
-    if (!root || root.dataset.arrowObserverReady === 'true') return;
-    root.dataset.arrowObserverReady = 'true';
-    normalizeLeftMenuArrows();
-  }
-
-  function makeSubscriptionHTML() {
-    return '<i class="iconfont icon-anquandanao top-security-icon safe-brain-iconfont nav-icon-18" aria-hidden="true"></i>' +
-      '<span class="subscription-trigger-copy">360全网安全大脑持续守护 <strong>' + subscriptionDays + '</strong> 天，共 <strong>' + subscriptionCount + '</strong> 项订阅服务</span>';
-  }
-
-  function getDoubleTopItems() {
-    return Array.from(document.querySelectorAll('.double-top-nav .top-info-item'));
-  }
-
-  function findSubscriptionTrigger() {
-    return document.getElementById('safeBrainTrigger') ||
-      getDoubleTopItems().find(item => item.textContent.includes('持续守护') || item.textContent.includes('订阅'));
-  }
-
-  function findUserTrigger() {
-    return document.getElementById('userDropdown') ||
-      getDoubleTopItems().find(item => item.textContent.includes('超级管理员') || item.textContent.includes('用户名'));
-  }
-
-  function normalizeSubscriptionTrigger(trigger) {
-    if (!trigger) return null;
-    if (trigger.dataset.normalizedSubscription === 'true') return trigger;
-    trigger.dataset.normalizedSubscription = 'true';
-    trigger.innerHTML = makeSubscriptionHTML();
-    return trigger;
-  }
-
-  function normalizeUserTrigger(trigger) {
-    if (!trigger) return null;
-    if (trigger.dataset.normalizedUser === 'true') return trigger;
-    trigger.dataset.normalizedUser = 'true';
-
-    const isDouble = trigger.classList.contains('top-info-item');
-    const label = trigger.textContent.includes('超级管理员') ? '超级管理员' : '用户名';
-    if (isDouble) {
-      trigger.innerHTML = '<i class="iconfont icon-gerenzhongxin user-profile-icon primary-icon nav-icon-14" aria-hidden="true"></i>' +
-        '<span class="top-info-text-white">' + label + '</span>' +
-        '<span class="dropdown-state top-dropdown-state" aria-hidden="true">' +
-        '<i class="iconfont icon-xiajiantou nav-icon-14 icon-state-collapsed"></i>' +
-        '<i class="iconfont icon-shangjiantou nav-icon-14 icon-state-expanded"></i>' +
-        '</span>';
-    } else {
-      trigger.innerHTML = '<span>' + label + '</span>' +
-        '<span class="dropdown-state down-icon" aria-hidden="true">' +
-        '<i class="iconfont icon-xiajiantou nav-icon-14 icon-state-collapsed"></i>' +
-        '<i class="iconfont icon-shangjiantou nav-icon-14 icon-state-expanded"></i>' +
-        '</span>';
-    }
-    return trigger;
-  }
-
-  function createSubscriptionPopover() {
-    let panel = document.getElementById('sharedSubscriptionPopover');
-    if (panel) return panel;
-    panel = document.createElement('div');
-    panel.id = 'sharedSubscriptionPopover';
-    panel.className = 'nav-right-popover subscription-popover';
-    panel.innerHTML = `
-      <div class="subscription-header">
-        <h2 class="subscription-title">订阅服务详情</h2>
-        <p class="subscription-desc">360全网安全大脑持续守护 <strong>${subscriptionDays}</strong> 天，共 <strong>${subscriptionCount}</strong> 项订阅服务</p>
-      </div>
-      <div class="subscription-content">
-        <div class="subscription-section-title">订阅能力</div>
-        <div class="subscription-table">
-          <div class="subscription-row"><span>能力一</span><span>2026-03-28</span><span>授权至 2026-12-16</span><span>检查更新</span></div>
-          <div class="subscription-row"><span>能力二</span><span>2026-04-16</span><span>授权至 2026-12-16</span><span>检查更新</span></div>
-          <div class="subscription-row"><span>能力三</span><span>2026-03-03</span><span>授权至 2026-12-16</span><span>检查更新</span></div>
-          <div class="subscription-row"><span>能力四</span><span>2026-02-05</span><span>授权至 2026-12-16</span><span>检查更新</span></div>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(panel);
-    return panel;
-  }
-
-  function createUserPopover() {
-    let panel = document.getElementById('sharedUserPopover');
-    if (panel) return panel;
-    panel = document.createElement('div');
-    panel.id = 'sharedUserPopover';
-    panel.className = 'nav-right-popover user-popover';
-    panel.innerHTML = '<div class="popover-option">修改密码</div><div class="popover-option">意见反馈</div><div class="popover-option">退出登录</div>';
-    document.body.appendChild(panel);
-    return panel;
-  }
-
-  function alignRight(trigger, panel) {
-    panel.classList.add('visible');
-    panel.style.visibility = 'hidden';
-    panel.style.display = 'block';
-
-    const rect = trigger.getBoundingClientRect();
-    const width = Math.min(panel.offsetWidth || 156, window.innerWidth - 16);
-    const left = Math.max(8, Math.min(rect.right - width, window.innerWidth - width - 8));
-
-    panel.style.left = left + 'px';
-    panel.style.top = rect.bottom + 'px';
-    panel.style.visibility = '';
-  }
-
-  function bindHoverDropdown(trigger, panel) {
-    if (!trigger || !panel || trigger.dataset.hoverBound === 'true') return;
-    trigger.dataset.hoverBound = 'true';
-
-    let closeTimer = null;
-
-    function open() {
-      clearTimeout(closeTimer);
-      document.querySelectorAll('.nav-right-popover.visible').forEach(item => {
-        if (item !== panel) item.classList.remove('visible');
-      });
-      document.querySelectorAll('.top-info-item.open, .safe-brain-trigger.open, .user-dropdown.open').forEach(item => {
-        if (item !== trigger) item.classList.remove('open');
-      });
-      alignRight(trigger, panel);
-      trigger.classList.add('open');
-    }
-
-    function close() {
-      clearTimeout(closeTimer);
-      closeTimer = setTimeout(() => {
-        const triggerHover = trigger.matches(':hover');
-        const panelHover = panel.matches(':hover');
-        if (!triggerHover && !panelHover) {
-          panel.classList.remove('visible');
-          trigger.classList.remove('open');
-        }
-      }, 100);
-    }
-
-    trigger.addEventListener('mouseenter', open);
-    trigger.addEventListener('mouseleave', close);
-    trigger.addEventListener('click', event => event.preventDefault());
-    panel.addEventListener('mouseenter', () => clearTimeout(closeTimer));
-    panel.addEventListener('mouseleave', close);
-  }
-
-  function bindTopHoverDropdowns() {
-    const subscriptionTrigger = normalizeSubscriptionTrigger(findSubscriptionTrigger());
-    const userTrigger = normalizeUserTrigger(findUserTrigger());
-
-    bindHoverDropdown(subscriptionTrigger, createSubscriptionPopover());
-    bindHoverDropdown(userTrigger, createUserPopover());
-
-    const userMenu = document.getElementById('userMenu');
-    if (userMenu) {
-      userMenu.innerHTML = '<div class="user-option">修改密码</div><div class="user-option">意见反馈</div><div class="user-option">退出登录</div>';
-    }
-  }
-
-  function rebindSidebarCollapse() {
-    const button = document.getElementById('localSidebarCollapse');
-    if (!button || button.dataset.finalCollapseBound === 'true') return;
-    button.dataset.finalCollapseBound = 'true';
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      event.stopPropagation();
-      getFrameRoot().classList.toggle('frame-sidebar-collapsed');
-      document.querySelectorAll('.local-cascade-layer').forEach(layer => layer.remove());
-      normalizeLeftMenuArrows();
-    }, true);
-  }
-
-  setTimeout(() => {
-    normalizeLeftMenuArrows();
-    patchSidebarRenderHook();
-    bindTopHoverDropdowns();
-    rebindSidebarCollapse();
-  }, 0);
-
-  setTimeout(() => {
-    normalizeLeftMenuArrows();
-    bindTopHoverDropdowns();
-    rebindSidebarCollapse();
-  }, 300);
-})();
-</script>
 
 <style>
   /* ===== 框架组件维护层 =====
      常规接入只需要替换：
      - navItems：顶部主导航与下拉项
      - localBrainMenus：左侧菜单树
-     - .mock-main-panel：页面主体内容
+     - .mock-content 内业务内容：保留 .mock-body、.mock-main-panel 和页签式内容容器外层结构
      下方 class hook 请保持稳定，避免影响框架交互。 */
   :root {
     --frame-brand-color: #039972;
     --frame-active-bg: #D9F4EE;
     --frame-neutral-hover-bg: #F2F3F5;
+    --frame-card-bg: #FFFFFF;
+    --frame-border-color: #E8EAED;
+    --frame-text-title: #242933;
+    --frame-text-body: #525966;
+    --frame-text-muted: #8A9099;
+    --frame-shadow-layer: 0 8px 24px rgba(36, 41, 51, .14);
     --frame-global-menu-gap: 24px;
     --frame-main-menu-gap: 32px;
     --frame-popover-z-index: 10000;
+    --frame-dropdown-z-index: 9999;
+    --frame-transition-fast: .16s ease;
+    --frame-transition-width: .18s ease;
+
+    /* 左侧菜单硬约束：与单层导航框架保持一致 */
+    --frame-sidebar-width: 216px;
+    --frame-sidebar-collapsed-width: 56px;
+    --frame-sidebar-scroll-padding: 8px 0;
+    --frame-sidebar-footer-height: 42px;
+    --frame-sidebar-footer-padding: 12px 20px;
+    --frame-sidebar-footer-collapsed-padding: 12px 19px;
+    --frame-sidebar-footer-line-height: 18px;
+    --frame-menu-row-height: 40px;
+    --frame-menu-row-padding-x: 8px;
+    --frame-menu-item-width: 200px;
+    --frame-menu-collapsed-item-size: 40px;
+    --frame-menu-radius: 4px;
+    --frame-menu-level-1-padding: 9px 12px;
+    --frame-menu-level-2-padding: 9px 12px 9px 38px;
+    --frame-menu-level-3-padding: 9px 12px 9px 56px;
+    --frame-menu-main-gap: 8px;
+    --frame-menu-icon-size: 18px;
+    --frame-menu-arrow-size: 14px;
+    --frame-menu-font-size: 14px;
+    --frame-menu-line-height: 22px;
+    --frame-collapse-icon-size: 18px;
+    --frame-cascade-width: 180px;
+    --frame-cascade-max-height: calc(100vh - 72px);
+    --frame-cascade-arrow-gap: 8px;
+    --frame-popover-radius: 6px;
+    --frame-popover-padding: 4px;
+    --frame-dropdown-option-height: 36px;
+    --frame-dropdown-option-padding: 7px 12px;
+    --frame-dropdown-option-radius: 4px;
+    --frame-dropdown-option-font-size: 14px;
+    --frame-dropdown-option-line-height: 22px;
+  }
+
+  /* ===== 双层导航左侧菜单硬约束入口 ===== */
+  .local-brain-sidebar {
+    width: var(--frame-sidebar-width) !important;
+    min-width: var(--frame-sidebar-width) !important;
+    max-width: var(--frame-sidebar-width) !important;
+    flex: 0 0 var(--frame-sidebar-width) !important;
+    background: var(--frame-card-bg) !important;
+    border-right-color: var(--frame-border-color) !important;
+    transition: width var(--frame-transition-width), flex-basis var(--frame-transition-width) !important;
+  }
+
+  .local-sidebar-scroll {
+    width: var(--frame-sidebar-width) !important;
+    padding: var(--frame-sidebar-scroll-padding) !important;
+  }
+
+  .local-menu-row {
+    width: var(--frame-sidebar-width) !important;
+    height: var(--frame-menu-row-height) !important;
+    padding: 0 var(--frame-menu-row-padding-x) !important;
+    background: var(--frame-card-bg) !important;
+  }
+
+  .local-menu-item {
+    width: var(--frame-menu-item-width) !important;
+    height: var(--frame-menu-row-height) !important;
+    border-radius: var(--frame-menu-radius) !important;
+    color: var(--frame-text-title) !important;
+    font-size: var(--frame-menu-font-size) !important;
+    line-height: var(--frame-menu-line-height) !important;
+    transition: color var(--frame-transition-fast), background-color var(--frame-transition-fast) !important;
+  }
+
+  .local-menu-item.level-1 {
+    padding: var(--frame-menu-level-1-padding) !important;
+  }
+
+  .local-menu-item.level-2 {
+    padding: var(--frame-menu-level-2-padding) !important;
+    color: var(--frame-text-body) !important;
+  }
+
+  .local-menu-item.level-3 {
+    padding: var(--frame-menu-level-3-padding) !important;
+    color: var(--frame-text-body) !important;
+  }
+
+  .local-menu-main {
+    gap: var(--frame-menu-main-gap) !important;
+  }
+
+  .local-menu-label {
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    text-align: left !important;
+  }
+
+  .local-menu-icon {
+    width: var(--frame-menu-icon-size) !important;
+    height: var(--frame-menu-icon-size) !important;
+    color: var(--frame-text-muted) !important;
+    font-size: var(--frame-menu-icon-size) !important;
+    transition: color var(--frame-transition-fast) !important;
+  }
+
+  .local-menu-arrow-wrap,
+  .local-menu-arrow {
+    width: var(--frame-menu-arrow-size) !important;
+    height: var(--frame-menu-arrow-size) !important;
+    color: var(--frame-text-muted) !important;
+    font-size: var(--frame-menu-arrow-size) !important;
+  }
+
+  .local-menu-arrow {
+    line-height: 1 !important;
+    transform: none !important;
+  }
+
+  .local-menu-item:hover {
+    color: var(--frame-brand-color) !important;
+    background: transparent !important;
+  }
+
+  .local-menu-item:hover .local-menu-icon,
+  .local-menu-item:hover .local-menu-arrow,
+  .local-menu-item:hover .local-menu-arrow-wrap {
+    color: var(--frame-brand-color) !important;
+  }
+
+  .local-menu-item.active {
+    color: var(--frame-brand-color) !important;
+    background: var(--frame-active-bg) !important;
+  }
+
+  .local-menu-item.active .local-menu-icon,
+  .local-menu-item.active .local-menu-arrow,
+  .local-menu-item.active .local-menu-arrow-wrap {
+    color: var(--frame-brand-color) !important;
+  }
+
+  .local-sidebar-footer {
+    width: var(--frame-sidebar-width) !important;
+    height: var(--frame-sidebar-footer-height) !important;
+    padding: var(--frame-sidebar-footer-padding) !important;
+    color: var(--frame-text-muted) !important;
+    border-top-color: var(--frame-neutral-hover-bg) !important;
+    font-size: var(--frame-menu-font-size) !important;
+    line-height: var(--frame-sidebar-footer-line-height) !important;
+  }
+
+  .local-collapse-button {
+    width: var(--frame-collapse-icon-size) !important;
+    height: var(--frame-collapse-icon-size) !important;
+    border-radius: var(--frame-menu-radius) !important;
+    color: var(--frame-text-muted) !important;
+  }
+
+  .local-collapse-button:hover,
+  .frame-sidebar-collapsed .local-menu-row:hover .local-menu-item {
+    color: var(--frame-brand-color) !important;
+    background: var(--frame-neutral-hover-bg) !important;
+  }
+
+  .frame-sidebar-collapsed .local-brain-sidebar {
+    width: var(--frame-sidebar-collapsed-width) !important;
+    min-width: var(--frame-sidebar-collapsed-width) !important;
+    max-width: var(--frame-sidebar-collapsed-width) !important;
+    flex-basis: var(--frame-sidebar-collapsed-width) !important;
+  }
+
+  .frame-sidebar-collapsed .local-sidebar-scroll {
+    width: var(--frame-sidebar-collapsed-width) !important;
+    min-width: var(--frame-sidebar-collapsed-width) !important;
+    max-width: var(--frame-sidebar-collapsed-width) !important;
+    padding: var(--frame-sidebar-scroll-padding) !important;
+  }
+
+  .frame-sidebar-collapsed .local-menu-node,
+  .frame-sidebar-collapsed .local-menu-row {
+    width: var(--frame-sidebar-collapsed-width) !important;
+    min-height: var(--frame-menu-row-height) !important;
+  }
+
+  .frame-sidebar-collapsed .local-menu-row {
+    height: var(--frame-menu-row-height) !important;
+    padding: 0 var(--frame-menu-row-padding-x) !important;
+  }
+
+  .frame-sidebar-collapsed .local-menu-item {
+    width: var(--frame-menu-collapsed-item-size) !important;
+    height: var(--frame-menu-collapsed-item-size) !important;
+    min-width: var(--frame-menu-collapsed-item-size) !important;
+  }
+
+  .frame-sidebar-collapsed .local-menu-main,
+  .frame-sidebar-collapsed .local-menu-icon {
+    width: var(--frame-menu-icon-size) !important;
+    min-width: var(--frame-menu-icon-size) !important;
+    max-width: var(--frame-menu-icon-size) !important;
+    flex-basis: var(--frame-menu-icon-size) !important;
+  }
+
+  .frame-sidebar-collapsed .local-sidebar-footer {
+    width: var(--frame-sidebar-collapsed-width) !important;
+    min-width: var(--frame-sidebar-collapsed-width) !important;
+    max-width: var(--frame-sidebar-collapsed-width) !important;
+    padding: var(--frame-sidebar-footer-collapsed-padding) !important;
+  }
+
+  .local-cascade-layer {
+    width: var(--frame-cascade-width) !important;
+    max-height: var(--frame-cascade-max-height) !important;
+    padding: var(--frame-popover-padding) !important;
+    border-radius: var(--frame-popover-radius) !important;
+    background: var(--frame-card-bg) !important;
+    border-color: var(--frame-border-color) !important;
+    box-shadow: var(--frame-shadow-layer) !important;
+    z-index: var(--frame-dropdown-z-index) !important;
+  }
+
+  .local-cascade-option,
+  .local-cascade-title {
+    min-height: var(--frame-dropdown-option-height) !important;
+    padding: var(--frame-dropdown-option-padding) !important;
+    border-radius: var(--frame-dropdown-option-radius) !important;
+    color: var(--frame-text-title) !important;
+    font-size: var(--frame-dropdown-option-font-size) !important;
+    line-height: var(--frame-dropdown-option-line-height) !important;
+  }
+
+  .local-cascade-option:hover {
+    background: var(--frame-neutral-hover-bg) !important;
+    color: var(--frame-text-title) !important;
+  }
+
+  .local-cascade-option.active {
+    background: var(--frame-active-bg) !important;
+    color: var(--frame-brand-color) !important;
+  }
+
+  .local-cascade-arrow {
+    margin-left: var(--frame-cascade-arrow-gap) !important;
+    color: var(--frame-text-muted) !important;
   }
 
   .local-menu-node > .local-menu-row .local-menu-arrow-wrap .iconfont {
@@ -6896,6 +6810,19 @@
     });
   }
 
+  function bindSidebarCollapse() {
+    const button = document.getElementById('localSidebarCollapse');
+    if (!button || button.dataset.frameCollapseBound === 'true') return;
+    button.dataset.frameCollapseBound = 'true';
+
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      getFrameRoot().classList.toggle('frame-sidebar-collapsed');
+      removeLocalCascadeLayers(1);
+    });
+  }
+
   function findSubscriptionTrigger() {
     return getTopItems().find(item => item.textContent.includes('持续守护') || item.textContent.includes('订阅'));
   }
@@ -7005,6 +6932,7 @@
     updateActiveAncestorState();
     bindLeftMenuInteraction();
     watchLeftMenuRerender();
+    bindSidebarCollapse();
     bindCollapsedSidebarCascade();
     bindTopHoverPopovers();
   }
