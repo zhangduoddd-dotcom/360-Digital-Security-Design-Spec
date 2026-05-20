@@ -46,30 +46,14 @@ HTML 预览
 
 ## 2. 必读文件
 
-生成 HTML Demo 时必须读取：
+生成 HTML Demo 时，先读取根目录：
 
 ```text
-ROLE.md
 SKILL.md
-DOCS-STRUCTURE.md
 INDEX.md
-06-vue-code/templates/README.md
-06-vue-code/templates/common-single-nav.html 或 06-vue-code/templates/double-nav-frame.html
-04-pages/overview.md
-对应页面规范
-docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-docs/component-style-library/component_style_library_index.md
-06-vue-code/component-dom-extraction-rules.md
-06-vue-code/component-style-code-map.md
-06-vue-code/business-component-reuse-rules.md
-06-vue-code/component-style-import-rules.md
-06-vue-code/component-reading-order-rules.md
-06-vue-code/deprecated-class-blacklist.md
-02-components/component-doc-boundary.md
-02-components/overview.md
-对应 02-components 组件语义文档
-07-checklists/ai-output.md
 ```
+
+再按 `INDEX.md` 中对应任务 profile 读取页面规范、交互规范、组件样式库、组件抽取规则和验收清单。
 
 禁止只读取 `02-components/` 后自行推导 HTML class。禁止只读取框架母版而不读取组件样式库。
 
@@ -173,15 +157,13 @@ HTML 可演示页面必须满足：
 - 是否读取并执行 `component-style-import-rules.md`。
 - 是否读取并执行 `component-style-code-map.md`。
 - 是否读取并执行 `business-component-reuse-rules.md`。
-- 是否读取并执行 `component-reading-order-rules.md`。
 - 是否读取并执行 `deprecated-class-blacklist.md`。
-- 是否读取 `02-components/component-doc-boundary.md`。
 - 所有业务组件 DOM 是否来自组件样式库。
 - 所有已使用组件是否有对应 CSS 和 Token。
 - 组件 CSS 是否位于框架母版 CSS 之后、页面业务 CSS 之前。
 - 页面业务 CSS 是否只做局部修饰。
 - 是否包含 loading、empty、error、success、confirm 等必要状态。
-- 是否通过 `07-checklists/ai-output.md` 验收。
+- 是否通过 `07-checklists/ai-output.md` 或 `07-checklists/frontend-acceptance.md` 验收。
 
 只要 DOM、CSS、Token 成对抽取检查不通过，禁止交付最终 HTML。
 

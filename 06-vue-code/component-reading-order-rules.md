@@ -28,8 +28,7 @@ Keywords: component reading order, component dom extraction, html demo, semantic
 6. 06-vue-code/component-style-import-rules.md
 7. 06-vue-code/deprecated-class-blacklist.md
 8. 02-components/component-doc-boundary.md
-9. 02-components/overview.md
-10. 02-components/对应组件文档
+9. 02-components/对应组件文档
 ```
 
 ## 4. 组件职责划分
@@ -82,4 +81,4 @@ deprecated-class-blacklist.md
 - 是否读取 `02-components/component-doc-boundary.md`。
 - 业务组件 DOM 是否来自组件样式库。
 - 业务组件 CSS 与 Token 是否来自组件样式库或复用母版同名 Token。
-- 是否通过 `07-checklists/ai-output.md`。
+- 是否通过 `07-checklists/ai-output.md` 或 `07-checklists/frontend-acceptance.md`。
