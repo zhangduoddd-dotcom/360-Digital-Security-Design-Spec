@@ -328,3 +328,24 @@ HTML 预览需支持搜索、重置、分页、行操作、删除确认、勾选
 | 状态标签 | 颜色和文字同时表达 |
 | 分页 | 总数、页码、每页条数和跳页完整 |
 | 预览交互 | 搜索、重置、分页、删除确认可操作 |
+
+## 17. 列表页交付总控规则
+
+列表页交付不得只满足“搜索区 + 表格 + 分页”的粗粒度结构。
+
+生成列表页、HTML Demo 或 Vue 页面代码时，必须同时满足：
+
+```text
+03-interaction/list-search.md
+03-interaction/list-table.md
+06-vue-code/list-page-interaction-enforcement.md
+07-checklists/frontend-acceptance.md
+```
+
+列表页必须完整落实搜索、清空、loading、empty、排序、列筛选、勾选联动、固定列、行操作、更多菜单、分页、禁用 Tooltip、二次确认和 Toast 反馈等交互规则。
+
+读取列表页交互文档后，必须转换为当前页面内部验收清单。
+生成完成后，必须逐项自检。
+缺少任一当前业务适用的硬性项时，不得交付。
+
+HTML 预览不得降级为静态展示。排序、列筛选、分页切换、勾选联动、更多菜单、禁用 Tooltip、确认弹窗和 Toast 反馈必须可点击验证。
