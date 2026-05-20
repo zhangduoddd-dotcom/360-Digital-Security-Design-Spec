@@ -1,9 +1,24 @@
 # 表格规范
 ## Table Rules
 
-Keywords: table, data table, column type, row action, batch action, pagination, p6
+Keywords: table, data table, column type, row action, batch action, pagination, p6, semantic component rules
 
 本文合并上传包 `table` 组件细节，并保留主线仓库的数据展示规范方向。表格是 B 端列表页的核心组件，必须优先保证查找效率、判断效率和处理效率。
+
+## 0. 使用边界
+
+本文只定义表格的语义、信息组织、列类型、状态要求和交互规则，不作为 HTML Demo 的真实 class / CSS 来源。
+
+HTML Demo 中表格真实 class 与 CSS 必须以以下文件为准：
+
+```text
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-style-code-map.md
+06-vue-code/business-component-reuse-rules.md
+06-vue-code/component-style-import-rules.md
+```
+
+如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-table-wrapper`、`.ant-table`、`.ant-table-compact`、`.ant-table-toolbar`、`.ant-table-cell-actions`、`.ant-table-empty`、`.ant-table-loading`、`.ant-table-error` 等真实 class 为准。禁止根据本文自行生成 `.data-table`、`.alert-table`、`.risk-table` 等旧别名或私有表格 class。
 
 ## 1. 使用场景
 
@@ -30,8 +45,8 @@ TableContainer
 
 | 项目 | 规范 |
 |---|---|
-| 表头高度 | 40px |
-| 表格行高 | 40px 默认，高密可 36px |
+| 表头高度 | 40px 或 48px，按组件样式库密度规范执行 |
+| 表格行高 | 40px 紧凑 / 48px 常规 |
 | 表格字号 | 12px 或 14px |
 | 表头背景 | `gray-2 / gray-3` 浅灰 |
 | 单元格 padding | 横向 12px 左右 |
@@ -125,4 +140,6 @@ TableContainer
 
 ## 13. Vue / HTML 生成要求
 
-Vue 使用 `a-table`，必须包含 `rowKey`、loading、empty、pagination、columns、dataSource。选择列使用 `rowSelection`。操作列危险操作必须确认。HTML 预览需要模拟 loading、empty、error、hover、selected、pagination、勾选联动和复制反馈。
+Vue 使用 `a-table`，必须包含 `rowKey`、loading、empty、pagination、columns、dataSource。选择列使用 `rowSelection`。操作列危险操作必须确认。
+
+HTML 预览需要模拟 loading、empty、error、hover、selected、pagination、勾选联动和复制反馈。HTML 预览的表格 DOM 必须使用组件样式库真实 `.ant-table-wrapper` + `.ant-table` 体系，并确保最终 HTML 已注入对应 `.ant-table` CSS。
