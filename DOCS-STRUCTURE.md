@@ -15,7 +15,6 @@ Keywords: documentation structure, reading order, component layers, html demo, a
 → 02 组件语义层
 → 03 交互规则层
 → 04 页面模式层
-→ 05 AI 生图层
 → 06 实现与样式映射层
 → 07 验收层
 ```
@@ -46,8 +45,7 @@ Keywords: documentation structure, reading order, component layers, html demo, a
 | `02-components/` | 组件语义、使用场景、状态要求、交互规则 | 不决定 HTML Demo 的真实 class / CSS |
 | `03-interaction/` | 搜索、表格交互、表单录入、导航、权限等交互模式 | 不决定组件最终 CSS |
 | `04-pages/` | 页面类型模板：列表、表单、详情、工作台等 | 不重写基础组件样式 |
-| `05-ai-image/` | 生图 Prompt 与负向约束 | 不生成可运行 HTML |
-| `06-vue-code/` | HTML Demo、Vue 代码、组件 class 映射、样式注入、模板母版 | 不定义组件语义本身 |
+| `06-vue-code/` | HTML Demo、Vue 代码、组件 class 映射、样式注入、旧 class 黑名单、模板母版 | 不定义组件语义本身 |
 | `07-checklists/` | 输出验收、设计走查、前端实现检查 | 不作为生成源头 |
 | `docs/component-style-library/` | 可运行组件样式库，提供真实 `.ant-*` class 与 CSS | 不解释完整业务场景 |
 
@@ -78,6 +76,9 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 06-vue-code/component-reading-order-rules.md
 = 强制先读真实样式层，再读 02 语义层
+
+06-vue-code/deprecated-class-blacklist.md
+= 集中维护旧别名 class 和私有组件 class 黑名单
 ```
 
 ---
@@ -100,10 +101,11 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 11. 06-vue-code/business-component-reuse-rules.md
 12. 06-vue-code/component-style-import-rules.md
 13. 06-vue-code/component-reading-order-rules.md
-14. 02-components/component-doc-boundary.md
-15. 02-components/overview.md
-16. 对应 02-components 组件语义文档
-17. 07-checklists/ai-output.md
+14. 06-vue-code/deprecated-class-blacklist.md
+15. 02-components/component-doc-boundary.md
+16. 02-components/overview.md
+17. 对应 02-components 组件语义文档
+18. 07-checklists/ai-output.md
 ```
 
 核心原则：
@@ -149,15 +151,21 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 HTML Demo 中基础组件 class 必须来自真实样式库。
 
-| 组件 | 正确基础 class | 禁止旧别名 / 私有 class |
-|---|---|---|
-| Button | `.ant-btn`、`.ant-btn-primary`、`.ant-btn-text`、`.ant-btn-link` | `.btn`、`.btn-primary`、`.alert-button` |
-| Input | `.ant-input`、`.ant-input-affix-wrapper` | `.form-input`、`.search-input`、`.alert-input` |
-| Select | `.ant-select`、`.ant-select-selector` | `.select`、`.select-panel`、`.alert-select` |
-| Table | `.ant-table-wrapper`、`.ant-table`、`.ant-table-compact` | `.data-table`、`.alert-table`、`.risk-table` |
-| Tag | `.ant-tag`、`.ant-tag-success`、`.ant-tag-warning`、`.ant-tag-error` | `.tag`、`.tag-status`、`.status-tag` |
-| Pagination | `.ant-pagination`、`.ant-pagination-item` | `.pagination`、`.alert-pagination` |
-| Toast | `.toast-holder`、`.toast` | `.alert-toast` |
+| 组件 | 正确基础 class |
+|---|---|
+| Button | `.ant-btn`、`.ant-btn-primary`、`.ant-btn-text`、`.ant-btn-link` |
+| Input | `.ant-input`、`.ant-input-affix-wrapper` |
+| Select | `.ant-select`、`.ant-select-selector` |
+| Table | `.ant-table-wrapper`、`.ant-table`、`.ant-table-compact` |
+| Tag | `.ant-tag`、`.ant-tag-success`、`.ant-tag-warning`、`.ant-tag-error` |
+| Pagination | `.ant-pagination`、`.ant-pagination-item` |
+| Toast | `.toast-holder`、`.toast` |
+
+旧别名 class 和页面私有组件 class 统一集中到：
+
+```text
+06-vue-code/deprecated-class-blacklist.md
+```
 
 业务 class 只能追加：
 
@@ -181,9 +189,10 @@ HTML Demo 中基础组件 class 必须来自真实样式库。
 3. 组件 class 映射：以 06-vue-code/component-style-code-map.md 为准。
 4. 业务组件复用：以 06-vue-code/business-component-reuse-rules.md 为准。
 5. 组件 CSS 注入：以 06-vue-code/component-style-import-rules.md 为准。
-6. 组件语义和状态：以 02-components/*.md 为准。
-7. 页面结构：以 04-pages/*.md 为准。
-8. 输出验收：以 07-checklists/*.md 为准。
+6. 旧 class 黑名单：以 06-vue-code/deprecated-class-blacklist.md 为准。
+7. 组件语义和状态：以 02-components/*.md 为准。
+8. 页面结构：以 04-pages/*.md 为准。
+9. 输出验收：以 07-checklists/*.md 为准。
 ```
 
 特别说明：
@@ -215,12 +224,12 @@ Backend-Design-Standards/
 │   └── ...
 ├── 03-interaction/
 ├── 04-pages/
-├── 05-ai-image/
 ├── 06-vue-code/
 │   ├── component-reading-order-rules.md
 │   ├── component-style-code-map.md
 │   ├── business-component-reuse-rules.md
 │   ├── component-style-import-rules.md
+│   ├── deprecated-class-blacklist.md
 │   ├── preview-html.md
 │   ├── codegen-rules.md
 │   └── templates/
@@ -240,7 +249,7 @@ Backend-Design-Standards/
 1. 新增组件语义规则，放入 `02-components/`。
 2. 新增真实组件 CSS，放入 `docs/component-style-library/`。
 3. 新增 HTML / Vue 映射，更新 `06-vue-code/component-style-code-map.md`。
-4. 新增防误用规则，更新 `06-vue-code/business-component-reuse-rules.md`。
+4. 新增防误用规则，更新 `06-vue-code/business-component-reuse-rules.md` 或 `06-vue-code/deprecated-class-blacklist.md`。
 5. 新增 CSS 注入要求，更新 `06-vue-code/component-style-import-rules.md`。
 6. 新增读取顺序或目录关系，更新本文和 `INDEX.md`。
 
