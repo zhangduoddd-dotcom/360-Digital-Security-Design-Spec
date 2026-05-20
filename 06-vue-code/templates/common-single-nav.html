@@ -3252,16 +3252,12 @@
 .nav-icon-18 { width: 18px; height: 18px; font-size: 18px; }
 .nav-icon-24 { width: 24px; height: 24px; font-size: 24px; }
 
-/* 深色顶部导航：默认弱白，hover / open 变白；强调图标用品牌绿 */
-.double-top-nav .iconfont,
+/* 单层深色顶部导航：默认弱白，hover / open 变白；强调图标用品牌绿 */
 .s-header .iconfont,
 .terminal-topbar .iconfont {
   color: #AEB2B8;
 }
 
-.double-top-nav .top-security-icon,
-.double-top-nav .company-icon,
-.double-top-nav .user-profile-icon,
 .s-header .safe-brain-iconfont,
 .s-header .company-switch-icon,
 .s-header .user-profile-icon,
@@ -3271,11 +3267,6 @@
   color: #00AB7A !important;
 }
 
-.double-top-nav .top-info-item:hover .iconfont,
-.double-top-nav .top-info-item.open .iconfont,
-.double-top-nav .main-nav-item:hover .iconfont,
-.double-top-nav .main-nav-item.open .iconfont,
-.double-top-nav .global-menu:hover .iconfont,
 .s-header .icon-button:hover .iconfont,
 .s-header .icon-button.open .iconfont,
 .s-header .user-dropdown:hover .iconfont,
@@ -4156,116 +4147,7 @@
       display: inline-flex !important;
     }
 
-    /* 双层顶部：全局菜单 40×40 热区 */
-    .global-menu {
-      width: 40px !important;
-      height: 40px !important;
-      min-width: 40px !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      border-radius: 4px !important;
-      cursor: pointer !important;
-    }
-
-    .global-menu:hover,
-    .global-menu.open {
-      background: rgba(255,255,255,.08) !important;
-    }
-
-    /* 双层顶部：主导航响应式，隐藏项合并到“更多” */
-    .main-nav {
-      min-width: 0 !important;
-      flex: 1 !important;
-      overflow: hidden !important;
-    }
-
-    .main-nav-item.is-hidden-by-width {
-      display: none !important;
-    }
-
-    .main-nav-more {
-      height: 68px;
-      padding: 0 16px;
-      display: none;
-      align-items: center;
-      gap: 4px;
-      color: #D3D4D6;
-      font-size: 14px;
-      line-height: 22px;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .main-nav-more.visible {
-      display: inline-flex;
-    }
-
-    .main-nav-more:hover,
-    .main-nav-more.open {
-      color: #FFFFFF;
-    }
-
-    .main-nav-more-dropdown {
-      position: fixed;
-      top: 68px;
-      min-width: 156px;
-      padding: 4px;
-      border-radius: 6px;
-      background: #FFFFFF;
-      border: 1px solid #E8EAED;
-      box-shadow: 0 8px 24px rgba(36,41,51,.14);
-      z-index: 9999;
-      display: none;
-    }
-
-    .main-nav-more-dropdown.visible {
-      display: block;
-    }
-
-    .main-nav-more-option {
-      height: 36px;
-      padding: 7px 12px;
-      border-radius: 4px;
-      color: #242933;
-      font-size: 14px;
-      line-height: 22px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .main-nav-more-option:hover {
-      background: #F2F3F5;
-      color: #039972;
-    }
-
-
-    /* ===== 本轮修正：全局菜单热区 / 左侧菜单箭头 / 收起态 / 滚动条 ===== */
-
-    /* 双层顶部全局菜单：40×28 响应热区，16×16 icon 居中 */
-    .global-menu {
-      width: 40px !important;
-      height: 28px !important;
-      min-width: 40px !important;
-      padding: 0 !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      border-radius: 4px !important;
-      cursor: pointer !important;
-      flex-shrink: 0 !important;
-    }
-
-    .global-menu .iconfont {
-      width: 16px !important;
-      height: 16px !important;
-      font-size: 16px !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      line-height: 1 !important;
-    }
+    /* ===== 本轮修正：左侧菜单箭头 / 收起态 / 滚动条 ===== */
 
     /* 左侧菜单 icon：统一 18×18 */
     .local-menu-icon {
@@ -4370,7 +4252,6 @@
     .main-content,
     .safe-brain-content,
     .screen-drawer,
-    .main-nav-more-dropdown,
     .local-cascade-layer,
     .center-dropdown,
     .user-dropdown {
@@ -4383,7 +4264,6 @@
     .main-content::-webkit-scrollbar,
     .safe-brain-content::-webkit-scrollbar,
     .screen-drawer::-webkit-scrollbar,
-    .main-nav-more-dropdown::-webkit-scrollbar,
     .local-cascade-layer::-webkit-scrollbar,
     .center-dropdown::-webkit-scrollbar,
     .user-dropdown::-webkit-scrollbar {
@@ -4396,7 +4276,6 @@
     .main-content::-webkit-scrollbar-track,
     .safe-brain-content::-webkit-scrollbar-track,
     .screen-drawer::-webkit-scrollbar-track,
-    .main-nav-more-dropdown::-webkit-scrollbar-track,
     .local-cascade-layer::-webkit-scrollbar-track,
     .center-dropdown::-webkit-scrollbar-track,
     .user-dropdown::-webkit-scrollbar-track {
@@ -4408,7 +4287,6 @@
     .main-content::-webkit-scrollbar-thumb,
     .safe-brain-content::-webkit-scrollbar-thumb,
     .screen-drawer::-webkit-scrollbar-thumb,
-    .main-nav-more-dropdown::-webkit-scrollbar-thumb,
     .local-cascade-layer::-webkit-scrollbar-thumb,
     .center-dropdown::-webkit-scrollbar-thumb,
     .user-dropdown::-webkit-scrollbar-thumb {
@@ -4421,7 +4299,6 @@
     .main-content::-webkit-scrollbar-thumb:hover,
     .safe-brain-content::-webkit-scrollbar-thumb:hover,
     .screen-drawer::-webkit-scrollbar-thumb:hover,
-    .main-nav-more-dropdown::-webkit-scrollbar-thumb:hover,
     .local-cascade-layer::-webkit-scrollbar-thumb:hover,
     .center-dropdown::-webkit-scrollbar-thumb:hover,
     .user-dropdown::-webkit-scrollbar-thumb:hover {
@@ -4437,49 +4314,12 @@
 
     /* ===== 2026-05 左侧导航统一组件最终修正 ===== */
 
-    /* 顶部全局菜单：40×28 热区，16×16 icon 居中；hover 不加底色，只变白 */
-    .double-top-nav .global-menu {
-      width: 40px !important;
-      height: 28px !important;
-      min-width: 40px !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      border-radius: 4px !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      background: transparent !important;
-      color: #AEB2B8 !important;
-      cursor: pointer !important;
-      flex-shrink: 0 !important;
-    }
-
-    .double-top-nav .global-menu:hover,
-    .double-top-nav .global-menu.open {
-      background: transparent !important;
-      color: #FFFFFF !important;
-    }
-
-    .double-top-nav .global-menu .iconfont {
-      width: 16px !important;
-      height: 16px !important;
-      font-size: 16px !important;
-      line-height: 1 !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      color: currentColor !important;
-    }
-
     /* 顶部右侧操作：主题色 icon 悬停保持主题色；浅灰文字/普通 icon 悬停变白 */
-    .double-top-nav .top-info-item,
     .s-header .safe-brain-trigger,
     .terminal-topbar .safe-brain-trigger {
       color: #AEB2B8 !important;
     }
 
-    .double-top-nav .top-info-item:hover,
-    .double-top-nav .top-info-item.open,
     .s-header .safe-brain-trigger:hover,
     .s-header .safe-brain-trigger.open,
     .terminal-topbar .safe-brain-trigger:hover,
@@ -4487,9 +4327,6 @@
       color: #FFFFFF !important;
     }
 
-    .double-top-nav .top-security-icon,
-    .double-top-nav .company-icon,
-    .double-top-nav .user-profile-icon,
     .s-header .safe-brain-iconfont,
     .s-header .company-switch-icon,
     .s-header .user-profile-icon,
@@ -4499,12 +4336,6 @@
       color: #00AB7A !important;
     }
 
-    .double-top-nav .top-info-item:hover .top-security-icon,
-    .double-top-nav .top-info-item:hover .company-icon,
-    .double-top-nav .top-info-item:hover .user-profile-icon,
-    .double-top-nav .top-info-item.open .top-security-icon,
-    .double-top-nav .top-info-item.open .company-icon,
-    .double-top-nav .top-info-item.open .user-profile-icon,
     .s-header .safe-brain-trigger:hover .safe-brain-iconfont,
     .s-header .safe-brain-trigger.open .safe-brain-iconfont,
     .terminal-topbar .safe-brain-trigger:hover .safe-brain-iconfont,
@@ -4514,16 +4345,11 @@
       color: #00AB7A !important;
     }
 
-    .double-top-nav .top-security-icon,
     .s-header .safe-brain-iconfont,
     .terminal-topbar .safe-brain-iconfont {
       margin-right: 8px !important;
     }
 
-    .double-top-nav .top-info-item:hover .secondary-icon,
-    .double-top-nav .top-info-item.open .secondary-icon,
-    .double-top-nav .top-info-item:hover .dropdown-state,
-    .double-top-nav .top-info-item.open .dropdown-state,
     .s-header .user-dropdown:hover .dropdown-state,
     .s-header .user-dropdown.open .dropdown-state,
     .terminal-topbar .visual-screen-trigger:hover .dropdown-state,
@@ -4867,7 +4693,6 @@
     .main-content,
     .safe-brain-content,
     .screen-drawer,
-    .main-nav-more-dropdown,
     .center-dropdown,
     .user-dropdown,
     .dropdown-panel {
@@ -4882,7 +4707,6 @@
     .main-content::-webkit-scrollbar,
     .safe-brain-content::-webkit-scrollbar,
     .screen-drawer::-webkit-scrollbar,
-    .main-nav-more-dropdown::-webkit-scrollbar,
     .center-dropdown::-webkit-scrollbar,
     .user-dropdown::-webkit-scrollbar,
     .dropdown-panel::-webkit-scrollbar {
@@ -4897,7 +4721,6 @@
     .main-content::-webkit-scrollbar-track,
     .safe-brain-content::-webkit-scrollbar-track,
     .screen-drawer::-webkit-scrollbar-track,
-    .main-nav-more-dropdown::-webkit-scrollbar-track,
     .center-dropdown::-webkit-scrollbar-track,
     .user-dropdown::-webkit-scrollbar-track,
     .dropdown-panel::-webkit-scrollbar-track {
@@ -4911,7 +4734,6 @@
     .main-content::-webkit-scrollbar-thumb,
     .safe-brain-content::-webkit-scrollbar-thumb,
     .screen-drawer::-webkit-scrollbar-thumb,
-    .main-nav-more-dropdown::-webkit-scrollbar-thumb,
     .center-dropdown::-webkit-scrollbar-thumb,
     .user-dropdown::-webkit-scrollbar-thumb,
     .dropdown-panel::-webkit-scrollbar-thumb {
@@ -4926,7 +4748,6 @@
     .main-content::-webkit-scrollbar-thumb:hover,
     .safe-brain-content::-webkit-scrollbar-thumb:hover,
     .screen-drawer::-webkit-scrollbar-thumb:hover,
-    .main-nav-more-dropdown::-webkit-scrollbar-thumb:hover,
     .center-dropdown::-webkit-scrollbar-thumb:hover,
     .user-dropdown::-webkit-scrollbar-thumb:hover,
     .dropdown-panel::-webkit-scrollbar-thumb:hover {
@@ -5186,14 +5007,12 @@
 
     /* 下拉组件统一样式：hover 只给中性背景，文字不变色；active 才使用品牌色文字 + 背景 */
     .nav-dropdown-option,
-    .main-nav-more-option,
     .popover-option,
     .local-cascade-option {
       color: #242933 !important;
     }
 
     .nav-dropdown-option:hover,
-    .main-nav-more-option:hover,
     .popover-option:hover,
     .local-cascade-option:hover {
       background: #F2F3F5 !important;
@@ -5201,7 +5020,6 @@
     }
 
     .nav-dropdown-option.active,
-    .main-nav-more-option.active,
     .popover-option.active,
     .local-cascade-option.active {
       background: #D9F4EE !important;
@@ -5465,7 +5283,6 @@
     .safe-brain-content,
     .subscription-content,
     .screen-drawer,
-    .main-nav-more-dropdown,
     .center-dropdown,
     .user-dropdown,
     .dropdown-panel,
@@ -5482,7 +5299,6 @@
     .safe-brain-content::-webkit-scrollbar,
     .subscription-content::-webkit-scrollbar,
     .screen-drawer::-webkit-scrollbar,
-    .main-nav-more-dropdown::-webkit-scrollbar,
     .center-dropdown::-webkit-scrollbar,
     .user-dropdown::-webkit-scrollbar,
     .dropdown-panel::-webkit-scrollbar,
@@ -5499,7 +5315,6 @@
     .safe-brain-content::-webkit-scrollbar-track,
     .subscription-content::-webkit-scrollbar-track,
     .screen-drawer::-webkit-scrollbar-track,
-    .main-nav-more-dropdown::-webkit-scrollbar-track,
     .center-dropdown::-webkit-scrollbar-track,
     .user-dropdown::-webkit-scrollbar-track,
     .dropdown-panel::-webkit-scrollbar-track,
@@ -5515,7 +5330,6 @@
     .safe-brain-content::-webkit-scrollbar-thumb,
     .subscription-content::-webkit-scrollbar-thumb,
     .screen-drawer::-webkit-scrollbar-thumb,
-    .main-nav-more-dropdown::-webkit-scrollbar-thumb,
     .center-dropdown::-webkit-scrollbar-thumb,
     .user-dropdown::-webkit-scrollbar-thumb,
     .dropdown-panel::-webkit-scrollbar-thumb,
@@ -5956,7 +5770,6 @@
     .safe-brain-content,
     .subscription-content,
     .screen-drawer,
-    .main-nav-more-dropdown,
     .center-dropdown,
     .user-dropdown,
     .dropdown-panel,
@@ -5973,7 +5786,6 @@
     .safe-brain-content::-webkit-scrollbar,
     .subscription-content::-webkit-scrollbar,
     .screen-drawer::-webkit-scrollbar,
-    .main-nav-more-dropdown::-webkit-scrollbar,
     .center-dropdown::-webkit-scrollbar,
     .user-dropdown::-webkit-scrollbar,
     .dropdown-panel::-webkit-scrollbar,
@@ -5990,7 +5802,6 @@
     .safe-brain-content::-webkit-scrollbar-thumb,
     .subscription-content::-webkit-scrollbar-thumb,
     .screen-drawer::-webkit-scrollbar-thumb,
-    .main-nav-more-dropdown::-webkit-scrollbar-thumb,
     .center-dropdown::-webkit-scrollbar-thumb,
     .user-dropdown::-webkit-scrollbar-thumb,
     .dropdown-panel::-webkit-scrollbar-thumb,
