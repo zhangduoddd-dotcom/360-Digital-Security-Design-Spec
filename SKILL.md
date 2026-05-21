@@ -17,28 +17,6 @@ version: 1.0.0
 
 不维护 Vue / React / Tailwind / 前端工程代码生成规范。
 
-## 0. 角色与判断原则
-
-AI 默认以资深 B 端产品 UI/UX 设计师视角工作，同时具备 HTML Demo 高保真还原和交互验证意识。
-
-页面生成目标优先级：
-
-```text
-清晰 > 稳定 > 高效 > 可验证 > 高保真
-```
-
-生成前必须先判断：
-
-- 页面类型是什么。
-- 用户主任任务是什么。
-- P0 / P1 / P2 / P3 信息分别是什么。
-- 需要哪些组件。
-- 是否存在高风险操作。
-- 是否覆盖 loading / empty / error / success / disabled / confirm。
-- 输出是否便于直接打开 HTML Demo 评审和交互验证。
-
-不得为了视觉丰富增加无业务意义的装饰，不得跳过结构、交互和状态判断直接生成页面。
-
 ## 1. 默认交付方式
 
 默认且唯一交付目标为：
@@ -49,7 +27,21 @@ AI 默认以资深 B 端产品 UI/UX 设计师视角工作，同时具备 HTML D
 
 HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态截图，也不是框架工程代码。
 
-## 2. 任务分流
+## 2. 生成前判断
+
+生成前必须判断：
+
+- 页面类型。
+- 用户主任务。
+- P0 / P1 / P2 / P3 信息层级。
+- 需要的基础组件。
+- 是否存在高风险操作。
+- 是否覆盖 loading / empty / error / success / disabled / confirm。
+- 当前页面需要读取哪些 `03-interaction/` 交互规则。
+
+不得为了视觉丰富增加无业务意义的装饰，不得跳过结构、交互和状态判断直接生成页面。
+
+## 3. 任务分流
 
 | 用户任务 | 执行模式 | 读取方式 |
 |---|---|---|
@@ -57,9 +49,7 @@ HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态�
 | 检查页面是否符合规范 | 验收模式 | 读取页面规范、交互规范、组件运行时契约和验收清单 |
 | 修改 / 合并 / 删除规范文档 | 文档维护模式 | 读取 `INDEX.md` 的唯一真源归属表，只修改真源文件 |
 
-不提供 Vue、React、Tailwind、前端工程代码或框架项目代码生成要求。
-
-## 3. HTML Demo 三大硬约束
+## 4. HTML Demo 三大硬约束
 
 最终 HTML Demo 必须由三部分组成：
 
@@ -69,99 +59,27 @@ HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态�
 + 当前页面业务内容、mock 数据和交互 JS
 ```
 
-不得脱离框架母版重新写页面。不得脱离 manifest / snippet 文件重写基础组件 DOM。不得读取交互规范后只做静态视觉展示。
+执行时必须满足：
 
-### 3.1 框架必须继承母版
+- 框架母版以 `06-vue-code/templates/*.html` 为准。
+- 母版可替换区域以 `06-vue-code/template-boundary-contract.md` 为准。
+- 组件定位以 `docs/component-style-library/component_snippet_manifest.json` 为准。
+- 稳定组件 DOM 以 `docs/component-style-library/snippets/*.html` 为准。
+- 组件 CSS / Token 以 `docs/component-style-library/backend_ai_ui_component_kit_with_index.html` 为准。
+- 组件运行时抽取、注入和成对检查以 `06-vue-code/component-runtime-contract.md` 为准。
+- 组件语义、状态和行为只在需要时读取 `02-components/component-semantic-boundary.md` 与对应组件文档。
+- 页面交互细节以 `03-interaction/` 对应文件为准。
+- 最终验收以 `07-checklists/html-demo-acceptance.md` 为准。
 
-所有页面必须完整继承指定框架母版 HTML，不得自行重写顶部导航、侧边导航、页头和内容容器。
-
-默认母版：
-
-```text
-06-vue-code/templates/common-single-nav.html
-```
-
-母版替换边界：
-
-```text
-06-vue-code/template-boundary-contract.md
-```
-
-框架母版是页面底座，不是视觉参考稿。
-
-必须保留：
-
-- 顶部导航结构。
-- 左侧导航结构。
-- 页面头部结构。
-- 内容容器结构。
-- 框架 CSS。
-- 框架 JS。
-- iconfont。
-- hover / active / collapsed / open 等框架交互。
-
-只允许替换：Logo、导航文案、菜单文案、页面标题、页头允许替换项、业务内容区内容和 mock 数据。
-
-未完整继承框架母版时，HTML Demo 视为生成失败。
-
-### 3.2 组件必须来自 manifest 与 snippet
-
-所有稳定基础组件的 DOM 必须从组件 snippet manifest 指向的 `snippetFile` 中复制。
-
-组件定位入口：
-
-```text
-docs/component-style-library/component_snippet_manifest.json
-```
-
-稳定 DOM 复制入口：
-
-```text
-docs/component-style-library/snippets/*.html
-```
-
-组件 CSS / Token 来源：
-
-```text
-docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-```
-
-运行时规则唯一读取：
-
-```text
-06-vue-code/component-runtime-contract.md
-```
-
-组件语义、状态和行为需要判断时，再按需读取：
-
-```text
-02-components/component-semantic-boundary.md
-02-components/对应组件文档
-```
-
-未完成 manifest key / snippetFile / DOM / CSS scope / Token 成对抽取时，HTML Demo 视为生成失败。
-
-### 3.3 交互必须逐项落地
-
-已读取的页面交互规范必须转换为当前页面验收清单，生成后逐项自检；任一当前业务适用硬性项缺失，不得交付。
-
-页面专项交互细节以 `03-interaction/` 对应文件为唯一真源。列表页必须读取并落实：
-
-```text
-03-interaction/list-search.md
-03-interaction/list-table.md
-```
-
-## 4. 生成流程
+## 5. 标准生成流程
 
 ```text
 识别任务类型
 → 读取 INDEX.md 获取最小读取 profile
 → 锁定 HTML 母版
 → 读取 template-boundary-contract.md 判断业务替换区域
-→ 读取页面规范
-→ 读取交互规范
-→ 读取 component_snippet_manifest.json
+→ 读取页面规范和交互规范
+→ 读取 component_snippet_manifest.json 定位组件
 → 复制所需 snippets/*.html 中的稳定组件 DOM
 → 读取组件样式库校验 CSS / Token
 → 执行 component-runtime-contract.md
@@ -171,65 +89,28 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 → 不通过则先修正再交付
 ```
 
-## 5. 组件实现规则
-
-HTML Demo 中稳定基础组件 DOM 必须来自：
-
-```text
-docs/component-style-library/snippets/*.html
-```
-
-组件 CSS / Token 必须来自：
-
-```text
-docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-```
-
-必须执行：
-
-```text
-06-vue-code/component-runtime-contract.md
-```
-
-关键规则：
-
-- Button、Input、Select、Table、Tag、Pagination、Toast 等稳定基础组件必须使用 manifest 指向的 snippet DOM。
-- 使用了某组件 snippet DOM，就必须同步抽取或校验该组件 CSS scope 与依赖 Token。
-- manifest 中 `pendingComponents` 标注的组件不得被当作稳定基础组件使用。
-- 最终 HTML 的样式顺序必须是：母版 CSS → 组件样式库 CSS → 页面业务 CSS。
-- 页面业务 class 只能追加在真实组件 DOM 上作业务修饰，不得替代基础组件 class。
-- 命中旧 class 快速拦截项时必须修正；需要深度排查时读取 `06-vue-code/deprecated-class-blacklist.md`。
-
-## 6. 交互落地规则
-
-读取交互文档不等于完成。
-
-生成页面前，必须将当前页面相关交互规范转换为内部验收清单；生成后逐项自检。
-
-交互细节不得在 `SKILL.md` 重复维护。列表页、表单页、详情页等页面的交互项以 `03-interaction/` 对应文件为准；缺少任一当前业务适用项，不得交付。
-
-## 7. 冲突优先级
+## 6. 冲突优先级
 
 当文档发生冲突时，按以下顺序判断：
 
 ```text
 1. HTML 母版：06-vue-code/templates/*.html
 2. 母版替换边界：06-vue-code/template-boundary-contract.md
-3. 稳定组件 DOM 定位：docs/component-style-library/component_snippet_manifest.json
+3. 稳定组件定位：docs/component-style-library/component_snippet_manifest.json
 4. 稳定组件 DOM：docs/component-style-library/snippets/*.html
 5. 组件 CSS / Token：docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-6. 组件运行时抽取与 CSS / Token 注入：06-vue-code/component-runtime-contract.md
+6. 组件运行时契约：06-vue-code/component-runtime-contract.md
 7. 页面结构：04-pages/*.md
 8. 交互规则：03-interaction/*.md
 9. 组件语义：02-components/component-semantic-boundary.md、02-components/*.md
-10. 输出验收：07-checklists/*.md
+10. 输出验收：07-checklists/html-demo-acceptance.md
 ```
 
 验收清单只负责检查结果，不反向创造新的生成规则。
 
-## 8. 禁止交付条件
+## 7. 禁止交付条件
 
-出现以下任一情况，禁止交付最终结果：
+出现以下任一情况，不得交付最终结果：
 
 - 未使用固定 HTML 母版。
 - 改写或破坏母版固定结构。
