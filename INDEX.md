@@ -17,6 +17,7 @@
 - 先识别页面类型，再读取对应 HTML Demo profile。
 - 页面结构、交互、组件运行时、验收分别读取对应唯一真源。
 - 组件真实 DOM / class / CSS / Token 只从组件样式库、组件 snippet manifest 和 `06-vue-code/component-runtime-contract.md` 获取。
+- 母版可替换区域只按 `06-vue-code/template-boundary-contract.md` 判断。
 - `02-components/` 只用于组件语义、状态和行为判断；不作为 HTML DOM / class / CSS 来源。
 
 ## 2. 公共运行时读取链路
@@ -25,6 +26,7 @@
 
 ```text
 06-vue-code/preview-html.md
+06-vue-code/template-boundary-contract.md
 docs/component-style-library/component_snippet_manifest.json
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 06-vue-code/component-runtime-contract.md
@@ -53,6 +55,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/list-page.md
 03-interaction/list-search.md
 03-interaction/list-table.md
@@ -75,6 +78,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/form-page.md
 03-interaction/form-entry.md
 06-vue-code/preview-html.md
@@ -97,6 +101,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/detail-page.md
 03-interaction/page-container.md
 06-vue-code/preview-html.md
@@ -119,6 +124,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/dashboard.md
 06-vue-code/preview-html.md
 docs/component-style-library/component_snippet_manifest.json
@@ -139,6 +145,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/step-flow-page.md
 03-interaction/form-entry.md
 06-vue-code/preview-html.md
@@ -159,6 +166,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/exception-page.md
 06-vue-code/preview-html.md
 docs/component-style-library/component_snippet_manifest.json
@@ -177,6 +185,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/user-management.md
 03-interaction/list-search.md
 03-interaction/list-table.md
@@ -201,6 +210,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/system-settings.md
 03-interaction/form-entry.md
 03-interaction/permission-state.md
@@ -225,6 +235,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 04-pages/system-config.md
 03-interaction/form-entry.md
 03-interaction/list-table.md
@@ -249,6 +260,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```text
 SKILL.md
 06-vue-code/templates/common-single-nav.html
+06-vue-code/template-boundary-contract.md
 07-checklists/html-demo-acceptance.md
 06-vue-code/preview-html.md
 docs/component-style-library/component_snippet_manifest.json
@@ -270,6 +282,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 SKILL.md
 对应页面规范
 对应交互规范
+06-vue-code/template-boundary-contract.md
 docs/component-style-library/component_snippet_manifest.json
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 06-vue-code/component-runtime-contract.md
@@ -318,6 +331,7 @@ INDEX.md
 | 组件 snippet 定位 | `docs/component-style-library/component_snippet_manifest.json` | 生成或检查组件实现时必读 |
 | 真实 DOM / class / CSS / Token | `docs/component-style-library/backend_ai_ui_component_kit_with_index.html` | 生成或检查组件实现时必读 |
 | 组件运行时抽取和注入契约 | `06-vue-code/component-runtime-contract.md` | 生成或检查 HTML Demo 时必读 |
+| 母版替换边界 | `06-vue-code/template-boundary-contract.md` | 生成或检查 HTML Demo 时必读 |
 | 组件语义边界 | `02-components/component-semantic-boundary.md` | 需要判断组件语义、状态、行为时读取 |
 | 具体组件语义 | `02-components/*.md` | 需要判断某个组件的适用场景和状态时读取 |
 | 旧 class 完整排查 | `06-vue-code/deprecated-class-blacklist.md` | 命中旧 class、做深度 review、排查污染时读取 |
@@ -333,7 +347,7 @@ INDEX.md
 | `02-components/` | 组件语义、状态、行为说明；不提供真实 DOM / class / CSS |
 | `03-interaction/` | 页面交互规则，例如搜索区、表格区、表单录入、权限状态 |
 | `04-pages/` | 页面类型结构和信息层级 |
-| `06-vue-code/` | 历史目录名；当前保留 HTML Demo、母版、组件运行时契约、旧 class 诊断和历史入口 |
+| `06-vue-code/` | 历史目录名；当前保留 HTML Demo、母版、母版边界契约、组件运行时契约、旧 class 诊断和历史入口 |
 | `07-checklists/` | HTML Demo 输出验收清单 |
 | `docs/component-style-library/` | 真实组件 DOM / class / CSS / Token 与 snippet manifest |
 
@@ -344,6 +358,7 @@ INDEX.md
 | AI 默认交付方式、硬约束、冲突优先级 | `SKILL.md` |
 | 任务最小读取路径、目录职责、文档索引 | `INDEX.md` |
 | HTML 母版结构 | `06-vue-code/templates/*.html` |
+| 母版替换边界 | `06-vue-code/template-boundary-contract.md` |
 | HTML Demo 生成要求 | `06-vue-code/preview-html.md` |
 | 组件 snippet 定位 | `docs/component-style-library/component_snippet_manifest.json` |
 | 组件真实 DOM / class / CSS / Token | `docs/component-style-library/backend_ai_ui_component_kit_with_index.html` |
