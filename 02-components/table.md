@@ -7,15 +7,15 @@ Keywords: table, data table, column type, row action, batch action, pagination, 
 
 ## 0. 使用边界
 
-本文只定义表格的语义、信息组织、列类型、状态要求和交互规则，不作为 HTML Demo 的真实 class / CSS 来源。
+本文只定义表格的语义、信息组织、列类型、状态要求和交互规则，不作为 HTML Demo 的真实 DOM / class / CSS / Token 来源。
 
-HTML Demo 中表格真实 class 与 CSS 必须以以下文件为准：
+HTML Demo 中表格真实 DOM / class / CSS / Token 必须以以下文件为准：
 
 ```text
+docs/component-style-library/component_snippet_manifest.json
+docs/component-style-library/snippets/*.html
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-06-vue-code/component-style-code-map.md
-06-vue-code/business-component-reuse-rules.md
-06-vue-code/component-style-import-rules.md
+06-vue-code/component-runtime-contract.md
 ```
 
 如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-table-wrapper`、`.ant-table`、`.ant-table-compact`、`.ant-table-toolbar`、`.ant-table-cell-actions`、`.ant-table-empty`、`.ant-table-loading`、`.ant-table-error` 等真实 class 为准。禁止根据本文自行生成 `.data-table`、`.alert-table`、`.risk-table` 等旧别名或私有表格 class。
@@ -138,8 +138,8 @@ TableContainer
 - 展开行 200ms，使用高度或 opacity 轻量过渡。
 - 表格不要使用大面积动效，避免影响阅读效率。
 
-## 13. Vue / HTML 生成要求
+## 13. HTML Demo 生成要求
 
-Vue 使用 `a-table`，必须包含 `rowKey`、loading、empty、pagination、columns、dataSource。选择列使用 `rowSelection`。操作列危险操作必须确认。
+组件语义可参考 Ant Design / Ant Design Vue 的同名 Table 组件，但本 Skill 不输出 Vue 代码。
 
-HTML 预览需要模拟 loading、empty、error、hover、selected、pagination、勾选联动和复制反馈。HTML 预览的表格 DOM 必须使用组件样式库真实 `.ant-table-wrapper` + `.ant-table` 体系，并确保最终 HTML 已注入对应 `.ant-table` CSS。
+HTML Demo 需要模拟 loading、empty、error、hover、selected、pagination、勾选联动和复制反馈。表格 DOM 必须复制 manifest 指向的 snippet，并使用组件样式库真实 `.ant-table-wrapper` + `.ant-table` 体系，最终 HTML 必须按 `component-runtime-contract.md` 注入对应 `.ant-table` CSS / Token。
