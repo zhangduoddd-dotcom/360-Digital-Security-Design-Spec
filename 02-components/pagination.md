@@ -7,15 +7,15 @@ Keywords: pagination, page size, total count, jump page, table, semantic compone
 
 ## 0. 使用边界
 
-本文只定义分页的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 class / CSS 来源。
+本文只定义分页的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 DOM / class / CSS / Token 来源。
 
-HTML Demo 中分页真实 class 与 CSS 必须以以下文件为准：
+HTML Demo 中分页真实 DOM / class / CSS / Token 必须以以下文件为准：
 
 ```text
+docs/component-style-library/component_snippet_manifest.json
+docs/component-style-library/snippets/*.html
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-06-vue-code/component-style-code-map.md
-06-vue-code/business-component-reuse-rules.md
-06-vue-code/component-style-import-rules.md
+06-vue-code/component-runtime-contract.md
 ```
 
 如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-pagination`、`.ant-pagination-item`、`.ant-pagination-item-active`、`.ant-pagination-prev`、`.ant-pagination-next`、`.ant-pagination-options` 等真实 class 为准。禁止根据本文自行生成 `.pagination`、`.alert-pagination` 等旧别名或私有分页 class。
@@ -63,8 +63,8 @@ Default / Hover / Active Page / Disabled / Page Size Change / Jump Page
 
 默认值根据页面密度确定，普通列表建议 10 或 20，高密数据表可使用 20 或 50。
 
-## 6. Vue / HTML 生成要求
+## 6. HTML Demo 生成要求
 
-Vue 使用 `a-pagination`。
+组件语义可参考 Ant Design / Ant Design Vue 的同名 Pagination 组件，但本 Skill 不输出 Vue 代码。
 
-HTML 预览需要模拟页码切换、每页条数切换、上一页下一页、跳页和禁用态。HTML 预览的分页 DOM 必须使用组件样式库真实 `.ant-pagination` 体系，并确保最终 HTML 已注入对应 `.ant-pagination` CSS。
+HTML Demo 需要模拟页码切换、每页条数切换、上一页下一页、跳页和禁用态。分页 DOM 必须复制 manifest 指向的 snippet，并使用组件样式库真实 `.ant-pagination` 体系，最终 HTML 必须按 `component-runtime-contract.md` 注入对应 `.ant-pagination` CSS / Token。
