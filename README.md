@@ -34,7 +34,7 @@ INDEX.md
 ```text
 读取 SKILL.md
 → 读取 INDEX.md 中的 html-demo-list-page profile
-→ 按 profile 读取对应页面、交互、组件样式库和验收文件
+→ 按 profile 读取对应页面、交互、母版边界、组件 snippet manifest、组件运行时契约和验收文件
 ```
 
 检查 HTML Demo 是否符合规范：
@@ -64,12 +64,27 @@ Backend-Design-Standards/
 ├── 02-components/                 # 组件语义、状态、交互说明
 ├── 03-interaction/                # 页面交互规则
 ├── 04-pages/                      # 页面类型结构
-├── 06-vue-code/                   # 历史目录名；当前只保留 HTML Demo、组件抽取与注入规则
+├── 06-vue-code/                   # 历史目录名；当前保留 HTML Demo、母版边界和组件运行时契约
 ├── 07-checklists/                 # HTML Demo 输出验收清单
-└── docs/component-style-library/  # 真实组件 DOM / class / CSS / Token
+└── docs/component-style-library/  # 组件 manifest、稳定 DOM snippet、CSS / Token / 视觉状态来源
 ```
 
-## 4. 维护原则
+## 4. 组件样式库结构
+
+```text
+docs/component-style-library/component_snippet_manifest.json
+= 组件定位入口，声明组件 key、snippetFile、requiredClasses、cssScopes、tokens、states。
+
+docs/component-style-library/snippets/*.html
+= 稳定组件 DOM 复制入口。
+
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+= 组件 CSS、Token、视觉状态和完整样式参考来源。
+```
+
+AI 生成 HTML Demo 时，稳定基础组件 DOM 优先来自 `snippets/*.html`；组件 CSS / Token 从 `backend_ai_ui_component_kit_with_index.html` 校验和抽取。
+
+## 5. 维护原则
 
 - 根目录只保留 `README.md`、`SKILL.md`、`INDEX.md` 三个入口文件。
 - 01～08 目录内不再维护目录导读、overview、reference 或子级 README。
@@ -77,9 +92,11 @@ Backend-Design-Standards/
 - 页面结构归 `04-pages/`。
 - 交互规则归 `03-interaction/`。
 - 组件语义归 `02-components/`。
-- 真实组件 DOM / class / CSS / Token 归 `docs/component-style-library/`。
-- HTML Demo 生成、组件抽取和 CSS 注入规则归 `06-vue-code/`。
-- 验收只放 `07-checklists/`，不反向创造生成规则。
+- 组件定位归 `docs/component-style-library/component_snippet_manifest.json`。
+- 稳定组件 DOM 归 `docs/component-style-library/snippets/`。
+- 组件 CSS / Token / 视觉状态归 `docs/component-style-library/backend_ai_ui_component_kit_with_index.html`。
+- HTML Demo 生成、母版边界和组件运行时契约归 `06-vue-code/`。
+- 验收只放 `07-checklists/html-demo-acceptance.md`，不反向创造生成规则。
 
 ## License
 
