@@ -30,7 +30,7 @@ AI 默认以资深 B 端产品 UI/UX 设计师视角工作，同时具备 HTML D
 生成前必须先判断：
 
 - 页面类型是什么。
-- 用户主任务是什么。
+- 用户主任任务是什么。
 - P0 / P1 / P2 / P3 信息分别是什么。
 - 需要哪些组件。
 - 是否存在高风险操作。
@@ -125,9 +125,14 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 ### 3.3 交互必须逐项落地
 
-已读取的页面交互规范必须转换为当前页面验收清单，生成后逐项自检；任一硬性项缺失，不得交付。
+已读取的页面交互规范必须转换为当前页面验收清单，生成后逐项自检；任一当前业务适用硬性项缺失，不得交付。
 
-列表页至少必须验证：搜索、清空、loading、empty、排序、列筛选、勾选联动、固定列、行操作、更多菜单、分页、禁用 Tooltip、二次确认、Toast 反馈。
+页面专项交互细节以 `03-interaction/` 对应文件为唯一真源。列表页必须读取并落实：
+
+```text
+03-interaction/list-search.md
+03-interaction/list-table.md
+```
 
 ## 4. 生成流程
 
@@ -173,13 +178,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 生成页面前，必须将当前页面相关交互规范转换为内部验收清单；生成后逐项自检。
 
-列表页必须重点落实：
-
-```text
-搜索 / 清空 / loading / empty / 排序 / 列筛选 / 勾选联动 / 固定列 / 行操作 / 更多菜单 / 分页 / 禁用 Tooltip / 二次确认 / Toast 反馈
-```
-
-缺少任一当前业务适用项，不得交付。
+交互细节不得在 `SKILL.md` 重复维护。列表页、表单页、详情页等页面的交互项以 `03-interaction/` 对应文件为准；缺少任一当前业务适用项，不得交付。
 
 ## 7. 冲突优先级
 
@@ -208,5 +207,5 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 - 命中旧 class 或私有组件 class 拦截项。
 - 页面只有静态视觉，没有主要交互可点击验证。
 - 缺少 loading、empty、error、success、confirm 等适用状态。
-- 列表页只实现“搜索 + 表格 + 分页”的粗结构，缺少排序、筛选、勾选联动、固定列、确认反馈等适用交互。
+- 未落实 `03-interaction/` 对应文件中当前业务适用的页面交互规则。
 - 未按 `07-checklists/html-demo-acceptance.md` 完成最终自检。
