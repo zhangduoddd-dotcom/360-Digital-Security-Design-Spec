@@ -1,14 +1,17 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "source": "docs/component-style-library/backend_ai_ui_component_kit_with_index.html",
-  "description": "HTML Demo component snippet manifest. AI must use this manifest to locate stable component snippets before composing business content.",
+  "snippetRoot": "docs/component-style-library/snippets/",
+  "description": "HTML Demo component snippet manifest. AI must copy snippetFile first. The large component library remains the CSS, Token, and visual-state source.",
   "rules": {
-    "usage": "Use snippetId to locate SNIPPET_START / SNIPPET_END markers in the component style library. Copy DOM inside the snippet boundary, then include the listed CSS scopes and tokens.",
-    "fallback": "If a component has no manifest entry, it is not a stable base component. Mark it as style-library-pending and only add minimal page-local fallback styles when required."
+    "usage": "Use snippetFile as the stable DOM copy source. Use snippetId only to verify the SNIPPET_START / SNIPPET_END boundary inside that file.",
+    "cssAndTokenSource": "Use cssScopes and tokens to extract or verify matching CSS and Token from backend_ai_ui_component_kit_with_index.html.",
+    "fallback": "If snippetFile is missing or the component has no manifest entry, it is not a stable base component. Mark it as style-library-pending and only add minimal page-local fallback styles when required."
   },
   "components": {
     "button.primary": {
       "snippetId": "button-primary",
+      "snippetFile": "docs/component-style-library/snippets/button-primary.html",
       "requiredClasses": ["ant-btn", "ant-btn-primary"],
       "cssScopes": ["button"],
       "tokens": ["p6", "p5", "p7"],
@@ -16,6 +19,7 @@
     },
     "button.default": {
       "snippetId": "button-default",
+      "snippetFile": "docs/component-style-library/snippets/button-default.html",
       "requiredClasses": ["ant-btn"],
       "cssScopes": ["button"],
       "tokens": ["gray-5", "p6"],
@@ -23,20 +27,15 @@
     },
     "input.search": {
       "snippetId": "input-search",
+      "snippetFile": "docs/component-style-library/snippets/input-search.html",
       "requiredClasses": ["ant-input-affix-wrapper", "ant-input"],
       "cssScopes": ["input"],
       "tokens": ["gray-5", "p6"],
       "states": ["default", "hover", "focus", "disabled", "error"]
     },
-    "input.textarea": {
-      "snippetId": "textarea-default",
-      "requiredClasses": ["ant-input", "ant-textarea"],
-      "cssScopes": ["input", "textarea"],
-      "tokens": ["gray-5", "p6"],
-      "states": ["default", "hover", "focus", "disabled", "error", "count"]
-    },
     "select.default": {
       "snippetId": "select-default",
+      "snippetFile": "docs/component-style-library/snippets/select-default.html",
       "requiredClasses": ["ant-select", "ant-select-selector"],
       "cssScopes": ["select"],
       "tokens": ["gray-5", "p6"],
@@ -44,6 +43,7 @@
     },
     "checkbox.default": {
       "snippetId": "checkbox-default",
+      "snippetFile": "docs/component-style-library/snippets/checkbox-default.html",
       "requiredClasses": ["ant-checkbox-wrapper", "ant-checkbox"],
       "cssScopes": ["checkbox"],
       "tokens": ["p6"],
@@ -51,6 +51,7 @@
     },
     "radio.default": {
       "snippetId": "radio-default",
+      "snippetFile": "docs/component-style-library/snippets/radio-default.html",
       "requiredClasses": ["ant-radio-wrapper", "ant-radio"],
       "cssScopes": ["radio"],
       "tokens": ["p6"],
@@ -58,6 +59,7 @@
     },
     "tabs.default": {
       "snippetId": "tabs-default",
+      "snippetFile": "docs/component-style-library/snippets/tabs-default.html",
       "requiredClasses": ["ant-tabs", "ant-tabs-nav", "ant-tabs-tab"],
       "cssScopes": ["tabs"],
       "tokens": ["p6", "p7"],
@@ -65,6 +67,7 @@
     },
     "table.compact": {
       "snippetId": "table-compact",
+      "snippetFile": "docs/component-style-library/snippets/table-compact.html",
       "requiredClasses": ["ant-table-wrapper", "ant-table", "ant-table-compact"],
       "cssScopes": ["table"],
       "tokens": ["gray-2", "gray-4", "p6"],
@@ -72,6 +75,7 @@
     },
     "table.states": {
       "snippetId": "table-states",
+      "snippetFile": "docs/component-style-library/snippets/table-states.html",
       "requiredClasses": ["ant-table-empty", "ant-table-loading", "ant-table-error"],
       "cssScopes": ["table"],
       "tokens": ["gray-5", "p6", "red", "orange"],
@@ -79,6 +83,7 @@
     },
     "tag.status": {
       "snippetId": "tag-status",
+      "snippetFile": "docs/component-style-library/snippets/tag-status.html",
       "requiredClasses": ["ant-tag"],
       "cssScopes": ["tag"],
       "tokens": ["green", "orange", "red", "blue"],
@@ -86,6 +91,7 @@
     },
     "pagination.default": {
       "snippetId": "pagination-default",
+      "snippetFile": "docs/component-style-library/snippets/pagination-default.html",
       "requiredClasses": ["ant-pagination", "ant-pagination-item"],
       "cssScopes": ["pagination"],
       "tokens": ["p6", "gray-5"],
@@ -93,27 +99,17 @@
     },
     "toast.message": {
       "snippetId": "toast-message",
+      "snippetFile": "docs/component-style-library/snippets/toast-message.html",
       "requiredClasses": ["toast-holder", "toast"],
       "cssScopes": ["toast"],
       "tokens": ["green", "orange", "red", "blue"],
       "states": ["success", "warning", "error", "info"]
-    },
-    "tooltip.default": {
-      "snippetId": "tooltip-default",
-      "requiredClasses": ["tooltip-anchor", "ant-tooltip"],
-      "cssScopes": ["tooltip"],
-      "tokens": ["gray-10"],
-      "states": ["default", "open"]
-    },
-    "picker.range": {
-      "snippetId": "picker-range",
-      "requiredClasses": ["ant-picker", "ant-picker-range"],
-      "cssScopes": ["picker"],
-      "tokens": ["gray-5", "p6"],
-      "states": ["default", "hover", "focus", "disabled"]
     }
   },
   "pendingComponents": {
+    "input.textarea": "snippet-pending",
+    "tooltip.default": "snippet-pending",
+    "picker.range": "snippet-pending",
     "modal.confirm": "style-library-pending",
     "drawer.detail": "style-library-pending",
     "alert.inline": "style-library-pending",
