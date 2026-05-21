@@ -19,6 +19,7 @@
 - 组件真实 DOM / class / CSS / Token 只从组件样式库、组件 snippet manifest 和 `06-vue-code/component-runtime-contract.md` 获取。
 - 母版可替换区域只按 `06-vue-code/template-boundary-contract.md` 判断。
 - `02-components/` 只用于组件语义、状态和行为判断；不作为 HTML DOM / class / CSS 来源。
+- 生成页面前必须形成当前页面执行契约；执行契约缺失时不得直接进入 HTML / CSS / JS 输出。
 
 ## 2. 公共运行时读取链路
 
@@ -65,11 +66,18 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 06-vue-code/component-runtime-contract.md
 02-components/component-semantic-boundary.md
 02-components/table.md
+02-components/input.md
+02-components/select.md
+02-components/checkbox.md
 02-components/tag.md
 02-components/pagination.md
 02-components/button.md
+02-components/feedback.md
+02-components/toast-message.md
 07-checklists/html-demo-acceptance.md
 ```
+
+列表页必须根据当前页面组件清单动态补充读取对应组件语义文档；搜索、筛选、分页、更多菜单、Tooltip、弹窗确认、空状态、loading、Toast 等不得因 profile 未列全而跳过 manifest/snippet 映射。
 
 ### 3.2 html-demo-form-page
 
@@ -196,10 +204,15 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 06-vue-code/component-runtime-contract.md
 02-components/component-semantic-boundary.md
 02-components/table.md
+02-components/input.md
+02-components/select.md
+02-components/checkbox.md
 02-components/form.md
 02-components/tag.md
 02-components/pagination.md
 02-components/button.md
+02-components/feedback.md
+02-components/toast-message.md
 07-checklists/html-demo-acceptance.md
 ```
 
@@ -246,10 +259,15 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 06-vue-code/component-runtime-contract.md
 02-components/component-semantic-boundary.md
 02-components/form.md
+02-components/input.md
+02-components/select.md
+02-components/checkbox.md
 02-components/table.md
 02-components/tag.md
 02-components/pagination.md
 02-components/button.md
+02-components/feedback.md
+02-components/toast-message.md
 07-checklists/html-demo-acceptance.md
 ```
 
