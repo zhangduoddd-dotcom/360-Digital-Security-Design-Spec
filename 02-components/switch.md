@@ -5,6 +5,21 @@ Keywords: switch, toggle, enabled, disabled, p6
 
 本文迁移自上传包 `references/component-styles/switch.txt`，用于约束开关组件。
 
+## 0. 使用边界
+
+本文只定义 Switch 的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 DOM / class / CSS / Token 来源。
+
+HTML Demo 中 Switch 真实 DOM / class / CSS / Token 必须以以下文件为准：
+
+```text
+docs/component-style-library/component_snippet_manifest.json
+docs/component-style-library/snippets/*.html
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-runtime-contract.md
+```
+
+如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-switch`、`.ant-switch-handle`、`.ant-switch-inner` 等真实 class 为准。禁止根据本文自行生成 `.switch`、`.toggle`、`.status-switch` 等旧别名或私有开关 class。
+
 ## 1. 使用场景
 
 - 启用 / 停用某个配置。
@@ -41,6 +56,8 @@ Off / On / Hover / Active / Disabled / Loading
 - 开关旁应有清晰标签说明含义。
 - 表格中的 Switch 需要处理 loading 和失败回滚。
 
-## 5. Vue / HTML 生成要求
+## 5. HTML Demo 生成要求
 
-Vue 使用 `a-switch`。HTML 预览需要模拟 on、off、hover、disabled、loading、确认切换和失败回滚。
+组件语义可参考 Ant Design / Ant Design Vue 的同名 Switch 组件，但本 Skill 不输出 Vue 代码。
+
+HTML Demo 需要模拟 on、off、hover、disabled、loading、确认切换和失败回滚。Switch DOM 必须复制 manifest 指向的 snippet，并使用组件样式库真实 `.ant-switch` 体系，最终 HTML 必须按 `component-runtime-contract.md` 注入对应 `.ant-switch` CSS / Token。
