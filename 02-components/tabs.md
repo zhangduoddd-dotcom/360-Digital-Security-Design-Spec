@@ -5,6 +5,21 @@ Keywords: tabs, tab navigation, segmented content, p6
 
 本文迁移自上传包 `references/component-styles/tabs.txt`，用于约束页签切换、状态页签和内容分组。
 
+## 0. 使用边界
+
+本文只定义 Tabs 的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 DOM / class / CSS / Token 来源。
+
+HTML Demo 中 Tabs 真实 DOM / class / CSS / Token 必须以以下文件为准：
+
+```text
+docs/component-style-library/component_snippet_manifest.json
+docs/component-style-library/snippets/*.html
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-runtime-contract.md
+```
+
+如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-tabs`、`.ant-tabs-nav`、`.ant-tabs-tab` 等真实 class 为准。禁止根据本文自行生成 `.tabs`、`.tab-nav`、`.status-tabs` 等旧别名或私有页签 class。
+
 ## 1. 使用场景
 
 - 同一对象下的多个并列信息区。
@@ -42,6 +57,8 @@ Default / Hover / Active / Disabled / Count Badge / Overflow
 - 页签文案应短，避免换行。
 - 状态数量可用 Badge 展示，但不要堆叠过多颜色。
 
-## 5. Vue / HTML 生成要求
+## 5. HTML Demo 生成要求
 
-Vue 使用 `a-tabs`。HTML 预览需要模拟 hover、active、disabled、数量标识、切换内容和溢出处理。
+组件语义可参考 Ant Design / Ant Design Vue 的同名 Tabs 组件，但本 Skill 不输出 Vue 代码。
+
+HTML Demo 需要模拟 hover、active、disabled、数量标识、切换内容和溢出处理。Tabs DOM 必须复制 manifest 指向的 snippet，并使用组件样式库真实 `.ant-tabs` 体系，最终 HTML 必须按 `component-runtime-contract.md` 注入对应 `.ant-tabs` CSS / Token。
