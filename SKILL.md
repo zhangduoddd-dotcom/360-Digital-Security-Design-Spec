@@ -38,8 +38,23 @@ HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态�
 - 是否存在高风险操作。
 - 是否覆盖 loading / empty / error / success / disabled / confirm。
 - 当前页面需要读取哪些 `03-interaction/` 交互规则。
+- 是否已经形成当前页面执行契约。
 
 不得为了视觉丰富增加无业务意义的装饰，不得跳过结构、交互和状态判断直接生成页面。
+
+### 2.1 当前页面执行契约
+
+生成 HTML Demo 前，必须把当前页面涉及的页面规范、交互规范、组件 manifest、snippet 和组件样式库转成当前页面执行契约。
+
+当前页面执行契约至少包含：
+
+- 页面类型与使用母版。
+- 组件映射表：组件用途、manifest key、snippetFile、cssScopes、tokens。
+- 交互验收清单：来自 `03-interaction/` 的当前页面适用项。
+- 状态清单：loading、empty、error、success、disabled、confirm 等适用状态。
+- 布局风险点：容器边界、表格溢出、固定列、分页位置、响应式断点。
+
+没有建立当前页面执行契约，不得进入 HTML / CSS / JS 生成。
 
 ## 3. 任务分流
 
@@ -84,10 +99,14 @@ HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态�
 → 读取组件样式库校验 CSS / Token
 → 执行 component-runtime-contract.md
 → 按需读取组件语义文档
+→ 建立当前页面执行契约
 → 生成单文件 HTML Demo
+→ 写入 COMPONENT_USAGE_MAP 组件映射证据
 → 按 html-demo-acceptance.md 自检
 → 不通过则先修正再交付
 ```
+
+脚本语法检查或页面可运行检查不能替代规范验收。生成后必须按当前页面执行契约逐项检查组件来源、布局边界、交互状态和页面类型规则。
 
 ## 6. 冲突优先级
 
@@ -116,13 +135,18 @@ HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态�
 - 改写或破坏母版固定结构。
 - 未读取 `template-boundary-contract.md` 判断业务替换区域。
 - 业务内容整体替换 `.terminal-right-panel`。
+- 未建立当前页面执行契约。
+- 当前页面执行契约缺少组件映射表、交互验收清单、状态清单或布局风险点。
 - 稳定基础组件未命中 manifest key。
 - 稳定基础组件没有对应 snippetFile。
 - 业务组件 DOM / CSS scope / Token 未成对抽取或校验。
 - 只写 `.ant-*` class，但没有对应 snippet DOM / CSS。
+- 用浏览器原生控件替代 manifest/snippet 中已有的稳定组件。
 - 把 pending 组件当作稳定基础组件使用。
 - 命中旧 class 或私有组件 class 拦截项。
 - 页面只有静态视觉，没有主要交互可点击验证。
 - 缺少 loading、empty、error、success、confirm 等适用状态。
 - 未落实 `03-interaction/` 对应文件中当前业务适用的页面交互规则。
+- 只完成脚本语法检查或页面可运行检查，但未完成规范差异检查。
+- 最终 HTML 未保留 `COMPONENT_USAGE_MAP` 组件映射证据。
 - 未按 `07-checklists/html-demo-acceptance.md` 完成最终自检。
