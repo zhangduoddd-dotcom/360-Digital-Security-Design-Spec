@@ -1,0 +1,125 @@
+{
+  "version": "1.0.0",
+  "source": "docs/component-style-library/backend_ai_ui_component_kit_with_index.html",
+  "description": "HTML Demo component snippet manifest. AI must use this manifest to locate stable component snippets before composing business content.",
+  "rules": {
+    "usage": "Use snippetId to locate SNIPPET_START / SNIPPET_END markers in the component style library. Copy DOM inside the snippet boundary, then include the listed CSS scopes and tokens.",
+    "fallback": "If a component has no manifest entry, it is not a stable base component. Mark it as style-library-pending and only add minimal page-local fallback styles when required."
+  },
+  "components": {
+    "button.primary": {
+      "snippetId": "button-primary",
+      "requiredClasses": ["ant-btn", "ant-btn-primary"],
+      "cssScopes": ["button"],
+      "tokens": ["p6", "p5", "p7"],
+      "states": ["default", "hover", "active", "disabled", "loading"]
+    },
+    "button.default": {
+      "snippetId": "button-default",
+      "requiredClasses": ["ant-btn"],
+      "cssScopes": ["button"],
+      "tokens": ["gray-5", "p6"],
+      "states": ["default", "hover", "active", "disabled"]
+    },
+    "input.search": {
+      "snippetId": "input-search",
+      "requiredClasses": ["ant-input-affix-wrapper", "ant-input"],
+      "cssScopes": ["input"],
+      "tokens": ["gray-5", "p6"],
+      "states": ["default", "hover", "focus", "disabled", "error"]
+    },
+    "input.textarea": {
+      "snippetId": "textarea-default",
+      "requiredClasses": ["ant-input", "ant-textarea"],
+      "cssScopes": ["input", "textarea"],
+      "tokens": ["gray-5", "p6"],
+      "states": ["default", "hover", "focus", "disabled", "error", "count"]
+    },
+    "select.default": {
+      "snippetId": "select-default",
+      "requiredClasses": ["ant-select", "ant-select-selector"],
+      "cssScopes": ["select"],
+      "tokens": ["gray-5", "p6"],
+      "states": ["default", "hover", "open", "selected", "disabled", "empty"]
+    },
+    "checkbox.default": {
+      "snippetId": "checkbox-default",
+      "requiredClasses": ["ant-checkbox-wrapper", "ant-checkbox"],
+      "cssScopes": ["checkbox"],
+      "tokens": ["p6"],
+      "states": ["unchecked", "checked", "indeterminate", "disabled"]
+    },
+    "radio.default": {
+      "snippetId": "radio-default",
+      "requiredClasses": ["ant-radio-wrapper", "ant-radio"],
+      "cssScopes": ["radio"],
+      "tokens": ["p6"],
+      "states": ["unchecked", "checked", "disabled"]
+    },
+    "tabs.default": {
+      "snippetId": "tabs-default",
+      "requiredClasses": ["ant-tabs", "ant-tabs-nav", "ant-tabs-tab"],
+      "cssScopes": ["tabs"],
+      "tokens": ["p6", "p7"],
+      "states": ["default", "hover", "active", "disabled"]
+    },
+    "table.compact": {
+      "snippetId": "table-compact",
+      "requiredClasses": ["ant-table-wrapper", "ant-table", "ant-table-compact"],
+      "cssScopes": ["table"],
+      "tokens": ["gray-2", "gray-4", "p6"],
+      "states": ["default", "hover", "selected", "loading", "empty", "error"]
+    },
+    "table.states": {
+      "snippetId": "table-states",
+      "requiredClasses": ["ant-table-empty", "ant-table-loading", "ant-table-error"],
+      "cssScopes": ["table"],
+      "tokens": ["gray-5", "p6", "red", "orange"],
+      "states": ["loading", "empty", "error"]
+    },
+    "tag.status": {
+      "snippetId": "tag-status",
+      "requiredClasses": ["ant-tag"],
+      "cssScopes": ["tag"],
+      "tokens": ["green", "orange", "red", "blue"],
+      "states": ["success", "processing", "warning", "error", "primary"]
+    },
+    "pagination.default": {
+      "snippetId": "pagination-default",
+      "requiredClasses": ["ant-pagination", "ant-pagination-item"],
+      "cssScopes": ["pagination"],
+      "tokens": ["p6", "gray-5"],
+      "states": ["default", "hover", "active", "disabled", "options", "quick-jumper"]
+    },
+    "toast.message": {
+      "snippetId": "toast-message",
+      "requiredClasses": ["toast-holder", "toast"],
+      "cssScopes": ["toast"],
+      "tokens": ["green", "orange", "red", "blue"],
+      "states": ["success", "warning", "error", "info"]
+    },
+    "tooltip.default": {
+      "snippetId": "tooltip-default",
+      "requiredClasses": ["tooltip-anchor", "ant-tooltip"],
+      "cssScopes": ["tooltip"],
+      "tokens": ["gray-10"],
+      "states": ["default", "open"]
+    },
+    "picker.range": {
+      "snippetId": "picker-range",
+      "requiredClasses": ["ant-picker", "ant-picker-range"],
+      "cssScopes": ["picker"],
+      "tokens": ["gray-5", "p6"],
+      "states": ["default", "hover", "focus", "disabled"]
+    }
+  },
+  "pendingComponents": {
+    "modal.confirm": "style-library-pending",
+    "drawer.detail": "style-library-pending",
+    "alert.inline": "style-library-pending",
+    "switch.default": "style-library-pending",
+    "empty.state": "style-library-pending",
+    "spin.loading": "style-library-pending",
+    "dropdown.more": "style-library-pending"
+  }
+}
