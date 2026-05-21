@@ -65,11 +65,11 @@ HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态�
 
 ```text
 框架母版 HTML
-+ 组件样式库真实组件 DOM / CSS / Token
++ 组件 snippet DOM 与组件样式库 CSS / Token
 + 当前页面业务内容、mock 数据和交互 JS
 ```
 
-不得脱离框架母版重新写页面。不得脱离组件样式库重写基础组件。不得读取交互规范后只做静态视觉展示。
+不得脱离框架母版重新写页面。不得脱离 manifest / snippet 文件重写基础组件 DOM。不得读取交互规范后只做静态视觉展示。
 
 ### 3.1 框架必须继承母版
 
@@ -79,6 +79,12 @@ HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态�
 
 ```text
 06-vue-code/templates/common-single-nav.html
+```
+
+母版替换边界：
+
+```text
+06-vue-code/template-boundary-contract.md
 ```
 
 框架母版是页面底座，不是视觉参考稿。
@@ -94,15 +100,27 @@ HTML Demo 必须可打开、可点击、可验证主要交互。它不是静态�
 - iconfont。
 - hover / active / collapsed / open 等框架交互。
 
-只允许替换：Logo、导航文案、菜单文案、页面标题、业务内容区内容和 mock 数据。
+只允许替换：Logo、导航文案、菜单文案、页面标题、页头允许替换项、业务内容区内容和 mock 数据。
 
 未完整继承框架母版时，HTML Demo 视为生成失败。
 
-### 3.2 组件必须来自组件样式库
+### 3.2 组件必须来自 manifest 与 snippet
 
-所有基础组件必须从组件样式库或未来组件调用清单指向的真实组件来源中抽取 DOM、class、CSS 和 Token。
+所有稳定基础组件的 DOM 必须从组件 snippet manifest 指向的 `snippetFile` 中复制。
 
-当前组件样式库来源：
+组件定位入口：
+
+```text
+docs/component-style-library/component_snippet_manifest.json
+```
+
+稳定 DOM 复制入口：
+
+```text
+docs/component-style-library/snippets/*.html
+```
+
+组件 CSS / Token 来源：
 
 ```text
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
@@ -121,7 +139,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 02-components/对应组件文档
 ```
 
-未完成组件 DOM / CSS / Token 成对抽取时，HTML Demo 视为生成失败。
+未完成 manifest key / snippetFile / DOM / CSS scope / Token 成对抽取时，HTML Demo 视为生成失败。
 
 ### 3.3 交互必须逐项落地
 
@@ -140,9 +158,12 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 识别任务类型
 → 读取 INDEX.md 获取最小读取 profile
 → 锁定 HTML 母版
+→ 读取 template-boundary-contract.md 判断业务替换区域
 → 读取页面规范
 → 读取交互规范
-→ 读取组件样式库
+→ 读取 component_snippet_manifest.json
+→ 复制所需 snippets/*.html 中的稳定组件 DOM
+→ 读取组件样式库校验 CSS / Token
 → 执行 component-runtime-contract.md
 → 按需读取组件语义文档
 → 生成单文件 HTML Demo
@@ -152,7 +173,13 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 ## 5. 组件实现规则
 
-HTML Demo 中基础组件必须来自：
+HTML Demo 中稳定基础组件 DOM 必须来自：
+
+```text
+docs/component-style-library/snippets/*.html
+```
+
+组件 CSS / Token 必须来自：
 
 ```text
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
@@ -166,8 +193,9 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 关键规则：
 
-- Button、Input、Select、Table、Tag、Pagination、Toast 等基础组件必须使用组件样式库真实 DOM。
-- 使用了某组件 DOM，就必须同步抽取该组件 CSS 与依赖 Token。
+- Button、Input、Select、Table、Tag、Pagination、Toast 等稳定基础组件必须使用 manifest 指向的 snippet DOM。
+- 使用了某组件 snippet DOM，就必须同步抽取或校验该组件 CSS scope 与依赖 Token。
+- manifest 中 `pendingComponents` 标注的组件不得被当作稳定基础组件使用。
 - 最终 HTML 的样式顺序必须是：母版 CSS → 组件样式库 CSS → 页面业务 CSS。
 - 页面业务 class 只能追加在真实组件 DOM 上作业务修饰，不得替代基础组件 class。
 - 命中旧 class 快速拦截项时必须修正；需要深度排查时读取 `06-vue-code/deprecated-class-blacklist.md`。
@@ -186,12 +214,15 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 ```text
 1. HTML 母版：06-vue-code/templates/*.html
-2. 组件真实 DOM / class / CSS / Token：docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-3. 组件运行时抽取与 CSS / Token 注入：06-vue-code/component-runtime-contract.md
-4. 页面结构：04-pages/*.md
-5. 交互规则：03-interaction/*.md
-6. 组件语义：02-components/component-semantic-boundary.md、02-components/*.md
-7. 输出验收：07-checklists/*.md
+2. 母版替换边界：06-vue-code/template-boundary-contract.md
+3. 稳定组件 DOM 定位：docs/component-style-library/component_snippet_manifest.json
+4. 稳定组件 DOM：docs/component-style-library/snippets/*.html
+5. 组件 CSS / Token：docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+6. 组件运行时抽取与 CSS / Token 注入：06-vue-code/component-runtime-contract.md
+7. 页面结构：04-pages/*.md
+8. 交互规则：03-interaction/*.md
+9. 组件语义：02-components/component-semantic-boundary.md、02-components/*.md
+10. 输出验收：07-checklists/*.md
 ```
 
 验收清单只负责检查结果，不反向创造新的生成规则。
@@ -202,8 +233,13 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 - 未使用固定 HTML 母版。
 - 改写或破坏母版固定结构。
-- 业务组件 DOM / CSS / Token 未成对抽取。
-- 只写 `.ant-*` class，但没有对应真实 DOM / CSS。
+- 未读取 `template-boundary-contract.md` 判断业务替换区域。
+- 业务内容整体替换 `.terminal-right-panel`。
+- 稳定基础组件未命中 manifest key。
+- 稳定基础组件没有对应 snippetFile。
+- 业务组件 DOM / CSS scope / Token 未成对抽取或校验。
+- 只写 `.ant-*` class，但没有对应 snippet DOM / CSS。
+- 把 pending 组件当作稳定基础组件使用。
 - 命中旧 class 或私有组件 class 拦截项。
 - 页面只有静态视觉，没有主要交互可点击验证。
 - 缺少 loading、empty、error、success、confirm 等适用状态。
