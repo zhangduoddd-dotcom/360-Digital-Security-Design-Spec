@@ -1,7 +1,7 @@
 # 02 组件文档使用边界
 ## Component Docs Boundary
 
-Keywords: 02-components, semantic rules, component class boundary, ant class, css source
+Keywords: 02-components, semantic rules, component class boundary, ant class, css source, html demo
 
 ## 1. 定位
 
@@ -11,7 +11,7 @@ Keywords: 02-components, semantic rules, component class boundary, ant class, cs
 设计语义层 / 状态规则层 / 交互要求层
 ```
 
-本目录不再作为 HTML Demo 的真实 class / CSS 来源。
+本目录不作为 HTML Demo 的真实 class / DOM / CSS 来源。
 
 ## 2. 保留价值
 
@@ -22,7 +22,6 @@ Keywords: 02-components, semantic rules, component class boundary, ant class, cs
 - 组件必须覆盖哪些状态。
 - 组件和业务场景如何匹配。
 - 危险操作、异步反馈、空状态、错误状态如何处理。
-- Vue 工程中应使用哪个 Ant Design Vue 组件。
 
 例如：
 
@@ -63,7 +62,7 @@ alert-input
 
 ## 4. 真实实现来源
 
-HTML Demo 中组件真实 class 与 CSS 来源必须是：
+HTML Demo 中组件真实 class、DOM 与 CSS 来源必须是：
 
 ```text
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
@@ -108,7 +107,7 @@ docs/component-style-library/component_style_library_index.md
 8. 02-components/对应组件文档
 ```
 
-也就是说，先确定真实 class 和 CSS，再读取 `02-components` 补充语义和状态。
+也就是说，先确定真实 class、DOM 和 CSS，再读取 `02-components` 补充语义和状态。
 
 ## 6. 冲突处理
 
@@ -124,8 +123,8 @@ docs/component-style-library/component_style_library_index.md
 
 AI 生成 HTML Demo 时：
 
-1. 不能根据 `02-components` 自行创造基础组件 class。
-2. 不能把 `02-components` 中的组件名称直接转成 `.xxx-button`、`.xxx-table`、`.xxx-tag`。
+1. 不得根据 `02-components` 自行创造基础组件 class。
+2. 不得把 `02-components` 中的组件名称直接转成 `.xxx-button`、`.xxx-table`、`.xxx-tag`。
 3. 必须使用真实 `.ant-*` class。
 4. 必须按 `component-style-import-rules.md` 注入对应 CSS。
 5. 页面私有 class 只能作为业务修饰追加。
@@ -150,7 +149,7 @@ AI 生成 HTML Demo 时：
 <div class="pagination"></div>
 ```
 
-## 8. 02 组件文档后续维护原则
+## 8. 后续维护原则
 
 后续维护 `02-components/` 时，只保留以下内容：
 
@@ -159,7 +158,6 @@ AI 生成 HTML Demo 时：
 - 类型和语义。
 - 状态要求。
 - 交互规则。
-- Vue 组件映射。
 - HTML Demo 真实 class 以组件样式库为准的提醒。
 
 需要删除或避免新增：
