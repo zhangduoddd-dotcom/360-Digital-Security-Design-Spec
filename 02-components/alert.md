@@ -5,6 +5,21 @@ Keywords: alert, notice, warning, page feedback, semantic color
 
 本文迁移自上传包 `references/component-styles/alert.txt`，用于约束页面级提示、说明、警告和异常信息。
 
+## 0. 使用边界
+
+本文只定义 Alert 的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 DOM / class / CSS / Token 来源。
+
+HTML Demo 中 Alert 真实 DOM / class / CSS / Token 必须以以下文件为准：
+
+```text
+docs/component-style-library/component_snippet_manifest.json
+docs/component-style-library/snippets/*.html
+docs/component-style-library/backend_ai_ui_component_kit_with_index.html
+06-vue-code/component-runtime-contract.md
+```
+
+如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-alert`、`.ant-alert-content`、`.ant-alert-message` 等真实 class 为准。禁止根据本文自行生成 `.alert`、`.notice`、`.risk-alert` 等旧别名或私有提示 class。
+
 ## 1. 使用场景
 
 - 页面顶部的重要说明。
@@ -40,6 +55,8 @@ Icon + Title + Description + Action / Close
 - 页面顶部不要堆叠多个 Alert。
 - 语义色必须与内容一致。
 
-## 5. Vue / HTML 生成要求
+## 5. HTML Demo 生成要求
 
-Vue 使用 `a-alert`。HTML 预览需要模拟 info、success、warning、error、closable 和 action 状态。
+组件语义可参考 Ant Design / Ant Design Vue 的同名 Alert 组件，但本 Skill 不输出 Vue 代码。
+
+HTML Demo 需要模拟 info、success、warning、error、closable 和 action 状态。Alert DOM 必须复制 manifest 指向的 snippet，并使用组件样式库真实 `.ant-alert` 体系，最终 HTML 必须按 `component-runtime-contract.md` 注入对应 `.ant-alert` CSS / Token。
