@@ -1,13 +1,13 @@
 # HTML 可演示页面规范
 ## Preview HTML Demo Rules
 
-Keywords: preview html, clickable demo, html demo, backend page, component runtime contract, interaction validation
+Keywords: preview html, clickable demo, html demo, backend page, snippet manifest, component runtime contract, interaction validation
 
 本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证，只定义 HTML Demo 输出要求，不重复维护组件运行时细则。
 
 ## 0. 最高优先级
 
-生成 HTML Demo 时，必须先完整继承框架母版，再从组件样式库抽取业务所需组件 DOM、CSS 与 Token，最后替换业务文案、字段、mock 数据和业务修饰 class。
+生成 HTML Demo 时，必须先完整继承框架母版，再按 `template-boundary-contract.md` 判断业务替换区域，然后从 `component_snippet_manifest.json` 定位组件，从 `snippets/*.html` 复制稳定组件 DOM，并从组件样式库校验 CSS 与 Token，最后替换业务文案、字段、mock 数据和业务修饰 class。
 
 组件运行时细则唯一读取：
 
@@ -41,9 +41,9 @@ SKILL.md
 INDEX.md
 ```
 
-再按 `INDEX.md` 中对应任务 profile 读取页面规范、交互规范、组件样式库、组件运行时契约和验收清单。
+再按 `INDEX.md` 中对应任务 profile 读取页面规范、交互规范、母版边界契约、组件 snippet manifest、组件样式库、组件运行时契约和验收清单。
 
-禁止只读取 `02-components/` 后自行推导 HTML class。禁止只读取框架母版而不读取组件样式库和组件运行时契约。
+禁止只读取 `02-components/` 后自行推导 HTML class。禁止只读取框架母版而不读取组件 snippet manifest、组件样式库和组件运行时契约。
 
 ## 3. 框架模板调用规则
 
@@ -56,9 +56,27 @@ INDEX.md
 
 HTML 母版是页面底座，不是视觉参考稿。必须完整复制母版 DOM、CSS、JS、iconfont、hover、active、open、collapsed、级联浮层和响应式规则。
 
+母版可替换区域按以下文件判断：
+
+```text
+06-vue-code/template-boundary-contract.md
+```
+
 ## 4. 组件运行时规则
 
-组件真实实现来源：
+组件定位入口：
+
+```text
+docs/component-style-library/component_snippet_manifest.json
+```
+
+稳定组件 DOM 来源：
+
+```text
+docs/component-style-library/snippets/*.html
+```
+
+组件 CSS / Token 来源：
 
 ```text
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
@@ -95,7 +113,8 @@ HTML 可演示页面必须满足：
 - 支持基础点击交互。
 - 必须完整实现所调用的固定框架母版。
 - 业务内容只能写入母版指定的业务内容区。
-- 业务组件 DOM、CSS、Token 必须来自组件样式库并成对抽取。
+- 稳定基础组件 DOM 必须来自 manifest 指向的 snippetFile。
+- 组件 CSS 与 Token 必须来自组件样式库并成对抽取或校验。
 - 页面业务 CSS 只能补充布局、宽度、间距和局部业务修饰。
 - 使用规范指定的 iconfont Font Class。
 - 必须继承字体渲染基线。
@@ -119,14 +138,18 @@ HTML 可演示页面必须满足：
 
 - 是否完整复制对应 HTML 母版。
 - 是否保留母版 DOM、CSS、JS、iconfont、hover、active、open、collapsed 和响应式规则。
+- 是否读取 `06-vue-code/template-boundary-contract.md`。
 - 业务内容是否只进入母版业务内容区。
-- 是否读取组件样式库。
+- 是否读取 `docs/component-style-library/component_snippet_manifest.json`。
+- 是否读取所需 `docs/component-style-library/snippets/*.html`。
+- 是否读取组件样式库作为 CSS / Token 来源。
 - 是否执行 `06-vue-code/component-runtime-contract.md`。
-- 所有业务组件 DOM 是否来自组件样式库或未来组件调用清单指向的真实来源。
-- 所有已使用组件是否有对应 CSS 和 Token。
+- 所有稳定基础组件 DOM 是否来自 manifest 指定的 snippetFile。
+- 所有已使用组件是否有对应 CSS scope 和 Token。
 - 组件 CSS 是否位于框架母版 CSS 之后、页面业务 CSS 之前。
 - 页面业务 CSS 是否只做局部修饰。
+- pending 组件是否未被当作稳定基础组件。
 - 是否包含 loading、empty、error、success、confirm 等必要状态。
 - 是否通过 `07-checklists/html-demo-acceptance.md` 验收。
 
-只要 DOM、CSS、Token 成对抽取检查不通过，禁止交付最终 HTML。
+只要 manifest key / snippetFile / DOM / CSS scope / Token 成对检查不通过，禁止交付最终 HTML。
