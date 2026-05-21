@@ -1,33 +1,21 @@
 # HTML 可演示页面规范
 ## Preview HTML Demo Rules
 
-Keywords: preview html, clickable demo, html demo, backend page, component dom extraction, component css injection, ant class
+Keywords: preview html, clickable demo, html demo, backend page, component runtime contract, interaction validation
 
-本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证。
+本文用于约束 AI 生成可直接预览的 HTML 演示页面。该文件服务于设计调整、快速演示和交互验证，只定义 HTML Demo 输出要求，不重复维护组件运行时细则。
 
 ## 0. 最高优先级
 
-生成 HTML Demo 时，以下规则优先于页面内容、业务字段、视觉微调和组件语义：
+生成 HTML Demo 时，必须先完整继承框架母版，再从组件样式库抽取业务所需组件 DOM、CSS 与 Token，最后替换业务文案、字段、mock 数据和业务修饰 class。
+
+组件运行时细则唯一读取：
 
 ```text
-先完整继承框架母版，再从组件样式库抽取业务所需组件 DOM、CSS 与 Token，最后只替换业务文案、字段、mock 数据和业务修饰 class。
+06-vue-code/component-runtime-contract.md
 ```
 
 不得只注入组件 CSS 后自行编写基础组件 DOM。不得根据 `.ant-*` class 列表自行拼出“看起来像 Ant”的结构。
-
-执行顺序必须是：
-
-```text
-1. 完整复制 HTML 母版。
-2. 读取组件样式库。
-3. 判断业务页面需要哪些基础组件。
-4. 从组件样式库抽取这些组件的真实 DOM。
-5. 从组件样式库抽取这些组件的 CSS 与依赖 Token。
-6. 替换业务文案、字段、mock 数据和状态文案。
-7. 追加业务修饰 class。
-8. 追加页面业务 CSS。
-9. 输出前检查 DOM、CSS、Token 是否成对抽取。
-```
 
 ## 1. 默认使用场景
 
@@ -53,9 +41,9 @@ SKILL.md
 INDEX.md
 ```
 
-再按 `INDEX.md` 中对应任务 profile 读取页面规范、交互规范、组件样式库、组件抽取规则和验收清单。
+再按 `INDEX.md` 中对应任务 profile 读取页面规范、交互规范、组件样式库、组件运行时契约和验收清单。
 
-禁止只读取 `02-components/` 后自行推导 HTML class。禁止只读取框架母版而不读取组件样式库。
+禁止只读取 `02-components/` 后自行推导 HTML class。禁止只读取框架母版而不读取组件样式库和组件运行时契约。
 
 ## 3. 框架模板调用规则
 
@@ -68,56 +56,34 @@ INDEX.md
 
 HTML 母版是页面底座，不是视觉参考稿。必须完整复制母版 DOM、CSS、JS、iconfont、hover、active、open、collapsed、级联浮层和响应式规则。
 
-## 4. 组件 DOM / CSS / Token 成对抽取规则
+## 4. 组件运行时规则
 
-必须执行：
-
-```text
-06-vue-code/component-dom-extraction-rules.md
-06-vue-code/component-style-import-rules.md
-```
-
-要求：
-
-- 最终 HTML 使用 Button，必须抽取组件库 Button DOM、Button CSS 和依赖 Token。
-- 最终 HTML 使用 Input，必须抽取组件库 Input DOM、Input CSS 和依赖 Token。
-- 最终 HTML 使用 Select，必须抽取组件库 Select DOM、Select CSS 和依赖 Token。
-- 最终 HTML 使用 Table，必须抽取组件库 Table DOM、Table CSS 和依赖 Token。
-- 最终 HTML 使用 Tag，必须抽取组件库 Tag DOM、Tag CSS 和依赖 Token。
-- 最终 HTML 使用 Pagination，必须抽取组件库 Pagination DOM、Pagination CSS 和依赖 Token。
-- 最终 HTML 使用 Toast，必须抽取组件库 Toast DOM、Toast CSS 和依赖 Token。
-
-最终 HTML 的 `<style>` 必须按以下顺序组织：
-
-```text
-1. 框架母版 CSS
-2. 组件样式库 CSS
-3. 当前页面业务 CSS
-```
-
-## 5. 业务组件规则
-
-业务组件必须采用：
-
-```text
-组件库真实 DOM + 组件库真实基础 class + 业务修饰 class + 组件库对应 CSS
-```
-
-本文不提供手写基础组件 DOM 示例。基础组件 DOM 必须从以下文件抽取：
+组件真实实现来源：
 
 ```text
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 ```
 
-旧别名 class 和页面私有组件 class 统一按以下文件检查：
+组件抽取、CSS 注入、Token 成对、业务 class 追加和旧 class 拦截统一执行：
+
+```text
+06-vue-code/component-runtime-contract.md
+```
+
+组件语义、状态和行为需要判断时，再按需读取：
+
+```text
+02-components/component-semantic-boundary.md
+02-components/对应组件文档
+```
+
+旧 class 或私有组件 class 深度排查时，再读取：
 
 ```text
 06-vue-code/deprecated-class-blacklist.md
 ```
 
-如果最终 HTML 中出现黑名单 class，必须先修正后再交付。
-
-## 6. 文件要求
+## 5. 文件要求
 
 HTML 可演示页面必须满足：
 
@@ -134,7 +100,7 @@ HTML 可演示页面必须满足：
 - 使用规范指定的 iconfont Font Class。
 - 必须继承字体渲染基线。
 
-## 7. 基础交互要求
+## 6. 基础交互要求
 
 | 页面类型 | HTML 预览交互 |
 |---|---|
@@ -145,7 +111,9 @@ HTML 可演示页面必须满足：
 | 分步流程页 | 上一步、下一步、步骤校验、提交 loading、结果反馈 |
 | 异常页 | 刷新重试、返回首页、申请权限等可恢复操作 |
 
-## 8. 输出前自检
+读取交互文档后，必须把适用交互转成当前页面自检项。只做静态展示不得交付。
+
+## 7. 输出前自检
 
 输出 HTML Demo 前必须检查：
 
@@ -153,12 +121,8 @@ HTML 可演示页面必须满足：
 - 是否保留母版 DOM、CSS、JS、iconfont、hover、active、open、collapsed 和响应式规则。
 - 业务内容是否只进入母版业务内容区。
 - 是否读取组件样式库。
-- 是否读取并执行 `component-dom-extraction-rules.md`。
-- 是否读取并执行 `component-style-import-rules.md`。
-- 是否读取并执行 `component-style-code-map.md`。
-- 是否读取并执行 `business-component-reuse-rules.md`。
-- 是否读取并执行 `deprecated-class-blacklist.md`。
-- 所有业务组件 DOM 是否来自组件样式库。
+- 是否执行 `06-vue-code/component-runtime-contract.md`。
+- 所有业务组件 DOM 是否来自组件样式库或未来组件调用清单指向的真实来源。
 - 所有已使用组件是否有对应 CSS 和 Token。
 - 组件 CSS 是否位于框架母版 CSS 之后、页面业务 CSS 之前。
 - 页面业务 CSS 是否只做局部修饰。
