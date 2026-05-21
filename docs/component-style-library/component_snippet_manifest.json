@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.1.0",
   "source": "docs/component-style-library/backend_ai_ui_component_kit_with_index.html",
   "snippetRoot": "docs/component-style-library/snippets/",
   "description": "HTML Demo component snippet manifest. AI must copy snippetFile first. The large component library remains the CSS, Token, and visual-state source.",
@@ -104,18 +104,74 @@
       "cssScopes": ["toast"],
       "tokens": ["green", "orange", "red", "blue"],
       "states": ["success", "warning", "error", "info"]
+    },
+    "modal.confirm": {
+      "snippetId": "modal-confirm",
+      "snippetFile": "docs/component-style-library/snippets/modal-confirm.html",
+      "requiredClasses": ["ant-modal-root", "ant-modal", "ant-modal-confirm"],
+      "cssScopes": ["modal"],
+      "tokens": ["gray-10", "p6", "red"],
+      "states": ["open", "confirm", "cancel", "danger"]
+    },
+    "drawer.detail": {
+      "snippetId": "drawer-detail",
+      "snippetFile": "docs/component-style-library/snippets/drawer-detail.html",
+      "requiredClasses": ["ant-drawer", "ant-drawer-content", "ant-drawer-body"],
+      "cssScopes": ["drawer"],
+      "tokens": ["gray-10", "p6"],
+      "states": ["open", "close", "loading"]
+    },
+    "alert.inline": {
+      "snippetId": "alert-inline",
+      "snippetFile": "docs/component-style-library/snippets/alert-inline.html",
+      "requiredClasses": ["ant-alert", "ant-alert-content", "ant-alert-message"],
+      "cssScopes": ["alert"],
+      "tokens": ["blue", "green", "orange", "red"],
+      "states": ["info", "success", "warning", "error"]
+    },
+    "switch.default": {
+      "snippetId": "switch-default",
+      "snippetFile": "docs/component-style-library/snippets/switch-default.html",
+      "requiredClasses": ["ant-switch", "ant-switch-handle", "ant-switch-inner"],
+      "cssScopes": ["switch"],
+      "tokens": ["p6", "gray-5"],
+      "states": ["checked", "unchecked", "disabled", "loading"]
+    },
+    "empty.state": {
+      "snippetId": "empty-state",
+      "snippetFile": "docs/component-style-library/snippets/empty-state.html",
+      "requiredClasses": ["ant-empty", "ant-empty-description"],
+      "cssScopes": ["empty"],
+      "tokens": ["gray-5", "p6"],
+      "states": ["empty", "action"]
+    },
+    "spin.loading": {
+      "snippetId": "spin-loading",
+      "snippetFile": "docs/component-style-library/snippets/spin-loading.html",
+      "requiredClasses": ["ant-spin", "ant-spin-spinning"],
+      "cssScopes": ["spin"],
+      "tokens": ["p6"],
+      "states": ["loading"]
+    },
+    "dropdown.more": {
+      "snippetId": "dropdown-more",
+      "snippetFile": "docs/component-style-library/snippets/dropdown-more.html",
+      "requiredClasses": ["ant-dropdown", "ant-dropdown-menu", "ant-dropdown-menu-item"],
+      "cssScopes": ["dropdown"],
+      "tokens": ["gray-10", "p6", "red"],
+      "states": ["open", "hover", "danger"]
+    },
+    "tooltip.default": {
+      "snippetId": "tooltip-default",
+      "snippetFile": "docs/component-style-library/snippets/tooltip-default.html",
+      "requiredClasses": ["tooltip-anchor", "ant-tooltip", "ant-tooltip-inner"],
+      "cssScopes": ["tooltip"],
+      "tokens": ["gray-10"],
+      "states": ["open", "hidden"]
     }
   },
   "pendingComponents": {
     "input.textarea": "snippet-pending",
-    "tooltip.default": "snippet-pending",
-    "picker.range": "snippet-pending",
-    "modal.confirm": "style-library-pending",
-    "drawer.detail": "style-library-pending",
-    "alert.inline": "style-library-pending",
-    "switch.default": "style-library-pending",
-    "empty.state": "style-library-pending",
-    "spin.loading": "style-library-pending",
-    "dropdown.more": "style-library-pending"
+    "picker.range": "snippet-pending"
   }
 }
