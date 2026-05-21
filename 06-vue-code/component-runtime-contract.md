@@ -29,6 +29,27 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 
 如果 manifest 中没有某个组件入口，或该组件没有 `snippetFile`，该组件不得作为稳定基础组件使用；只能标注为“组件样式库待补齐组件”，并补充最小可用样式。
 
+### 0.1 组件映射证据
+
+最终 HTML Demo 必须保留组件映射证据，用于证明页面中的基础组件来自 manifest 和 snippet，而不是临时仿写。
+
+建议在 HTML 文件顶部或底部写入注释：
+
+```html
+<!--
+COMPONENT_USAGE_MAP
+button.primary: docs/component-style-library/snippets/button-primary.html | cssScopes: ... | tokens: ...
+input.search: docs/component-style-library/snippets/input-search.html | cssScopes: ... | tokens: ...
+select.default: docs/component-style-library/snippets/select-default.html | cssScopes: ... | tokens: ...
+table.compact: docs/component-style-library/snippets/table-compact.html | cssScopes: ... | tokens: ...
+pagination.default: docs/component-style-library/snippets/pagination-default.html | cssScopes: ... | tokens: ...
+tooltip.default: docs/component-style-library/snippets/tooltip-default.html | cssScopes: ... | tokens: ...
+dropdown.more: docs/component-style-library/snippets/dropdown-more.html | cssScopes: ... | tokens: ...
+-->
+```
+
+映射证据必须与页面实际使用组件一致。不得写入未使用组件，也不得遗漏已使用的稳定基础组件。
+
 ## 1. 职责边界
 
 本文负责：
@@ -37,6 +58,7 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 - 规定 manifest、snippet 文件、组件库 HTML 的读取顺序。
 - 规定组件抽取、注入、替换、追加业务 class 的顺序。
 - 规定旧 class、私有组件 class、自造组件结构的拦截规则。
+- 规定组件映射证据在最终 HTML 中的保留方式。
 
 本文不负责：
 
@@ -57,7 +79,8 @@ docs/component-style-library/backend_ai_ui_component_kit_with_index.html
 7. 替换业务文案、字段、mock 数据、placeholder、title、aria 文案。
 8. 在真实组件 DOM 上追加业务修饰 class。
 9. 追加页面业务 CSS，只处理布局、间距、宽度和局部业务修饰。
-10. 输出前检查 DOM / CSS / Token / snippetFile 是否成对存在。
+10. 写入 COMPONENT_USAGE_MAP 组件映射证据。
+11. 输出前检查 DOM / CSS / Token / snippetFile 是否成对存在。
 ```
 
 ## 3. 成对抽取规则
@@ -75,6 +98,15 @@ manifest 组件 key
 ```
 
 只复制 CSS 后手写 DOM、只写 `.ant-*` class 后自行拼结构、根据 `02-components/` 的语义说明反推 HTML 结构，都不算通过。
+
+当 manifest 中已经存在稳定组件时，不得裸用浏览器原生控件或临时 DOM 近似替代。例如：
+
+- 已存在 `select.default` 时，不得直接使用原生 `<select>` 充当筛选下拉或每页条数选择器。
+- 已存在 `pagination.default` 时，不得用普通按钮和输入框临时拼分页器。
+- 已存在 `dropdown.more` 时，不得用静态文字或悬浮 div 伪造更多菜单。
+- 已存在 `tooltip.default` 时，不得只依赖浏览器原生 `title` 作为完整 Tooltip 实现。
+
+如果某段 DOM 无法通过 COMPONENT_USAGE_MAP 说明其 manifest key 和 snippetFile 来源，则视为未通过组件运行时契约。
 
 ## 4. 可替换与必须保留
 
@@ -136,7 +168,10 @@ manifest 中 `pendingComponents` 标注的组件为待补齐组件。使用这�
 - 所有已使用基础组件都有 manifest key、snippetFile 和 snippetId。
 - 所有已使用基础组件 DOM 均来自对应 snippetFile。
 - 所有已使用基础组件都有对应 CSS scope 和 Token。
+- 最终 HTML 已保留 COMPONENT_USAGE_MAP 组件映射证据。
+- COMPONENT_USAGE_MAP 与页面实际使用组件一致。
 - 业务 class 只是追加，不替代基础组件 class。
 - 页面业务 CSS 没有重造基础组件样式。
+- 未裸用原生控件替代已有稳定组件。
 - 未命中旧 class 清单。
 - 已通过 `07-checklists/html-demo-acceptance.md`。
