@@ -111,7 +111,7 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 → 分页
 ```
 
-标签数量建议 2–5 个；当前标签使用主色高亮；标签用于切换顶层集合，不替代复杂筛选。
+标签数量建议 2-5 个；当前标签使用主色高亮；标签用于切换顶层集合，不替代复杂筛选。
 
 ## 4. 查询区规范
 
@@ -121,13 +121,13 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 
 布局规则：
 
-- 简单查询一行展示 3–5 个字段。
-- 复杂查询可使用 2–3 列栅格。
+- 简单查询一行展示 3-5 个字段。
+- 复杂查询可使用 2-3 列栅格。
 - 查询按钮使用主按钮。
 - 重置按钮使用次按钮。
 - 展开高级查询时应保持字段对齐。
 - 查询区不应占据过多首屏空间。
-- 日期范围应采用“开始日期 ～ 结束日期”结构。
+- 日期范围应采用“开始日期 ~ 结束日期”结构。
 
 ## 5. 工具栏规范
 
@@ -140,7 +140,7 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 - 左侧优先放批量操作。
 - 右侧优先放创建、导出、设置、刷新等页面操作。
 - 主操作按钮最多 1 个。
-- 次级操作建议 2–4 个。
+- 次级操作建议 2-4 个。
 - 批量操作在未选择数据时应为禁用态。
 - 工具栏与表格之间应有清晰分隔。
 
@@ -184,7 +184,7 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 
 标签规则：
 
-- 标签文字建议 2–6 字。
+- 标签文字建议 2-6 字。
 - 同一状态在同一产品内颜色保持一致。
 - 一个单元格内不宜堆叠过多彩色标签。
 - 普通类型标签使用灰色描边或浅色底。
@@ -196,7 +196,7 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 规则：
 
 - 行操作置于最右侧。
-- 单行高频操作建议 1–3 个。
+- 单行高频操作建议 1-3 个。
 - 低频操作收进更多菜单。
 - 删除、停用、取消等危险操作应弱化或二次确认。
 - 操作链接颜色以主色为主，不要多色混用。
@@ -265,12 +265,12 @@ Keywords: list page, search, table, pagination, batch action, backend, ai readab
 
 推荐值：
 
-- 表格列数：6–10 列。
-- 首屏行数：8–12 行。
-- 查询字段：3–8 个。
-- 标签页数量：2–5 个。
-- 工具按钮：2–5 个。
-- 单行操作：1–3 个。
+- 表格列数：6-10 列。
+- 首屏行数：8-12 行。
+- 查询字段：3-8 个。
+- 标签页数量：2-5 个。
+- 工具按钮：2-5 个。
+- 单行操作：1-3 个。
 
 控制原则：表格可密，但不能乱；查询区不应比表格更抢眼；普通字段不要和状态字段争抢视觉焦点。
 
@@ -328,14 +328,11 @@ HTML Demo 需支持搜索、清空、分页、行操作、删除确认、勾选�
 ```text
 03-interaction/list-search.md
 03-interaction/list-table.md
-06-vue-code/list-page-interaction-enforcement.md
 07-checklists/html-demo-acceptance.md
 ```
-
-列表页必须完整落实搜索、清空、loading、empty、排序、列筛选、勾选联动、固定列、行操作、更多菜单、分页、禁用 Tooltip、二次确认和 Toast 反馈等交互规则。
 
 读取列表页交互文档后，必须转换为当前页面内部验收清单。
 生成完成后，必须逐项自检。
 缺少任一当前业务适用的硬性项时，不得交付。
 
-HTML Demo 不得降级为静态展示。排序、列筛选、分页切换、勾选联动、更多菜单、禁用 Tooltip、确认弹窗和 Toast 反馈必须可点击验证。
+HTML Demo 不得降级为静态展示；当前业务适用的搜索、表格、分页、批量操作、确认反馈等交互必须可点击验证。
