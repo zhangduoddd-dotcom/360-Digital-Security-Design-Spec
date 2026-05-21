@@ -11,15 +11,21 @@ Keywords: html demo acceptance, snippet manifest, snippet file, template boundar
 - [ ] 是否完整继承指定框架母版 HTML。
 - [ ] 是否按 `06-vue-code/template-boundary-contract.md` 判断母版可替换区域。
 - [ ] 是否未自行重写顶部导航、侧边导航、页头和内容容器。
+- [ ] 是否在生成前建立当前页面执行契约。
+- [ ] 当前页面执行契约是否包含页面类型、使用母版、组件映射表、交互验收清单、状态清单和布局风险点。
 - [ ] 是否读取 `docs/component-style-library/component_snippet_manifest.json`。
 - [ ] 页面使用的每个稳定基础组件是否都能对应到 manifest 中的组件 key。
 - [ ] 页面使用的每个稳定基础组件是否都有 manifest 指定的 `snippetFile`。
 - [ ] 每个稳定基础组件 DOM 是否来自对应 `snippetFile` 的 `SNIPPET_START / SNIPPET_END` 区间。
 - [ ] 是否按 manifest 中的 `cssScopes` 和 `tokens` 注入或校验对应 CSS / Token。
-- [ ] 是否未自行拼装或仿写 Button、Input、Select、Table、Tag、Pagination、Toast 等基础组件。
+- [ ] 最终 HTML 是否保留 `COMPONENT_USAGE_MAP` 组件映射证据。
+- [ ] `COMPONENT_USAGE_MAP` 是否与页面实际使用的稳定基础组件一致。
+- [ ] 是否未自行拼装或仿写 Button、Input、Select、Table、Tag、Pagination、Toast、Tooltip、Dropdown 等基础组件。
+- [ ] 是否未用浏览器原生控件替代 manifest/snippet 中已有的稳定基础组件。
 - [ ] 是否把已读取的页面交互规范转换为当前页面验收清单。
 - [ ] 是否逐项落地当前页面适用的交互规则。
 - [ ] 是否不存在“只读了规范但未实现”的情况。
+- [ ] 是否完成规范差异检查，而不只是脚本语法检查或页面可运行检查。
 
 任一项不通过时，HTML Demo 视为验收失败。
 
@@ -33,6 +39,7 @@ Keywords: html demo acceptance, snippet manifest, snippet file, template boundar
 - [ ] 支持主要点击交互。
 - [ ] 没有只给静态页面而缺少 loading、empty、error、反馈状态。
 - [ ] 主要业务路径可以通过 HTML Demo 验证。
+- [ ] 最终 HTML 内含当前页面实际组件使用证据。
 
 ## 2. 母版与布局
 
@@ -50,6 +57,10 @@ Keywords: html demo acceptance, snippet manifest, snippet file, template boundar
 - [ ] 侧边栏收起态和展开态可用。
 - [ ] 表格列多时横向滚动和固定列正确。
 - [ ] 内容区域宽度不足时，通过换行、堆叠或横向滚动处理，而不是强行压缩到不可读。
+- [ ] 合并内容卡片型列表页中，搜索区、工具栏、表格、分页是否位于同一内容卡片内。
+- [ ] 合并内容卡片型列表页中，内容卡片是否使用规范边框而不是强阴影。
+- [ ] 合并内容卡片型列表页中，表格、工具栏、分页是否未溢出 24px 内容边界。
+- [ ] 合并内容卡片型列表页中，分页位置是否不受上方展开收起模块影响。
 
 ## 3. 组件实现
 
@@ -65,7 +76,10 @@ Keywords: html demo acceptance, snippet manifest, snippet file, template boundar
 - [ ] 已使用组件的 Token 已注入或复用母版同名 Token。
 - [ ] 最终样式顺序为：母版 CSS → 组件样式库 CSS → 页面业务 CSS。
 - [ ] 页面业务 class 只做命名空间、布局钩子或业务修饰。
-- [ ] 没有用 div 伪造 Button、Input、Select、Table、Tag、Pagination、Toast 等基础组件。
+- [ ] 最终 HTML 已写入 `COMPONENT_USAGE_MAP`。
+- [ ] `COMPONENT_USAGE_MAP` 中的 manifest key、snippetFile、cssScopes、tokens 与实际组件一致。
+- [ ] 没有用 div 伪造 Button、Input、Select、Table、Tag、Pagination、Toast、Tooltip、Dropdown 等基础组件。
+- [ ] 已有稳定 Select / Pagination / Dropdown / Tooltip 时，没有用原生 `<select>`、普通按钮组、静态 div 或浏览器 `title` 近似替代。
 - [ ] 没有命中 `deprecated-class-blacklist.md` 中的旧 class 或私有组件 class。
 - [ ] 按钮尺寸、颜色、hover、active、disabled、loading 状态正确。
 - [ ] 输入框、选择器、日期控件状态完整。
@@ -80,11 +94,13 @@ Keywords: html demo acceptance, snippet manifest, snippet file, template boundar
 - [ ] 搜索、清空、筛选、排序等当前页面适用交互逻辑正确。
 - [ ] 勾选行相关操作与勾选状态联动。
 - [ ] 勾选后展示 `已选 N 项`，未勾选时不展示。
+- [ ] 更多菜单可以点击展开和关闭。
+- [ ] 超长内容 hover 后展示完整 Tooltip。
 - [ ] 关键操作有确认。
 - [ ] 异步操作有 loading。
 - [ ] 成功、失败、异常、空状态反馈完整。
 - [ ] 空状态和异常状态有下一步操作。
-- [ ] 删除、禁用、还原、覆盖、发布、重置等操作有二次确认。
+- [ ] 删除、禁用、还原、覆盖、发布、清空等操作有二次确认。
 - [ ] 高风险操作不能只用 Toast 提示。
 
 ## 5. 数据与文案
@@ -93,6 +109,7 @@ Keywords: html demo acceptance, snippet manifest, snippet file, template boundar
 - [ ] 时间格式统一，例如 `YYYY-MM-DD HH:MM:SS`。
 - [ ] 数字格式、总数格式、分页格式统一。
 - [ ] 表头、字段、按钮文案与设计规范一致。
+- [ ] 搜索区按钮固定使用 `搜索 / 清空`，不混用 `查询 / 重置 / 确认`。
 - [ ] Tooltip、错误提示、帮助信息内容准确。
 - [ ] 风险、等级、状态标签文案使用标准命名。
 - [ ] 确认弹窗标题包含动作和对象。
@@ -109,7 +126,7 @@ Keywords: html demo acceptance, snippet manifest, snippet file, template boundar
 | 功能色 | 成功、警告、错误、信息使用对应 Green / Orange / Red / Blue Token |
 | 风险等级色 | 致命、严重、高危、中危、低危、安全按 Deep red / Red / Orange red / Orange / Yellow / Green 映射 |
 | Focus ring | 表单聚焦、错误、成功、警告状态使用 2px 外描边 Token，不改变组件尺寸 |
-| 投影 | 卡片使用一级投影；弹窗 / 抽屉使用二级投影；AI 超级输入框 hover 使用专门阴影 |
+| 投影 | 卡片使用一级投影；弹窗 / 抽屉使用二级投影；AI 超级输入框 hover 使用专门阴影；合并内容卡片型列表页不使用强阴影 |
 | 硬编码 | 关键颜色、阴影、字号、间距不应大量散乱硬编码 |
 | 字体渲染 | 必须继承字体渲染基线，关闭浏览器伪粗体 / 伪斜体 |
 
@@ -137,6 +154,6 @@ Keywords: html demo acceptance, snippet manifest, snippet file, template boundar
 | 表单页 | `03-interaction/form-entry.md` | 按表单录入当前业务适用项逐项检查 |
 | 详情页 / 页面容器 | `03-interaction/page-container.md` | 按页面容器和当前业务适用项逐项检查 |
 
-列表页验收必须以 `03-interaction/list-search.md` 和 `03-interaction/list-table.md` 为准。分页位置、空数据分页、固定列、空数据表格表现等细节不得在本文另行定义。
+列表页验收必须以 `03-interaction/list-search.md`、`03-interaction/list-table.md` 和 `04-pages/list-page.md` 的当前列表页类型规则为准。分页位置、空数据分页、固定列、空数据表格表现等细节不得在本文另行定义。
 
 缺少任一当前页面适用的硬性项，视为 HTML Demo 验收失败。
