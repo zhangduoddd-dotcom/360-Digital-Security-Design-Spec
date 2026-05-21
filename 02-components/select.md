@@ -7,15 +7,15 @@ Keywords: select, dropdown, multiple select, option, loading, p6, semantic compo
 
 ## 0. 使用边界
 
-本文只定义选择器的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 class / CSS 来源。
+本文只定义选择器的语义、使用场景、状态要求和交互规则，不作为 HTML Demo 的真实 DOM / class / CSS / Token 来源。
 
-HTML Demo 中选择器真实 class 与 CSS 必须以以下文件为准：
+HTML Demo 中选择器真实 DOM / class / CSS / Token 必须以以下文件为准：
 
 ```text
+docs/component-style-library/component_snippet_manifest.json
+docs/component-style-library/snippets/*.html
 docs/component-style-library/backend_ai_ui_component_kit_with_index.html
-06-vue-code/component-style-code-map.md
-06-vue-code/business-component-reuse-rules.md
-06-vue-code/component-style-import-rules.md
+06-vue-code/component-runtime-contract.md
 ```
 
 如果本文与组件样式库存在冲突，以组件样式库中的 `.ant-select`、`.ant-select-selector`、`.ant-select-dropdown`、`.ant-select-item`、`.ant-select-item-option-selected` 等真实 class 为准。禁止根据本文自行生成 `.select`、`.select-panel`、`.select-option`、`.alert-select` 等旧别名或私有选择器 class。
@@ -67,8 +67,8 @@ Default / Hover / Focus / Open / Selected / Disabled / Loading / Empty / Error /
 - 标签删除按钮需要 hover 状态。
 - 禁用选项不可点击。
 
-## 6. Vue / HTML 生成要求
+## 6. HTML Demo 生成要求
 
-Vue 使用 `a-select`、`a-tree-select`、`a-cascader`。
+组件语义可参考 Ant Design / Ant Design Vue 的同名 Select、TreeSelect、Cascader 组件，但本 Skill 不输出 Vue 代码。
 
-HTML 预览需要模拟打开、关闭、hover、selected、多选、删除标签、loading、empty 和 error 状态。HTML 预览的选择器 DOM 必须使用组件样式库真实 `.ant-select` 体系，并确保最终 HTML 已注入对应 `.ant-select` CSS。
+HTML Demo 需要模拟打开、关闭、hover、selected、多选、删除标签、loading、empty 和 error 状态。选择器 DOM 必须复制 manifest 指向的 snippet，并使用组件样式库真实 `.ant-select` 体系，最终 HTML 必须按 `component-runtime-contract.md` 注入对应 `.ant-select` CSS / Token。
