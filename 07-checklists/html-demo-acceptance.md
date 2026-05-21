@@ -1,7 +1,7 @@
 # HTML Demo 验收清单
 ## HTML Demo Acceptance Checklist
 
-Keywords: html demo acceptance, checklist, high fidelity preview, token, responsive, backend, interaction
+Keywords: html demo acceptance, snippet manifest, template boundary, component dom, token, interaction
 
 本文用于检查 HTML Demo 是否符合设计规范、交互规则和高保真预览要求。
 
@@ -9,12 +9,15 @@ Keywords: html demo acceptance, checklist, high fidelity preview, token, respons
 
 - [ ] HTML Demo 是否由“框架母版 HTML + 组件样式库真实组件 DOM / CSS / Token + 当前页面业务内容、mock 数据和交互 JS”组成。
 - [ ] 是否完整继承指定框架母版 HTML。
-- [ ] 是否未自行重写顶部导航、侧边导航、页头和内容容器。
+- [ ] 是否只替换母版 `BUSINESS_CONTENT_START / BUSINESS_CONTENT_END` 内部内容。
+- [ ] 是否未修改 `FRAME_LOCKED_START / FRAME_LOCKED_END` 内部结构。
+- [ ] 是否读取 `docs/component-style-library/component_snippet_manifest.json`。
+- [ ] 页面使用的每个基础组件是否都能对应到 manifest 中的组件 key。
+- [ ] 每个基础组件 DOM 是否来自组件库对应 `SNIPPET_START / SNIPPET_END` 区间。
 - [ ] 是否从组件样式库 HTML 中按需抽取真实组件 DOM、class、CSS 和 Token。
 - [ ] 是否未自行拼装或仿写 Button、Input、Select、Table、Tag、Pagination、Toast 等基础组件。
 - [ ] 是否把已读取的页面交互规范转换为当前页面验收清单。
 - [ ] 是否逐项落地当前页面适用的交互规则。
-- [ ] 是否不存在“只读了规范但未实现”的情况。
 
 任一项不通过时，HTML Demo 视为验收失败。
 
@@ -33,6 +36,10 @@ Keywords: html demo acceptance, checklist, high fidelity preview, token, respons
 
 - [ ] 已完整继承指定 HTML 母版。
 - [ ] 未重写顶部导航、侧边导航、页头和内容容器结构。
+- [ ] 只替换 `BUSINESS_CONTENT_START / BUSINESS_CONTENT_END` 内部内容。
+- [ ] 未修改 `FRAME_LOCKED_START / FRAME_LOCKED_END` 内部结构。
+- [ ] 未删除页头、内容容器、侧边栏、顶部导航固定结构。
+- [ ] 未保留母版中的示例业务卡片或示例文案。
 - [ ] 页面整体宽度、边距、栅格、内容区符合设计规范。
 - [ ] 顶部导航、侧边导航、主内容区位置稳定。
 - [ ] 页面最小宽度和横向滚动策略正确。
@@ -43,8 +50,13 @@ Keywords: html demo acceptance, checklist, high fidelity preview, token, respons
 
 ## 3. 组件实现
 
+- [ ] 已读取 `docs/component-style-library/component_snippet_manifest.json`。
 - [ ] 基础组件 DOM 来自 `docs/component-style-library/backend_ai_ui_component_kit_with_index.html`。
-- [ ] 基础组件 CSS 与依赖 Token 已同步抽取。
+- [ ] 页面使用的每个基础组件都能对应到 manifest 中的组件 key。
+- [ ] 每个基础组件 DOM 都来自组件库中对应 `SNIPPET_START / SNIPPET_END` 区间。
+- [ ] 没有使用 manifest 以外的组件作为稳定基础组件。
+- [ ] 已使用组件的 CSS scope 已注入。
+- [ ] 已使用组件的 Token 已注入或复用母版同名 Token。
 - [ ] 最终样式顺序为：母版 CSS → 组件样式库 CSS → 页面业务 CSS。
 - [ ] 页面业务 class 只做命名空间、布局钩子或业务修饰。
 - [ ] 没有用 div 伪造 Button、Input、Select、Table、Tag、Pagination、Toast 等基础组件。
