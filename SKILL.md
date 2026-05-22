@@ -94,6 +94,8 @@ Basic UI component style/Navigation.html
 
 稳定基础组件必须直接复用组件库中的真实 DOM、class、CSS 和 Token。不得为了视觉接近临时仿写 Button、Input、Select、Table、Tag、Pagination、Dropdown、Tooltip、Toast、Modal、Drawer、Tabs、Steps 等基础组件。
 
+组件库 HTML 是可预览的展示页，其中可能包含展示壳、导航、页头和文档说明结构。AI 只能把 `COMPONENT_START` / `COMPONENT_END` 标记内的组件 CSS、组件 DOM 示例和组件状态作为组件来源；标记外内容只用于理解展示页，不得复制进业务页面。尤其禁止从组件库 HTML 中复制 `.platform-frame`、`.platform-top-nav`、`.platform-sidebar`、`.platform-page-header`、`.platform-page-content` 等框架结构。
+
 组件使用规则：
 
 - 全局 Token、颜色、阴影、字体基线优先来自 `Green Theme-Global Style.css`。
@@ -130,7 +132,7 @@ AI 必须按以下顺序执行：
 2. 读取 INDEX.md，获得最小读取路径。
 3. 选择并完整继承固定 HTML 母版。
 4. 判断业务内容只能进入的母版业务区域。
-5. 读取需要的组件库资产。
+5. 读取需要的组件库资产，并只提取 `COMPONENT_START` / `COMPONENT_END` 标记内的组件来源。
 6. 建立当前页面执行契约。
 7. 基于真实组件 DOM / CSS / Token 生成业务内容。
 8. 添加页面业务 JS，实现主要点击交互和状态切换。
@@ -174,6 +176,7 @@ HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的�
 - 未保留母版示例业务内容。
 - 已建立当前页面执行契约。
 - 所有稳定基础组件均来自 `Basic UI component style/` 组件库资产。
+- 组件库 HTML 只使用 `COMPONENT_START` / `COMPONENT_END` 标记内的组件来源，未复制展示壳或 `.platform-*` 框架代码。
 - 未使用浏览器原生控件或临时 DOM 代替已有稳定组件。
 - 页面业务 CSS 没有重造基础组件样式。
 - 已覆盖当前页面适用的交互和状态。
@@ -193,6 +196,7 @@ HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的�
 - 破坏母版固定结构或框架交互。
 - 业务内容写到母版业务区之外。
 - 临时仿写基础组件。
+- 从组件库 HTML 复制展示壳、导航、页头、文档说明结构或 `.platform-*` 框架代码。
 - 把未补齐组件库文件当作完整组件真源。
 - 只复制 CSS 但手写组件 DOM。
 - 只写相似 class 但没有组件库真实结构。
