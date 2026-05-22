@@ -96,8 +96,7 @@ Interaction Construction Specifications/permission-state.md
 列表页、查询结果页、用户管理列表、系统配置列表必须额外读取：
 
 ```text
-Interaction Construction Specifications/list-search.md
-Interaction Construction Specifications/list-table.md
+Interaction Construction Specifications/list-page.md
 ```
 
 表单页、新增页、编辑页、配置页、抽屉表单、分步表单必须额外读取：
@@ -106,7 +105,7 @@ Interaction Construction Specifications/list-table.md
 Interaction Construction Specifications/form-entry.md
 ```
 
-详情页、工作台等页面如果包含表格、列表、搜索区或编辑表单，必须按实际模块追加读取 `list-search.md`、`list-table.md` 或 `form-entry.md`。
+详情页、工作台等页面如果包含表格、列表、搜索区或编辑表单，必须按实际模块追加读取 `list-page.md` 或 `form-entry.md`。
 
 未读取当前页面适用交互规范时，不得生成最终 HTML Demo。
 

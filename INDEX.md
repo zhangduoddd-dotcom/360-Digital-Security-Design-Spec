@@ -28,8 +28,7 @@ INDEX.md
 | 双层导航母版 | `Interaction Construction Specifications/double-nav-frame.html` |
 | 页面容器交互规范 | `Interaction Construction Specifications/page-container.md` |
 | 权限与状态交互规范 | `Interaction Construction Specifications/permission-state.md` |
-| 列表页搜索交互规范 | `Interaction Construction Specifications/list-search.md` |
-| 列表页表格交互规范 | `Interaction Construction Specifications/list-table.md` |
+| 列表页搜索与表格交互规范 | `Interaction Construction Specifications/list-page.md` |
 | 表单录入交互规范 | `Interaction Construction Specifications/form-entry.md` |
 | 全局 Token / 主题样式 | `Basic UI component style/Green Theme-Global Style.css` |
 | 基础与数据录入组件 | `Basic UI component style/Basic & Data Entry.html` |
@@ -54,25 +53,25 @@ Interaction Construction Specifications/permission-state.md
 
 | 页面结构 / 模块 | 必须追加读取 |
 |---|---|
-| 列表页、查询结果页、用户管理列表、系统配置列表 | `Interaction Construction Specifications/list-search.md`、`Interaction Construction Specifications/list-table.md` |
+| 列表页、查询结果页、用户管理列表、系统配置列表 | `Interaction Construction Specifications/list-page.md` |
 | 表单页、新增页、编辑页、配置页、抽屉表单、分步表单 | `Interaction Construction Specifications/form-entry.md` |
-| 详情页中包含关联表格 | `Interaction Construction Specifications/list-table.md` |
+| 详情页中包含关联表格 | `Interaction Construction Specifications/list-page.md` |
 | 详情页中包含编辑抽屉或配置表单 | `Interaction Construction Specifications/form-entry.md` |
-| 工作台中包含待办列表、排行列表或表格模块 | `Interaction Construction Specifications/list-table.md` |
+| 工作台中包含待办列表、排行列表或表格模块 | `Interaction Construction Specifications/list-page.md` |
 | 页面包含禁用、loading、empty、error、权限隐藏或权限禁用 | `Interaction Construction Specifications/permission-state.md` |
 
 ## 4. 页面类型读取映射
 
 | 页面类型 | 母版 / 交互规范 | 组件库资产 |
 |---|---|---|
-| 列表页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`、`list-search.md`、`list-table.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Navigation.html` |
+| 列表页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`、`list-page.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Navigation.html` |
 | 表单页 / 新增页 / 编辑页 / 配置页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`、`form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读取 `Feedback.html` |
-| 详情页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；若包含关联表格，追加读取 `list-table.md`；若包含编辑抽屉或配置表单，追加读取 `form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Feedback.html` |
-| 工作台 / Dashboard | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；若包含待办列表、排行列表或表格模块，追加读取 `list-table.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html` |
+| 详情页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；若包含关联表格，追加读取 `list-page.md`；若包含编辑抽屉或配置表单，追加读取 `form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Feedback.html` |
+| 工作台 / Dashboard | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；若包含待办列表、排行列表或表格模块，追加读取 `list-page.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html` |
 | 分步流程页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`、`form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读取 `Navigation.html`、`Feedback.html` |
 | 异常页 / 空状态页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读取 `Feedback.html` |
-| 用户管理 / 系统配置 / 系统设置 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；包含列表时读取 `list-search.md`、`list-table.md`；包含新增 / 编辑 / 配置时读取 `form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Feedback.html`、`Navigation.html` |
-| HTML Demo 检查 | 读取待检查页面实际使用的母版；必须读取 `page-container.md`、`permission-state.md`；再按页面实际结构读取 `list-search.md`、`list-table.md`、`form-entry.md` | 读取待检查页面实际使用的组件库资产 |
+| 用户管理 / 系统配置 / 系统设置 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；包含列表时读取 `list-page.md`；包含新增 / 编辑 / 配置时读取 `form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Feedback.html`、`Navigation.html` |
+| HTML Demo 检查 | 读取待检查页面实际使用的母版；必须读取 `page-container.md`、`permission-state.md`；再按页面实际结构读取 `list-page.md`、`form-entry.md` | 读取待检查页面实际使用的组件库资产 |
 
 ## 5. 目录职责
 
