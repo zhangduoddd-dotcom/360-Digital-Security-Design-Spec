@@ -20,6 +20,8 @@ INDEX.md
 
 然后按页面类型读取对应母版和组件库资产。不要一次性读取全仓库。
 
+母版继承、组件来源、读取失败中止、最终自检和禁止交付条件均以 `SKILL.md` 为准；本文只提供读取路径，不重复维护具体规则。
+
 ## 2. 固定资产路径
 
 | 类型 | 路径 |
@@ -31,6 +33,8 @@ INDEX.md
 | 数据展示组件 | `Basic UI component style/Data Display.html` |
 | 反馈组件 | `Basic UI component style/Feedback.html` |
 | 导航组件 | `Basic UI component style/Navigation.html` |
+
+以上路径只用于定位母版和组件来源资产，不代表可以按资产视觉重新组织、重写或仿写页面框架和基础组件。
 
 当前组件库状态：`Feedback.html` 和 `Navigation.html` 尚未补齐完整真实组件 DOM / CSS / 状态时，只能视为待补齐资产，不应作为完整组件真源。
 
