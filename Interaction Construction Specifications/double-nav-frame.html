@@ -8,7 +8,7 @@
   AI 使用硬约束：
   1. 本文件是通用双层导航框架 HTML 母版，不是视觉参考稿。
   2. 生成页面时必须完整复制本文件作为基座。
-  3. 只允许修改 navItems、localBrainMenus、顶部 logo、页签文案、.mock-content 内业务内容、mock 数据和必要业务文案。
+  3. 只允许修改 navItems、localBrainMenus、顶部 logo、页签文案、BUSINESS_CONTENT_START / BUSINESS_CONTENT_END 内业务内容、mock 数据和必要业务文案。
   4. 不得重写双层顶部导航、左侧菜单、收起态级联浮层、.mock-body、.mock-main-panel、页签式内容容器外层结构、iconfont、CSS 变量和 JS 交互。
   5. 若文字规范与本 HTML 母版冲突，以本文件为准。
   -->
@@ -5871,6 +5871,7 @@
 </style>
 </head>
 <body>
+  <!-- FRAME_LOCKED_START: double-nav fixed frame. Keep top navigation, main nav, sidebar, tab header, outer layout, iconfont, CSS variables, and frame interactions unchanged. -->
   <div class="product-frame">
     <header class="double-top-nav">
       <div class="top-nav-inner">
@@ -5940,10 +5941,14 @@
         </div>
 
         <main class="mock-content">
+          <!-- FRAME_LOCKED_END: business content insertion point begins. Keep <main class="mock-content"> itself unchanged. -->
+          <!-- BUSINESS_CONTENT_START: replace only this block with page-specific business content. Do not include top nav, sidebar, tab header, or another page frame here. -->
           <div class="mock-card">
             <h1 class="mock-title" id="tabTitle">页面一</h1>
             <p class="mock-desc" id="tabDesc">这是双层导航框架特有的页签式页头，用 40px 页签条替代普通页面页头。页签下方直接承载筛选区、表格区或业务内容。</p>
           </div>
+          <!-- BUSINESS_CONTENT_END -->
+          <!-- FRAME_LOCKED_START: closing double-nav frame, dropdowns, and runtime scripts. Keep unchanged. -->
         </main>
       </div>
     </div>
@@ -6946,6 +6951,7 @@
   setTimeout(applyFixes, 300);
 })();
 </script>
+<!-- FRAME_LOCKED_END -->
 
 </body>
 </html>
