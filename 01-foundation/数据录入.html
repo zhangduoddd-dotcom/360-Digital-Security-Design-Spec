@@ -1,0 +1,3831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>360 Design</title>
+  <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.css">
+  <style>
+    :root {
+      --frame-top-height: 56px;
+      --sidebar-expanded-width: 272px;
+      --frame-sidebar-width: var(--sidebar-expanded-width);
+      --frame-page-header-height: 48px;
+      --top-bg: #242933;
+      --page-bg: #F2F3F5;
+      --card-bg: #FFFFFF;
+      --border: #E8EAED;
+      --border-strong: #DFE1E6;
+      --p1: #D9F4EE;
+      --p5: #1DB887;
+      --p6: #00AB7A;
+      --p7: #039972;
+      --gray-1: #FFFFFF;
+      --gray-2: #F8F9FA;
+      --gray-3: #F2F3F5;
+      --gray-4: #E8EAED;
+      --gray-5: #DFE1E6;
+      --gray-6: #AEB2B8;
+      --gray-7: #8A9099;
+      --gray-8: #525966;
+      --gray-9: #242933;
+      --Red-1: #FFE8E6;
+      --Red-6: #F0131E;
+      --focus-default: 0 0 0 2px #D9F4EE;
+      --focus-error: 0 0 0 2px #FFE8E6;
+      --text-title: #242933;
+      --text-body: #525966;
+      --text-secondary: #8A9099;
+      --text-disabled: #AEB2B8;
+      --text-inverse: #FFFFFF;
+      --text-inverse-secondary: #D3D4D6;
+      --primary: #00AB7A;
+      --primary-hover: #1DB887;
+      --primary-active: #039972;
+      --primary-bg: #D9F4EE;
+      --error: #F0131E;
+      --shadow-card: 0 4px 16px rgba(36, 41, 51, .05);
+      --motion-fast: .15s ease;
+    }
+
+    * { box-sizing: border-box; }
+    html,
+    body,
+    button,
+    input,
+    textarea,
+    select {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+      font-synthesis: none;
+      font-synthesis-weight: none;
+      font-synthesis-style: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--page-bg);
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0;
+    }
+    button { font: inherit; }
+
+    .platform-frame {
+      min-width: 1280px;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--page-bg);
+    }
+
+    .platform-top-nav {
+      width: 100%;
+      height: var(--frame-top-height);
+      flex: 0 0 var(--frame-top-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--top-bg);
+      color: var(--text-inverse);
+      overflow: hidden;
+    }
+    .top-nav-left {
+      height: 100%;
+      display: flex;
+      align-items: flex-start;
+      min-width: 0;
+    }
+    .top-brand {
+      width: 286px;
+      height: var(--frame-top-height);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+    .top-brand-mark {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: var(--text-inverse);
+    }
+    .iconfont {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1em;
+      height: 1em;
+      font-size: 16px;
+      line-height: 1;
+      color: currentColor;
+    }
+    .top-brand-title {
+      overflow: hidden;
+      color: var(--text-inverse);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .top-brand-sub {
+      color: var(--text-inverse-secondary);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .top-nav-right {
+      height: var(--frame-top-height);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 0 24px;
+      color: #AEB2B8;
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .platform-body {
+      height: calc(100vh - var(--frame-top-height));
+      display: flex;
+      overflow: hidden;
+    }
+    .platform-sidebar {
+      position: relative;
+      width: var(--frame-sidebar-width);
+      flex: 0 0 var(--frame-sidebar-width);
+      height: 100%;
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: width .18s ease, flex-basis .18s ease;
+      z-index: 10;
+    }
+    .sidebar-scroll {
+      flex: 1;
+      min-height: 0;
+      padding: 8px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: #DFE1E6; border-radius: 6px; }
+    .sidebar-title {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      color: var(--text-title);
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 20px;
+      white-space: nowrap;
+    }
+    .sidebar-group-title {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      padding: 8px 12px 4px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 20px;
+      white-space: nowrap;
+    }
+    .menu-item {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      padding: 9px 12px;
+      border-radius: 4px;
+      color: var(--text-title);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color .16s ease, color .16s ease;
+    }
+    .menu-item-en {
+      display: inline;
+      flex: 0 0 auto;
+      font-size: 13px;
+      line-height: 20px;
+      color: var(--text-title);
+      transition: color .16s ease;
+    }
+    .menu-item-zh {
+      display: inline;
+      flex: 0 0 auto;
+      font-size: 13px;
+      line-height: 20px;
+      color: var(--text-secondary);
+      transition: color .16s ease;
+    }
+    .menu-item:hover,
+    .menu-item.active {
+      color: var(--primary-active);
+      background: var(--primary-bg);
+    }
+    .menu-item:hover .menu-item-en,
+    .menu-item.active .menu-item-en,
+    .menu-item:hover .menu-item-zh,
+    .menu-item.active .menu-item-zh {
+      color: var(--primary-active);
+    }
+    .platform-main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .platform-page-header {
+      height: var(--frame-page-header-height);
+      flex: 0 0 var(--frame-page-header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-title {
+      margin: 0;
+      color: var(--text-title);
+      font-size: 16px;
+      line-height: 28px;
+      font-weight: 500;
+    }
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .platform-page-content {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 16px;
+      background: var(--page-bg);
+    }
+    .content-shell {
+      display: grid;
+      gap: 16px;
+    }
+    .component-doc[hidden],
+    .component-empty[hidden] {
+      display: none;
+    }
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+    .section-header {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+    }
+    .section-title {
+      margin: 0;
+      color: var(--text-title);
+      font-size: 15px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+    .section-desc {
+      margin: 2px 0 0;
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .code-note {
+      flex: 0 0 auto;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--primary-bg);
+      color: var(--primary-active);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .section-body {
+      padding: 20px;
+    }
+    .spec-card {
+      padding: 24px;
+    }
+    .spec-card > .section-header {
+      min-height: 0;
+      padding: 0;
+    }
+    .spec-card > .section-header + .section-body {
+      margin-top: 16px;
+    }
+    .spec-card > .section-body {
+      padding: 0;
+    }
+    .spec-block {
+      margin-top: 40px;
+    }
+    .spec-card > .section-body + .spec-block {
+      margin-top: 40px;
+    }
+    .spec-block .section-header {
+      min-height: 0;
+      padding: 0;
+    }
+    .spec-block .section-body {
+      padding: 0;
+      margin-top: 16px;
+    }
+    .doc-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+    .doc-panel {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #FFFFFF;
+    }
+    .doc-panel h3 {
+      margin: 0 0 12px;
+      color: var(--text-title);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+    .demo-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .demo-row:last-child {
+      margin-bottom: 0;
+    }
+    .demo-stack {
+      display: grid;
+      gap: 12px;
+      align-items: start;
+    }
+    .textarea-variant-stack {
+      display: grid;
+      gap: 16px;
+    }
+    .textarea-variant {
+      display: grid;
+      gap: 0;
+    }
+    .textarea-variant h3 {
+      margin: 0;
+    }
+    .textarea-variant h3 + .x-textarea,
+    .textarea-variant h3 + .x-input-count-wrap {
+      margin-top: 16px;
+    }
+    .textarea-variant .rule-list {
+      margin-top: 12px;
+    }
+    .textarea-variant + .textarea-variant {
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .demo-field {
+      display: inline-grid;
+      gap: 4px;
+      align-items: start;
+    }
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      line-height: 20px;
+    }
+    .doc-table th,
+    .doc-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .doc-table th {
+      color: var(--text-secondary);
+      font-weight: 500;
+      background: var(--gray-2);
+    }
+    .doc-table tr:last-child td {
+      border-bottom: 0;
+    }
+    .code-block {
+      position: relative;
+      margin: 0;
+      padding: 14px 16px;
+      overflow: auto;
+      border-radius: 6px;
+      background: #F2F3F5;
+      color: #242933;
+      font-size: 13px;
+      line-height: 22px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      white-space: pre;
+    }
+    .code-copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 1px solid var(--gray-5);
+      border-radius: 4px;
+      background: var(--gray-1);
+      color: var(--gray-7);
+      opacity: 0;
+      cursor: pointer;
+      transition: opacity var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast);
+      z-index: 1;
+    }
+    .code-block:hover .code-copy-button {
+      opacity: 1;
+    }
+    .code-copy-button:hover,
+    .code-copy-button.is-copied {
+      color: var(--p7);
+      border-color: var(--p5);
+      background: var(--p1);
+    }
+    .code-copy-button .iconfont {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+    }
+    .spec-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .spec-summary-item {
+      min-height: 76px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--gray-2);
+    }
+    .spec-summary-label {
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .spec-summary-value {
+      margin-top: 4px;
+      color: var(--text-title);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+    .rule-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .rule-list li {
+      position: relative;
+      padding-left: 14px;
+      color: var(--text-body);
+      font-size: 13px;
+      line-height: 20px;
+    }
+    .rule-list li::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--p6);
+    }
+    .x-input,
+    .x-textarea {
+      width: 200px;
+      border: 1px solid var(--gray-5);
+      background: var(--gray-1);
+      color: var(--gray-9);
+      outline: none;
+      transition: border-color var(--motion-fast), box-shadow var(--motion-fast), background-color var(--motion-fast);
+    }
+    .x-input::placeholder,
+    .x-textarea::placeholder {
+      color: var(--gray-6);
+    }
+    .x-input {
+      height: 32px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-input-small {
+      height: 24px;
+      padding: 1px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .x-input-large {
+      height: 40px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 28px;
+    }
+    .x-input.is-hover,
+    .x-input:hover:not(:disabled),
+    .x-textarea.is-hover,
+    .x-textarea:hover:not(:disabled) {
+      border-color: var(--p5);
+    }
+    .x-input.is-focus,
+    .x-input:focus,
+    .x-textarea.is-focus,
+    .x-textarea:focus {
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+    }
+    .x-input.is-typing,
+    .x-textarea.is-typing {
+      border-color: var(--p6);
+    }
+    .x-input.is-filled,
+    .x-textarea.is-filled {
+      border-color: var(--gray-5);
+      color: var(--gray-9);
+    }
+    .x-input:disabled,
+    .x-input.is-disabled,
+    .x-textarea.is-disabled {
+      color: var(--gray-6);
+      background: var(--gray-2);
+      border-color: var(--gray-5);
+      cursor: not-allowed;
+    }
+    .x-input.is-error,
+    .x-textarea.is-error {
+      border-color: var(--Red-6);
+      box-shadow: var(--focus-error);
+    }
+    .x-form-error {
+      margin-top: 4px;
+      color: var(--Red-6);
+      font-size: 12px;
+      line-height: 20px;
+      text-align: left;
+    }
+    .x-input-group {
+      display: inline-flex;
+      align-items: stretch;
+      height: 32px;
+    }
+    .x-input-group .x-input {
+      border-radius: 0;
+    }
+    .x-input-group .x-input:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-input-group .x-input:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-input-addon {
+      min-width: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid var(--gray-5);
+      background: var(--gray-2);
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+      white-space: nowrap;
+    }
+    .x-input-addon:first-child {
+      border-right: 0;
+      border-radius: 6px 0 0 6px;
+    }
+    .x-input-addon:last-child {
+      border-left: 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .x-input-affix {
+      width: 240px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 12px;
+      border: 1px solid var(--gray-5);
+      border-radius: 6px;
+      background: var(--gray-1);
+      transition: border-color var(--motion-fast), box-shadow var(--motion-fast);
+    }
+    .x-input-affix.is-focus {
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+    }
+    .x-input-affix:hover:not(.is-disabled),
+    .x-input-affix.is-hover {
+      border-color: var(--p5);
+    }
+    .x-input-affix:focus-within:not(.is-disabled),
+    .x-input-affix.is-focus {
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+    }
+    .x-input-affix.is-typing {
+      border-color: var(--p6);
+    }
+    .x-input-affix.is-filled {
+      border-color: var(--gray-5);
+    }
+    .x-input-affix.is-disabled {
+      color: var(--gray-6);
+      background: var(--gray-2);
+      border-color: var(--gray-5);
+      cursor: not-allowed;
+    }
+    .x-input-affix.is-disabled .x-input,
+    .x-input-affix.is-disabled .x-input-icon {
+      color: var(--gray-6);
+      cursor: not-allowed;
+    }
+    .x-input-affix.is-error {
+      border-color: var(--Red-6);
+      box-shadow: var(--focus-error);
+    }
+    .x-input-affix .x-input {
+      width: 100%;
+      height: 30px;
+      padding: 0;
+      border: 0;
+      box-shadow: none;
+    }
+    .x-input-icon {
+      color: var(--gray-7);
+      font-size: 16px;
+      flex: 0 0 auto;
+    }
+    .x-input-count-wrap {
+      position: relative;
+      display: inline-block;
+      width: max-content;
+      justify-self: start;
+    }
+    .x-input-count {
+      position: absolute;
+      right: 12px;
+      bottom: 6px;
+      color: var(--gray-7);
+      font-size: 12px;
+      line-height: 20px;
+      pointer-events: none;
+    }
+    .x-input-count-wrap .x-input {
+      padding-right: 58px;
+    }
+    .x-textarea {
+      width: 320px;
+      min-height: 100px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 22px;
+      resize: vertical;
+    }
+    .x-input-count-wrap .x-textarea {
+      padding-right: 64px;
+      padding-bottom: 28px;
+    }
+    .x-password-dot {
+      letter-spacing: 2px;
+    }
+    .x-ipv4 {
+      width: 188px;
+      min-height: 32px;
+      display: inline-grid;
+      gap: 4px;
+    }
+    .x-ipv4-control {
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border: 1px solid var(--gray-5);
+      border-radius: 6px;
+      background: var(--gray-1);
+    }
+    .x-ipv4-segment {
+      width: 32px;
+      border: 0;
+      outline: 0;
+      text-align: center;
+      color: var(--gray-9);
+      font-size: 14px;
+      line-height: 22px;
+      background: transparent;
+    }
+    .x-ipv4-dot {
+      color: var(--gray-7);
+    }
+    .x-ipv4.is-hover .x-ipv4-control {
+      border-color: var(--p5);
+    }
+    .x-ipv4:hover .x-ipv4-control {
+      border-color: var(--p5);
+    }
+    .x-ipv4.is-focus .x-ipv4-control {
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+    }
+    .x-ipv4:focus-within .x-ipv4-control {
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+    }
+    .x-ipv4.is-typing .x-ipv4-control {
+      border-color: var(--p6);
+    }
+    .x-ipv4.is-disabled .x-ipv4-control {
+      color: var(--gray-6);
+      background: var(--gray-2);
+      border-color: var(--gray-5);
+      cursor: not-allowed;
+    }
+    .x-ipv4.is-disabled .x-ipv4-segment {
+      color: var(--gray-6);
+      cursor: not-allowed;
+    }
+    .x-ipv4.is-error .x-ipv4-control {
+      border-color: var(--Red-6);
+      box-shadow: var(--focus-error);
+    }
+    .x-input-number {
+      width: 218px;
+      height: 32px;
+      display: inline-flex;
+      align-items: stretch;
+      overflow: hidden;
+      border: 1px solid var(--gray-5);
+      border-radius: 6px;
+      background: var(--gray-1);
+      transition: border-color var(--motion-fast), box-shadow var(--motion-fast), background-color var(--motion-fast);
+    }
+    .x-input-number-small {
+      height: 24px;
+      border-radius: 4px;
+    }
+    .x-input-number-large {
+      height: 40px;
+      border-radius: 8px;
+    }
+    .x-input-number input {
+      min-width: 0;
+      flex: 1;
+      height: 100%;
+      padding: 5px 12px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--gray-9);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-input-number-small input {
+      padding: 1px 8px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .x-input-number-large input {
+      padding: 5px 12px;
+      font-size: 16px;
+      line-height: 28px;
+    }
+    .x-input-number input::placeholder {
+      color: var(--gray-6);
+    }
+    .x-input-number:hover:not(.is-disabled) {
+      border-color: var(--p5);
+    }
+    .x-input-number.is-hover {
+      border-color: var(--p5);
+    }
+    .x-input-number:focus-within:not(.is-disabled),
+    .x-input-number.is-focus,
+    .x-input-number.is-typing {
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+    }
+    .x-input-number.is-error {
+      border-color: var(--Red-6);
+      box-shadow: var(--focus-error);
+    }
+    .x-input-number.is-disabled {
+      background: var(--gray-2);
+      cursor: not-allowed;
+    }
+    .x-input-number.is-disabled input {
+      color: var(--gray-6);
+      cursor: not-allowed;
+    }
+    .x-input-number-stepper {
+      width: 32px;
+      display: none;
+      flex: 0 0 32px;
+      border-left: 1px solid var(--gray-5);
+      background: var(--gray-1);
+    }
+    .x-input-number.is-focus .x-input-number-stepper,
+    .x-input-number.is-typing .x-input-number-stepper,
+    .x-input-number.is-error .x-input-number-stepper,
+    .x-input-number:focus-within .x-input-number-stepper {
+      display: grid;
+    }
+    .x-input-number-step {
+      min-height: 0;
+      display: grid;
+      place-items: center;
+      color: var(--gray-6);
+      line-height: 1;
+    }
+    .x-input-number-step-icon {
+      width: 1em;
+      height: 1em;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .x-input-number-small .x-input-number-step-icon {
+      font-size: 12px;
+    }
+    .x-input-number-large .x-input-number-step-icon {
+      font-size: 20px;
+    }
+    .x-input-number-step + .x-input-number-step {
+      border-top: 1px solid var(--gray-5);
+    }
+    .x-input-number-step:hover {
+      color: var(--p7);
+      background: var(--p1);
+    }
+    .x-btn {
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 5px 16px;
+      border: 1px solid var(--gray-5);
+      border-radius: 6px;
+      background: var(--gray-1);
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-btn-primary {
+      border-color: var(--p6);
+      background: var(--p6);
+      color: var(--gray-1);
+    }
+    .x-advanced-search {
+      width: 100%;
+      max-width: 884px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px 0 16px;
+      border: 1px solid var(--gray-5);
+      border-radius: 8px;
+      background: var(--gray-1);
+      color: var(--gray-9);
+      transition: border-color var(--motion-fast), box-shadow var(--motion-fast), background-color var(--motion-fast);
+    }
+    .x-advanced-search:hover:not(.is-disabled) {
+      border-color: var(--p5);
+    }
+    .x-advanced-search:focus-within:not(.is-disabled) {
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+    }
+    .x-advanced-search.is-disabled {
+      background: var(--gray-2);
+      border-color: var(--gray-5);
+      cursor: not-allowed;
+    }
+    .x-advanced-search.is-error {
+      border-color: var(--Red-6);
+      box-shadow: var(--focus-error);
+    }
+    .x-advanced-search-input {
+      min-width: 0;
+      flex: 1;
+      height: 46px;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--gray-9);
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .x-advanced-search-input::placeholder {
+      color: var(--gray-6);
+    }
+    .x-advanced-search.is-disabled .x-advanced-search-input,
+    .x-advanced-search.is-disabled .x-advanced-search-icon {
+      color: var(--gray-6);
+      cursor: not-allowed;
+    }
+    .x-advanced-search-divider {
+      width: 1px;
+      height: 24px;
+      flex: 0 0 1px;
+      background: var(--border);
+    }
+    .x-advanced-search-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gray-8);
+      flex: 0 0 auto;
+    }
+    .x-advanced-search-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--gray-8);
+      font-size: 20px;
+      cursor: pointer;
+      transition: color var(--motion-fast);
+    }
+    .x-advanced-search-icon:hover {
+      color: var(--p7);
+    }
+    .x-control {
+      width: 200px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 12px;
+      border: 1px solid var(--gray-5);
+      border-radius: 6px;
+      background: var(--gray-1);
+      color: var(--gray-9);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-control-small { height: 24px; border-radius: 4px; font-size: 12px; line-height: 20px; }
+    .x-control-large { height: 40px; border-radius: 8px; font-size: 16px; line-height: 28px; }
+    .x-control.is-hover { border-color: var(--p5); }
+    .x-control.is-focus,
+    .x-control.is-open { border-color: var(--p6); box-shadow: var(--focus-default); }
+    .x-control.is-error { border-color: var(--Red-6); box-shadow: var(--focus-error); }
+    .x-control.is-disabled { color: var(--gray-6); background: var(--gray-2); cursor: not-allowed; }
+    .x-control-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+    .x-control-clear {
+      color: var(--gray-6);
+      font-size: 14px;
+    }
+    .x-range-control {
+      gap: 12px;
+    }
+    .x-range-control-values {
+      min-width: 0;
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 16px;
+    }
+    .x-range-control-end {
+      text-align: left;
+    }
+    .x-range-control-separator {
+      color: var(--gray-6);
+    }
+    .x-placeholder { color: var(--gray-6); }
+    .x-panel {
+      width: 200px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--gray-1);
+      box-shadow: var(--shadow-card);
+    }
+    .x-option {
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-option.is-hover { background: var(--gray-3); color: var(--gray-9); }
+    .x-option.is-selected { background: var(--p1); color: var(--p7); }
+    .x-option.is-disabled { color: var(--gray-6); cursor: not-allowed; }
+    .x-option.is-loading,
+    .x-option.is-empty { justify-content: center; color: var(--gray-7); font-size: 12px; }
+    .x-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 24px;
+      padding: 2px 8px;
+      border: 1px solid var(--gray-4);
+      border-radius: 4px;
+      background: var(--gray-3);
+      color: var(--text-body);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .x-choice {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 22px;
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-checkbox,
+    .x-radio {
+      width: 16px;
+      height: 16px;
+      position: relative;
+      flex: 0 0 auto;
+      border: 1px solid var(--gray-5);
+      background: var(--gray-1);
+    }
+    .x-checkbox { border-radius: 4px; }
+    .x-radio { border-radius: 50%; }
+    .x-choice.is-hover .x-checkbox,
+    .x-choice.is-hover .x-radio { border-color: var(--p5); }
+    .x-choice.is-checked .x-checkbox,
+    .x-choice.is-checked .x-radio { border-color: var(--p6); background: var(--p6); }
+    .x-choice.is-checked .x-checkbox::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 5px;
+      height: 9px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .x-choice.is-checked .x-radio::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .x-choice.is-indeterminate .x-checkbox { border-color: var(--p6); background: var(--p6); }
+    .x-choice.is-indeterminate .x-checkbox::after {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 6px;
+      width: 8px;
+      height: 2px;
+      background: #fff;
+    }
+    .x-choice.is-disabled { color: var(--gray-6); cursor: not-allowed; }
+    .x-choice.is-disabled .x-checkbox,
+    .x-choice.is-disabled .x-radio { border-color: var(--gray-5); background: var(--gray-2); }
+    .x-radio-button-group { display: inline-flex; }
+    .x-radio-button {
+      min-width: 74px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 16px;
+      border: 1px solid var(--gray-5);
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+      margin-left: -1px;
+    }
+    .x-radio-button:first-child { margin-left: 0; border-radius: 6px 0 0 6px; }
+    .x-radio-button:last-child { border-radius: 0 6px 6px 0; }
+    .x-radio-button.is-selected { z-index: 1; color: var(--p7); border-color: var(--p6); background: var(--p1); }
+    .x-switch {
+      width: 44px;
+      height: 22px;
+      position: relative;
+      display: inline-flex;
+      border-radius: 999px;
+      background: var(--gray-5);
+      transition: background-color var(--motion-fast);
+    }
+    .x-switch::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(36,41,51,.16);
+      transition: left var(--motion-fast);
+    }
+    .x-switch.is-on { background: var(--p6); }
+    .x-switch.is-on::after { left: 24px; }
+    .x-switch.is-small { width: 28px; height: 16px; }
+    .x-switch.is-small::after { width: 12px; height: 12px; }
+    .x-switch.is-small.is-on::after { left: 14px; }
+    .x-switch.is-large { width: 56px; height: 28px; }
+    .x-switch.is-large::after { width: 24px; height: 24px; }
+    .x-switch.is-large.is-on::after { left: 30px; }
+    .x-switch.is-disabled { opacity: .48; cursor: not-allowed; }
+    .x-slider {
+      width: 240px;
+      display: grid;
+      gap: 8px;
+    }
+    .x-slider-track {
+      height: 4px;
+      position: relative;
+      border-radius: 999px;
+      background: var(--gray-4);
+    }
+    .x-slider-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 56%;
+      border-radius: 999px;
+      background: var(--p6);
+    }
+    .x-slider-thumb {
+      position: absolute;
+      top: 50%;
+      left: 56%;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--p6);
+      border-radius: 50%;
+      background: #fff;
+      transform: translate(-50%, -50%);
+      box-shadow: var(--focus-default);
+    }
+    .x-progress {
+      width: 180px;
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--gray-4);
+    }
+    .x-progress-bar {
+      width: 65%;
+      height: 100%;
+      background: var(--p6);
+    }
+    .x-upload-box {
+      width: 306px;
+      min-height: 40px;
+      display: grid;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--gray-5);
+      border-radius: 6px;
+      background: var(--gray-1);
+    }
+    .x-upload-drag {
+      width: 384px;
+      min-height: 194px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px dashed var(--gray-5);
+      border-radius: 8px;
+      background: var(--gray-2);
+      color: var(--text-body);
+    }
+    .x-transfer {
+      display: grid;
+      grid-template-columns: 220px 48px 220px;
+      gap: 12px;
+      align-items: center;
+    }
+    .x-transfer-panel {
+      min-height: 220px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--gray-1);
+      overflow: hidden;
+    }
+    .x-transfer-header {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-title);
+      font-weight: 500;
+    }
+    .x-transfer-body { padding: 8px 12px; display: grid; gap: 8px; }
+    .x-mini-calendar,
+    .x-time-panel {
+      width: 280px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--gray-1);
+      padding: 12px;
+    }
+    .x-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 24px);
+      gap: 8px;
+      color: var(--text-body);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .x-calendar-cell {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 4px;
+    }
+    .x-calendar-cell.is-selected { background: var(--p6); color: #fff; }
+    .x-calendar-cell.is-range { background: var(--p1); color: var(--p7); }
+    .x-date-picker-demo {
+      position: relative;
+      width: max-content;
+    }
+    .x-date-picker-trigger {
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+    }
+    .x-date-picker-trigger .icon-a-riqirili,
+    .x-date-picker-trigger .icon-a-cuoguanbi {
+      color: var(--text-disabled);
+    }
+    .x-date-picker-trigger:hover:not(:disabled),
+    .x-date-picker-trigger:focus-visible {
+      border-color: var(--p5);
+    }
+    .x-date-picker-trigger:disabled {
+      cursor: not-allowed;
+    }
+    .x-date-picker-trigger:focus-visible,
+    .x-date-picker-demo.is-open .x-date-picker-trigger {
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+      outline: none;
+    }
+    .x-date-picker-popup {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      z-index: 4;
+      width: 352px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--gray-1);
+      box-shadow: var(--shadow-card);
+    }
+    .x-date-picker-popup[hidden] {
+      display: none;
+    }
+    .x-date-time-popup {
+      width: 536px;
+    }
+    .x-date-time-body {
+      display: grid;
+      grid-template-columns: 352px 184px;
+    }
+    .x-date-time-calendar {
+      border-right: 1px solid var(--border);
+    }
+    .x-date-time-calendar .x-date-picker-footer {
+      display: none;
+    }
+    .x-date-time-panel {
+      min-width: 0;
+    }
+    .x-date-time-value {
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-bottom: 1px solid var(--border);
+      color: var(--gray-9);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 500;
+    }
+    .x-date-time-columns {
+      height: 234px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .x-date-time-column {
+      min-width: 0;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scroll-snap-type: y proximity;
+      border-right: 1px solid var(--border);
+    }
+    .x-date-time-column:last-child {
+      border-right: 0;
+    }
+    .x-date-time-option {
+      width: 100%;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--gray-9);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      line-height: 22px;
+      scroll-snap-align: center;
+      transition: background-color var(--motion-fast), color var(--motion-fast);
+    }
+    .x-date-time-option:hover,
+    .x-date-time-option:focus-visible {
+      background: var(--gray-3);
+      outline: none;
+    }
+    .x-date-time-option.is-selected {
+      background: var(--p1);
+      color: var(--gray-9);
+      font-weight: 500;
+    }
+    .x-date-time-footer {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 16px;
+      border-top: 1px solid var(--border);
+    }
+    .x-date-time-today {
+      border: 0;
+      background: transparent;
+      color: var(--p6);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-date-time-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .x-date-time-actions .x-btn {
+      min-width: 48px;
+      height: 24px;
+      padding: 0 10px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .x-date-range-popup {
+      width: 752px;
+    }
+    .x-date-range-header {
+      height: 52px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 24px;
+      align-items: center;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-title);
+    }
+    .x-date-range-month-header {
+      display: grid;
+      grid-template-columns: 76px 1fr 76px;
+      align-items: center;
+    }
+    .x-date-range-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding: 0 24px;
+    }
+    .x-date-range-panels .x-date-picker-board {
+      padding-right: 0;
+      padding-left: 0;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .x-date-range-panels .x-date-picker-week,
+    .x-date-range-panels .x-date-range-days {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      justify-content: stretch;
+    }
+    .x-date-range-days .x-date-picker-day {
+      width: 100%;
+      border-radius: 0;
+    }
+    .x-date-range-days .x-date-picker-day:hover,
+    .x-date-range-days .x-date-picker-day:focus-visible {
+      border-radius: 6px;
+    }
+    .x-date-range-days .x-date-picker-day.is-selected {
+      position: relative;
+      z-index: 0;
+      color: var(--gray-1);
+      background: transparent;
+      border-radius: 0;
+      isolation: isolate;
+    }
+    .x-date-range-days .x-date-picker-day.is-selected::before {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      width: 32px;
+      height: 32px;
+      margin: auto;
+      border-radius: 6px;
+      background: var(--p6);
+      content: '';
+    }
+    .x-date-range-days .x-date-picker-day > span {
+      position: relative;
+      z-index: 1;
+    }
+    .x-date-range-days .x-date-picker-day.is-in-range:nth-child(7n + 1) {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-date-range-days .x-date-picker-day.is-in-range:nth-child(7n) {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-date-range-days .x-date-picker-day.is-in-range.is-selected {
+      background: var(--p1);
+    }
+    .x-date-range-days .x-date-picker-day.is-range-start {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-date-range-days .x-date-picker-day.is-range-end {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-date-range-days .x-date-picker-day.is-in-range.is-selected.is-range-start {
+      background: linear-gradient(90deg, transparent 0 50%, var(--p1) 50% 100%);
+    }
+    .x-date-range-days .x-date-picker-day.is-in-range.is-selected.is-range-end {
+      background: linear-gradient(90deg, var(--p1) 0 50%, transparent 50% 100%);
+    }
+    .x-date-range-days .x-date-picker-day.is-in-range.is-selected.is-range-start.is-range-end {
+      background: transparent;
+    }
+    .x-month-picker-popup {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      z-index: 4;
+      width: 424px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--gray-1);
+      box-shadow: var(--shadow-card);
+    }
+    .x-month-picker-popup[hidden] {
+      display: none;
+    }
+    .x-month-range-popup {
+      width: 752px;
+    }
+    .x-month-range-header {
+      height: 52px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 24px;
+      align-items: center;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-title);
+    }
+    .x-month-range-year-header {
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+    }
+    .x-month-range-year {
+      justify-self: center;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+    .x-month-range-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      padding: 24px 24px 28px;
+    }
+    .x-month-range-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 40px;
+      color: var(--gray-9);
+    }
+    .x-month-range-grid .x-month-picker-item {
+      width: 100%;
+      border-radius: 0;
+    }
+    .x-month-range-grid .x-month-picker-item:hover,
+    .x-month-range-grid .x-month-picker-item:focus-visible {
+      border-radius: 6px;
+    }
+    .x-month-range-grid .x-month-picker-item.is-in-range {
+      background: var(--p1);
+      color: var(--gray-9);
+    }
+    .x-month-range-grid .x-month-picker-item.is-in-range:nth-child(3n + 1) {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-month-range-grid .x-month-picker-item.is-in-range:nth-child(3n) {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-month-range-grid .x-month-picker-item.is-range-start {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-month-range-grid .x-month-picker-item.is-range-end {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-month-range-grid .x-month-picker-item.is-selected,
+    .x-month-range-grid .x-month-picker-item.is-in-range.is-selected {
+      border-radius: 6px;
+      background: var(--p6);
+      color: var(--gray-1);
+    }
+    .x-quarter-picker-popup {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      z-index: 4;
+      width: 424px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--gray-1);
+      box-shadow: var(--shadow-card);
+    }
+    .x-quarter-picker-popup[hidden] {
+      display: none;
+    }
+    .x-quarter-range-popup {
+      width: 752px;
+    }
+    .x-quarter-range-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 40px;
+      padding: 0 40px;
+      color: var(--gray-9);
+    }
+    .x-quarter-range-grid .x-month-picker-item {
+      width: 100%;
+      border-radius: 0;
+    }
+    .x-quarter-range-grid .x-month-picker-item:hover,
+    .x-quarter-range-grid .x-month-picker-item:focus-visible {
+      border-radius: 6px;
+    }
+    .x-quarter-range-grid .x-month-picker-item.is-in-range {
+      background: var(--p1);
+      color: var(--gray-9);
+    }
+    .x-quarter-range-grid .x-month-picker-item.is-in-range:nth-child(2n + 1) {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-quarter-range-grid .x-month-picker-item.is-in-range:nth-child(2n) {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-quarter-range-grid .x-month-picker-item.is-range-start {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-quarter-range-grid .x-month-picker-item.is-range-end {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-quarter-range-grid .x-month-picker-item.is-selected,
+    .x-quarter-range-grid .x-month-picker-item.is-in-range.is-selected {
+      border-radius: 6px;
+      background: var(--p6);
+      color: var(--gray-1);
+    }
+    .x-year-picker-popup {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      z-index: 4;
+      width: 424px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--gray-1);
+      box-shadow: var(--shadow-card);
+    }
+    .x-year-picker-popup[hidden] {
+      display: none;
+    }
+    .x-year-range-popup {
+      width: 752px;
+    }
+    .x-year-range-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 40px;
+      color: var(--gray-9);
+    }
+    .x-year-range-grid .x-month-picker-item {
+      width: 100%;
+      border-radius: 0;
+    }
+    .x-year-range-grid .x-month-picker-item:hover,
+    .x-year-range-grid .x-month-picker-item:focus-visible {
+      border-radius: 6px;
+    }
+    .x-year-range-grid .x-month-picker-item.is-in-range {
+      background: var(--p1);
+      color: var(--gray-9);
+    }
+    .x-year-range-grid .x-month-picker-item.is-in-range:nth-child(3n + 1) {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-year-range-grid .x-month-picker-item.is-in-range:nth-child(3n) {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-year-range-grid .x-month-picker-item.is-range-start {
+      border-radius: 6px 0 0 6px;
+    }
+    .x-year-range-grid .x-month-picker-item.is-range-end {
+      border-radius: 0 6px 6px 0;
+    }
+    .x-year-range-grid .x-month-picker-item.is-selected,
+    .x-year-range-grid .x-month-picker-item.is-in-range.is-selected {
+      border-radius: 6px;
+      background: var(--p6);
+      color: var(--gray-1);
+    }
+    .x-year-range-grid .x-year-picker-item.is-muted,
+    .x-year-range-grid .x-year-picker-item.is-muted:hover {
+      background: transparent;
+      color: var(--gray-6);
+    }
+    .x-date-picker-header {
+      height: 48px;
+      display: grid;
+      grid-template-columns: 76px 1fr 76px;
+      align-items: center;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-title);
+    }
+    .x-date-picker-month {
+      text-align: center;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+    .x-date-picker-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gray-6);
+    }
+    .x-date-picker-nav.is-next {
+      justify-content: flex-end;
+    }
+    .x-date-picker-nav .iconfont {
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      transition: color var(--motion-fast);
+    }
+    .x-date-picker-nav .iconfont:hover {
+      color: var(--text-title);
+    }
+    .x-date-picker-board {
+      padding: 18px 24px 16px;
+    }
+    .x-date-picker-week,
+    .x-date-picker-days {
+      display: grid;
+      grid-template-columns: repeat(7, 32px);
+      justify-content: space-between;
+      text-align: center;
+    }
+    .x-date-picker-week {
+      margin-bottom: 8px;
+      color: var(--text-title);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 500;
+    }
+    .x-date-picker-days {
+      row-gap: 6px;
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-date-picker-day {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      transition: background-color var(--motion-fast), color var(--motion-fast);
+    }
+    .x-date-picker-day.is-muted {
+      color: var(--gray-6);
+    }
+    .x-date-picker-day:hover,
+    .x-date-picker-day:focus-visible {
+      background: var(--gray-3);
+      color: var(--gray-9);
+      outline: none;
+    }
+    .x-date-picker-day.is-today {
+      background: var(--gray-3);
+    }
+    .x-date-picker-day.is-selected {
+      background: var(--p6);
+      color: var(--gray-1);
+    }
+    .x-date-picker-day.is-in-range {
+      background: var(--p1);
+      color: var(--gray-9);
+    }
+    .x-date-picker-day.is-in-range.is-selected {
+      background: var(--p6);
+      color: var(--gray-1);
+    }
+    .x-date-picker-footer {
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-top: 1px solid var(--border);
+      color: var(--p6);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--motion-fast);
+    }
+    .x-date-picker-footer:hover {
+      background: var(--gray-2);
+    }
+    .x-month-picker-header {
+      height: 60px;
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-title);
+    }
+    .x-month-picker-year {
+      justify-self: center;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+    .x-month-picker-year-nav {
+      color: var(--gray-6);
+      font-size: 16px;
+      cursor: pointer;
+      transition: color var(--motion-fast);
+    }
+    .x-month-picker-year-nav:hover {
+      color: var(--text-title);
+    }
+    .x-month-picker-year-nav.is-next {
+      justify-self: end;
+    }
+    .x-month-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 108px);
+      justify-content: space-between;
+      row-gap: 56px;
+      padding: 50px 24px 58px;
+      color: var(--gray-9);
+    }
+    .x-month-picker-item {
+      width: 108px;
+      height: 36px;
+      padding: 0;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-size: 16px;
+      line-height: 24px;
+      cursor: pointer;
+      transition: background-color var(--motion-fast), color var(--motion-fast);
+    }
+    .x-month-picker-item:hover,
+    .x-month-picker-item:focus-visible {
+      background: var(--gray-2);
+      color: var(--p6);
+      outline: none;
+    }
+    .x-month-picker-item.is-selected {
+      background: var(--p6);
+      color: var(--gray-1);
+    }
+    .x-month-picker-item.is-in-range {
+      background: var(--gray-2);
+      color: var(--gray-9);
+    }
+    .x-month-picker-item.is-in-range.is-selected {
+      background: var(--p6);
+      color: var(--gray-1);
+    }
+    .x-quarter-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 108px);
+      justify-content: space-between;
+      row-gap: 56px;
+      padding: 50px 68px 58px;
+      color: var(--gray-9);
+    }
+    .x-year-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 108px);
+      justify-content: space-between;
+      row-gap: 56px;
+      padding: 50px 24px 58px;
+      color: var(--gray-9);
+    }
+    .x-year-picker-item.is-muted {
+      color: var(--gray-6);
+    }
+    .x-time-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .token-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .token-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--gray-2);
+      color: var(--text-body);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .token-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      border: 1px solid rgba(36, 41, 51, .08);
+    }
+    .component-empty {
+      min-height: calc(100vh - var(--frame-top-height) - var(--frame-page-header-height) - 32px);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: var(--shadow-card);
+    }
+    .anchor-list {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="platform-frame">
+    <header class="platform-top-nav">
+      <div class="top-nav-left">
+        <div class="top-brand">
+          <div class="top-brand-mark"><i class="iconfont icon-a-quanjucaidan1"></i></div>
+          <div>
+            <div class="top-brand-title">360 Design</div>
+            <div class="top-brand-sub">Data Entry Components</div>
+          </div>
+        </div>
+      </div>
+      <div class="top-nav-right">Backend Design Standards</div>
+    </header>
+
+    <div class="platform-body">
+      <aside class="platform-sidebar">
+        <div class="sidebar-scroll">
+          <div class="sidebar-title">数据录入</div>
+          <a class="menu-item active" href="#input"><span class="menu-item-en">Input</span><span class="menu-item-zh">输入框</span></a>
+          <a class="menu-item" href="#input-number"><span class="menu-item-en">InputNumber</span><span class="menu-item-zh">数字输入框</span></a>
+          <a class="menu-item" href="#date-picker"><span class="menu-item-en">DatePicker</span><span class="menu-item-zh">日期选择器</span></a>
+          <a class="menu-item" href="#cascader"><span class="menu-item-en">Cascader</span><span class="menu-item-zh">级联选择器</span></a>
+          <a class="menu-item" href="#checkbox"><span class="menu-item-en">Checkbox</span><span class="menu-item-zh">多选框</span></a>
+          <a class="menu-item" href="#radio"><span class="menu-item-en">Radio</span><span class="menu-item-zh">单选框</span></a>
+          <a class="menu-item" href="#select"><span class="menu-item-en">Select</span><span class="menu-item-zh">选择器</span></a>
+          <a class="menu-item" href="#time-picker"><span class="menu-item-en">TimePicker</span><span class="menu-item-zh">时间选择框</span></a>
+          <a class="menu-item" href="#transfer"><span class="menu-item-en">Transfer</span><span class="menu-item-zh">穿梭框</span></a>
+          <a class="menu-item" href="#tree-select"><span class="menu-item-en">TreeSelect</span><span class="menu-item-zh">树选择</span></a>
+          <a class="menu-item" href="#upload"><span class="menu-item-en">Upload</span><span class="menu-item-zh">上传</span></a>
+          <a class="menu-item" href="#form"><span class="menu-item-en">Form</span><span class="menu-item-zh">表单</span></a>
+          <a class="menu-item" href="#slider"><span class="menu-item-en">Slider</span><span class="menu-item-zh">滑动输入条</span></a>
+          <a class="menu-item" href="#switch"><span class="menu-item-en">Switch</span><span class="menu-item-zh">开关</span></a>
+        </div>
+      </aside>
+
+      <main class="platform-main">
+        <div class="platform-page-header">
+          <div>
+            <h1 class="page-title">Input 输入框</h1>
+          </div>
+        </div>
+        <div class="platform-page-content">
+          <div class="anchor-list" aria-hidden="true">
+            <span id="input"></span>
+            <span id="input-number"></span>
+            <span id="date-picker"></span>
+            <span id="cascader"></span>
+            <span id="checkbox"></span>
+            <span id="radio"></span>
+            <span id="select"></span>
+            <span id="time-picker"></span>
+            <span id="transfer"></span>
+            <span id="tree-select"></span>
+            <span id="upload"></span>
+            <span id="form"></span>
+            <span id="slider"></span>
+            <span id="switch"></span>
+          </div>
+          <div class="content-shell">
+            <section class="component-doc" data-component="input">
+              <section class="section-card spec-card">
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">Input Family 输入框体系</h2>
+                    <p class="section-desc">输入框体系用于承载短文本、长文本、IPv4 地址与高级搜索等录入任务；尺寸统一按高度分为大、中、小三档。</p>
+                  </div>
+                  <span class="code-note">360euxd: Input Family</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item">
+                      <div class="spec-summary-label">体系定位</div>
+                      <div class="spec-summary-value">文本类数据录入</div>
+                    </div>
+                    <div class="spec-summary-item">
+                      <div class="spec-summary-label">独立组件</div>
+                      <div class="spec-summary-value">Input / TextArea / IPv4 / AdvancedSearch</div>
+                    </div>
+                    <div class="spec-summary-item">
+                      <div class="spec-summary-label">尺寸规则</div>
+                      <div class="spec-summary-value">仅按高度分大中小</div>
+                    </div>
+                    <div class="spec-summary-item">
+                      <div class="spec-summary-label">核心 Token</div>
+                      <div class="spec-summary-value">p6 / gray-5 / Red-6</div>
+                    </div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header">
+                    <div>
+                      <h2 class="section-title">通用规范</h2>
+                      <p class="section-desc">输入框家族共享尺寸、状态、Token 与校验规则；各组件章节只展示默认样式和自身变体。</p>
+                    </div>
+                  </div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel">
+                      <h3>尺寸</h3>
+                      <div class="demo-stack">
+                        <input class="x-input x-input-small" placeholder="Small / 24px">
+                        <input class="x-input" placeholder="Default / 32px">
+                        <input class="x-input x-input-large" placeholder="Large / 40px">
+                      </div>
+                      <table class="doc-table" style="margin-top:16px;">
+                        <tbody>
+                          <tr><td>Small</td><td>高度 24px，字号 / 行高 12px / 20px，圆角 4px。</td></tr>
+                          <tr><td>Default</td><td>高度 32px，字号 / 行高 14px / 22px，圆角 6px，默认内边距 5px 12px。</td></tr>
+                          <tr><td>Large</td><td>高度 40px，字号 / 行高 16px / 28px，圆角 8px。</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>状态</h3>
+                      <div class="demo-stack">
+                        <div class="demo-row"><input class="x-input" placeholder="默认"><input class="x-input is-hover" placeholder="悬停"><input class="x-input is-focus" value="激活"></div>
+                        <div class="demo-row"><input class="x-input is-filled" value="输入完成"><input class="x-input" value="禁用" disabled></div>
+                        <div class="demo-field"><input class="x-input is-error" placeholder="报错"><div class="x-form-error">请输入字段名称</div></div>
+                      </div>
+                      <table class="doc-table" style="margin-top:16px;"><tbody><tr><td>默认</td><td>白底，边框使用 gray-5 #DFE1E6，占位文字使用 gray-6 #AEB2B8。</td></tr><tr><td>悬停</td><td>仅 border-color 使用 p5 #1DB887，占位文字样式与默认态一致。</td></tr><tr><td>激活</td><td>与输入中状态同态；border-color 使用 p6 #00AB7A，focus ring 使用 0 0 0 2px #D9F4EE，内容输入使用 gray-9 #242933。</td></tr><tr><td>输入完成</td><td>恢复默认边框，内容文字使用 gray-9 #242933。</td></tr><tr><td>禁用</td><td>浅灰背景，文字使用 gray-6，不响应 hover 与输入。</td></tr><tr><td>报错</td><td>border-color 使用 Red-6 #F0131E；错误文案固定在控件正下方左对齐。</td></tr></tbody></table>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>Token</h3>
+                      <div class="token-chip-row">
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--p6);"></span>p6 #00AB7A</span>
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--p5);"></span>p5 #1DB887</span>
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--p7);"></span>p7 #039972</span>
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--p1);"></span>p1 #D9F4EE</span>
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--Red-6);"></span>Red-6 #F0131E</span>
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--Red-1);"></span>Red-1 #FFE8E6</span>
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--gray-5);"></span>gray-5 #DFE1E6</span>
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--gray-6);"></span>gray-6 #AEB2B8</span>
+                        <span class="token-chip"><span class="token-swatch" style="background: var(--gray-9);"></span>gray-9 #242933</span>
+                      </div>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>校验规则</h3>
+                      <ul class="rule-list">
+                        <li>必填未填写，失焦提示：请输入{字段名称}。</li>
+                        <li>格式错误，失焦提示：格式错误，请输入{格式要求}。</li>
+                        <li>非法字符应直接拦截，不能录入到控件内。</li>
+                        <li>失败状态必须同时展示红色边框和错误文案，不能只改变边框颜色。</li>
+                      </ul>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>尺寸使用原则</h3>
+                      <ul class="rule-list">
+                        <li>实际业务中只允许选择 Small、Default、Large 三档高度。</li>
+                        <li>宽度由表单栅格、搜索区布局或业务字段长度决定，不作为组件尺寸档位。</li>
+                        <li>不得新增 28px、36px 等仓库未定义高度。</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header">
+                    <div>
+                      <h2 class="section-title">组件选择规则</h2>
+                      <p class="section-desc">生成业务页面前必须先判断输入内容类型，再选择输入框体系下的正确组件。</p>
+                    </div>
+                  </div>
+                  <div class="section-body">
+                    <table class="doc-table">
+                      <thead><tr><th>输入任务</th><th>应使用组件</th><th>选择规则</th></tr></thead>
+                      <tbody>
+                        <tr><td>名称、账号、编号、关键字、域名等短文本</td><td>Input</td><td>使用常规输入框；可按需要启用前后置图标、前后置标签、allowClear、showCount。</td></tr>
+                        <tr><td>备注、描述、说明、处置意见等多行文本</td><td>TextArea</td><td>作为独立组件使用，不作为 Input 变体；可启用字数统计。</td></tr>
+                        <tr><td>IPv4 地址</td><td>InputIPv4</td><td>使用四段式专用输入框，每段只允许 0-255 的正整数。</td></tr>
+                        <tr><td>列表筛选区、多字段组合查询</td><td>AdvancedSearch</td><td>用于承载搜索项、查询、重置、展开收起等搜索容器能力。</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header">
+                    <div>
+                      <h2 class="section-title">常规输入框 Input</h2>
+                      <p class="section-desc">Input 用于普通单行短文本录入，是输入框体系中的基础组件。</p>
+                    </div>
+                  </div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel">
+                      <h3>组件定位</h3>
+                      <ul class="rule-list"><li>承载单行短文本输入，不承载数字、IP、多行备注和搜索容器。</li><li>常用于名称、账号、编号、关键字、域名、轻量搜索词。</li></ul>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>使用场景</h3>
+                      <ul class="rule-list"><li>表单录入、表格筛选区单字段查询、行内编辑。</li><li>需要清除、字数统计、前后缀辅助内容的短文本字段。</li></ul>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>默认样式</h3>
+                      <div class="demo-stack"><input class="x-input" placeholder="请输入名称"></div>
+                      <ul class="rule-list" style="margin-top:12px;"><li>页面默认只展示基础样式。</li><li>hover、focus、输入、禁用、失败等反馈遵循通用状态规则。</li></ul>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>API</h3>
+                      <table class="doc-table"><tbody><tr><td>size</td><td>small | default | large</td></tr><tr><td>status</td><td>default | error</td></tr><tr><td>allowClear</td><td>显示清除按钮。</td></tr><tr><td>prefix / suffix</td><td>前后置图标或内容。</td></tr><tr><td>addonBefore / addonAfter</td><td>前后置标签。</td></tr><tr><td>showCount / maxLength</td><td>字数统计与最大长度。</td></tr></tbody></table>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>代码示例</h3>
+                      <pre class="code-block"><code>import { Input } from '360euxd';
+
+export default () =&gt; (
+  &lt;&gt;
+    &lt;Input placeholder="请输入名称" /&gt;
+    &lt;Input allowClear placeholder="请输入关键词" /&gt;
+    &lt;Input showCount maxLength={10} placeholder="请输入策略名称" /&gt;
+  &lt;/&gt;
+);</code></pre>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>AI 生成规则</h3>
+                      <ul class="rule-list"><li>短文本优先使用 Input，不要使用 TextArea 或 InputNumber 替代。</li><li>可清空字段启用 allowClear；有长度限制时启用 showCount 与 maxLength。</li><li>错误态必须同时给出 status="error" 和错误文案。</li></ul>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">Input 变体</h2><p class="section-desc">Input 变体用于承载图标或固定前后缀，不扩展为独立组件。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>带前置图标</h3><div class="demo-stack"><div class="x-input-affix"><i class="iconfont icon-a-sousuofangdajing x-input-icon"></i><input class="x-input" placeholder="请输入关键词"></div></div><ul class="rule-list" style="margin-top:12px;"><li>图标表达输入语义，如搜索、用户、位置。</li><li>鼠标悬浮、聚焦和输入时按输入框状态规则反馈。</li></ul></div>
+                    <div class="doc-panel"><h3>带后置图标</h3><div class="demo-stack"><div class="x-input-affix"><input class="x-input" placeholder="请输入策略名称"><i class="iconfont icon-a-sousuofangdajing x-input-icon"></i></div></div><ul class="rule-list" style="margin-top:12px;"><li>用于清除、复制、查看等输入后操作。</li><li>鼠标悬浮、聚焦和输入时按输入框状态规则反馈。</li></ul></div>
+                    <div class="doc-panel"><h3>带前置标签</h3><div class="demo-stack"><div class="x-input-group"><span class="x-input-addon">https://</span><input class="x-input" value="console.360.cn"></div></div><ul class="rule-list" style="margin-top:12px;"><li>用于协议、币种、固定前缀等不可编辑内容。</li><li>前置标签不参与用户输入内容。</li></ul></div>
+                    <div class="doc-panel"><h3>带后置标签</h3><div class="demo-stack"><div class="x-input-group"><input class="x-input" value="128"><span class="x-input-addon">GB</span></div></div><ul class="rule-list" style="margin-top:12px;"><li>用于单位、域名后缀等固定后缀。</li><li>数值字段应使用 InputNumber，不要仅靠后置单位包装 Input。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">文本域 TextArea</h2><p class="section-desc">TextArea 是多行文本录入组件，适用于备注、描述、说明等长文本，不作为 Input 的变体。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>承载多行文本输入，支持高度扩展、字数统计和最大长度限制。</li><li>最小高度建议不低于 100px，宽度由表单或页面布局决定。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>备注、描述、处置说明、告警说明、审批意见。</li><li>需要用户输入较长自然语言内容的表单字段。</li></ul></div>
+                    <div class="doc-panel"><div class="textarea-variant-stack"><div class="textarea-variant"><h3>默认样式</h3><textarea class="x-textarea" placeholder="请输入处置说明"></textarea><ul class="rule-list"><li>默认文本域不展示字数统计。</li><li>适用于无明确长度限制的备注、描述、说明。</li></ul></div><div class="textarea-variant"><h3>带字数限制</h3><div class="x-input-count-wrap"><textarea class="x-textarea" placeholder="请输入处置说明">安全策略调整说明</textarea><span class="x-input-count">8 / 200</span></div><ul class="rule-list"><li>字数统计固定展示在文本域内部右下角。</li><li>字数统计不遮挡输入内容，文本域需预留底部内边距。</li></ul></div></div></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>rows</td><td>控制默认行数。</td></tr><tr><td>showCount</td><td>显示字数统计。</td></tr><tr><td>maxLength</td><td>最大可输入字符数。</td></tr><tr><td>autoSize</td><td>按内容自动调整高度。</td></tr><tr><td>status</td><td>default | error。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { TextArea } from '360euxd';
+
+export default () =&gt; (
+  &lt;TextArea
+    rows={4}
+    showCount
+    maxLength={200}
+    placeholder="请输入处置说明"
+  /&gt;
+);</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>字段名包含备注、描述、说明、意见时，优先使用 TextArea。</li><li>超过一行的自然语言内容不要使用 Input。</li><li>有长度限制时必须展示内部字数统计。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">IPv4 输入框</h2><p class="section-desc">IPv4 输入框是 IP 地址专用输入组件，采用四段式结构并内置 0-255 的正整数约束。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>专用于 IPv4 地址录入，不使用普通 Input 拼接或正则提示替代。</li><li>每段独立输入，段间以点号分隔。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>源 IP、目的 IP、网关、DNS、资产地址等 IPv4 字段。</li><li>安全、网络、资产管理等后台业务配置。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-ipv4"><div class="x-ipv4-control"><input class="x-ipv4-segment" value="192"><span class="x-ipv4-dot">.</span><input class="x-ipv4-segment" value="168"><span class="x-ipv4-dot">.</span><input class="x-ipv4-segment" value="1"><span class="x-ipv4-dot">.</span><input class="x-ipv4-segment" value="1"></div></div></div><ul class="rule-list" style="margin-top:12px;"><li>四段式结构：0 . 0 . 0 . 0。</li><li>hover、focus、输入、禁用、失败等反馈遵循通用状态规则。</li></ul></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>value</td><td>IPv4 字符串，例如 192.168.1.1。</td></tr><tr><td>onChange</td><td>返回合法 IPv4 字符串或分段值。</td></tr><tr><td>disabled</td><td>禁用全部分段。</td></tr><tr><td>status</td><td>default | error。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { InputIPv4 } from '360euxd';
+
+export default () =&gt; (
+  &lt;InputIPv4
+    value="192.168.1.1"
+    errorMessage="格式错误，请输入0-255的正整数"
+  /&gt;
+);</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>字段语义为 IP、IPv4、源地址、目的地址时必须使用 InputIPv4。</li><li>每段只允许录入 0-255 的正整数，非法字符直接拦截。</li><li>不要使用普通 Input + placeholder 模拟 IP 地址。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">高级搜索 AdvancedSearch</h2><p class="section-desc">AdvancedSearch 是搜索筛选容器组件，用于组合多个查询字段和操作按钮，不是 Input 的视觉变体。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>承载列表页、表格页的多条件查询、重置、展开收起。</li><li>容器内部可组合 Input、Select、DatePicker、InputIPv4 等录入控件。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>列表筛选区、资产查询、告警查询、日志检索。</li><li>搜索字段超过 3 项，或存在高级筛选折叠需求。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-advanced-search"><input class="x-advanced-search-input" placeholder="请输入告警名称，多个告警名称用“；”隔开"><span class="x-advanced-search-divider"></span><span class="x-advanced-search-actions"><i class="iconfont icon-gaojisousuo x-advanced-search-icon"></i><i class="iconfont icon-wenjian x-advanced-search-icon"></i></span></div></div><ul class="rule-list" style="margin-top:12px;"><li>页面只展示默认状态。</li><li>hover、focus、输入、禁用、失败等反馈遵循通用状态规则。</li></ul></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>fields</td><td>搜索字段配置。</td></tr><tr><td>onSearch</td><td>点击查询或回车触发。</td></tr><tr><td>onReset</td><td>重置为默认筛选条件。</td></tr><tr><td>collapsible</td><td>是否支持展开收起。</td></tr><tr><td>defaultCollapsed</td><td>默认是否收起高级项。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { AdvancedSearch, Input, Select, DateRangePicker } from '360euxd';
+
+export default () =&gt; (
+  &lt;AdvancedSearch
+    onSearch={handleSearch}
+    onReset={handleReset}
+    collapsible
+    fields={[
+      { name: 'keyword', label: '策略名称', component: &lt;Input allowClear /&gt; },
+      { name: 'level', label: '风险等级', component: &lt;Select /&gt; },
+      { name: 'time', label: '发生时间', component: &lt;DateRangePicker /&gt; },
+    ]}
+  /&gt;
+);</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>列表页存在多个筛选条件时优先生成 AdvancedSearch。</li><li>单个关键词搜索可使用 Input 或 Search，不必使用 AdvancedSearch。</li><li>搜索区内的字段组件仍需遵循各自组件规范。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">禁止用法</h2><p class="section-desc">以下规则用于约束 AI 和研发生成页面时的组件选择，避免把展示页样式或错误组件带入业务代码。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止用 Input 录入数字、金额、百分比、数量，应使用 InputNumber。</li><li>禁止用 Input 模拟 IPv4，应使用 InputIPv4。</li><li>禁止把 TextArea、IPv4、AdvancedSearch 归类为 Input 变体。</li><li>禁止只改变红色边框而不展示错误文案。</li></ul></div>
+                    <div class="doc-panel"><h3>禁止代码写法</h3><pre class="code-block"><code>// 错误：业务文档和示例中禁止从 antd 导入或暴露原组件
+// 请统一从 360euxd 导入输入框体系组件
+
+// 错误：展示页视觉类名不能作为真实业务组件使用
+&lt;div className="x-input"&gt;请输入名称&lt;/div&gt;
+
+// 错误：IP 地址不能使用普通 Input
+&lt;Input placeholder="请输入 IP 地址" /&gt;</code></pre></div>
+                  </div>
+                </section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="input-number" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">数据录入组件库 / InputNumber 数字输入框规范页</h2>
+                    <p class="section-desc">InputNumber 用于数字、金额、百分比、数量等数值录入，必须具备范围、步进、修正和校验反馈能力。</p>
+                  </div>
+                  <span class="code-note">360euxd: InputNumber</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">组件定位</div><div class="spec-summary-value">数值类数据录入</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">尺寸规则</div><div class="spec-summary-value">24 / 32 / 40px</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">关键能力</div><div class="spec-summary-value">范围 / 步进 / 单位</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">图标规则</div><div class="spec-summary-value">反馈态显示步进</div></div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">通用规范</h2><p class="section-desc">数字输入框继承输入框体系的尺寸、Token 与校验规则，额外约束右侧加减图标的展示时机。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>尺寸</h3><div class="demo-stack"><div class="x-input-number x-input-number-small"><input placeholder="Small / 24px"></div><div class="x-input-number"><input placeholder="Default / 32px"></div><div class="x-input-number x-input-number-large"><input placeholder="Large / 40px"></div></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>Small</td><td>高度 24px，用于紧凑表格筛选和行内编辑。</td></tr><tr><td>Default</td><td>高度 32px，用于常规表单与筛选。</td></tr><tr><td>Large</td><td>高度 40px，用于重点输入或低密度页面。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>状态</h3><div class="demo-stack"><div class="demo-row"><div class="x-input-number"><input placeholder="默认 0-100"></div><div class="x-input-number is-hover"><input placeholder="悬停 0-100"></div><div class="x-input-number is-focus"><input value="激活"><span class="x-input-number-stepper"><span class="x-input-number-step"><i class="iconfont icon-shangjiantou x-input-number-step-icon"></i></span><span class="x-input-number-step"><i class="iconfont icon-xiajiantou x-input-number-step-icon"></i></span></span></div></div><div class="demo-row"><div class="x-input-number"><input value="输入完成：65"></div><div class="x-input-number is-disabled"><input value="禁用" disabled></div></div><div class="demo-field"><div class="x-input-number is-error"><input value="120"><span class="x-input-number-stepper"><span class="x-input-number-step"><i class="iconfont icon-shangjiantou x-input-number-step-icon"></i></span><span class="x-input-number-step"><i class="iconfont icon-xiajiantou x-input-number-step-icon"></i></span></span></div><div class="x-form-error">请输入0-100之间的数值</div></div></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>默认</td><td>默认边框，不显示右侧加减图标。</td></tr><tr><td>悬停</td><td>border-color 使用 p5，不显示右侧加减图标。</td></tr><tr><td>激活</td><td>激活与输入中状态一致，显示右侧加减图标。</td></tr><tr><td>输入完成 / 禁用</td><td>不显示右侧加减图标。</td></tr><tr><td>报错</td><td>显示右侧加减图标，红色边框和错误文案同时出现。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>Token</h3><div class="token-chip-row"><span class="token-chip"><span class="token-swatch" style="background: var(--p6);"></span>p6 #00AB7A</span><span class="token-chip"><span class="token-swatch" style="background: var(--p5);"></span>p5 #1DB887</span><span class="token-chip"><span class="token-swatch" style="background: var(--p1);"></span>p1 #D9F4EE</span><span class="token-chip"><span class="token-swatch" style="background: var(--Red-6);"></span>Red-6 #F0131E</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-5);"></span>gray-5 #DFE1E6</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-9);"></span>gray-9 #242933</span></div></div>
+                    <div class="doc-panel"><h3>校验规则</h3><ul class="rule-list"><li>仅允许录入数字，非法字符直接拦截。</li><li>必须定义 min、max、step，超出范围需要提示或修正。</li><li>错误提示固定展示在输入框正下方，靠左对齐。</li><li>金额、百分比、数量等字段不得使用普通 Input。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">组件定位与使用场景</h2><p class="section-desc">InputNumber 只承载数值输入，不承载普通文本、IP、密码和多行说明。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>用于数值录入、数值调整和需要范围校验的字段。</li><li>支持键盘输入、步进加减、单位展示和格式化展示。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>数量、次数、阈值、端口、排序、下载限速。</li><li>金额、百分比、折扣、容量、时间间隔等带单位数值。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">API</h2><p class="section-desc">InputNumber API 必须能表达数值范围、步进、格式化、单位、精度和校验状态。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>属性</th><th>说明</th><th>规则</th></tr></thead><tbody><tr><td>min / max</td><td>最小值 / 最大值</td><td>业务数值字段必须明确边界。</td></tr><tr><td>step</td><td>每次加减的步长</td><td>默认 1；金额、百分比等可按业务定义。</td></tr><tr><td>precision</td><td>小数精度</td><td>金额、比例等需要明确小数位。</td></tr><tr><td>formatter / parser</td><td>展示格式与真实值解析</td><td>金额、百分比、千分位场景使用。</td></tr><tr><td>prefix / suffix</td><td>前后单位</td><td>单位只做辅助展示，不参与数值本身。</td></tr><tr><td>status / help</td><td>错误状态与提示文案</td><td>错误状态必须展示文案。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">示例使用 360euxd 占位包名，覆盖范围、步进、精度、单位、错误和禁用。</p></div></div>
+                  <div class="section-body"><pre class="code-block"><code>import { InputNumber } from '360euxd';
+
+export default () =&gt; (
+  &lt;&gt;
+    &lt;InputNumber min={0} max={100} step={1} placeholder="0-100" /&gt;
+    &lt;InputNumber min={0} max={10000} step={100} suffix="元" /&gt;
+    &lt;InputNumber min={0} max={100} precision={2} suffix="%" /&gt;
+    &lt;InputNumber status="error" value={120} help="请输入0-100之间的数值" /&gt;
+    &lt;InputNumber disabled value={0} /&gt;
+  &lt;/&gt;
+);</code></pre></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">AI 生成规则</h2><p class="section-desc">生成业务页面时，先判断字段是否为数值语义，再选择 InputNumber。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>字段类型</th><th>应使用组件</th><th>规则</th></tr></thead><tbody><tr><td>数量、次数、阈值、端口、排序</td><td>InputNumber</td><td>必须设置 min、max、step。</td></tr><tr><td>金额、价格、费用</td><td>InputNumber</td><td>设置 precision、formatter 或 suffix。</td></tr><tr><td>百分比、比例、折扣</td><td>InputNumber</td><td>设置范围 0-100 或业务允许范围，并展示 %。</td></tr><tr><td>普通名称、账号、关键字</td><td>Input</td><td>禁止误用 InputNumber。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">禁止用法</h2><p class="section-desc">避免用普通文本输入框模拟数值能力，也避免缺失边界和错误提示。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止用 Input 录入数字、金额、百分比、数量。</li><li>禁止只有 placeholder 中写 0-100，却不设置真实 min / max。</li><li>禁止错误状态只改变边框，不展示错误文案。</li><li>禁止默认、输入完成、禁用状态展示加减图标。</li></ul></div><div class="doc-panel"><h3>错误示例</h3><pre class="code-block"><code>// 错误：数字字段不应使用普通 Input
+&lt;Input placeholder="请输入数量" /&gt;
+
+// 错误：只有占位符，没有真实范围
+&lt;InputNumber placeholder="0-100" /&gt;
+
+// 错误：错误态缺少错误提示
+&lt;InputNumber status="error" value={120} /&gt;</code></pre></div></div>
+                </section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="date-picker" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">Date Family 日期选择体系</h2>
+                    <p class="section-desc">日期选择体系用于承载单日期、日期区间和日历面板选择；各组件共享日期状态、面板和校验规则。</p>
+                  </div>
+                  <span class="code-note">360euxd: Date Family</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">体系定位</div><div class="spec-summary-value">日期类数据录入</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">独立组件</div><div class="spec-summary-value">DatePicker / DateRangePicker / CalendarPicker</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">面板宽度</div><div class="spec-summary-value">280 / 560 / 657px</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">日期格</div><div class="spec-summary-value">24 × 24px</div></div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">通用规范</h2><p class="section-desc">日期选择器共享数据录入控件的尺寸、状态、Token 与校验反馈，并补充日期面板的选中范围规则。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>尺寸</h3><div class="demo-stack"><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-control-small x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">Small / 24px</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">Default / 32px</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-control-large x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">Large / 40px</span><i class="iconfont icon-a-riqirili"></i></button></div></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>单日期</td><td>默认宽度 240px，按 Small / Default / Large 三档高度使用。</td></tr><tr><td>日期区间</td><td>默认宽度 400px，需要完整展示开始和结束日期。</td></tr><tr><td>日期格</td><td>面板日期格尺寸 24 × 24px。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>状态</h3><div class="demo-stack"><div class="demo-row"><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">默认</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger is-hover" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">悬停</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger is-focus" type="button" style="width:240px;" aria-expanded="false"><span>激活</span><i class="iconfont icon-a-riqirili"></i></button></div></div><div class="demo-row"><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span>2026-05-20</span><i class="iconfont icon-a-riqirili"></i></button></div><button class="x-control x-date-picker-trigger is-disabled" type="button" style="width:240px;" disabled><span>禁用</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="demo-field"><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger is-error" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">报错</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-form-error">请选择日期</div></div></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>默认</td><td>未选择时展示占位文字和日历图标。</td></tr><tr><td>悬停</td><td>仅边框进入 hover 反馈，内容保持默认展示。</td></tr><tr><td>激活</td><td>聚焦、键盘输入和面板展开时使用激活反馈。</td></tr><tr><td>输入完成</td><td>控件回到默认边框，保留已选日期。</td></tr><tr><td>禁用</td><td>不可选择、不可输入，不响应面板展开。</td></tr><tr><td>报错</td><td>红色边框和错误文案同时展示。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>Token</h3><div class="token-chip-row"><span class="token-chip"><span class="token-swatch" style="background: var(--p6);"></span>p6 #00AB7A</span><span class="token-chip"><span class="token-swatch" style="background: var(--p5);"></span>p5 #1DB887</span><span class="token-chip"><span class="token-swatch" style="background: var(--p7);"></span>p7 #039972</span><span class="token-chip"><span class="token-swatch" style="background: var(--p1);"></span>p1 #D9F4EE</span><span class="token-chip"><span class="token-swatch" style="background: var(--Red-6);"></span>Red-6 #F0131E</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-5);"></span>gray-5 #DFE1E6</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-6);"></span>gray-6 #AEB2B8</span></div></div>
+                    <div class="doc-panel"><h3>校验规则</h3><ul class="rule-list"><li>必填日期未选择时，失焦后在控件下方展示错误提示。</li><li>支持键盘输入时必须容错，并校验日期格式和可选范围。</li><li>日期区间需要校验开始时间与结束时间顺序。</li><li>不可选日期应在面板中禁用，避免用户先选后报错。</li></ul></div>
+                    <div class="doc-panel"><h3>面板规则</h3><ul class="rule-list"><li>当天、悬停日期、已选日期和区间范围需要可区分。</li><li>单日期面板默认宽度 280px，区间面板按双面板宽度展示。</li><li>必要时标注周末、节假日或业务特殊日期。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">组件选择规则</h2><p class="section-desc">生成页面前先判断用户选择的是单日期、日期区间、日历面板还是纯时间。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>录入任务</th><th>应使用组件</th><th>选择规则</th></tr></thead><tbody><tr><td>单个日期</td><td>DatePicker</td><td>用于发生日期、生效日期、截止日期等单日期字段。</td></tr><tr><td>开始日期到结束日期</td><td>DateRangePicker</td><td>用于筛选区间、有效期和统计周期。</td></tr><tr><td>直接在日历面板选择日期</td><td>CalendarPicker</td><td>用于需要常驻日历视图或在面板中辨识日期的场景。</td></tr><tr><td>只选择时刻</td><td>TimePicker</td><td>不要用日期选择组件代替纯时间选择。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">日期选择器 DatePicker</h2><p class="section-desc">DatePicker 用于一个日期字段的选择和回填，是日期选择体系中的基础控件。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>用于选择或输入一个符合日期语义的值。</li><li>支持按业务需要扩展日期时间，但不承载日期区间。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>生效日期、过期日期、计划日期、截止日期。</li><li>需要精确到时分秒的单个发生时间可启用 showTime。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择日期</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-date-picker-popup" hidden><div class="x-date-picker-header"><span class="x-date-picker-nav"><i class="iconfont icon-shuangjiantou-zuo"></i><i class="iconfont icon-zuo-jiantou"></i></span><strong class="x-date-picker-month">2020年 7月</strong><span class="x-date-picker-nav is-next"><i class="iconfont icon-you-jiantou"></i><i class="iconfont icon-shuangjiantou-you"></i></span></div><div class="x-date-picker-board"><div class="x-date-picker-week"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div><div class="x-date-picker-days"></div></div><div class="x-date-picker-footer">今天</div></div></div><div class="x-date-picker-demo x-date-time-picker-demo" data-date-time-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择日期时间</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-month-picker-demo" data-month-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择月份</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-month-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2022年</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-month-picker-grid"></div></div></div><div class="x-date-picker-demo x-quarter-picker-demo" data-quarter-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择季度</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-quarter-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2022年</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-quarter-picker-grid"></div></div></div><div class="x-date-picker-demo x-year-picker-demo" data-year-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择年份</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-year-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2020-2029</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-year-picker-grid"></div></div></div></div><ul class="rule-list" style="margin-top:12px;"><li>日历图标固定作为日期语义提示。</li><li>激活日期选择器时展开日历面板，反馈样式遵循通用规范。</li></ul></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>value</td><td>当前已选日期。</td></tr><tr><td>format</td><td>日期展示和输入格式。</td></tr><tr><td>showTime</td><td>启用日期时间选择。</td></tr><tr><td>disabledDate</td><td>禁用不可选日期。</td></tr><tr><td>status / help</td><td>错误状态与提示文案。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { DatePicker } from '360euxd';
+
+&lt;DatePicker placeholder="请选择日期" /&gt;
+&lt;DatePicker showTime placeholder="请选择日期时间" /&gt;
+&lt;DatePicker disabled value="2026-05-20" /&gt;</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>日期、生效日、截止日等单日期字段使用 DatePicker。</li><li>纯时间字段使用 TimePicker，不要开启 DatePicker。</li><li>错误态必须同时展示控件状态和提示文案。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">日期区间选择器 DateRangePicker</h2><p class="section-desc">DateRangePicker 用于成对录入开始日期和结束日期，区间逻辑由组件统一承载。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>用于选择连续日期范围，不拆成两个无联动单日期控件。</li><li>需要表达开始、结束和范围有效性。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>列表查询时间范围、统计周期、有效期。</li><li>任务开始与结束、策略生效区间。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="date"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始日期</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束日期</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="month"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始月份</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束月份</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="quarter"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始季度</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束季度</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="year"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始年份</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束年份</span></span><i class="iconfont icon-a-riqirili"></i></button></div></div><ul class="rule-list" style="margin-top:12px;"><li>开始与结束日期需要同时可见。</li><li>区间面板需要连续表达已选范围。</li></ul></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>value</td><td>开始与结束日期值。</td></tr><tr><td>format</td><td>范围展示格式。</td></tr><tr><td>disabledDate</td><td>禁用不可选范围。</td></tr><tr><td>placeholder</td><td>开始日期 / 结束日期提示。</td></tr><tr><td>status / help</td><td>区间校验反馈。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { DateRangePicker } from '360euxd';
+
+&lt;DateRangePicker
+  placeholder={['开始日期', '结束日期']}
+  disabledDate={disabledDate}
+/&gt;</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>开始日期、结束日期、有效期和查询区间使用 DateRangePicker。</li><li>需要限制未来或过去日期时配置 disabledDate。</li><li>必须校验开始日期不晚于结束日期。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">日历选择 CalendarPicker</h2><p class="section-desc">CalendarPicker 直接展示日历面板，用于用户需要在日期格中辨识上下文后再选择日期。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>以日历面板承载日期选择，不依赖输入框触发器。</li><li>适合需要直接浏览日期上下文的选择任务。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>排期、值班、活动日期、周期日期浏览。</li><li>需要查看周末、节假日或业务特殊日期的场景。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="x-mini-calendar"><div class="demo-row" style="justify-content:space-between;margin-bottom:12px;"><i class="iconfont icon-zuo-jiantou"></i><strong>2026 年 5 月</strong><i class="iconfont icon-you-jiantou"></i></div><div class="x-calendar-grid"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span><span class="x-calendar-cell">18</span><span class="x-calendar-cell is-range">19</span><span class="x-calendar-cell is-selected">20</span><span class="x-calendar-cell">21</span><span class="x-calendar-cell">22</span><span class="x-calendar-cell">23</span><span class="x-calendar-cell">24</span></div></div><ul class="rule-list" style="margin-top:12px;"><li>选中日期使用主色反馈。</li><li>范围或辅助日期使用浅选中背景。</li></ul></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>value</td><td>当前日历选中日期。</td></tr><tr><td>mode</td><td>日期视图模式。</td></tr><tr><td>disabledDate</td><td>禁用不可选日期格。</td></tr><tr><td>dateCellRender</td><td>展示特殊日期信息。</td></tr><tr><td>onSelect</td><td>选择日期回调。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { CalendarPicker } from '360euxd';
+
+&lt;CalendarPicker
+  value="2026-05-20"
+  disabledDate={disabledDate}
+  onSelect={handleSelect}
+/&gt;</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>需要常驻日历视图时使用 CalendarPicker。</li><li>普通表单单日期字段优先使用 DatePicker。</li><li>特殊日期标记应由业务规则明确提供。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">禁止用法</h2><p class="section-desc">避免日期录入退化成格式不稳定的文本输入，也避免缺失范围约束。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止用普通 Input 录入标准日期字段。</li><li>禁止用两个无联动的 DatePicker 代替 DateRangePicker。</li><li>禁止表单单日期字段滥用常驻 CalendarPicker。</li><li>禁止报错态只显示红色边框，不展示错误提示。</li></ul></div><div class="doc-panel"><h3>错误示例</h3><pre class="code-block"><code>// 错误：标准日期字段不应使用普通 Input
+&lt;Input placeholder="请输入日期" /&gt;
+
+// 错误：日期范围应使用 DateRangePicker
+&lt;DatePicker placeholder="开始日期" /&gt;
+&lt;DatePicker placeholder="结束日期" /&gt;
+
+// 错误：报错状态缺少提示文案
+&lt;DatePicker status="error" /&gt;</code></pre></div></div>
+                </section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="cascader" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Cascader 级联选择器规范页</h2><p class="section-desc">Cascader 用于地区、组织、权限分类、业务对象分类等父子层级数据选择。</p></div><span class="code-note">360euxd: Cascader</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">一级面板</div><div class="spec-summary-value">120 × 160px</div></div><div class="spec-summary-item"><div class="spec-summary-label">二级面板</div><div class="spec-summary-value">240 × 160px</div></div><div class="spec-summary-item"><div class="spec-summary-label">三级面板</div><div class="spec-summary-value">360 × 160px</div></div><div class="spec-summary-item"><div class="spec-summary-label">面板圆角</div><div class="spec-summary-value">6px</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">层级与状态</h2><p class="section-desc">支持单选与多选；只选择最终节点时应避免误选中间层。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="demo-stack"><div class="x-control is-open"><span>华北 / 北京 / 海淀</span><i class="iconfont icon-xiajiantou"></i></div><div class="demo-row" style="align-items:flex-start;"><div class="x-panel" style="width:120px;"><div class="x-option is-selected">华北<i class="iconfont icon-you-jiantou"></i></div><div class="x-option">华东<i class="iconfont icon-you-jiantou"></i></div></div><div class="x-panel" style="width:120px;"><div class="x-option is-selected">北京<i class="iconfont icon-you-jiantou"></i></div><div class="x-option">天津<i class="iconfont icon-you-jiantou"></i></div></div><div class="x-panel" style="width:120px;"><div class="x-option is-selected">海淀</div><div class="x-option is-hover">朝阳</div></div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>支持搜索时应提示匹配路径。</li><li>层级过深时建议改为 TreeSelect。</li><li>每一级选项文字为 14px / 22px。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">多级选择应声明是否只能选择叶子节点。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Cascader } from '360euxd';
+
+&lt;Cascader options={regionOptions} placeholder="请选择地区" /&gt;
+&lt;Cascader multiple options={orgOptions} showSearch /&gt;
+&lt;Cascader changeOnSelect={false} placeholder="请选择最终节点" /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="checkbox" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Checkbox 多选框规范页</h2><p class="section-desc">Checkbox 用于多项条件筛选、表单多选、权限配置和表格批量选择。</p></div><span class="code-note">360euxd: Checkbox</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">控件尺寸</div><div class="spec-summary-value">16 × 16px</div></div><div class="spec-summary-item"><div class="spec-summary-label">文本</div><div class="spec-summary-value">14px / 22px</div></div><div class="spec-summary-item"><div class="spec-summary-label">圆角</div><div class="spec-summary-value">4px</div></div><div class="spec-summary-item"><div class="spec-summary-label">关键状态</div><div class="spec-summary-value">checked / indeterminate</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与分组</h2><p class="section-desc">半选状态用于树选择、权限配置、批量选择场景，不能省略。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>状态预览</h3><div class="demo-stack"><label class="x-choice"><span class="x-checkbox"></span>未选</label><label class="x-choice is-hover"><span class="x-checkbox"></span>Hover</label><label class="x-choice is-checked"><span class="x-checkbox"></span>已选</label><label class="x-choice is-indeterminate"><span class="x-checkbox"></span>半选</label><label class="x-choice is-disabled"><span class="x-checkbox"></span>禁用</label></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>checked 使用 p6 #00AB7A。</li><li>全选必须和子项状态联动。</li><li>跨页选择必须明确作用范围。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">表格选择需提供已选数量和批量操作启禁用。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Checkbox } from '360euxd';
+
+&lt;Checkbox&gt;未选&lt;/Checkbox&gt;
+&lt;Checkbox checked&gt;已选&lt;/Checkbox&gt;
+&lt;Checkbox indeterminate&gt;半选&lt;/Checkbox&gt;
+&lt;Checkbox.Group options={['读取', '编辑', '删除']} /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="radio" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Radio 单选框规范页</h2><p class="section-desc">Radio 用于多个互斥选项中选择一个，选项超过 5 个建议改用 Select。</p></div><span class="code-note">360euxd: Radio</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">基础 Radio</div><div class="spec-summary-value">控件 16px</div></div><div class="spec-summary-item"><div class="spec-summary-label">选项行高</div><div class="spec-summary-value">22px</div></div><div class="spec-summary-item"><div class="spec-summary-label">胶囊单选</div><div class="spec-summary-value">74 × 32px</div></div><div class="spec-summary-item"><div class="spec-summary-label">横向间距</div><div class="spec-summary-value">24px</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与类型</h2><p class="section-desc">基础 Radio 用于表单互斥选择，胶囊单选用于模式切换、筛选切换。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>状态预览</h3><div class="demo-stack"><label class="x-choice"><span class="x-radio"></span>未选</label><label class="x-choice is-hover"><span class="x-radio"></span>Hover</label><label class="x-choice is-checked"><span class="x-radio"></span>已选</label><label class="x-choice is-disabled"><span class="x-radio"></span>禁用</label><div class="x-radio-button-group"><span class="x-radio-button is-selected">日</span><span class="x-radio-button">周</span><span class="x-radio-button">月</span></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>checked 使用 p6，selected 文本可使用 p7。</li><li>默认选中项需要符合业务安全默认值。</li><li>选项文案应短且互斥。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">低数量互斥选项优先使用 Radio。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Radio } from '360euxd';
+
+&lt;Radio.Group value="enabled"&gt;
+  &lt;Radio value="enabled"&gt;启用&lt;/Radio&gt;
+  &lt;Radio value="disabled"&gt;停用&lt;/Radio&gt;
+&lt;/Radio.Group&gt;
+&lt;Radio.ButtonGroup options={['日', '周', '月']} /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="select" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Select 选择器规范页</h2><p class="section-desc">Select 用于从有限选项中选择一个或多个值，支持单选、多选、搜索、加载和空状态。</p></div><span class="code-note">360euxd: Select</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">默认宽度</div><div class="spec-summary-value">200px</div></div><div class="spec-summary-item"><div class="spec-summary-label">高度档位</div><div class="spec-summary-value">24 / 32 / 40px</div></div><div class="spec-summary-item"><div class="spec-summary-label">下拉宽度</div><div class="spec-summary-value">不小于触发器</div></div><div class="spec-summary-item"><div class="spec-summary-label">选项高度</div><div class="spec-summary-value">默认 32px</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与面板</h2><p class="section-desc">必须覆盖 Default、Hover、Focus、Open、Selected、Disabled、Loading、Empty、Error、Multiple。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="demo-stack"><div class="x-control is-open"><span>待处置</span><i class="iconfont icon-shangjiantou"></i></div><div class="x-panel"><div class="x-option is-selected">待处置<i class="iconfont icon-dui"></i></div><div class="x-option is-hover">处理中</div><div class="x-option is-disabled">已禁用</div><div class="x-option is-loading">加载中</div></div><div class="x-control" style="height:auto;min-height:32px;justify-content:flex-start;flex-wrap:wrap;"><span class="x-tag">高风险<i class="iconfont icon-a-cuoguanbi"></i></span><span class="x-tag">外联<i class="iconfont icon-a-cuoguanbi"></i></span><span class="x-placeholder">+2</span></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>选项少于 5 个时，优先考虑 Radio 或 Checkbox。</li><li>selected 使用 p1 浅绿底 + p7 文字。</li><li>选项数量多时必须支持搜索或分组。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">多选标签不应无限撑高页面，需使用 maxTagCount 或 +N。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Select } from '360euxd';
+
+&lt;Select placeholder="请选择状态" options={statusOptions} /&gt;
+&lt;Select showSearch placeholder="请选择归属对象" /&gt;
+&lt;Select multiple maxTagCount={2} options={riskOptions} /&gt;
+&lt;Select loading placeholder="加载中" /&gt;
+&lt;Select status="error" help="请选择状态" /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="time-picker" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / TimePicker 时间选择框规范页</h2><p class="section-desc">TimePicker 用于单时间、时间区间和多列时间选择，必须统一时间格式并禁用不可选时间。</p></div><span class="code-note">360euxd: TimePicker</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">单时间</div><div class="spec-summary-value">240 × 32px</div></div><div class="spec-summary-item"><div class="spec-summary-label">时间区间</div><div class="spec-summary-value">320 × 40px</div></div><div class="spec-summary-item"><div class="spec-summary-label">单列面板</div><div class="spec-summary-value">112 × 248px</div></div><div class="spec-summary-item"><div class="spec-summary-label">区间面板</div><div class="spec-summary-value">340 × 248px</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与面板</h2><p class="section-desc">覆盖未填写、已填写、默认、悬停、聚焦、输入中、禁用和不可选时间。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="demo-stack"><div class="x-control" style="width:240px;"><span class="x-placeholder">请选择时间</span><i class="iconfont icon-xiajiantou"></i></div><div class="x-control is-focus" style="width:240px;"><span>09:30:00</span><i class="iconfont icon-shangjiantou"></i></div><div class="x-time-panel"><div class="x-time-columns"><div class="demo-stack"><div class="x-option">08</div><div class="x-option is-selected">09</div><div class="x-option">10</div></div><div class="demo-stack"><div class="x-option">15</div><div class="x-option is-selected">30</div><div class="x-option">45</div></div><div class="demo-stack"><div class="x-option is-disabled">00</div><div class="x-option is-selected">30</div><div class="x-option">59</div></div></div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>时间格式必须统一。</li><li>禁用不可选时间，错误格式需要即时提示。</li><li>默认值应符合业务场景。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">区间或多列场景需明确格式和禁用规则。</p></div></div><div class="section-body"><pre class="code-block"><code>import { TimePicker } from '360euxd';
+
+&lt;TimePicker placeholder="请选择时间" format="HH:mm:ss" /&gt;
+&lt;TimePicker.RangePicker format="HH:mm" /&gt;
+&lt;TimePicker disabledHours={() =&gt; [0, 1, 2]} /&gt;
+&lt;TimePicker status="error" help="格式错误，请输入 HH:mm:ss" /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="transfer" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Transfer 穿梭框规范页</h2><p class="section-desc">Transfer 用于在候选集合和目标集合之间移动一个或多个对象。</p></div><span class="code-note">360euxd: Transfer</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">左侧</div><div class="spec-summary-value">Source</div></div><div class="spec-summary-item"><div class="spec-summary-label">右侧</div><div class="spec-summary-value">Target</div></div><div class="spec-summary-item"><div class="spec-summary-label">能力</div><div class="spec-summary-value">搜索 / 数量 / 移动</div></div><div class="spec-summary-item"><div class="spec-summary-label">按钮状态</div><div class="spec-summary-value">启用 / 禁用</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">结构与状态</h2><p class="section-desc">必须支持搜索、已选数量展示，移动按钮必须有禁用态。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="x-transfer"><div class="x-transfer-panel"><div class="x-transfer-header"><span>Source</span><span>2 / 5</span></div><div class="x-transfer-body"><input class="x-input" style="width:100%;" placeholder="搜索"><label class="x-choice is-checked"><span class="x-checkbox"></span>用户 A</label><label class="x-choice"><span class="x-checkbox"></span>用户 B</label><label class="x-choice is-disabled"><span class="x-checkbox"></span>用户 C</label></div></div><div class="demo-stack"><button class="x-btn x-btn-primary">›</button><button class="x-btn">‹</button></div><div class="x-transfer-panel"><div class="x-transfer-header"><span>Target</span><span>1 项</span></div><div class="x-transfer-body"><label class="x-choice is-checked"><span class="x-checkbox"></span>用户 D</label></div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>左侧为来源 Source，右侧为目标 Target。</li><li>候选项很多时必须支持搜索。</li><li>没有可移动项时移动按钮禁用。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">适用于成员分配、权限对象移动、字段配置。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Transfer } from '360euxd';
+
+&lt;Transfer
+  dataSource={users}
+  targetKeys={selectedKeys}
+  showSearch
+  titles={['Source', 'Target']}
+/&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="tree-select" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / TreeSelect 树选择规范页</h2><p class="section-desc">TreeSelect 用于组织、权限、分类等树形层级对象选择，节点过多时必须支持搜索。</p></div><span class="code-note">360euxd: TreeSelect</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">基本面板</div><div class="spec-summary-value">约 267 × 232px</div></div><div class="spec-summary-item"><div class="spec-summary-label">多选面板</div><div class="spec-summary-value">约 239 × 232px</div></div><div class="spec-summary-item"><div class="spec-summary-label">建议层级</div><div class="spec-summary-value">最多 4 级</div></div><div class="spec-summary-item"><div class="spec-summary-label">展开图标</div><div class="spec-summary-value">12 × 12px</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">节点状态</h2><p class="section-desc">节点状态至少包含父级默认 / 禁用，子级默认 / 悬浮 / 选中 / 禁用和三级子级。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="demo-stack"><div class="x-control is-open"><span>安全运营中心</span><i class="iconfont icon-shangjiantou"></i></div><div class="x-panel" style="width:267px;"><div class="x-option"><span><i class="iconfont icon-xiajiantou"></i> 总部</span></div><div class="x-option is-selected" style="padding-left:28px;">安全运营中心<i class="iconfont icon-dui"></i></div><div class="x-option is-hover" style="padding-left:28px;">风险分析组</div><div class="x-option is-disabled" style="padding-left:28px;">禁用节点</div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>支持单选和多选。</li><li>多选时应明确父子节点联动关系。</li><li>权限、组织、分类多选必须体现半选。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">树节点过多时启用搜索。</p></div></div><div class="section-body"><pre class="code-block"><code>import { TreeSelect } from '360euxd';
+
+&lt;TreeSelect treeData={orgTree} placeholder="请选择组织" showSearch /&gt;
+&lt;TreeSelect multiple treeCheckable treeData={permissionTree} /&gt;
+&lt;TreeSelect disabled value="archived-node" /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="upload" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Upload 上传规范页</h2><p class="section-desc">Upload 支持点击上传、图片上传、拖拽上传和上传 / 导入对话框，必须覆盖上传过程与失败状态。</p></div><span class="code-note">360euxd: Upload</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">点击上传</div><div class="spec-summary-value">306 × 40px</div></div><div class="spec-summary-item"><div class="spec-summary-label">图片上传</div><div class="spec-summary-value">80 × 80px</div></div><div class="spec-summary-item"><div class="spec-summary-label">拖拽上传</div><div class="spec-summary-value">384 × 194px</div></div><div class="spec-summary-item"><div class="spec-summary-label">导入对话框</div><div class="spec-summary-value">560px 宽</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与类型</h2><p class="section-desc">必须包含上传中、暂停、完成、失败、格式错误和文件大小错误。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="demo-stack"><div class="x-upload-box"><button class="x-btn x-btn-primary"><i class="iconfont icon-shangchuan"></i>点击上传</button><span class="x-placeholder">支持扩展名：.rar .zip .doc .pdf .jpg...</span></div><div class="x-upload-box"><div class="demo-row" style="justify-content:space-between;"><span>资产清单.xlsx</span><span>65%</span></div><div class="x-progress"><div class="x-progress-bar"></div></div></div><div class="x-upload-box" style="border-color:var(--Red-6);"><span style="color:var(--Red-6);">上传失败！失败原因xxx</span></div><div class="x-upload-drag"><div><i class="iconfont icon-shangchuan" style="font-size:24px;color:var(--p6);"></i><div>点击或将文件拖拽到这里上传</div></div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>点击上传由按钮和说明组成。</li><li>上传过程保留文件名、进度、状态图标或操作按钮。</li><li>图片上传基础格 80 × 80px，圆角 8px。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">导入类场景需要提供模板下载和格式说明。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Upload } from '360euxd';
+
+&lt;Upload accept=".rar,.zip,.doc,.docx,.pdf,.jpg" /&gt;
+&lt;Upload.Image maxCount={9} tip="建议尺寸 900*400，单个图片不超过 20M" /&gt;
+&lt;Upload.Dragger tip="点击或将文件拖拽到这里上传" /&gt;
+&lt;Upload.ImportDialog width={560} templateUrl="/template.xlsx" /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="form" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Form 表单规范页</h2><p class="section-desc">Form 用于创建、编辑、配置、审批和提交数据，是输入、选择、校验与提交反馈的容器。</p></div><span class="code-note">360euxd: Form</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">核心目标</div><div class="spec-summary-value">低错误率录入</div></div><div class="spec-summary-item"><div class="spec-summary-label">字段 > 12</div><div class="spec-summary-value">必须分组</div></div><div class="spec-summary-item"><div class="spec-summary-label">字段 > 20</div><div class="spec-summary-value">步骤化结构</div></div><div class="spec-summary-item"><div class="spec-summary-label">主操作</div><div class="spec-summary-value">页面仅 1 个</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">结构与校验</h2><p class="section-desc">错误提示固定展示在输入框正下方，靠左对齐，红色标注。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="demo-stack"><div class="demo-field"><label>策略名称 <span style="color:var(--Red-6);">*</span></label><input class="x-input" placeholder="请输入策略名称"></div><div class="demo-field"><label>通知方式</label><div class="x-control"><span>邮件</span><i class="iconfont icon-xiajiantou"></i></div></div><div class="demo-field"><label>负责人</label><input class="x-input is-error" placeholder="请输入负责人"><div class="x-form-error">请输入负责人</div></div><div class="demo-row"><button class="x-btn x-btn-primary">保存</button><button class="x-btn">取消</button></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>标签建议单行，不超过 10 个中文字符。</li><li>字段数大于 12 必须按业务维度分组。</li><li>表单必须包含校验、提交 loading 和成功 / 失败反馈。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">生成 Vue 代码时必须包含类型定义、校验规则、提交 loading、反馈和脏状态提示。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Form, Input, Select, Button } from '360euxd';
+
+&lt;Form layout="horizontal" onFinish={handleSubmit}&gt;
+  &lt;Form.Item name="name" label="策略名称" rules={[{ required: true, message: '请输入策略名称' }]}&gt;
+    &lt;Input placeholder="请输入策略名称" /&gt;
+  &lt;/Form.Item&gt;
+  &lt;Form.Item name="owner" label="负责人"&gt;
+    &lt;Select options={ownerOptions} /&gt;
+  &lt;/Form.Item&gt;
+  &lt;Button type="primary" loading={submitting}&gt;保存&lt;/Button&gt;
+&lt;/Form&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="slider" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Slider 滑动输入条规范页</h2><p class="section-desc">当前仓库仅在系统设置中提到滑块用于下载速率、阈值、限速；本页按全局 Token 与尺寸基线建立占位规范。</p></div><span class="code-note">360euxd: Slider</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">使用场景</div><div class="spec-summary-value">阈值 / 限速</div></div><div class="spec-summary-item"><div class="spec-summary-label">轨道颜色</div><div class="spec-summary-value">gray-4 / p6</div></div><div class="spec-summary-item"><div class="spec-summary-label">状态</div><div class="spec-summary-value">默认 / hover / 禁用</div></div><div class="spec-summary-item"><div class="spec-summary-label">输入辅助</div><div class="spec-summary-value">建议配合数字值</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">预览与规则</h2><p class="section-desc">Slider 应用于连续数值调节；高精度数值仍应提供数字输入框。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="demo-stack"><div class="x-slider"><div class="x-slider-track"><div class="x-slider-fill"></div><span class="x-slider-thumb"></span></div><div class="demo-row" style="justify-content:space-between;margin:0;"><span>0</span><strong>56%</strong><span>100</span></div></div><div class="demo-row"><span>下载限速</span><input class="x-input" style="width:96px;" value="56 Mbps"></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>适合阈值、限速、比例等连续数值调整。</li><li>必须明确最小值、最大值、步长和单位。</li><li>需要精确输入时配合 InputNumber。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">滑块规范待仓库补充后可进一步细化。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Slider, InputNumber } from '360euxd';
+
+&lt;Slider min={0} max={100} step={1} value={56} unit="%" /&gt;
+&lt;Slider min={0} max={1000} step={10} marks={{ 0: '0', 1000: '1000Mbps' }} /&gt;
+&lt;InputNumber value={56} suffix="Mbps" /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" data-component="switch" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Switch 开关规范页</h2><p class="section-desc">Switch 表示开启 / 关闭两种互斥状态，切换后系统立即执行。</p></div><span class="code-note">360euxd: Switch</span></div>
+                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">Small</div><div class="spec-summary-value">28 × 16px</div></div><div class="spec-summary-item"><div class="spec-summary-label">Default</div><div class="spec-summary-value">44 × 22px</div></div><div class="spec-summary-item"><div class="spec-summary-label">Large</div><div class="spec-summary-value">56 × 28px</div></div><div class="spec-summary-item"><div class="spec-summary-label">On 色</div><div class="spec-summary-value">p6 #00AB7A</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与交互</h2><p class="section-desc">必须覆盖 Off、On、Hover、Active、Disabled、Loading；高风险启停需要二次确认。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>状态预览</h3><div class="demo-stack"><div class="demo-row"><span class="x-switch"></span><span>Off</span></div><div class="demo-row"><span class="x-switch is-on"></span><span>On</span></div><div class="demo-row"><span class="x-switch is-on is-disabled"></span><span>Disabled</span></div><div class="demo-row"><span class="x-switch is-small is-on"></span><span>Small</span></div><div class="demo-row"><span class="x-switch is-large is-on"></span><span>Large</span></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>Switch 表示立即生效，切换后应有反馈。</li><li>高风险启停需要二次确认，不应直接切换。</li><li>表格中的 Switch 需要处理 loading 和失败回滚。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">需要提交后才生效的复杂表单项不适合使用 Switch。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Switch } from '360euxd';
+
+&lt;Switch checked /&gt;
+&lt;Switch size="small" checked /&gt;
+&lt;Switch loading checked /&gt;
+&lt;Switch disabled /&gt;
+&lt;Switch confirmBeforeChange title="确认停用该策略吗？" /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <div class="component-empty" data-component-empty></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+    $$('.menu-item').forEach((item) => {
+      item.addEventListener('click', () => {
+        setActiveMenu(item);
+      });
+    });
+
+    function getMenuTitle(item) {
+      const en = $('.menu-item-en', item)?.textContent?.trim() || '';
+      const zh = $('.menu-item-zh', item)?.textContent?.trim() || '';
+      return [en, zh].filter(Boolean).join(' ');
+    }
+
+    function setActiveMenu(item) {
+      if (!item) return;
+      $$('.menu-item').forEach((nav) => nav.classList.remove('active'));
+      item.classList.add('active');
+      const title = getMenuTitle(item);
+      if (title) $('.page-title').textContent = title;
+      syncComponentContent(item);
+    }
+
+    function syncComponentContent(item) {
+      const componentId = item.getAttribute('href')?.replace('#', '') || 'input';
+      let hasContent = false;
+      $$('.component-doc').forEach((doc) => {
+        const visible = doc.dataset.component === componentId;
+        doc.hidden = !visible;
+        hasContent = hasContent || visible;
+      });
+      const empty = $('[data-component-empty]');
+      if (empty) empty.hidden = hasContent;
+    }
+
+    function syncMenuFromHash() {
+      const hash = window.location.hash || '#input';
+      const target = $(`.menu-item[href="${hash}"]`) || $('.menu-item');
+      setActiveMenu(target);
+    }
+
+    window.addEventListener('hashchange', syncMenuFromHash);
+    syncMenuFromHash();
+
+    const datePickerDemos = $$('[data-date-picker-demo]');
+    const dateTimePickerDemos = $$('[data-date-time-picker-demo]');
+    const monthPickerDemos = $$('[data-month-picker-demo]');
+    const quarterPickerDemos = $$('[data-quarter-picker-demo]');
+    const yearPickerDemos = $$('[data-year-picker-demo]');
+    const rangePickerDemos = $$('[data-range-picker-demo]');
+    function isSameDate(left, right) {
+      return Boolean(left && right)
+        && left.getFullYear() === right.getFullYear()
+        && left.getMonth() === right.getMonth()
+        && left.getDate() === right.getDate();
+    }
+
+    function compareDates(left, right) {
+      return new Date(left.getFullYear(), left.getMonth(), left.getDate())
+        - new Date(right.getFullYear(), right.getMonth(), right.getDate());
+    }
+
+    function isDateInRange(date, start, end) {
+      return Boolean(start && end) && compareDates(date, start) >= 0 && compareDates(date, end) <= 0;
+    }
+
+    function getDateRangePreview(state) {
+      if (state.rangeStart && state.rangeEnd) return [state.rangeStart, state.rangeEnd];
+      if (!state.rangeStart || !state.hoverDate) return [null, null];
+      return compareDates(state.hoverDate, state.rangeStart) < 0
+        ? [state.hoverDate, state.rangeStart]
+        : [state.rangeStart, state.hoverDate];
+    }
+
+    function formatDate(date) {
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${date.getFullYear()}-${month}-${day}`;
+    }
+
+    function formatTimePart(value) {
+      return String(value).padStart(2, '0');
+    }
+
+    function formatTime(state) {
+      return `${formatTimePart(state.hour)}:${formatTimePart(state.minute)}:${formatTimePart(state.second)}`;
+    }
+
+    function shiftCalendarMonth(demo, offset) {
+      const state = demo.calendarState;
+      state.viewDate = new Date(state.viewDate.getFullYear(), state.viewDate.getMonth() + offset, 1);
+      renderDatePickerCalendar(demo);
+    }
+
+    function shiftDateRangeMonth(demo, offset) {
+      const state = demo.calendarState;
+      state.viewDate = new Date(state.viewDate.getFullYear(), state.viewDate.getMonth() + offset, 1);
+      renderDateRangeCalendar(demo);
+    }
+
+    function rememberDatePickerTrigger(trigger) {
+      if (!trigger || trigger.dataset.emptyMarkup) return;
+      trigger.dataset.emptyMarkup = trigger.innerHTML;
+    }
+
+    function resetCalendarIcon(trigger) {
+      const icon = $('.icon-a-cuoguanbi', trigger);
+      if (!icon) return;
+      icon.classList.remove('icon-a-cuoguanbi');
+      icon.classList.add('icon-a-riqirili');
+    }
+
+    function setDatePickerTriggerValue(trigger, markup) {
+      rememberDatePickerTrigger(trigger);
+      trigger.innerHTML = markup;
+      trigger.classList.add('is-clearable');
+    }
+
+    function setDatePickerValue(demo, date) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      if (!trigger) return;
+      setDatePickerTriggerValue(trigger, `<span>${formatDate(date)}</span><i class="iconfont icon-a-riqirili"></i>`);
+    }
+
+    function setDateTimePickerValue(demo) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      const state = demo.calendarState;
+      if (!trigger || !state?.selectedDate) return;
+      setDatePickerTriggerValue(trigger, `<span>${formatDate(state.selectedDate)} ${formatTime(state)}</span><i class="iconfont icon-a-riqirili"></i>`);
+    }
+
+    function renderDatePickerCalendar(demo) {
+      const state = demo.calendarState;
+      const title = $('.x-date-picker-month', demo);
+      const grid = $('.x-date-picker-days', demo);
+      if (!state || !title || !grid) return;
+      const viewYear = state.viewDate.getFullYear();
+      const viewMonth = state.viewDate.getMonth();
+      const monthStart = new Date(viewYear, viewMonth, 1);
+      const monthDays = new Date(viewYear, viewMonth + 1, 0).getDate();
+      const startOffset = monthStart.getDay();
+      const cellCount = Math.ceil((startOffset + monthDays) / 7) * 7;
+      const today = new Date();
+      title.textContent = `${viewYear}年 ${viewMonth + 1}月`;
+      grid.innerHTML = '';
+      for (let index = 0; index < cellCount; index += 1) {
+        const date = new Date(viewYear, viewMonth, index - startOffset + 1);
+        const day = document.createElement('button');
+        day.className = 'x-date-picker-day';
+        day.type = 'button';
+        day.innerHTML = `<span>${String(date.getDate()).padStart(2, '0')}</span>`;
+        day.dataset.year = date.getFullYear();
+        day.dataset.month = date.getMonth();
+        day.dataset.day = date.getDate();
+        if (date.getMonth() !== viewMonth) day.classList.add('is-muted');
+        if (isSameDate(date, today)) day.classList.add('is-today');
+        if (isDateInRange(date, state.rangeStart, state.rangeEnd)) day.classList.add('is-in-range');
+        if (isSameDate(date, state.rangeStart) || isSameDate(date, state.rangeEnd)) day.classList.add('is-selected');
+        if (isSameDate(date, state.selectedDate)) day.classList.add('is-selected');
+        grid.appendChild(day);
+      }
+    }
+
+    function renderDateRangeMonth(state, title, grid, viewDate) {
+      if (!state || !title || !grid) return;
+      const viewYear = viewDate.getFullYear();
+      const viewMonth = viewDate.getMonth();
+      const monthStart = new Date(viewYear, viewMonth, 1);
+      const monthDays = new Date(viewYear, viewMonth + 1, 0).getDate();
+      const startOffset = monthStart.getDay();
+      const cellCount = Math.ceil((startOffset + monthDays) / 7) * 7;
+      const [rangeStart, rangeEnd] = getDateRangePreview(state);
+      title.textContent = `${viewYear}年 ${viewMonth + 1}月`;
+      grid.innerHTML = '';
+      for (let index = 0; index < cellCount; index += 1) {
+        const date = new Date(viewYear, viewMonth, index - startOffset + 1);
+        const day = document.createElement('button');
+        day.className = 'x-date-picker-day';
+        day.type = 'button';
+        day.innerHTML = `<span>${String(date.getDate()).padStart(2, '0')}</span>`;
+        day.dataset.year = date.getFullYear();
+        day.dataset.month = date.getMonth();
+        day.dataset.day = date.getDate();
+        const inViewMonth = date.getMonth() === viewMonth;
+        if (!inViewMonth) day.classList.add('is-muted');
+        if (inViewMonth && isDateInRange(date, rangeStart, rangeEnd)) day.classList.add('is-in-range');
+        if (inViewMonth && isSameDate(date, rangeStart)) day.classList.add('is-range-start');
+        if (inViewMonth && isSameDate(date, rangeEnd)) day.classList.add('is-range-end');
+        if (inViewMonth && (isSameDate(date, state.rangeStart) || isSameDate(date, state.rangeEnd) || isSameDate(date, state.hoverDate))) {
+          day.classList.add('is-selected');
+        }
+        grid.appendChild(day);
+      }
+    }
+
+    function renderDateRangeCalendar(demo) {
+      const state = demo.calendarState;
+      if (!state) return;
+      const leftViewDate = state.viewDate;
+      const rightViewDate = new Date(leftViewDate.getFullYear(), leftViewDate.getMonth() + 1, 1);
+      renderDateRangeMonth(state, $('.x-date-range-month.is-left', demo), $('.x-date-range-days.is-left', demo), leftViewDate);
+      renderDateRangeMonth(state, $('.x-date-range-month.is-right', demo), $('.x-date-range-days.is-right', demo), rightViewDate);
+    }
+
+    function renderDateTimeColumn(demo, unit, max) {
+      const state = demo.calendarState;
+      const column = $(`.x-date-time-column[data-time-unit="${unit}"]`, demo);
+      if (!state || !column) return;
+      column.innerHTML = '';
+      for (let value = 0; value <= max; value += 1) {
+        const option = document.createElement('button');
+        option.className = 'x-date-time-option';
+        option.type = 'button';
+        option.dataset.value = value;
+        option.textContent = formatTimePart(value);
+        if (state[unit] === value) option.classList.add('is-selected');
+        column.appendChild(option);
+      }
+      requestAnimationFrame(() => {
+        $('.x-date-time-option.is-selected', column)?.scrollIntoView({ block: 'center' });
+      });
+    }
+
+    function renderDateTimePanel(demo) {
+      const state = demo.calendarState;
+      const value = $('.x-date-time-value', demo);
+      if (!state || !value) return;
+      value.textContent = formatTime(state);
+      renderDateTimeColumn(demo, 'hour', 23);
+      renderDateTimeColumn(demo, 'minute', 59);
+      renderDateTimeColumn(demo, 'second', 59);
+    }
+
+    function ensureDatePickerPopup(demo) {
+      if ($('.x-date-picker-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-date-picker-popup" hidden>
+          <div class="x-date-picker-header">
+            <span class="x-date-picker-nav">
+              <i class="iconfont icon-shuangjiantou-zuo"></i>
+              <i class="iconfont icon-zuo-jiantou"></i>
+            </span>
+            <strong class="x-date-picker-month"></strong>
+            <span class="x-date-picker-nav is-next">
+              <i class="iconfont icon-you-jiantou"></i>
+              <i class="iconfont icon-shuangjiantou-you"></i>
+            </span>
+          </div>
+          <div class="x-date-picker-board">
+            <div class="x-date-picker-week">
+              <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+            </div>
+            <div class="x-date-picker-days"></div>
+          </div>
+          <div class="x-date-picker-footer">今天</div>
+        </div>
+      `);
+    }
+
+    function ensureDateTimePickerPopup(demo) {
+      if ($('.x-date-time-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-date-picker-popup x-date-time-popup" hidden>
+          <div class="x-date-time-body">
+            <div class="x-date-time-calendar">
+              <div class="x-date-picker-header">
+                <span class="x-date-picker-nav">
+                  <i class="iconfont icon-shuangjiantou-zuo"></i>
+                  <i class="iconfont icon-zuo-jiantou"></i>
+                </span>
+                <strong class="x-date-picker-month"></strong>
+                <span class="x-date-picker-nav is-next">
+                  <i class="iconfont icon-you-jiantou"></i>
+                  <i class="iconfont icon-shuangjiantou-you"></i>
+                </span>
+              </div>
+              <div class="x-date-picker-board">
+                <div class="x-date-picker-week">
+                  <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+                </div>
+                <div class="x-date-picker-days"></div>
+              </div>
+            </div>
+            <div class="x-date-time-panel">
+              <div class="x-date-time-value"></div>
+              <div class="x-date-time-columns">
+                <div class="x-date-time-column" data-time-unit="hour"></div>
+                <div class="x-date-time-column" data-time-unit="minute"></div>
+                <div class="x-date-time-column" data-time-unit="second"></div>
+              </div>
+            </div>
+          </div>
+          <div class="x-date-time-footer">
+            <button class="x-date-time-today" type="button">今天</button>
+            <span class="x-date-time-actions">
+              <button class="x-btn x-date-time-cancel" type="button">取消</button>
+              <button class="x-btn x-btn-primary x-date-time-confirm" type="button">确定</button>
+            </span>
+          </div>
+        </div>
+      `);
+    }
+
+    function ensureDateRangePickerPopup(demo) {
+      if ($('.x-date-range-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-date-picker-popup x-date-range-popup" hidden>
+          <div class="x-date-range-header">
+            <div class="x-date-range-month-header">
+              <span class="x-date-picker-nav">
+                <i class="iconfont icon-shuangjiantou-zuo"></i>
+                <i class="iconfont icon-zuo-jiantou"></i>
+              </span>
+              <strong class="x-date-picker-month x-date-range-month is-left"></strong>
+              <span></span>
+            </div>
+            <div class="x-date-range-month-header">
+              <span></span>
+              <strong class="x-date-picker-month x-date-range-month is-right"></strong>
+              <span class="x-date-picker-nav is-next">
+                <i class="iconfont icon-you-jiantou"></i>
+                <i class="iconfont icon-shuangjiantou-you"></i>
+              </span>
+            </div>
+          </div>
+          <div class="x-date-range-panels">
+            <div class="x-date-picker-board">
+              <div class="x-date-picker-week">
+                <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+              </div>
+              <div class="x-date-picker-days x-date-range-days is-left"></div>
+            </div>
+            <div class="x-date-picker-board">
+              <div class="x-date-picker-week">
+                <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+              </div>
+              <div class="x-date-picker-days x-date-range-days is-right"></div>
+            </div>
+          </div>
+        </div>
+      `);
+    }
+
+    function ensureMonthPickerPopup(demo) {
+      if ($('.x-month-picker-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-month-picker-popup" hidden>
+          <div class="x-month-picker-header">
+            <i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i>
+            <strong class="x-month-picker-year"></strong>
+            <i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i>
+          </div>
+          <div class="x-month-picker-grid"></div>
+        </div>
+      `);
+    }
+
+    function ensureMonthRangePickerPopup(demo) {
+      if ($('.x-month-range-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-month-picker-popup x-month-range-popup" hidden>
+          <div class="x-month-range-header">
+            <div class="x-month-range-year-header">
+              <i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i>
+              <strong class="x-month-range-year is-left"></strong>
+              <span></span>
+            </div>
+            <div class="x-month-range-year-header">
+              <span></span>
+              <strong class="x-month-range-year is-right"></strong>
+              <i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i>
+            </div>
+          </div>
+          <div class="x-month-range-panels">
+            <div class="x-month-range-grid is-left"></div>
+            <div class="x-month-range-grid is-right"></div>
+          </div>
+        </div>
+      `);
+    }
+
+    function ensureQuarterPickerPopup(demo) {
+      if ($('.x-quarter-picker-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-quarter-picker-popup" hidden>
+          <div class="x-month-picker-header">
+            <i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i>
+            <strong class="x-month-picker-year"></strong>
+            <i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i>
+          </div>
+          <div class="x-quarter-picker-grid"></div>
+        </div>
+      `);
+    }
+
+    function ensureQuarterRangePickerPopup(demo) {
+      if ($('.x-quarter-range-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-quarter-picker-popup x-quarter-range-popup" hidden>
+          <div class="x-month-range-header">
+            <div class="x-month-range-year-header">
+              <i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i>
+              <strong class="x-month-range-year is-left"></strong>
+              <span></span>
+            </div>
+            <div class="x-month-range-year-header">
+              <span></span>
+              <strong class="x-month-range-year is-right"></strong>
+              <i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i>
+            </div>
+          </div>
+          <div class="x-month-range-panels">
+            <div class="x-quarter-range-grid is-left"></div>
+            <div class="x-quarter-range-grid is-right"></div>
+          </div>
+        </div>
+      `);
+    }
+
+    function ensureYearPickerPopup(demo) {
+      if ($('.x-year-picker-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-year-picker-popup" hidden>
+          <div class="x-month-picker-header">
+            <i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i>
+            <strong class="x-month-picker-year"></strong>
+            <i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i>
+          </div>
+          <div class="x-year-picker-grid"></div>
+        </div>
+      `);
+    }
+
+    function ensureYearRangePickerPopup(demo) {
+      if ($('.x-year-range-popup', demo)) return;
+      demo.insertAdjacentHTML('beforeend', `
+        <div class="x-year-picker-popup x-year-range-popup" hidden>
+          <div class="x-month-range-header">
+            <div class="x-month-range-year-header">
+              <i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i>
+              <strong class="x-month-range-year is-left"></strong>
+              <span></span>
+            </div>
+            <div class="x-month-range-year-header">
+              <span></span>
+              <strong class="x-month-range-year is-right"></strong>
+              <i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i>
+            </div>
+          </div>
+          <div class="x-month-range-panels">
+            <div class="x-year-range-grid is-left"></div>
+            <div class="x-year-range-grid is-right"></div>
+          </div>
+        </div>
+      `);
+    }
+
+    function setDatePickerOpen(demo, open) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      const popup = $('.x-date-picker-popup', demo);
+      if (!trigger || !popup) return;
+      demo.classList.toggle('is-open', open);
+      popup.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function setMonthPickerValue(demo, year, month) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      if (!trigger) return;
+      setDatePickerTriggerValue(trigger, `<span>${year}年 ${month}月</span><i class="iconfont icon-a-riqirili"></i>`);
+    }
+
+    function renderMonthPicker(demo) {
+      const state = demo.monthState;
+      const title = $('.x-month-picker-year', demo);
+      const grid = $('.x-month-picker-grid', demo);
+      if (!state || !title || !grid) return;
+      title.textContent = `${state.viewYear}年`;
+      grid.innerHTML = '';
+      for (let month = 1; month <= 12; month += 1) {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'x-month-picker-item';
+        option.dataset.month = month;
+        option.textContent = `${month}月`;
+        if (state.selectedYear === state.viewYear && state.selectedMonth === month) {
+          option.classList.add('is-selected');
+        }
+        grid.appendChild(option);
+      }
+    }
+
+    function shiftMonthPickerYear(demo, offset) {
+      demo.monthState.viewYear += offset;
+      renderMonthPicker(demo);
+    }
+
+    function setMonthPickerOpen(demo, open) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      const popup = $('.x-month-picker-popup', demo);
+      if (!trigger || !popup) return;
+      demo.classList.toggle('is-open', open);
+      popup.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function setQuarterPickerValue(demo, year, quarter) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      if (!trigger) return;
+      setDatePickerTriggerValue(trigger, `<span>${year}年 Q${quarter}</span><i class="iconfont icon-a-riqirili"></i>`);
+    }
+
+    function renderQuarterPicker(demo) {
+      const state = demo.quarterState;
+      const title = $('.x-month-picker-year', demo);
+      const grid = $('.x-quarter-picker-grid', demo);
+      if (!state || !title || !grid) return;
+      title.textContent = `${state.viewYear}年`;
+      grid.innerHTML = '';
+      for (let quarter = 1; quarter <= 4; quarter += 1) {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'x-month-picker-item';
+        option.dataset.quarter = quarter;
+        option.textContent = `Q${quarter}`;
+        if (state.selectedYear === state.viewYear && state.selectedQuarter === quarter) {
+          option.classList.add('is-selected');
+        }
+        grid.appendChild(option);
+      }
+    }
+
+    function shiftQuarterPickerYear(demo, offset) {
+      demo.quarterState.viewYear += offset;
+      renderQuarterPicker(demo);
+    }
+
+    function setQuarterPickerOpen(demo, open) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      const popup = $('.x-quarter-picker-popup', demo);
+      if (!trigger || !popup) return;
+      demo.classList.toggle('is-open', open);
+      popup.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function decadeStart(year) {
+      return Math.floor(year / 10) * 10;
+    }
+
+    function setYearPickerValue(demo, year) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      if (!trigger) return;
+      setDatePickerTriggerValue(trigger, `<span>${year}年</span><i class="iconfont icon-a-riqirili"></i>`);
+    }
+
+    function renderYearPicker(demo) {
+      const state = demo.yearState;
+      const title = $('.x-month-picker-year', demo);
+      const grid = $('.x-year-picker-grid', demo);
+      if (!state || !title || !grid) return;
+      title.textContent = `${state.viewStart}-${state.viewStart + 9}`;
+      grid.innerHTML = '';
+      for (let year = state.viewStart - 1; year <= state.viewStart + 10; year += 1) {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = 'x-month-picker-item x-year-picker-item';
+        option.dataset.year = year;
+        option.textContent = year;
+        if (year < state.viewStart || year > state.viewStart + 9) option.classList.add('is-muted');
+        if (state.selectedYear === year) option.classList.add('is-selected');
+        grid.appendChild(option);
+      }
+    }
+
+    function shiftYearPickerDecade(demo, offset) {
+      demo.yearState.viewStart += offset;
+      renderYearPicker(demo);
+    }
+
+    function setYearPickerOpen(demo, open) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      const popup = $('.x-year-picker-popup', demo);
+      if (!trigger || !popup) return;
+      demo.classList.toggle('is-open', open);
+      popup.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function selectRangeValue(state, value, compare) {
+      if (!state.rangeStart || state.rangeEnd) {
+        state.rangeStart = value;
+        state.rangeEnd = null;
+        return false;
+      }
+      if (compare(value, state.rangeStart) < 0) {
+        state.rangeEnd = state.rangeStart;
+        state.rangeStart = value;
+      } else {
+        state.rangeEnd = value;
+      }
+      return true;
+    }
+
+    function rangeControlMarkup(start, end, icon = 'icon-a-riqirili') {
+      return `<span class="x-range-control-values"><span>${start}</span><span class="x-range-control-separator">~</span><span class="x-range-control-end">${end}</span></span><i class="iconfont ${icon}"></i>`;
+    }
+
+    function setRangePickerValue(demo, start, end) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      const type = demo.dataset.rangeType;
+      if (!trigger || !start || !end) return;
+      if (type === 'date') setDatePickerTriggerValue(trigger, rangeControlMarkup(formatDate(start), formatDate(end)));
+      if (type === 'month') setDatePickerTriggerValue(trigger, rangeControlMarkup(`${start.year}年 ${start.month}月`, `${end.year}年 ${end.month}月`));
+      if (type === 'quarter') setDatePickerTriggerValue(trigger, rangeControlMarkup(`${start.year}年 Q${start.quarter}`, `${end.year}年 Q${end.quarter}`));
+      if (type === 'year') setDatePickerTriggerValue(trigger, rangeControlMarkup(`${start.year}年`, `${end.year}年`));
+    }
+
+    function setRangePickerOpen(demo, open) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      const popup = $('.x-date-picker-popup, .x-month-picker-popup, .x-quarter-picker-popup, .x-year-picker-popup', demo);
+      if (!trigger || !popup) return;
+      demo.classList.toggle('is-open', open);
+      popup.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function comparePeriods(left, right) {
+      return left.index - right.index;
+    }
+
+    function getPeriodRangePreview(state) {
+      if (state.rangeStart && state.rangeEnd) return [state.rangeStart, state.rangeEnd];
+      if (!state.rangeStart || !state.hoverPeriod) return [state.rangeStart, state.rangeEnd];
+      return comparePeriods(state.hoverPeriod, state.rangeStart) < 0
+        ? [state.hoverPeriod, state.rangeStart]
+        : [state.rangeStart, state.hoverPeriod];
+    }
+
+    function rangeItemClass(state, index, endpoint) {
+      const classes = ['x-month-picker-item'];
+      const [rangeStart, rangeEnd] = getPeriodRangePreview(state);
+      if (rangeStart && rangeEnd && index >= rangeStart.index && index <= rangeEnd.index) classes.push('is-in-range');
+      if (rangeStart?.index === index) classes.push('is-range-start');
+      if (rangeEnd?.index === index) classes.push('is-range-end');
+      if (state.rangeStart?.index === index || state.rangeEnd?.index === index || state.hoverPeriod?.index === index) classes.push('is-selected');
+      if (endpoint) classes.push('x-year-picker-item');
+      return classes.join(' ');
+    }
+
+    function renderMonthRangeYear(state, title, grid, year) {
+      if (!state || !title || !grid) return;
+      title.textContent = `${year}年`;
+      grid.innerHTML = '';
+      for (let month = 1; month <= 12; month += 1) {
+        const option = document.createElement('button');
+        const value = { year, month, index: year * 12 + month };
+        option.type = 'button';
+        option.className = rangeItemClass(state, value.index);
+        option.dataset.year = year;
+        option.dataset.month = month;
+        option.textContent = `${month}月`;
+        grid.appendChild(option);
+      }
+    }
+
+    function renderMonthRangePicker(demo) {
+      const state = demo.rangeState;
+      if (!state) return;
+      renderMonthRangeYear(state, $('.x-month-range-year.is-left', demo), $('.x-month-range-grid.is-left', demo), state.viewYear);
+      renderMonthRangeYear(state, $('.x-month-range-year.is-right', demo), $('.x-month-range-grid.is-right', demo), state.viewYear + 1);
+    }
+
+    function renderQuarterRangePicker(demo) {
+      const state = demo.rangeState;
+      if (!state) return;
+      renderQuarterRangeYear(state, $('.x-month-range-year.is-left', demo), $('.x-quarter-range-grid.is-left', demo), state.viewYear);
+      renderQuarterRangeYear(state, $('.x-month-range-year.is-right', demo), $('.x-quarter-range-grid.is-right', demo), state.viewYear + 1);
+    }
+
+    function renderQuarterRangeYear(state, title, grid, year) {
+      if (!state || !title || !grid) return;
+      title.textContent = `${year}年`;
+      grid.innerHTML = '';
+      for (let quarter = 1; quarter <= 4; quarter += 1) {
+        const option = document.createElement('button');
+        const value = { year, quarter, index: year * 4 + quarter };
+        option.type = 'button';
+        option.className = rangeItemClass(state, value.index);
+        option.dataset.year = year;
+        option.dataset.quarter = quarter;
+        option.textContent = `Q${quarter}`;
+        grid.appendChild(option);
+      }
+    }
+
+    function renderYearRangePicker(demo) {
+      const state = demo.rangeState;
+      if (!state) return;
+      renderYearRangeDecade(state, $('.x-month-range-year.is-left', demo), $('.x-year-range-grid.is-left', demo), state.viewStart);
+      renderYearRangeDecade(state, $('.x-month-range-year.is-right', demo), $('.x-year-range-grid.is-right', demo), state.viewStart + 10);
+    }
+
+    function renderYearRangeDecade(state, title, grid, viewStart) {
+      if (!state || !title || !grid) return;
+      title.textContent = `${viewStart}年-${viewStart + 9}年`;
+      grid.innerHTML = '';
+      for (let year = viewStart - 1; year <= viewStart + 10; year += 1) {
+        const option = document.createElement('button');
+        const inViewDecade = year >= viewStart && year <= viewStart + 9;
+        const value = { year, index: year };
+        option.type = 'button';
+        option.className = inViewDecade ? rangeItemClass(state, value.index, true) : 'x-month-picker-item x-year-picker-item is-muted';
+        option.dataset.year = year;
+        option.textContent = year;
+        grid.appendChild(option);
+      }
+    }
+
+    function resetDatePickerDemo(demo) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      if (!trigger?.dataset.emptyMarkup) return;
+      trigger.innerHTML = trigger.dataset.emptyMarkup;
+      trigger.classList.remove('is-clearable');
+
+      if (demo.hasAttribute('data-date-picker-demo')) {
+        demo.calendarState.selectedDate = null;
+        renderDatePickerCalendar(demo);
+        setDatePickerOpen(demo, false);
+      }
+      if (demo.hasAttribute('data-date-time-picker-demo')) {
+        demo.calendarState.viewDate = new Date(2020, 6, 1);
+        demo.calendarState.selectedDate = new Date(2020, 6, 17);
+        demo.calendarState.hour = 1;
+        demo.calendarState.minute = 34;
+        demo.calendarState.second = 55;
+        renderDatePickerCalendar(demo);
+        renderDateTimePanel(demo);
+        setDatePickerOpen(demo, false);
+      }
+      if (demo.hasAttribute('data-month-picker-demo')) {
+        demo.monthState.selectedYear = null;
+        demo.monthState.selectedMonth = null;
+        renderMonthPicker(demo);
+        setMonthPickerOpen(demo, false);
+      }
+      if (demo.hasAttribute('data-quarter-picker-demo')) {
+        demo.quarterState.selectedYear = null;
+        demo.quarterState.selectedQuarter = null;
+        renderQuarterPicker(demo);
+        setQuarterPickerOpen(demo, false);
+      }
+      if (demo.hasAttribute('data-year-picker-demo')) {
+        demo.yearState.selectedYear = null;
+        renderYearPicker(demo);
+        setYearPickerOpen(demo, false);
+      }
+      if (demo.hasAttribute('data-range-picker-demo')) {
+        const type = demo.dataset.rangeType;
+        if (type === 'date') {
+          demo.calendarState.rangeStart = null;
+          demo.calendarState.rangeEnd = null;
+          demo.calendarState.hoverDate = null;
+          renderDateRangeCalendar(demo);
+        } else {
+          demo.rangeState.rangeStart = null;
+          demo.rangeState.rangeEnd = null;
+          demo.rangeState.hoverPeriod = null;
+          if (type === 'month') renderMonthRangePicker(demo);
+          if (type === 'quarter') renderQuarterRangePicker(demo);
+          if (type === 'year') renderYearRangePicker(demo);
+        }
+        setRangePickerOpen(demo, false);
+      }
+    }
+
+    function bindDatePickerClear(demo) {
+      const trigger = $('.x-date-picker-trigger', demo);
+      if (!trigger || trigger.disabled || trigger.dataset.clearBound) return;
+      trigger.dataset.clearBound = 'true';
+      rememberDatePickerTrigger(trigger);
+      trigger.addEventListener('mouseover', (event) => {
+        const icon = event.target.closest('.icon-a-riqirili');
+        if (!icon || !trigger.classList.contains('is-clearable')) return;
+        icon.classList.remove('icon-a-riqirili');
+        icon.classList.add('icon-a-cuoguanbi');
+      });
+      trigger.addEventListener('mouseout', (event) => {
+        const icon = event.target.closest('.icon-a-cuoguanbi');
+        if (!icon || icon.contains(event.relatedTarget)) return;
+        resetCalendarIcon(trigger);
+      });
+      trigger.addEventListener('click', (event) => {
+        const icon = event.target.closest('.icon-a-cuoguanbi');
+        if (!icon || !trigger.classList.contains('is-clearable')) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        resetDatePickerDemo(demo);
+      });
+    }
+
+    datePickerDemos.forEach((demo) => {
+      ensureDatePickerPopup(demo);
+      demo.calendarState = {
+        viewDate: new Date(2020, 6, 1),
+        selectedDate: null,
+      };
+      renderDatePickerCalendar(demo);
+      bindDatePickerClear(demo);
+      $('.x-date-picker-trigger', demo)?.addEventListener('click', () => {
+        setDatePickerOpen(demo, !demo.classList.contains('is-open'));
+      });
+      $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => shiftCalendarMonth(demo, -12));
+      $('.icon-zuo-jiantou', demo)?.addEventListener('click', () => shiftCalendarMonth(demo, -1));
+      $('.icon-you-jiantou', demo)?.addEventListener('click', () => shiftCalendarMonth(demo, 1));
+      $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => shiftCalendarMonth(demo, 12));
+      $('.x-date-picker-days', demo)?.addEventListener('click', (event) => {
+        const day = event.target.closest('.x-date-picker-day');
+        if (!day) return;
+        const date = new Date(Number(day.dataset.year), Number(day.dataset.month), Number(day.dataset.day));
+        demo.calendarState.selectedDate = date;
+        demo.calendarState.viewDate = new Date(date.getFullYear(), date.getMonth(), 1);
+        setDatePickerValue(demo, date);
+        renderDatePickerCalendar(demo);
+        setDatePickerOpen(demo, false);
+      });
+      $('.x-date-picker-footer', demo)?.addEventListener('click', () => {
+        const today = new Date();
+        demo.calendarState.selectedDate = today;
+        demo.calendarState.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        setDatePickerValue(demo, today);
+        renderDatePickerCalendar(demo);
+        setDatePickerOpen(demo, false);
+      });
+    });
+
+    dateTimePickerDemos.forEach((demo) => {
+      ensureDateTimePickerPopup(demo);
+      demo.calendarState = {
+        viewDate: new Date(2020, 6, 1),
+        selectedDate: new Date(2020, 6, 17),
+        hour: 1,
+        minute: 34,
+        second: 55,
+      };
+      renderDatePickerCalendar(demo);
+      renderDateTimePanel(demo);
+      bindDatePickerClear(demo);
+      $('.x-date-picker-trigger', demo)?.addEventListener('click', () => {
+        setDatePickerOpen(demo, !demo.classList.contains('is-open'));
+      });
+      $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => shiftCalendarMonth(demo, -12));
+      $('.icon-zuo-jiantou', demo)?.addEventListener('click', () => shiftCalendarMonth(demo, -1));
+      $('.icon-you-jiantou', demo)?.addEventListener('click', () => shiftCalendarMonth(demo, 1));
+      $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => shiftCalendarMonth(demo, 12));
+      $('.x-date-picker-days', demo)?.addEventListener('click', (event) => {
+        const day = event.target.closest('.x-date-picker-day');
+        if (!day) return;
+        event.stopPropagation();
+        const date = new Date(Number(day.dataset.year), Number(day.dataset.month), Number(day.dataset.day));
+        demo.calendarState.selectedDate = date;
+        demo.calendarState.viewDate = new Date(date.getFullYear(), date.getMonth(), 1);
+        renderDatePickerCalendar(demo);
+      });
+      $$('.x-date-time-column', demo).forEach((column) => column.addEventListener('click', (event) => {
+        const option = event.target.closest('.x-date-time-option');
+        const unit = column.dataset.timeUnit;
+        if (!option || !unit) return;
+        event.stopPropagation();
+        demo.calendarState[unit] = Number(option.dataset.value);
+        renderDateTimePanel(demo);
+      }));
+      $('.x-date-time-today', demo)?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const today = new Date();
+        demo.calendarState.selectedDate = today;
+        demo.calendarState.viewDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        renderDatePickerCalendar(demo);
+      });
+      $('.x-date-time-cancel', demo)?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setDatePickerOpen(demo, false);
+      });
+      $('.x-date-time-confirm', demo)?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setDateTimePickerValue(demo);
+        setDatePickerOpen(demo, false);
+      });
+    });
+
+    monthPickerDemos.forEach((demo) => {
+      demo.monthState = {
+        viewYear: 2022,
+        selectedYear: null,
+        selectedMonth: null,
+      };
+      renderMonthPicker(demo);
+      bindDatePickerClear(demo);
+      $('.x-date-picker-trigger', demo)?.addEventListener('click', () => {
+        setMonthPickerOpen(demo, !demo.classList.contains('is-open'));
+      });
+      $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => shiftMonthPickerYear(demo, -1));
+      $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => shiftMonthPickerYear(demo, 1));
+      $('.x-month-picker-grid', demo)?.addEventListener('click', (event) => {
+        const option = event.target.closest('.x-month-picker-item');
+        if (!option) return;
+        demo.monthState.selectedYear = demo.monthState.viewYear;
+        demo.monthState.selectedMonth = Number(option.dataset.month);
+        setMonthPickerValue(demo, demo.monthState.selectedYear, demo.monthState.selectedMonth);
+        renderMonthPicker(demo);
+        setMonthPickerOpen(demo, false);
+      });
+    });
+
+    quarterPickerDemos.forEach((demo) => {
+      demo.quarterState = {
+        viewYear: 2022,
+        selectedYear: null,
+        selectedQuarter: null,
+      };
+      renderQuarterPicker(demo);
+      bindDatePickerClear(demo);
+      $('.x-date-picker-trigger', demo)?.addEventListener('click', () => {
+        setQuarterPickerOpen(demo, !demo.classList.contains('is-open'));
+      });
+      $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => shiftQuarterPickerYear(demo, -1));
+      $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => shiftQuarterPickerYear(demo, 1));
+      $('.x-quarter-picker-grid', demo)?.addEventListener('click', (event) => {
+        const option = event.target.closest('.x-month-picker-item');
+        if (!option) return;
+        demo.quarterState.selectedYear = demo.quarterState.viewYear;
+        demo.quarterState.selectedQuarter = Number(option.dataset.quarter);
+        setQuarterPickerValue(demo, demo.quarterState.selectedYear, demo.quarterState.selectedQuarter);
+        renderQuarterPicker(demo);
+        setQuarterPickerOpen(demo, false);
+      });
+    });
+
+    yearPickerDemos.forEach((demo) => {
+      demo.yearState = {
+        viewStart: 2020,
+        selectedYear: null,
+      };
+      renderYearPicker(demo);
+      bindDatePickerClear(demo);
+      $('.x-date-picker-trigger', demo)?.addEventListener('click', () => {
+        setYearPickerOpen(demo, !demo.classList.contains('is-open'));
+      });
+      $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => shiftYearPickerDecade(demo, -10));
+      $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => shiftYearPickerDecade(demo, 10));
+      $('.x-year-picker-grid', demo)?.addEventListener('click', (event) => {
+        const option = event.target.closest('.x-year-picker-item');
+        if (!option) return;
+        const year = Number(option.dataset.year);
+        demo.yearState.selectedYear = year;
+        demo.yearState.viewStart = decadeStart(year);
+        setYearPickerValue(demo, year);
+        renderYearPicker(demo);
+        setYearPickerOpen(demo, false);
+      });
+    });
+
+    rangePickerDemos.forEach((demo) => {
+      const type = demo.dataset.rangeType;
+      demo.rangeState = { rangeStart: null, rangeEnd: null };
+      bindDatePickerClear(demo);
+      $('.x-date-picker-trigger', demo)?.addEventListener('click', () => {
+        setRangePickerOpen(demo, !demo.classList.contains('is-open'));
+      });
+
+      if (type === 'date') {
+        ensureDateRangePickerPopup(demo);
+        demo.calendarState = {
+          viewDate: new Date(2020, 6, 1),
+          rangeStart: null,
+          rangeEnd: null,
+          hoverDate: null,
+        };
+        renderDateRangeCalendar(demo);
+        $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => shiftDateRangeMonth(demo, -12));
+        $('.icon-zuo-jiantou', demo)?.addEventListener('click', () => shiftDateRangeMonth(demo, -1));
+        $('.icon-you-jiantou', demo)?.addEventListener('click', () => shiftDateRangeMonth(demo, 1));
+        $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => shiftDateRangeMonth(demo, 12));
+        $$('.x-date-picker-days', demo).forEach((grid) => grid.addEventListener('click', (event) => {
+          const day = event.target.closest('.x-date-picker-day');
+          if (!day) return;
+          event.stopPropagation();
+          const date = new Date(Number(day.dataset.year), Number(day.dataset.month), Number(day.dataset.day));
+          const complete = selectRangeValue(demo.calendarState, date, compareDates);
+          demo.calendarState.hoverDate = null;
+          renderDateRangeCalendar(demo);
+          if (complete) {
+            setRangePickerValue(demo, demo.calendarState.rangeStart, demo.calendarState.rangeEnd);
+            setRangePickerOpen(demo, false);
+          }
+        }));
+        $$('.x-date-picker-days', demo).forEach((grid) => {
+          grid.addEventListener('mouseover', (event) => {
+            const day = event.target.closest('.x-date-picker-day');
+            if (!day || !demo.calendarState.rangeStart || demo.calendarState.rangeEnd) return;
+            const date = new Date(Number(day.dataset.year), Number(day.dataset.month), Number(day.dataset.day));
+            if (isSameDate(date, demo.calendarState.hoverDate)) return;
+            demo.calendarState.hoverDate = date;
+            renderDateRangeCalendar(demo);
+          });
+          grid.addEventListener('mouseleave', () => {
+            if (!demo.calendarState.hoverDate || demo.calendarState.rangeEnd) return;
+            demo.calendarState.hoverDate = null;
+            renderDateRangeCalendar(demo);
+          });
+        });
+      }
+
+      if (type === 'month') {
+        ensureMonthRangePickerPopup(demo);
+        demo.rangeState.viewYear = 2026;
+        demo.rangeState.hoverPeriod = null;
+        renderMonthRangePicker(demo);
+        $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => {
+          demo.rangeState.viewYear -= 1;
+          renderMonthRangePicker(demo);
+        });
+        $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => {
+          demo.rangeState.viewYear += 1;
+          renderMonthRangePicker(demo);
+        });
+        $$('.x-month-range-grid', demo).forEach((grid) => {
+          grid.addEventListener('click', (event) => {
+            const option = event.target.closest('.x-month-picker-item');
+            if (!option) return;
+            event.stopPropagation();
+            const year = Number(option.dataset.year);
+            const month = Number(option.dataset.month);
+            const value = { year, month, index: year * 12 + month };
+            const complete = selectRangeValue(demo.rangeState, value, comparePeriods);
+            demo.rangeState.hoverPeriod = null;
+            renderMonthRangePicker(demo);
+            if (complete) {
+              setRangePickerValue(demo, demo.rangeState.rangeStart, demo.rangeState.rangeEnd);
+              setRangePickerOpen(demo, false);
+            }
+          });
+          grid.addEventListener('mouseover', (event) => {
+            const option = event.target.closest('.x-month-picker-item');
+            if (!option || !demo.rangeState.rangeStart || demo.rangeState.rangeEnd) return;
+            const year = Number(option.dataset.year);
+            const month = Number(option.dataset.month);
+            const value = { year, month, index: year * 12 + month };
+            if (demo.rangeState.hoverPeriod?.index === value.index) return;
+            demo.rangeState.hoverPeriod = value;
+            renderMonthRangePicker(demo);
+          });
+          grid.addEventListener('mouseleave', () => {
+            if (!demo.rangeState.hoverPeriod || demo.rangeState.rangeEnd) return;
+            demo.rangeState.hoverPeriod = null;
+            renderMonthRangePicker(demo);
+          });
+        });
+      }
+
+      if (type === 'quarter') {
+        ensureQuarterRangePickerPopup(demo);
+        demo.rangeState.viewYear = 2026;
+        demo.rangeState.hoverPeriod = null;
+        renderQuarterRangePicker(demo);
+        $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => {
+          demo.rangeState.viewYear -= 1;
+          renderQuarterRangePicker(demo);
+        });
+        $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => {
+          demo.rangeState.viewYear += 1;
+          renderQuarterRangePicker(demo);
+        });
+        $$('.x-quarter-range-grid', demo).forEach((grid) => {
+          grid.addEventListener('click', (event) => {
+            const option = event.target.closest('.x-month-picker-item');
+            if (!option) return;
+            event.stopPropagation();
+            const year = Number(option.dataset.year);
+            const quarter = Number(option.dataset.quarter);
+            const value = { year, quarter, index: year * 4 + quarter };
+            const complete = selectRangeValue(demo.rangeState, value, comparePeriods);
+            demo.rangeState.hoverPeriod = null;
+            renderQuarterRangePicker(demo);
+            if (complete) {
+              setRangePickerValue(demo, demo.rangeState.rangeStart, demo.rangeState.rangeEnd);
+              setRangePickerOpen(demo, false);
+            }
+          });
+          grid.addEventListener('mouseover', (event) => {
+            const option = event.target.closest('.x-month-picker-item');
+            if (!option || !demo.rangeState.rangeStart || demo.rangeState.rangeEnd) return;
+            const year = Number(option.dataset.year);
+            const quarter = Number(option.dataset.quarter);
+            const value = { year, quarter, index: year * 4 + quarter };
+            if (demo.rangeState.hoverPeriod?.index === value.index) return;
+            demo.rangeState.hoverPeriod = value;
+            renderQuarterRangePicker(demo);
+          });
+          grid.addEventListener('mouseleave', () => {
+            if (!demo.rangeState.hoverPeriod || demo.rangeState.rangeEnd) return;
+            demo.rangeState.hoverPeriod = null;
+            renderQuarterRangePicker(demo);
+          });
+        });
+      }
+
+      if (type === 'year') {
+        ensureYearRangePickerPopup(demo);
+        demo.rangeState.viewStart = 2020;
+        demo.rangeState.hoverPeriod = null;
+        renderYearRangePicker(demo);
+        $('.icon-shuangjiantou-zuo', demo)?.addEventListener('click', () => {
+          demo.rangeState.viewStart -= 10;
+          renderYearRangePicker(demo);
+        });
+        $('.icon-shuangjiantou-you', demo)?.addEventListener('click', () => {
+          demo.rangeState.viewStart += 10;
+          renderYearRangePicker(demo);
+        });
+        $$('.x-year-range-grid', demo).forEach((grid) => {
+          grid.addEventListener('click', (event) => {
+            const option = event.target.closest('.x-year-picker-item:not(.is-muted)');
+            if (!option) return;
+            event.stopPropagation();
+            const year = Number(option.dataset.year);
+            const value = { year, index: year };
+            const complete = selectRangeValue(demo.rangeState, value, comparePeriods);
+            demo.rangeState.hoverPeriod = null;
+            renderYearRangePicker(demo);
+            if (complete) {
+              setRangePickerValue(demo, demo.rangeState.rangeStart, demo.rangeState.rangeEnd);
+              setRangePickerOpen(demo, false);
+            }
+          });
+          grid.addEventListener('mouseover', (event) => {
+            const option = event.target.closest('.x-year-picker-item:not(.is-muted)');
+            if (!option || !demo.rangeState.rangeStart || demo.rangeState.rangeEnd) return;
+            const year = Number(option.dataset.year);
+            const value = { year, index: year };
+            if (demo.rangeState.hoverPeriod?.index === value.index) return;
+            demo.rangeState.hoverPeriod = value;
+            renderYearRangePicker(demo);
+          });
+          grid.addEventListener('mouseleave', () => {
+            if (!demo.rangeState.hoverPeriod || demo.rangeState.rangeEnd) return;
+            demo.rangeState.hoverPeriod = null;
+            renderYearRangePicker(demo);
+          });
+        });
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      datePickerDemos.forEach((demo) => {
+        if (!demo.contains(event.target)) setDatePickerOpen(demo, false);
+      });
+      dateTimePickerDemos.forEach((demo) => {
+        if (!demo.contains(event.target)) setDatePickerOpen(demo, false);
+      });
+      monthPickerDemos.forEach((demo) => {
+        if (!demo.contains(event.target)) setMonthPickerOpen(demo, false);
+      });
+      quarterPickerDemos.forEach((demo) => {
+        if (!demo.contains(event.target)) setQuarterPickerOpen(demo, false);
+      });
+      yearPickerDemos.forEach((demo) => {
+        if (!demo.contains(event.target)) setYearPickerOpen(demo, false);
+      });
+      rangePickerDemos.forEach((demo) => {
+        if (!demo.contains(event.target)) setRangePickerOpen(demo, false);
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      datePickerDemos.forEach((demo) => setDatePickerOpen(demo, false));
+      dateTimePickerDemos.forEach((demo) => setDatePickerOpen(demo, false));
+      monthPickerDemos.forEach((demo) => setMonthPickerOpen(demo, false));
+      quarterPickerDemos.forEach((demo) => setQuarterPickerOpen(demo, false));
+      yearPickerDemos.forEach((demo) => setYearPickerOpen(demo, false));
+      rangePickerDemos.forEach((demo) => setRangePickerOpen(demo, false));
+    });
+
+    $$('.code-block').forEach((block) => {
+      const button = document.createElement('button');
+      button.className = 'code-copy-button';
+      button.type = 'button';
+      button.setAttribute('aria-label', '复制代码');
+      button.innerHTML = '<i class="iconfont icon-fuzhi"></i>';
+      block.appendChild(button);
+
+      button.addEventListener('click', async () => {
+        const code = $('code', block)?.textContent || '';
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code);
+          button.classList.add('is-copied');
+          button.setAttribute('aria-label', '已复制');
+          setTimeout(() => {
+            button.classList.remove('is-copied');
+            button.setAttribute('aria-label', '复制代码');
+          }, 1200);
+        } catch (error) {
+          button.setAttribute('aria-label', '复制失败');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

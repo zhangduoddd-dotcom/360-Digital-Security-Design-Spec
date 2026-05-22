@@ -1,0 +1,80 @@
+:root {
+  --AI 悬停: linear-gradient(0deg, rgba(255,255,255,0.20), rgba(255,255,255,0.20)),linear-gradient(126deg, #1AFFAF 0%,#1093FF 37%,#004DFF 100%); /* AI按钮悬停 */
+  --AI 按下: linear-gradient(0deg, rgba(0,0,0,0.20), rgba(0,0,0,0.20)),linear-gradient(309deg, #004DFF 0%,#1093FF 54%,#1AFFAF 100%); /* AI按钮按下 */
+  --AI 默认: linear-gradient(307deg, #004DFF 0%,#1093FF 65%,#1AFFAF 100%); /* AI按钮默认色 */
+  --p1: #D9F4EE; /* 部分组件选中态填充色、图形化配色 */
+  --p10: #013C32; /* 图形化配色 */
+  --p2: #B9F7E2; /* 图形化配色 */
+  --p3: #71EDC2; /* 图形化配色 */
+  --p4: #4AD3A4; /* 图形化配色 */
+  --p5: #1DB887; /* 可交互控件填充色hover/图形化配色 */
+  --p6: #00AB7A; /* 主色/可交互控件填充色normal / 文本色hover/图形化配色 */
+  --p7: #039972; /* 可交互控件填充色click / 文本色normal/图形化配色 */
+  --p8: #008563; /* 文本色click/图形化配色 */
+  --p9: #006853; /* 图形化配色 */
+  --Deep red-1: #FCE7E3; 
+  --Deep red-2: #F0A399; 
+  --Deep red-6: #BC0004; 
+  --Deep red-7: #960008; 
+  --Default 默认: 0px 0px 0px 2px #D9F4EE; 
+  --Error 错误: 0px 0px 0px 2px #FFE8E6; 
+  --Success成功: 0px 0px 0px 2px #EFF8EE; 
+  --Warning警告: 0px 0px 0px 2px #FFF8E6; 
+  --gray-1: #FFFFFF; 
+  --gray-10: #000000; 
+  --gray-2: #F8F9FA; 
+  --gray-3白背景hover: #F2F3F5; 
+  --gray-4-分割线: #E8EAED; 
+  --gray-5-边框: #DFE1E6; 
+  --gray-6-禁用: #AEB2B8; 
+  --gray-7: #8A9099; 
+  --gray-8: #525966; 
+  --gray-9: #242933; 
+  --Orange red-1: #FFF3E6; 
+  --Orange red-3: #FFBC85; 
+  --Orange red-6: #F05A0A; 
+  --Orange red-7: #C94000; 
+  --Yellow-1: #FFFFE6; 
+  --Yellow-5: #EBD426; 
+  --Yellow-6: #DFBC00; 
+  --Yellow-7: #B89600; 
+  --Orange-1: #FFF8E6; 
+  --Orange-4: #FFC054; 
+  --Orange-6: #F58A02; 
+  --Orange-7: #CF6E00; 
+  --Blue-1: #E6F7FF; 
+  --Blue-3: #91D5FF; 
+  --Blue-5: #40A9FF; 
+  --Blue-6: #1890FF; 
+  --Blue-7: #096DD9; 
+  --Blue-8: #0050B3; 
+  --Blue4: #69C0FF; 
+  --Red-1: #FFE8E6; 
+  --Red-2: #FFBEB8; 
+  --Red-3: #FF948F; 
+  --Red-5: #FC3D40; 
+  --Red-6: #F0131E; 
+  --Red-7: #C90616; 
+  --Green-1: #EFF8EE; 
+  --Green-3: #BCE0B4; 
+  --Green-6: #52C41A; 
+  --Green-7: #389E0D; 
+  --Blue-7: #096DD9; 
+  --P6: #00AB7A; 
+  --P7: #039972; 
+  --gray-6: #AEB2B8; 
+  --gray-7: #8A9099; 
+  --gray-8: #525966; 
+  --gray-9: #242933; 
+  --一级-向上: 0px -4px 16px 0px rgba(36,41,51,0.05); /* 应用于卡片背景浮起状态 */
+  --一级-向下: 0px 4px 16px 0px rgba(36,41,51,0.05); /* 应用于卡片背景浮起状态 */
+  --一级-向右: 4px 0px 16px 0px rgba(36,41,51,0.05); /* 应用于卡片背景浮起状态 */
+  --一级-向左: -4px 0px 16px 0px rgba(36,41,51,0.05); /* 应用于卡片背景浮起状态 */
+  --二级-向上: 0px -8px 80px 0px rgba(36,41,51,0.08); /* 应用于侧拉抽屉，遮罩弹窗等 */
+  --二级-向下: 0px 8px 80px 0px rgba(36,41,51,0.08); /* 应用于侧拉抽屉，遮罩弹窗等 */
+  --二级-向右: 6px 0px 80px 0px rgba(36,41,51,0.08); /* 应用于侧拉抽屉，遮罩弹窗等 */
+  --二级-向左: -8px 0px 80px 0px rgba(36,41,51,0.08); /* 应用于侧拉抽屉，遮罩弹窗等 */
+  --投影-悬停: 0px 1px 2px -2px rgba(0,0,0,0.16),0px 3px 6px 0px rgba(0,0,0,0.12),0px 5px 12px 4px rgba(0,0,0,0.08); 
+  --投影-默认: 0px 3px 6px -4px rgba(0,0,0,0.12),0px 6px 16px 0px rgba(0,0,0,0.08),0px 9px 28px 8px rgba(0,0,0,0.04); 
+  --超级框hover阴影: 0px 4px 12px 0px rgba(183,179,255,0.50); 
+}
