@@ -4,7 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360组件样式库 - Ant Design 数据展示扩展</title>
+  <!--
+    AI_COPY_RULE:
+    This file is a component library demo page. The platform frame, top navigation,
+    sidebar, page header, and documentation shell are preview-only.
+    For production HTML demos, copy component CSS/DOM only from COMPONENT_START /
+    COMPONENT_END blocks. Never copy .platform-* frame code from this file.
+  -->
   <style>
+    /* DEMO_SHELL_START: preview frame, documentation layout, and component-library demo chrome. Do not copy into generated business pages. */
     @font-face {
       font-family: "iconfont"; /* Project id 5177816 */
       src: url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff2?t=1779186015229') format('woff2'),
@@ -392,7 +400,9 @@
       font-size: 12px;
       line-height: 20px;
     }
+    /* DEMO_SHELL_END */
 
+    /* COMPONENT_START: Data Display CSS. AI may reuse these component classes with matching DOM fragments. */
     .ant-btn {
       height: 32px;
       display: inline-flex;
@@ -2327,7 +2337,9 @@
       animation: toast-in .2s ease;
     }
     @keyframes toast-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    /* COMPONENT_END: Data Display CSS */
 
+    /* DEMO_SHELL_START: preview-only responsive adjustments for the component-library demo page. */
     @media (max-width: 1180px) {
       .top-utility-row { display: none; }
       .platform-sidebar { width: 184px; flex-basis: 184px; }
@@ -2375,6 +2387,7 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto; transition-duration: .01ms; animation-duration: .01ms; }
     }
+    /* DEMO_SHELL_END */
   </style>
 </head>
 <body>
@@ -2419,6 +2432,13 @@
         </div>
 
         <div class="platform-page-content">
+          <!--
+            COMPONENT_START: Data Display DOM examples.
+            AI may inspect these sections for real ant-* / data-display component
+            DOM and states. Do not copy content-shell, section-card, section-header,
+            demo-panel, demo-grid, or other documentation wrappers into business
+            pages unless the target page itself is a component documentation page.
+          -->
           <div class="content-shell">
             <section class="section-card" id="table">
               <div class="section-header">
@@ -3637,6 +3657,7 @@
             </section>
 
           </div>
+          <!-- COMPONENT_END: Data Display DOM examples -->
         </div>
       </main>
     </div>
@@ -3644,6 +3665,7 @@
 
   <div class="toast-holder" id="toastHolder"></div>
 
+  <!-- DEMO_SHELL_START: component-library navigation and preview interactions. Do not copy this block into generated business pages. -->
   <script>
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -4009,5 +4031,6 @@
 
     refreshIcons();
   </script>
+  <!-- DEMO_SHELL_END -->
 </body>
 </html>
