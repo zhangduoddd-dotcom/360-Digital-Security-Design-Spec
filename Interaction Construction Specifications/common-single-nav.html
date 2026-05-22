@@ -8,7 +8,7 @@
   AI 使用硬约束：
   1. 本文件是通用单层导航框架 HTML 母版，不是视觉参考稿。
   2. 生成页面时必须完整复制本文件作为基座。
-  3. 只允许修改 FRAME_CONFIG、顶部 logo、右侧 .terminal-right-panel 业务区域、mock 数据和必要业务文案。
+  3. 只允许修改 FRAME_CONFIG、顶部 logo、BUSINESS_CONTENT_START / BUSINESS_CONTENT_END 内业务内容、mock 数据和必要业务文案。
   4. 不得重写顶部导航、左侧菜单、收起态级联浮层、右侧框架容器、iconfont、CSS 变量和 JS 交互。
   5. 若文字规范与本 HTML 母版冲突，以本文件为准。
   -->
@@ -5448,6 +5448,7 @@
 
 </head>
 <body>
+  <!-- FRAME_LOCKED_START: common-single-nav fixed frame. Keep top navigation, sidebar, page header, outer layout, iconfont, CSS variables, and frame interactions unchanged. -->
   <div class="terminal-frame">
     <header class="s-header">
       <div class="s-header-left">
@@ -5499,10 +5500,14 @@
         </section>
 
         <main class="main-content">
+          <!-- FRAME_LOCKED_END: business content insertion point begins. Keep <main class="main-content"> itself unchanged. -->
+          <!-- BUSINESS_CONTENT_START: replace only this block with page-specific business content. Do not include top nav, sidebar, page header, or another page frame here. -->
           <div class="content-card">
             <h1 class="content-title">通用基础页面框架</h1>
             <p class="content-desc">通用基础页面框架</p>
           </div>
+          <!-- BUSINESS_CONTENT_END -->
+          <!-- FRAME_LOCKED_START: closing common-single-nav frame and runtime scripts. Keep unchanged. -->
         </main>
       </section>
     </div>
@@ -5952,6 +5957,7 @@
       }
     })();
   </script>
+  <!-- FRAME_LOCKED_END -->
 
 </body>
 </html>
