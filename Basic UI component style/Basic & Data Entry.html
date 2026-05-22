@@ -5,15 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360 Design</title>
   <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.css">
-  <!--
-    AI_COPY_RULE:
-    This file is a component library demo page. The platform frame, top navigation,
-    sidebar, page header, and documentation shell are preview-only.
-    For production HTML demos, copy component CSS/DOM only from COMPONENT_START /
-    COMPONENT_END blocks. Never copy .platform-* frame code from this file.
-  -->
   <style>
-    /* DEMO_SHELL_START: preview frame, documentation layout, and component-library demo chrome. Do not copy into generated business pages. */
     :root {
       --frame-top-height: 56px;
       --sidebar-expanded-width: 272px;
@@ -47,6 +39,9 @@
       --text-disabled: #AEB2B8;
       --text-inverse: #FFFFFF;
       --text-inverse-secondary: #D3D4D6;
+      --color-ai-default: linear-gradient(307deg, #004DFF 0%, #1093FF 65%, #1AFFAF 100%);
+      --color-ai-hover: linear-gradient(0deg, rgba(255,255,255,0.20), rgba(255,255,255,0.20)), linear-gradient(126deg, #1AFFAF 0%, #1093FF 37%, #004DFF 100%);
+      --color-ai-active: linear-gradient(0deg, rgba(0,0,0,0.20), rgba(0,0,0,0.20)), linear-gradient(309deg, #004DFF 0%, #1093FF 54%, #1AFFAF 100%);
       --primary: #00AB7A;
       --primary-hover: #1DB887;
       --primary-active: #039972;
@@ -297,6 +292,9 @@
     .component-empty[hidden] {
       display: none;
     }
+    [data-component="button"] > .section-card + .section-card {
+      margin-top: 16px;
+    }
     .section-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -397,6 +395,164 @@
       display: grid;
       gap: 12px;
       align-items: start;
+    }
+    .ant-btn {
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      background: var(--card-bg);
+      color: var(--text-body);
+      cursor: pointer;
+      white-space: nowrap;
+      outline: none;
+      transition: color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast), box-shadow var(--motion-fast);
+    }
+    .ant-btn .iconfont {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+      font-size: 16px;
+    }
+    .ant-btn:hover:not(:disabled),
+    .ant-btn.is-hover {
+      color: var(--primary);
+      border-color: var(--primary-hover);
+    }
+    .ant-btn:active:not(:disabled),
+    .ant-btn.is-active {
+      color: var(--primary-active);
+      border-color: var(--primary-active);
+    }
+    .ant-btn:focus-visible,
+    .ant-btn.is-focus {
+      border-color: var(--primary);
+      box-shadow: var(--focus-default);
+    }
+    .ant-btn:disabled {
+      color: var(--text-disabled);
+      border-color: var(--border);
+      background: var(--gray-2);
+      cursor: not-allowed;
+    }
+    .ant-btn-primary {
+      color: var(--gray-1);
+      border-color: var(--primary);
+      background: var(--primary);
+    }
+    .ant-btn-primary:hover:not(:disabled),
+    .ant-btn-primary.is-hover {
+      color: var(--gray-1);
+      border-color: var(--primary-hover);
+      background: var(--primary-hover);
+    }
+    .ant-btn-primary:active:not(:disabled),
+    .ant-btn-primary.is-active {
+      color: var(--gray-1);
+      border-color: var(--primary-active);
+      background: var(--primary-active);
+    }
+    .ant-btn-dashed { border-style: dashed; }
+    .ant-btn-auxiliary {
+      border-color: var(--gray-4);
+      background: var(--gray-3);
+      color: var(--text-body);
+    }
+    .ant-btn-auxiliary:hover:not(:disabled),
+    .ant-btn-auxiliary.is-hover {
+      border-color: var(--p5);
+      background: var(--p1);
+      color: var(--p7);
+    }
+    .ant-btn-auxiliary:active:not(:disabled),
+    .ant-btn-auxiliary.is-active {
+      border-color: var(--p7);
+      background: var(--p1);
+      color: var(--p7);
+    }
+    .ant-btn-text,
+    .ant-btn-link {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+    .ant-btn-text { color: var(--text-body); }
+    .ant-btn-text:hover:not(:disabled),
+    .ant-btn-text.is-hover {
+      color: var(--text-title);
+      border-color: transparent;
+      background: var(--gray-3);
+    }
+    .ant-btn-link {
+      color: var(--primary);
+      padding-inline: 16px;
+    }
+    .ant-btn-link:hover:not(:disabled),
+    .ant-btn-link.is-hover {
+      color: var(--primary-hover);
+      border-color: transparent;
+      background: transparent;
+    }
+    .ant-btn-ai {
+      color: var(--gray-1);
+      border: 0;
+      background: var(--color-ai-default);
+    }
+    .ant-btn-ai:hover:not(:disabled),
+    .ant-btn-ai.is-hover {
+      color: var(--gray-1);
+      background: var(--color-ai-hover);
+    }
+    .ant-btn-ai:active:not(:disabled),
+    .ant-btn-ai.is-active {
+      color: var(--gray-1);
+      background: var(--color-ai-active);
+    }
+    .ant-btn-sm {
+      height: 24px;
+      padding: 0 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .ant-btn-lg {
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 28px;
+    }
+    .ant-btn-icon-only {
+      width: 32px;
+      padding: 0;
+    }
+    .ant-btn-sm.ant-btn-icon-only { width: 24px; }
+    .ant-btn-lg.ant-btn-icon-only { width: 40px; }
+    .loading-spinner {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      flex: 0 0 auto;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    .ant-btn-lg .loading-spinner {
+      width: 16px;
+      height: 16px;
+    }
+    .ant-btn-sm .loading-spinner {
+      width: 12px;
+      height: 12px;
+      border-width: 1.5px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
     .textarea-variant-stack {
       display: grid;
@@ -540,9 +696,6 @@
       border-radius: 50%;
       background: var(--p6);
     }
-    /* DEMO_SHELL_END */
-
-    /* COMPONENT_START: Basic & Data Entry CSS. AI may reuse these component classes with matching DOM fragments. */
     .x-input,
     .x-textarea {
       width: 200px;
@@ -1054,6 +1207,25 @@
     .x-range-control-separator {
       color: var(--gray-6);
     }
+    .x-date-time-range-demo {
+      width: 400px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+    }
+    .x-date-time-range-demo .x-date-picker-demo {
+      min-width: 0;
+      width: 100%;
+    }
+    .x-date-time-range-demo .x-date-picker-trigger {
+      width: 100%;
+    }
+    .x-date-time-range-separator {
+      color: var(--gray-6);
+      font-size: 14px;
+      line-height: 22px;
+    }
     .x-placeholder { color: var(--gray-6); }
     .x-panel {
       width: 200px;
@@ -1080,6 +1252,152 @@
     .x-option.is-disabled { color: var(--gray-6); cursor: not-allowed; }
     .x-option.is-loading,
     .x-option.is-empty { justify-content: center; color: var(--gray-7); font-size: 12px; }
+    .x-cascader-demo {
+      position: relative;
+      width: max-content;
+    }
+    .x-cascader-trigger {
+      width: 240px;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+    }
+    [data-component="cascader"] .x-control .iconfont {
+      color: var(--gray-7);
+    }
+    .x-cascader-trigger:hover,
+    .x-cascader-multi-trigger:hover {
+      border-color: var(--p5);
+    }
+    .x-cascader-trigger:focus-visible,
+    .x-cascader-multi-trigger:focus-visible,
+    .x-cascader-demo.is-open .x-cascader-trigger,
+    .x-cascader-demo.is-open .x-cascader-multi-trigger {
+      border-color: var(--p6);
+      outline: none;
+    }
+    .x-cascader-demo.is-open .x-cascader-trigger,
+    .x-cascader-demo.is-open .x-cascader-multi-trigger {
+      box-shadow: var(--focus-default);
+    }
+    .x-cascader-popup {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      z-index: 4;
+      width: max-content;
+      min-height: 240px;
+      display: flex;
+      align-items: stretch;
+      padding: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--gray-1);
+      box-shadow: var(--shadow-card);
+    }
+    .x-cascader-popup[hidden] {
+      display: none;
+    }
+    .x-cascader-column {
+      width: 176px;
+      min-width: 0;
+      border-right: 1px solid var(--border);
+    }
+    .x-cascader-column[hidden] {
+      display: none;
+    }
+    .x-cascader-column:last-child {
+      border-right: 0;
+    }
+    .x-cascader-list {
+      display: grid;
+      align-content: start;
+      gap: 2px;
+      min-height: 0;
+      padding: 0;
+    }
+    .x-cascader-option {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+    }
+    .x-cascader-option[hidden] {
+      display: none;
+    }
+    .x-cascader-option:hover,
+    .x-cascader-option:focus-visible {
+      background: var(--gray-3);
+      color: var(--gray-9);
+      outline: none;
+    }
+    .x-cascader-option:disabled,
+    .x-cascader-option.is-disabled {
+      color: var(--gray-6);
+      cursor: not-allowed;
+    }
+    .x-cascader-option:disabled:hover,
+    .x-cascader-option.is-disabled:hover {
+      background: transparent;
+      color: var(--gray-6);
+    }
+    .x-cascader-empty {
+      width: 176px;
+      min-height: 224px;
+      display: grid;
+      place-items: center;
+      color: var(--gray-6);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-cascader-multi-trigger {
+      width: 360px;
+      height: auto;
+      min-height: 32px;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+    }
+    .x-cascader-multi-values {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .x-cascader-multi-option {
+      justify-content: space-between;
+    }
+    .x-cascader-multi-label {
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .x-cascader-multi-checkbox {
+      width: 16px;
+      height: 16px;
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--gray-5);
+      border-radius: 4px;
+      color: transparent;
+      font-size: 16px;
+      line-height: 16px;
+    }
+    .x-cascader-multi-option.is-selected .x-cascader-multi-checkbox {
+      border: 0;
+      color: var(--p6);
+    }
+    .x-cascader-multi-option.is-selected {
+      color: var(--gray-9);
+    }
     .x-tag {
       display: inline-flex;
       align-items: center;
@@ -1115,18 +1433,30 @@
     .x-radio { border-radius: 50%; }
     .x-choice.is-hover .x-checkbox,
     .x-choice.is-hover .x-radio { border-color: var(--p5); }
+    .x-choice-live {
+      cursor: pointer;
+      user-select: none;
+    }
+    .x-choice-live:hover:not(.is-disabled) .x-checkbox,
+    .x-choice-live:hover:not(.is-disabled) .x-radio,
+    .x-choice-live:focus-visible:not(.is-disabled) .x-checkbox,
+    .x-choice-live:focus-visible:not(.is-disabled) .x-radio { border-color: var(--p5); }
+    .x-choice-live:focus-visible {
+      outline: none;
+    }
+    .x-choice-live:focus-visible:not(.is-disabled) .x-checkbox,
+    .x-choice-live:focus-visible:not(.is-disabled) .x-radio {
+      box-shadow: 0 0 0 2px var(--p1);
+    }
     .x-choice.is-checked .x-checkbox,
     .x-choice.is-checked .x-radio { border-color: var(--p6); background: var(--p6); }
     .x-choice.is-checked .x-checkbox::after {
       content: "";
       position: absolute;
-      left: 4px;
-      top: 1px;
-      width: 5px;
-      height: 9px;
-      border: solid #fff;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
+      inset: -1px;
+      background: var(--gray-1);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M7.2950346,9.4497476L11.6252079,5.11957443C11.7846403,4.960141856,12.0431318,4.960141856,12.2025642,5.11957443L12.7799206,5.69693083C12.939353,5.85636342,12.939353,6.1148547,12.7799206,6.2742872L7.5837128,11.4704947C7.4242804,11.6299276,7.1657891,11.6299276,7.0063565,11.4704947L4.11957443,8.5837128C3.960141856,8.4242804,3.960141856,8.1657891,4.11957443,8.006356499999999L4.69693083,7.4290001C4.85636342,7.2695675,5.1148547,7.2695675,5.2742872,7.4290001L7.2950346,9.4497476Z' fill='black'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M7.2950346,9.4497476L11.6252079,5.11957443C11.7846403,4.960141856,12.0431318,4.960141856,12.2025642,5.11957443L12.7799206,5.69693083C12.939353,5.85636342,12.939353,6.1148547,12.7799206,6.2742872L7.5837128,11.4704947C7.4242804,11.6299276,7.1657891,11.6299276,7.0063565,11.4704947L4.11957443,8.5837128C3.960141856,8.4242804,3.960141856,8.1657891,4.11957443,8.006356499999999L4.69693083,7.4290001C4.85636342,7.2695675,5.1148547,7.2695675,5.2742872,7.4290001L7.2950346,9.4497476Z' fill='black'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
     }
     .x-choice.is-checked .x-radio::after {
       content: "";
@@ -1138,36 +1468,20 @@
       border-radius: 50%;
       background: #fff;
     }
-    .x-choice.is-indeterminate .x-checkbox { border-color: var(--p6); background: var(--p6); }
+    .x-choice.is-indeterminate .x-checkbox { border-color: var(--p6); background: var(--gray-1); }
     .x-choice.is-indeterminate .x-checkbox::after {
       content: "";
       position: absolute;
-      left: 3px;
-      top: 6px;
-      width: 8px;
-      height: 2px;
-      background: #fff;
+      inset: -1px;
+      background: var(--p6);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4,8.5L4,7.5C4,7.22385763,4.1790861,7,4.40000001,7L11.5999999,7.000000000000001C11.8209138,7.000000000000001,12,7.22385763,12,7.5L12,8.5C12,8.7761424,11.8209138,9,11.5999999,9L4.40000001,9C4.1790861,9,4,8.7761424,4,8.5Z' fill='black'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4,8.5L4,7.5C4,7.22385763,4.1790861,7,4.40000001,7L11.5999999,7.000000000000001C11.8209138,7.000000000000001,12,7.22385763,12,7.5L12,8.5C12,8.7761424,11.8209138,9,11.5999999,9L4.40000001,9C4.1790861,9,4,8.7761424,4,8.5Z' fill='black'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
     }
     .x-choice.is-disabled { color: var(--gray-6); cursor: not-allowed; }
     .x-choice.is-disabled .x-checkbox,
     .x-choice.is-disabled .x-radio { border-color: var(--gray-5); background: var(--gray-2); }
-    .x-radio-button-group { display: inline-flex; }
-    .x-radio-button {
-      min-width: 74px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 5px 16px;
-      border: 1px solid var(--gray-5);
-      color: var(--text-body);
-      font-size: 14px;
-      line-height: 22px;
-      margin-left: -1px;
-    }
-    .x-radio-button:first-child { margin-left: 0; border-radius: 6px 0 0 6px; }
-    .x-radio-button:last-child { border-radius: 0 6px 6px 0; }
-    .x-radio-button.is-selected { z-index: 1; color: var(--p7); border-color: var(--p6); background: var(--p1); }
+    .x-choice.is-checked.is-disabled .x-checkbox::after,
+    .x-choice.is-indeterminate.is-disabled .x-checkbox::after { background: var(--gray-6); }
     .x-switch {
       width: 44px;
       height: 22px;
@@ -1175,7 +1489,8 @@
       display: inline-flex;
       border-radius: 999px;
       background: var(--gray-5);
-      transition: background-color var(--motion-fast);
+      outline: none;
+      transition: background-color var(--motion-fast), box-shadow var(--motion-fast);
     }
     .x-switch::after {
       content: "";
@@ -1194,10 +1509,38 @@
     .x-switch.is-small { width: 28px; height: 16px; }
     .x-switch.is-small::after { width: 12px; height: 12px; }
     .x-switch.is-small.is-on::after { left: 14px; }
-    .x-switch.is-large { width: 56px; height: 28px; }
-    .x-switch.is-large::after { width: 24px; height: 24px; }
-    .x-switch.is-large.is-on::after { left: 30px; }
+    .x-switch.is-large { width: 44px; height: 22px; }
+    .x-switch-live:not(.is-disabled) {
+      cursor: pointer;
+    }
+    .x-switch-live.is-on:hover:not(.is-disabled),
+    .x-switch-live.is-on:focus-visible:not(.is-disabled) {
+      background: var(--p5);
+    }
+    .x-switch-live:not(.is-on):hover:not(.is-disabled),
+    .x-switch-live:not(.is-on):focus-visible:not(.is-disabled) {
+      background: var(--gray-6);
+    }
+    .x-switch-live:focus-visible:not(.is-disabled) {
+      box-shadow: var(--focus-default);
+    }
     .x-switch.is-disabled { opacity: .48; cursor: not-allowed; }
+    .x-switch-spec-row {
+      display: grid;
+      grid-template-columns: minmax(72px, 96px) auto auto;
+      align-items: center;
+      gap: 24px;
+      min-height: 40px;
+      color: var(--gray-9);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .x-switch-size-demo {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      min-height: 40px;
+    }
     .x-slider {
       width: 240px;
       display: grid;
@@ -1285,7 +1628,6 @@
       font-weight: 500;
     }
     .x-transfer-body { padding: 8px 12px; display: grid; gap: 8px; }
-    .x-mini-calendar,
     .x-time-panel {
       width: 280px;
       border: 1px solid var(--border);
@@ -1293,23 +1635,6 @@
       background: var(--gray-1);
       padding: 12px;
     }
-    .x-calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 24px);
-      gap: 8px;
-      color: var(--text-body);
-      font-size: 12px;
-      line-height: 20px;
-    }
-    .x-calendar-cell {
-      width: 24px;
-      height: 24px;
-      display: grid;
-      place-items: center;
-      border-radius: 4px;
-    }
-    .x-calendar-cell.is-selected { background: var(--p6); color: #fff; }
-    .x-calendar-cell.is-range { background: var(--p1); color: var(--p7); }
     .x-date-picker-demo {
       position: relative;
       width: max-content;
@@ -1335,6 +1660,89 @@
       border-color: var(--p6);
       box-shadow: var(--focus-default);
       outline: none;
+    }
+    .x-date-combo-demo {
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      width: max-content;
+    }
+    .x-date-combo-mode {
+      position: relative;
+      z-index: 1;
+    }
+    .x-date-combo-mode-trigger {
+      width: 112px;
+      justify-content: space-between;
+      border-radius: 6px 0 0 6px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .x-date-combo-mode.is-open .x-date-combo-mode-trigger,
+    .x-date-combo-mode-trigger:focus-visible {
+      position: relative;
+      z-index: 1;
+      border-color: var(--p6);
+      box-shadow: var(--focus-default);
+      outline: none;
+    }
+    .x-date-combo-mode-trigger .iconfont {
+      color: var(--gray-6);
+      font-size: 12px;
+    }
+    .x-date-combo-menu {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      z-index: 5;
+      width: 128px;
+      display: grid;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--gray-1);
+      box-shadow: var(--shadow-card);
+    }
+    .x-date-combo-menu[hidden] {
+      display: none;
+    }
+    .x-date-combo-option {
+      height: 32px;
+      padding: 0 8px;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--gray-9);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      line-height: 22px;
+      text-align: left;
+    }
+    .x-date-combo-option:hover,
+    .x-date-combo-option:focus-visible {
+      background: var(--gray-2);
+      color: var(--p6);
+      outline: none;
+    }
+    .x-date-combo-option.is-selected {
+      background: var(--p1);
+      color: var(--p7);
+    }
+    .x-date-combo-panel {
+      width: 264px;
+    }
+    .x-date-combo-panel[hidden] {
+      display: none;
+    }
+    .x-date-combo-panel .x-date-picker-trigger {
+      width: 264px;
+      margin-left: -1px;
+      border-radius: 0 6px 6px 0;
+    }
+    .x-date-combo-panel.is-open {
+      z-index: 2;
     }
     .x-date-picker-popup {
       position: absolute;
@@ -1385,9 +1793,13 @@
     .x-date-time-column {
       min-width: 0;
       overflow-y: auto;
-      scrollbar-width: thin;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
       scroll-snap-type: y proximity;
       border-right: 1px solid var(--border);
+    }
+    .x-date-time-column::-webkit-scrollbar {
+      display: none;
     }
     .x-date-time-column:last-child {
       border-right: 0;
@@ -1933,9 +2345,6 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
-    /* COMPONENT_END: Basic & Data Entry CSS */
-
-    /* DEMO_SHELL_START: preview-only token chips, empty panel, and hidden anchors. */
     .token-chip-row {
       display: flex;
       flex-wrap: wrap;
@@ -1974,7 +2383,6 @@
       clip: rect(0 0 0 0);
       white-space: nowrap;
     }
-    /* DEMO_SHELL_END */
   </style>
 </head>
 <body>
@@ -1996,6 +2404,7 @@
       <aside class="platform-sidebar">
         <div class="sidebar-scroll">
           <div class="sidebar-title">数据录入</div>
+          <a class="menu-item" href="#button"><span class="menu-item-en">Button</span><span class="menu-item-zh">按钮</span></a>
           <a class="menu-item active" href="#input"><span class="menu-item-en">Input</span><span class="menu-item-zh">输入框</span></a>
           <a class="menu-item" href="#input-number"><span class="menu-item-en">InputNumber</span><span class="menu-item-zh">数字输入框</span></a>
           <a class="menu-item" href="#date-picker"><span class="menu-item-en">DatePicker</span><span class="menu-item-zh">日期选择器</span></a>
@@ -2020,14 +2429,8 @@
           </div>
         </div>
         <div class="platform-page-content">
-          <!--
-            COMPONENT_START: Basic & Data Entry DOM examples.
-            AI may inspect these sections for real x-* component DOM and states.
-            Do not copy content-shell, component-doc, section-card, section-header,
-            doc-panel, demo-row, or other documentation wrappers into business pages
-            unless the target page itself is a component documentation page.
-          -->
           <div class="anchor-list" aria-hidden="true">
+            <span id="button"></span>
             <span id="input"></span>
             <span id="input-number"></span>
             <span id="date-picker"></span>
@@ -2044,6 +2447,121 @@
             <span id="switch"></span>
           </div>
           <div class="content-shell">
+            <section class="component-doc" data-component="button" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">基础按钮 Basic Button</h2>
+                    <p class="section-desc">基础按钮用于触发普通操作、页面提交、辅助控制与图标命令。</p>
+                  </div>
+                  <span class="code-note">360euxd: Button</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">组件定位</div><div class="spec-summary-value">业务操作触发</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">尺寸</div><div class="spec-summary-value">Small / Medium / Large</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">状态</div><div class="spec-summary-value">默认 / 悬停 / 按下 / 加载 / 禁用</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">分类</div><div class="spec-summary-value">主 / 次 / 辅助 / 文字 / 图标</div></div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">通用规范</h2><p class="section-desc">基础按钮共享三档尺寸与业务按钮层级规则；各分类单独展示状态。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>尺寸</h3><div class="demo-row"><button class="ant-btn ant-btn-primary ant-btn-sm">Small</button><button class="ant-btn ant-btn-primary">Medium</button><button class="ant-btn ant-btn-primary ant-btn-lg">Large</button></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>Small</td><td>高度 24px，紧凑操作使用。</td></tr><tr><td>Medium</td><td>高度 32px，常规按钮默认使用。</td></tr><tr><td>Large</td><td>高度 40px，重点操作或低密度页面使用。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>Token</h3><div class="token-chip-row"><span class="token-chip"><span class="token-swatch" style="background: var(--p6);"></span>p6 #00AB7A</span><span class="token-chip"><span class="token-swatch" style="background: var(--p5);"></span>p5 #1DB887</span><span class="token-chip"><span class="token-swatch" style="background: var(--p7);"></span>p7 #039972</span><span class="token-chip"><span class="token-swatch" style="background: var(--p1);"></span>p1 #D9F4EE</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-5);"></span>gray-5 #DFE1E6</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-6);"></span>gray-6 #AEB2B8</span></div></div>
+                    <div class="doc-panel"><h3>使用规则</h3><ul class="rule-list"><li>同一区域只保留一个主按钮，避免操作优先级混乱。</li><li>表单提交中使用加载态并阻止重复提交。</li><li>纯图标按钮必须提供可识别的语义和悬停提示。</li><li>页面命令优先使用按钮，不把链接样式当主操作。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">主按钮</h2><p class="section-desc">用于当前区域最重要、最希望用户执行的操作。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>表达当前区域优先级最高的操作。</li><li>用于驱动主流程前进。</li></ul></div><div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>新建、保存、确定、查询、提交。</li><li>同一操作区通常只保留一个主按钮。</li></ul></div><div class="doc-panel"><h3>默认样式</h3><div class="demo-row"><button class="ant-btn ant-btn-primary"><i class="iconfont icon-add"></i>新建</button><button class="ant-btn ant-btn-primary">保存</button></div></div><div class="doc-panel"><h3>状态</h3><div class="demo-row"><button class="ant-btn ant-btn-primary">默认</button><button class="ant-btn ant-btn-primary is-hover">悬停</button><button class="ant-btn ant-btn-primary is-active">按下</button><button class="ant-btn ant-btn-primary ant-btn-loading"><span class="loading-spinner" aria-hidden="true"></span>加载</button><button class="ant-btn ant-btn-primary" disabled>禁用</button></div></div><div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>type</td><td>primary</td></tr><tr><td>size</td><td>small | medium | large</td></tr><tr><td>loading</td><td>异步提交中使用。</td></tr><tr><td>icon</td><td>可选前置图标。</td></tr></tbody></table></div><div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { Button } from '360euxd';
+
+&lt;Button type="primary" icon="add"&gt;新建&lt;/Button&gt;
+&lt;Button type="primary" loading&gt;保存&lt;/Button&gt;</code></pre></div><div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>主流程确认动作优先生成主按钮。</li><li>一个操作区不要并列生成多个主按钮。</li></ul></div></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">次按钮</h2><p class="section-desc">用于与主操作并列但优先级更低的标准操作。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>承载标准但非首要的按钮操作。</li><li>与主按钮保持层级区分。</li></ul></div><div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>取消、返回、重置、关闭。</li><li>可与主按钮并列出现。</li></ul></div><div class="doc-panel"><h3>默认样式</h3><div class="demo-row"><button class="ant-btn">取消</button><button class="ant-btn">重置</button></div></div><div class="doc-panel"><h3>状态</h3><div class="demo-row"><button class="ant-btn">默认</button><button class="ant-btn is-hover">悬停</button><button class="ant-btn is-active">按下</button><button class="ant-btn ant-btn-loading"><span class="loading-spinner" aria-hidden="true"></span>加载</button><button class="ant-btn" disabled>禁用</button></div></div><div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>type</td><td>secondary</td></tr><tr><td>size</td><td>small | medium | large</td></tr><tr><td>loading</td><td>异步次级动作使用。</td></tr><tr><td>disabled</td><td>动作不可用时禁用。</td></tr></tbody></table></div><div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { Button } from '360euxd';
+
+&lt;Button type="secondary"&gt;取消&lt;/Button&gt;
+&lt;Button type="secondary"&gt;重置&lt;/Button&gt;</code></pre></div><div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>取消、返回、重置优先生成次按钮。</li><li>不要用次按钮抢占主按钮层级。</li></ul></div></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">辅助按钮</h2><p class="section-desc">用于弱强调的工具型或补充型操作。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>提供弱强调的工具型按钮入口。</li><li>低于主按钮和次按钮优先级。</li></ul></div><div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>导出、批量配置、模板下载。</li><li>常见于列表工具栏辅助操作。</li></ul></div><div class="doc-panel"><h3>默认样式</h3><div class="demo-row"><button class="ant-btn ant-btn-auxiliary">导出</button><button class="ant-btn ant-btn-auxiliary">批量配置</button></div></div><div class="doc-panel"><h3>状态</h3><div class="demo-row"><button class="ant-btn ant-btn-auxiliary">默认</button><button class="ant-btn ant-btn-auxiliary is-hover">悬停</button><button class="ant-btn ant-btn-auxiliary is-active">按下</button><button class="ant-btn ant-btn-auxiliary ant-btn-loading"><span class="loading-spinner" aria-hidden="true"></span>加载</button><button class="ant-btn ant-btn-auxiliary" disabled>禁用</button></div></div><div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>type</td><td>auxiliary</td></tr><tr><td>size</td><td>small | medium | large</td></tr><tr><td>loading</td><td>工具动作处理中使用。</td></tr><tr><td>disabled</td><td>动作不可用时禁用。</td></tr></tbody></table></div><div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { Button } from '360euxd';
+
+&lt;Button type="auxiliary"&gt;导出&lt;/Button&gt;
+&lt;Button type="auxiliary"&gt;批量配置&lt;/Button&gt;</code></pre></div><div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>列表补充工具动作生成辅助按钮。</li><li>关键提交动作不得使用辅助按钮。</li></ul></div></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">文字按钮</h2><p class="section-desc">用于低强调文字命令，不承载主流程。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>承载上下文中的轻量文字命令。</li><li>不承担页面主操作层级。</li></ul></div><div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>展开详情、收起、查看更多。</li><li>用于低强调局部动作。</li></ul></div><div class="doc-panel"><h3>默认样式</h3><div class="demo-row"><button class="ant-btn ant-btn-text">展开详情</button><button class="ant-btn ant-btn-text">收起</button></div></div><div class="doc-panel"><h3>状态</h3><div class="demo-row"><button class="ant-btn ant-btn-text">默认</button><button class="ant-btn ant-btn-text is-hover">悬停</button><button class="ant-btn ant-btn-text is-active">按下</button><button class="ant-btn ant-btn-text ant-btn-loading"><span class="loading-spinner" aria-hidden="true"></span>加载</button><button class="ant-btn ant-btn-text" disabled>禁用</button></div></div><div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>type</td><td>text</td></tr><tr><td>size</td><td>small | medium | large</td></tr><tr><td>loading</td><td>需要等待时使用。</td></tr><tr><td>disabled</td><td>上下文不可用时禁用。</td></tr></tbody></table></div><div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { Button } from '360euxd';
+
+&lt;Button type="text"&gt;展开详情&lt;/Button&gt;
+&lt;Button type="text"&gt;收起&lt;/Button&gt;</code></pre></div><div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>局部轻量命令可生成文字按钮。</li><li>保存、删除等核心动作不要使用文字按钮。</li></ul></div></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">图标按钮</h2><p class="section-desc">用于紧凑工具栏和可被图标清晰表达的命令。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>为紧凑命令提供图标化触发入口。</li><li>图标本身必须能够表达动作。</li></ul></div><div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>刷新、下载、设置等工具栏命令。</li><li>空间有限且图标语义清晰时使用。</li></ul></div><div class="doc-panel"><h3>默认样式</h3><div class="demo-row"><button class="ant-btn ant-btn-icon-only" aria-label="刷新" title="刷新"><i class="iconfont icon-a-shuaxingengxinzhongzhi"></i></button><button class="ant-btn ant-btn-icon-only" aria-label="下载" title="下载"><i class="iconfont icon-xiazai"></i></button></div></div><div class="doc-panel"><h3>状态</h3><div class="demo-row"><button class="ant-btn ant-btn-icon-only" aria-label="默认"><i class="iconfont icon-a-shuaxingengxinzhongzhi"></i></button><button class="ant-btn ant-btn-icon-only is-hover" aria-label="悬停"><i class="iconfont icon-a-shuaxingengxinzhongzhi"></i></button><button class="ant-btn ant-btn-icon-only is-active" aria-label="按下"><i class="iconfont icon-a-shuaxingengxinzhongzhi"></i></button><button class="ant-btn ant-btn-icon-only ant-btn-loading" aria-label="加载"><span class="loading-spinner" aria-hidden="true"></span></button><button class="ant-btn ant-btn-icon-only" aria-label="禁用" disabled><i class="iconfont icon-a-shuaxingengxinzhongzhi"></i></button></div></div><div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>type</td><td>icon</td></tr><tr><td>icon</td><td>必填图标内容。</td></tr><tr><td>aria-label</td><td>必填可访问名称。</td></tr><tr><td>tooltip</td><td>建议展示动作名称。</td></tr></tbody></table></div><div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { Button } from '360euxd';
+
+&lt;Button type="icon" icon="refresh" aria-label="刷新" /&gt;
+&lt;Button type="icon" icon="download" aria-label="下载" /&gt;</code></pre></div><div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>图标语义明确且空间紧凑时使用。</li><li>必须同时生成 aria-label 或 tooltip。</li></ul></div></div>
+                </section>
+
+              </section>
+
+              <section class="section-card spec-card">
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">AI 按钮 AI Button</h2>
+                    <p class="section-desc">AI 按钮用于触发智能分析、智能生成等 AI 能力入口。</p>
+                  </div>
+                  <span class="code-note">360euxd: AIButton</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">组件定位</div><div class="spec-summary-value">AI 能力入口</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">尺寸</div><div class="spec-summary-value">Small / Medium / Large</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">状态</div><div class="spec-summary-value">默认 / 悬停 / 按下 / 加载 / 禁用</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">视觉</div><div class="spec-summary-value">AI 渐变底色</div></div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">通用规范</h2><p class="section-desc">AI 按钮沿用基础按钮尺寸结构，以 AI 视觉表达智能入口。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>尺寸</h3><div class="demo-row"><button class="ant-btn ant-btn-ai ant-btn-sm"><i class="iconfont icon-zhinengfenxi"></i>Small</button><button class="ant-btn ant-btn-ai"><i class="iconfont icon-zhinengfenxi"></i>Medium</button><button class="ant-btn ant-btn-ai ant-btn-lg"><i class="iconfont icon-zhinengfenxi"></i>Large</button></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>Small</td><td>高度 24px。</td></tr><tr><td>Medium</td><td>高度 32px。</td></tr><tr><td>Large</td><td>高度 40px。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>Token</h3><div class="token-chip-row"><span class="token-chip">AI Default Gradient</span><span class="token-chip">AI Hover Gradient</span><span class="token-chip">AI Active Gradient</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-6);"></span>gray-6 Disabled</span></div></div>
+                    <div class="doc-panel"><h3>使用规则</h3><ul class="rule-list"><li>只用于 AI 能力入口，不替代基础主按钮。</li><li>按钮文案应明确智能动作，如 AI 分析、智能生成。</li><li>等待生成结果时进入加载态。</li><li>同一操作区避免堆叠多个竞争注意力的 AI 按钮。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">AI 按钮</h2><p class="section-desc">AI 按钮单独表达智能入口，不替代基础按钮分类。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>表达智能入口和 AI 结果生成动作。</li><li>与基础按钮分离，避免普通操作被误判为 AI 操作。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>智能分析、智能补全、生成建议、生成摘要。</li><li>能力不可用时明确展示禁用态。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-row"><button class="ant-btn ant-btn-ai"><i class="iconfont icon-zhinengfenxi"></i>AI 分析</button><button class="ant-btn ant-btn-ai"><i class="iconfont icon-zhinengfenxi"></i>智能生成</button></div></div>
+                    <div class="doc-panel"><h3>状态</h3><div class="demo-row"><button class="ant-btn ant-btn-ai"><i class="iconfont icon-zhinengfenxi"></i>默认</button><button class="ant-btn ant-btn-ai is-hover"><i class="iconfont icon-zhinengfenxi"></i>悬停</button><button class="ant-btn ant-btn-ai is-active"><i class="iconfont icon-zhinengfenxi"></i>按下</button><button class="ant-btn ant-btn-ai ant-btn-loading"><span class="loading-spinner" aria-hidden="true"></span>加载</button><button class="ant-btn ant-btn-ai" disabled><i class="iconfont icon-zhinengfenxi"></i>禁用</button></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>默认</td><td>展示 AI 默认渐变。</td></tr><tr><td>悬停</td><td>使用 AI hover 渐变。</td></tr><tr><td>按下</td><td>使用 AI active 渐变。</td></tr><tr><td>加载</td><td>等待 AI 结果时展示 loading。</td></tr><tr><td>禁用</td><td>不可触发智能能力。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><thead><tr><th>属性</th><th>说明</th><th>规则</th></tr></thead><tbody><tr><td>size</td><td>按钮尺寸</td><td>small / medium / large。</td></tr><tr><td>loading</td><td>生成或分析中</td><td>等待 AI 响应时使用。</td></tr><tr><td>disabled</td><td>入口不可用</td><td>无权限或无上下文时禁用。</td></tr><tr><td>icon</td><td>AI 图标</td><td>使用 AI 图标库资源。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { AIButton } from '360euxd';
+
+&lt;AIButton icon="ai-analysis"&gt;AI 分析&lt;/AIButton&gt;
+&lt;AIButton size="small"&gt;智能生成&lt;/AIButton&gt;
+&lt;AIButton loading&gt;生成中&lt;/AIButton&gt;
+&lt;AIButton disabled&gt;AI 分析&lt;/AIButton&gt;</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>智能分析、智能生成、生成摘要使用 AI 按钮。</li><li>执行期间使用 loading 明确等待状态。</li><li>禁止用 AI 按钮承载保存、取消、删除等基础操作。</li><li>禁止仅为视觉强调把普通按钮改成 AI 渐变。</li></ul></div>
+                  </div>
+                </section>
+              </section>
+            </section>
+
             <section class="component-doc" data-component="input">
               <section class="section-card spec-card">
                 <div class="section-header">
@@ -2383,7 +2901,7 @@ export default () =&gt; (
                 <div class="section-body">
                   <div class="spec-summary">
                     <div class="spec-summary-item"><div class="spec-summary-label">体系定位</div><div class="spec-summary-value">日期类数据录入</div></div>
-                    <div class="spec-summary-item"><div class="spec-summary-label">独立组件</div><div class="spec-summary-value">DatePicker / DateRangePicker / CalendarPicker</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">独立组件</div><div class="spec-summary-value">DatePicker / DateRangePicker</div></div>
                     <div class="spec-summary-item"><div class="spec-summary-label">面板宽度</div><div class="spec-summary-value">280 / 560 / 657px</div></div>
                     <div class="spec-summary-item"><div class="spec-summary-label">日期格</div><div class="spec-summary-value">24 × 24px</div></div>
                   </div>
@@ -2401,8 +2919,8 @@ export default () =&gt; (
                 </section>
 
                 <section class="spec-block">
-                  <div class="section-header"><div><h2 class="section-title">组件选择规则</h2><p class="section-desc">生成页面前先判断用户选择的是单日期、日期区间、日历面板还是纯时间。</p></div></div>
-                  <div class="section-body"><table class="doc-table"><thead><tr><th>录入任务</th><th>应使用组件</th><th>选择规则</th></tr></thead><tbody><tr><td>单个日期</td><td>DatePicker</td><td>用于发生日期、生效日期、截止日期等单日期字段。</td></tr><tr><td>开始日期到结束日期</td><td>DateRangePicker</td><td>用于筛选区间、有效期和统计周期。</td></tr><tr><td>直接在日历面板选择日期</td><td>CalendarPicker</td><td>用于需要常驻日历视图或在面板中辨识日期的场景。</td></tr><tr><td>只选择时刻</td><td>TimePicker</td><td>不要用日期选择组件代替纯时间选择。</td></tr></tbody></table></div>
+                  <div class="section-header"><div><h2 class="section-title">组件选择规则</h2><p class="section-desc">生成页面前先判断用户选择的是单日期、日期区间还是纯时间。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>录入任务</th><th>应使用组件</th><th>选择规则</th></tr></thead><tbody><tr><td>单个日期</td><td>DatePicker</td><td>用于发生日期、生效日期、截止日期等单日期字段。</td></tr><tr><td>开始日期到结束日期</td><td>DateRangePicker</td><td>用于筛选区间、有效期和统计周期。</td></tr><tr><td>只选择时刻</td><td>TimePicker</td><td>不要用日期选择组件代替纯时间选择。</td></tr></tbody></table></div>
                 </section>
 
                 <section class="spec-block">
@@ -2410,7 +2928,7 @@ export default () =&gt; (
                   <div class="section-body doc-grid">
                     <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>用于选择或输入一个符合日期语义的值。</li><li>支持按业务需要扩展日期时间，但不承载日期区间。</li></ul></div>
                     <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>生效日期、过期日期、计划日期、截止日期。</li><li>需要精确到时分秒的单个发生时间可启用 showTime。</li></ul></div>
-                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择日期</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-date-picker-popup" hidden><div class="x-date-picker-header"><span class="x-date-picker-nav"><i class="iconfont icon-shuangjiantou-zuo"></i><i class="iconfont icon-zuo-jiantou"></i></span><strong class="x-date-picker-month">2020年 7月</strong><span class="x-date-picker-nav is-next"><i class="iconfont icon-you-jiantou"></i><i class="iconfont icon-shuangjiantou-you"></i></span></div><div class="x-date-picker-board"><div class="x-date-picker-week"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div><div class="x-date-picker-days"></div></div><div class="x-date-picker-footer">今天</div></div></div><div class="x-date-picker-demo x-date-time-picker-demo" data-date-time-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择日期时间</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-month-picker-demo" data-month-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择月份</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-month-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2022年</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-month-picker-grid"></div></div></div><div class="x-date-picker-demo x-quarter-picker-demo" data-quarter-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择季度</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-quarter-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2022年</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-quarter-picker-grid"></div></div></div><div class="x-date-picker-demo x-year-picker-demo" data-year-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择年份</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-year-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2020-2029</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-year-picker-grid"></div></div></div></div><ul class="rule-list" style="margin-top:12px;"><li>日历图标固定作为日期语义提示。</li><li>激活日期选择器时展开日历面板，反馈样式遵循通用规范。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-date-picker-demo" data-date-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择日期</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-date-picker-popup" hidden><div class="x-date-picker-header"><span class="x-date-picker-nav"><i class="iconfont icon-shuangjiantou-zuo"></i><i class="iconfont icon-zuo-jiantou"></i></span><strong class="x-date-picker-month">2020年 7月</strong><span class="x-date-picker-nav is-next"><i class="iconfont icon-you-jiantou"></i><i class="iconfont icon-shuangjiantou-you"></i></span></div><div class="x-date-picker-board"><div class="x-date-picker-week"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div><div class="x-date-picker-days"></div></div><div class="x-date-picker-footer">今天</div></div></div><div class="x-date-picker-demo x-date-time-picker-demo" data-date-time-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择日期时间</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-month-picker-demo" data-month-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择月份</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-month-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2022年</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-month-picker-grid"></div></div></div><div class="x-date-picker-demo x-quarter-picker-demo" data-quarter-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择季度</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-quarter-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2022年</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-quarter-picker-grid"></div></div></div><div class="x-date-picker-demo x-year-picker-demo" data-year-picker-demo><button class="x-control x-date-picker-trigger" type="button" style="width:240px;" aria-expanded="false"><span class="x-placeholder">请选择年份</span><i class="iconfont icon-a-riqirili"></i></button><div class="x-year-picker-popup" hidden><div class="x-month-picker-header"><i class="iconfont icon-shuangjiantou-zuo x-month-picker-year-nav"></i><strong class="x-month-picker-year">2020-2029</strong><i class="iconfont icon-shuangjiantou-you x-month-picker-year-nav is-next"></i></div><div class="x-year-picker-grid"></div></div></div><div class="x-date-combo-demo" data-date-combo-demo><div class="x-date-combo-mode"><button class="x-control x-date-combo-mode-trigger" type="button" aria-expanded="false"><span data-date-combo-label>日期</span><i class="iconfont icon-xiajiantou"></i></button><div class="x-date-combo-menu" hidden><button class="x-date-combo-option is-selected" type="button" data-date-combo-mode="date">日期</button><button class="x-date-combo-option" type="button" data-date-combo-mode="datetime">日期时间</button><button class="x-date-combo-option" type="button" data-date-combo-mode="month">月份</button><button class="x-date-combo-option" type="button" data-date-combo-mode="quarter">季度</button><button class="x-date-combo-option" type="button" data-date-combo-mode="year">年份</button></div></div><div class="x-date-picker-demo x-date-combo-panel" data-date-picker-demo data-date-combo-panel="date"><button class="x-control x-date-picker-trigger" type="button" aria-expanded="false"><span class="x-placeholder">请选择日期</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-date-time-picker-demo x-date-combo-panel" data-date-time-picker-demo data-date-combo-panel="datetime" hidden><button class="x-control x-date-picker-trigger" type="button" aria-expanded="false"><span class="x-placeholder">请选择日期时间</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-month-picker-demo x-date-combo-panel" data-month-picker-demo data-date-combo-panel="month" hidden><button class="x-control x-date-picker-trigger" type="button" aria-expanded="false"><span class="x-placeholder">请选择月份</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-quarter-picker-demo x-date-combo-panel" data-quarter-picker-demo data-date-combo-panel="quarter" hidden><button class="x-control x-date-picker-trigger" type="button" aria-expanded="false"><span class="x-placeholder">请选择季度</span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-year-picker-demo x-date-combo-panel" data-year-picker-demo data-date-combo-panel="year" hidden><button class="x-control x-date-picker-trigger" type="button" aria-expanded="false"><span class="x-placeholder">请选择年份</span><i class="iconfont icon-a-riqirili"></i></button></div></div></div><ul class="rule-list" style="margin-top:12px;"><li>日历图标固定作为日期语义提示。</li><li>激活日期选择器时展开日历面板，反馈样式遵循通用规范。</li></ul></div>
                     <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>value</td><td>当前已选日期。</td></tr><tr><td>format</td><td>日期展示和输入格式。</td></tr><tr><td>showTime</td><td>启用日期时间选择。</td></tr><tr><td>disabledDate</td><td>禁用不可选日期。</td></tr><tr><td>status / help</td><td>错误状态与提示文案。</td></tr></tbody></table></div>
                     <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { DatePicker } from '360euxd';
 
@@ -2426,7 +2944,7 @@ export default () =&gt; (
                   <div class="section-body doc-grid">
                     <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>用于选择连续日期范围，不拆成两个无联动单日期控件。</li><li>需要表达开始、结束和范围有效性。</li></ul></div>
                     <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>列表查询时间范围、统计周期、有效期。</li><li>任务开始与结束、策略生效区间。</li></ul></div>
-                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="date"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始日期</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束日期</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="month"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始月份</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束月份</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="quarter"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始季度</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束季度</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="year"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始年份</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束年份</span></span><i class="iconfont icon-a-riqirili"></i></button></div></div><ul class="rule-list" style="margin-top:12px;"><li>开始与结束日期需要同时可见。</li><li>区间面板需要连续表达已选范围。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="date"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始日期</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束日期</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-time-range-demo"><div class="x-date-picker-demo x-date-time-picker-demo" data-date-time-picker-demo><button class="x-control x-date-picker-trigger" type="button" aria-expanded="false"><span class="x-placeholder">开始日期时间</span><i class="iconfont icon-a-riqirili"></i></button></div><span class="x-date-time-range-separator">~</span><div class="x-date-picker-demo x-date-time-picker-demo" data-date-time-picker-demo><button class="x-control x-date-picker-trigger" type="button" aria-expanded="false"><span class="x-placeholder">结束日期时间</span><i class="iconfont icon-a-riqirili"></i></button></div></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="month"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始月份</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束月份</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="quarter"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始季度</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束季度</span></span><i class="iconfont icon-a-riqirili"></i></button></div><div class="x-date-picker-demo x-range-picker-demo" data-range-picker-demo data-range-type="year"><button class="x-control x-range-control x-date-picker-trigger" type="button" style="width:400px;" aria-expanded="false"><span class="x-range-control-values"><span class="x-placeholder">开始年份</span><span class="x-range-control-separator">~</span><span class="x-placeholder x-range-control-end">结束年份</span></span><i class="iconfont icon-a-riqirili"></i></button></div></div><ul class="rule-list" style="margin-top:12px;"><li>开始与结束日期需要同时可见。</li><li>区间面板需要连续表达已选范围。</li></ul></div>
                     <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>value</td><td>开始与结束日期值。</td></tr><tr><td>format</td><td>范围展示格式。</td></tr><tr><td>disabledDate</td><td>禁用不可选范围。</td></tr><tr><td>placeholder</td><td>开始日期 / 结束日期提示。</td></tr><tr><td>status / help</td><td>区间校验反馈。</td></tr></tbody></table></div>
                     <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { DateRangePicker } from '360euxd';
 
@@ -2439,26 +2957,8 @@ export default () =&gt; (
                 </section>
 
                 <section class="spec-block">
-                  <div class="section-header"><div><h2 class="section-title">日历选择 CalendarPicker</h2><p class="section-desc">CalendarPicker 直接展示日历面板，用于用户需要在日期格中辨识上下文后再选择日期。</p></div></div>
-                  <div class="section-body doc-grid">
-                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>以日历面板承载日期选择，不依赖输入框触发器。</li><li>适合需要直接浏览日期上下文的选择任务。</li></ul></div>
-                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>排期、值班、活动日期、周期日期浏览。</li><li>需要查看周末、节假日或业务特殊日期的场景。</li></ul></div>
-                    <div class="doc-panel"><h3>默认样式</h3><div class="x-mini-calendar"><div class="demo-row" style="justify-content:space-between;margin-bottom:12px;"><i class="iconfont icon-zuo-jiantou"></i><strong>2026 年 5 月</strong><i class="iconfont icon-you-jiantou"></i></div><div class="x-calendar-grid"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span><span class="x-calendar-cell">18</span><span class="x-calendar-cell is-range">19</span><span class="x-calendar-cell is-selected">20</span><span class="x-calendar-cell">21</span><span class="x-calendar-cell">22</span><span class="x-calendar-cell">23</span><span class="x-calendar-cell">24</span></div></div><ul class="rule-list" style="margin-top:12px;"><li>选中日期使用主色反馈。</li><li>范围或辅助日期使用浅选中背景。</li></ul></div>
-                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>value</td><td>当前日历选中日期。</td></tr><tr><td>mode</td><td>日期视图模式。</td></tr><tr><td>disabledDate</td><td>禁用不可选日期格。</td></tr><tr><td>dateCellRender</td><td>展示特殊日期信息。</td></tr><tr><td>onSelect</td><td>选择日期回调。</td></tr></tbody></table></div>
-                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { CalendarPicker } from '360euxd';
-
-&lt;CalendarPicker
-  value="2026-05-20"
-  disabledDate={disabledDate}
-  onSelect={handleSelect}
-/&gt;</code></pre></div>
-                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>需要常驻日历视图时使用 CalendarPicker。</li><li>普通表单单日期字段优先使用 DatePicker。</li><li>特殊日期标记应由业务规则明确提供。</li></ul></div>
-                  </div>
-                </section>
-
-                <section class="spec-block">
                   <div class="section-header"><div><h2 class="section-title">禁止用法</h2><p class="section-desc">避免日期录入退化成格式不稳定的文本输入，也避免缺失范围约束。</p></div></div>
-                  <div class="section-body doc-grid"><div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止用普通 Input 录入标准日期字段。</li><li>禁止用两个无联动的 DatePicker 代替 DateRangePicker。</li><li>禁止表单单日期字段滥用常驻 CalendarPicker。</li><li>禁止报错态只显示红色边框，不展示错误提示。</li></ul></div><div class="doc-panel"><h3>错误示例</h3><pre class="code-block"><code>// 错误：标准日期字段不应使用普通 Input
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止用普通 Input 录入标准日期字段。</li><li>禁止用两个无联动的 DatePicker 代替 DateRangePicker。</li><li>禁止报错态只显示红色边框，不展示错误提示。</li></ul></div><div class="doc-panel"><h3>错误示例</h3><pre class="code-block"><code>// 错误：标准日期字段不应使用普通 Input
 &lt;Input placeholder="请输入日期" /&gt;
 
 // 错误：日期范围应使用 DateRangePicker
@@ -2473,43 +2973,226 @@ export default () =&gt; (
 
             <section class="component-doc" data-component="cascader" hidden>
               <section class="section-card spec-card">
-                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Cascader 级联选择器规范页</h2><p class="section-desc">Cascader 用于地区、组织、权限分类、业务对象分类等父子层级数据选择。</p></div><span class="code-note">360euxd: Cascader</span></div>
-                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">一级面板</div><div class="spec-summary-value">120 × 160px</div></div><div class="spec-summary-item"><div class="spec-summary-label">二级面板</div><div class="spec-summary-value">240 × 160px</div></div><div class="spec-summary-item"><div class="spec-summary-label">三级面板</div><div class="spec-summary-value">360 × 160px</div></div><div class="spec-summary-item"><div class="spec-summary-label">面板圆角</div><div class="spec-summary-value">6px</div></div></div></div>
-                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">层级与状态</h2><p class="section-desc">支持单选与多选；只选择最终节点时应避免误选中间层。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>预览</h3><div class="demo-stack"><div class="x-control is-open"><span>华北 / 北京 / 海淀</span><i class="iconfont icon-xiajiantou"></i></div><div class="demo-row" style="align-items:flex-start;"><div class="x-panel" style="width:120px;"><div class="x-option is-selected">华北<i class="iconfont icon-you-jiantou"></i></div><div class="x-option">华东<i class="iconfont icon-you-jiantou"></i></div></div><div class="x-panel" style="width:120px;"><div class="x-option is-selected">北京<i class="iconfont icon-you-jiantou"></i></div><div class="x-option">天津<i class="iconfont icon-you-jiantou"></i></div></div><div class="x-panel" style="width:120px;"><div class="x-option is-selected">海淀</div><div class="x-option is-hover">朝阳</div></div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>支持搜索时应提示匹配路径。</li><li>层级过深时建议改为 TreeSelect。</li><li>每一级选项文字为 14px / 22px。</li></ul></div></div></section>
-                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">多级选择应声明是否只能选择叶子节点。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Cascader } from '360euxd';
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">数据录入组件库 / Cascader 级联选择器规范页</h2>
+                    <p class="section-desc">Cascader 用于地区、组织、权限分类、业务对象分类等父子层级数据选择。</p>
+                  </div>
+                  <span class="code-note">360euxd: Cascader</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">组件定位</div><div class="spec-summary-value">层级数据选择</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">面板层级</div><div class="spec-summary-value">一级 / 二级 / 三级</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">关键能力</div><div class="spec-summary-value">路径 / 搜索 / 多选</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">面板规则</div><div class="spec-summary-value">每列 120 × 160px</div></div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">通用规范</h2><p class="section-desc">级联选择器继承选择类控件的尺寸、状态、Token 与校验反馈，并补充层级面板的路径规则。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>尺寸</h3><div class="demo-stack"><div class="x-control x-control-small" style="width:240px;"><span class="x-placeholder">Small / 24px</span><i class="iconfont icon-xiajiantou"></i></div><div class="x-control" style="width:240px;"><span class="x-placeholder">Default / 32px</span><i class="iconfont icon-xiajiantou"></i></div><div class="x-control x-control-large" style="width:240px;"><span class="x-placeholder">Large / 40px</span><i class="iconfont icon-xiajiantou"></i></div></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>触发器</td><td>按 Small / Default / Large 三档高度使用。</td></tr><tr><td>面板列</td><td>一级 120 × 160px，每增加一级叠加一列。</td></tr><tr><td>选项</td><td>每一级选项文本使用 14px / 22px。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>状态</h3><div class="demo-stack"><div class="demo-row"><div class="x-control" style="width:200px;"><span class="x-placeholder">默认</span><i class="iconfont icon-xiajiantou"></i></div><div class="x-control is-hover" style="width:200px;"><span class="x-placeholder">悬停</span><i class="iconfont icon-xiajiantou"></i></div><div class="x-control is-focus" style="width:200px;"><span>激活</span><i class="iconfont icon-shangjiantou"></i></div></div><div class="demo-row"><div class="x-control" style="width:200px;"><span>华北 / 北京 / 海淀</span><i class="iconfont icon-xiajiantou"></i></div><div class="x-control is-disabled" style="width:200px;"><span>禁用</span><i class="iconfont icon-xiajiantou"></i></div></div><div class="demo-field"><div class="x-control is-error" style="width:200px;"><span class="x-placeholder">报错</span><i class="iconfont icon-xiajiantou"></i></div><div class="x-form-error">请选择所属区域</div></div></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>默认</td><td>未选择时展示占位文字和展开图标。</td></tr><tr><td>悬停 / 激活</td><td>悬停反馈边框；激活与面板展开同步。</td></tr><tr><td>输入完成</td><td>触发器回填完整选择路径。</td></tr><tr><td>禁用 / 报错</td><td>禁用不响应展开；报错同时展示边框和文案。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>Token</h3><div class="token-chip-row"><span class="token-chip"><span class="token-swatch" style="background: var(--p6);"></span>p6 #00AB7A</span><span class="token-chip"><span class="token-swatch" style="background: var(--p5);"></span>p5 #1DB887</span><span class="token-chip"><span class="token-swatch" style="background: var(--p1);"></span>p1 #D9F4EE</span><span class="token-chip"><span class="token-swatch" style="background: var(--Red-6);"></span>Red-6 #F0131E</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-5);"></span>gray-5 #DFE1E6</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-9);"></span>gray-9 #242933</span></div></div>
+                    <div class="doc-panel"><h3>校验规则</h3><ul class="rule-list"><li>必填字段未选择时，在触发器正下方展示错误提示。</li><li>选择结果需回填可识别路径，避免只显示末级名称造成歧义。</li><li>业务只允许最终节点时，不应提前提交中间层值。</li><li>选项层级过深或结构可展开收起时，应评估 TreeSelect。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">组件选择规则</h2><p class="section-desc">生成页面前先判断选项是否存在明确父子路径，再决定是否使用级联选择器。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>选择任务</th><th>应使用组件</th><th>选择规则</th></tr></thead><tbody><tr><td>地区、组织、分类路径</td><td>Cascader</td><td>用于逐级选择父级到子级的结构化路径。</td></tr><tr><td>层级选项多且需要搜索</td><td>Cascader</td><td>开启搜索并展示匹配路径。</td></tr><tr><td>可展开树、层级较深</td><td>TreeSelect</td><td>不要强行堆叠过多级联列。</td></tr><tr><td>单层有限选项</td><td>Select / Radio</td><td>不要误用 Cascader。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">单选级联选择器 Cascader</h2><p class="section-desc">单选 Cascader 用于从一条明确父子路径中选择一个最终结果，不用于平铺单层选项。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>通过逐级面板选择父级到子级的一条结构化路径。</li><li>支持搜索，并按业务决定是否允许选择中间层。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>地区、组织、部门、资产分类、权限分类。</li><li>需要同时理解父级归属与末级对象的选择任务。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-cascader-demo" data-cascader-demo><button class="x-control x-cascader-trigger" type="button" aria-expanded="false"><span class="x-placeholder" data-cascader-value>请选择</span><i class="iconfont icon-xiajiantou"></i></button><div class="x-cascader-popup" hidden><div class="x-cascader-column" data-cascader-column="1"><div class="x-cascader-list"><button class="x-option x-cascader-option" type="button" data-cascader-level="1" data-cascader-key="level-1-a"><span>一级</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" data-cascader-level="1" data-cascader-key="level-1-b"><span>一级</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" data-cascader-level="1" data-cascader-key="level-1-c"><span>一级</span><i class="iconfont icon-you-jiantou"></i></button></div></div><div class="x-cascader-column" data-cascader-column="2" hidden><div class="x-cascader-list"><button class="x-option x-cascader-option" type="button" data-cascader-level="2" data-cascader-key="level-2-a" data-cascader-parent="level-1-a" hidden><span>二级</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" data-cascader-level="2" data-cascader-key="level-2-b" data-cascader-parent="level-1-a" hidden><span>二级</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" data-cascader-level="2" data-cascader-key="level-2-c" data-cascader-parent="level-1-b" hidden><span>二级</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" data-cascader-level="2" data-cascader-key="level-2-d" data-cascader-parent="level-1-c" hidden><span>二级</span><i class="iconfont icon-you-jiantou"></i></button></div></div><div class="x-cascader-column" data-cascader-column="3" hidden><div class="x-cascader-list"><button class="x-option x-cascader-option" type="button" data-cascader-level="3" data-cascader-parent="level-2-a" data-cascader-path="一级 / 二级 / 三级" hidden>三级</button><button class="x-option x-cascader-option" type="button" data-cascader-level="3" data-cascader-parent="level-2-b" data-cascader-path="一级 / 二级 / 三级" hidden>三级</button><button class="x-option x-cascader-option" type="button" data-cascader-level="3" data-cascader-parent="level-2-c" data-cascader-path="一级 / 二级 / 三级" hidden>三级</button><button class="x-option x-cascader-option" type="button" data-cascader-level="3" data-cascader-parent="level-2-d" data-cascader-path="一级 / 二级 / 三级" hidden>三级</button></div></div></div></div><div class="x-cascader-demo" data-cascader-demo><button class="x-control x-cascader-trigger" type="button" aria-expanded="false"><span class="x-placeholder" data-cascader-value>请选择</span><i class="iconfont icon-xiajiantou"></i></button><div class="x-cascader-popup" hidden><div class="x-cascader-column" data-cascader-column="1"><div class="x-cascader-list"><button class="x-option x-cascader-option" type="button" data-cascader-level="1" data-cascader-key="disabled-1-a"><span>一级</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" data-cascader-level="1" data-cascader-key="disabled-1-b"><span>一级</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" disabled><span>一级禁用</span><i class="iconfont icon-you-jiantou"></i></button></div></div><div class="x-cascader-column" data-cascader-column="2" hidden><div class="x-cascader-list"><button class="x-option x-cascader-option" type="button" data-cascader-level="2" data-cascader-key="disabled-2-a" data-cascader-parent="disabled-1-a" hidden><span>二级</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" data-cascader-level="2" data-cascader-parent="disabled-1-a" disabled hidden><span>二级禁用</span><i class="iconfont icon-you-jiantou"></i></button><button class="x-option x-cascader-option" type="button" data-cascader-level="2" data-cascader-key="disabled-2-b" data-cascader-parent="disabled-1-b" hidden><span>二级</span><i class="iconfont icon-you-jiantou"></i></button></div></div><div class="x-cascader-column" data-cascader-column="3" hidden><div class="x-cascader-list"><button class="x-option x-cascader-option" type="button" data-cascader-level="3" data-cascader-parent="disabled-2-a" data-cascader-path="一级 / 二级 / 三级" hidden>三级</button><button class="x-option x-cascader-option" type="button" data-cascader-level="3" data-cascader-parent="disabled-2-b" data-cascader-path="一级 / 二级 / 三级" hidden>三级</button></div></div></div></div><div class="x-cascader-demo" data-cascader-demo><button class="x-control x-cascader-trigger" type="button" aria-expanded="false"><span class="x-placeholder" data-cascader-value>请选择</span><i class="iconfont icon-xiajiantou"></i></button><div class="x-cascader-popup" hidden><div class="x-cascader-empty">暂无数据</div></div></div></div><ul class="rule-list" style="margin-top:12px;"><li>默认未选择时展示占位文字和展开图标。</li><li>示例只支持单选，前两级用于展开路径，选择到最后一级才回填。</li><li>存在禁用节点时保留层级结构并阻止该节点继续选择；空数据时展示空态面板。</li><li>搜索命中时应展示完整路径，避免同名节点误选。</li></ul></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>options</td><td>节点应包含可识别 label、value 与 children。</td></tr><tr><td>showSearch</td><td>路径长、选项多时开启搜索。</td></tr><tr><td>changeOnSelect</td><td>是否允许选择中间层。</td></tr><tr><td>displayRender</td><td>控制单条回填路径展示。</td></tr><tr><td>status / help</td><td>错误状态与提示文案。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { Cascader } from '360euxd';
 
 &lt;Cascader options={regionOptions} placeholder="请选择地区" /&gt;
-&lt;Cascader multiple options={orgOptions} showSearch /&gt;
-&lt;Cascader changeOnSelect={false} placeholder="请选择最终节点" /&gt;</code></pre></div></section>
+&lt;Cascader options={orgOptions} showSearch placeholder="请选择组织" /&gt;
+&lt;Cascader changeOnSelect={false} placeholder="请选择最终节点" /&gt;</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>字段只需选定一条地区、组织、分类路径时使用单选 Cascader。</li><li>层级较深或需要树状展开收起时改用 TreeSelect。</li><li>单层选项优先使用 Select、Radio，不要误用 Cascader。</li><li>错误态必须同时展示触发器状态和提示文案。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">多选级联选择器 Cascader Multiple</h2><p class="section-desc">多选 Cascader 用于在同一层级数据体系中选择多条有效路径，并在触发器内回填已选结果。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>面向同一组选项树的多路径选择，不拆成多个单选 Cascader。</li><li>选中结果按标签或数量摘要回填，并保留可识别的路径语义。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>资产分类、告警分类、组织权限范围等可同时选择多个末级节点。</li><li>需要批量筛选多条地区或分类路径，且路径之间互不排斥。</li></ul></div>
+                    <div class="doc-panel"><h3>默认样式</h3><div class="demo-stack"><div class="x-cascader-demo x-cascader-multi-demo" data-multi-cascader-demo><button class="x-control x-cascader-multi-trigger" type="button" aria-expanded="false"><span class="x-cascader-multi-values"><span class="x-placeholder">请选择</span></span><i class="iconfont icon-xiajiantou"></i></button></div><div class="x-cascader-demo x-cascader-multi-demo" data-multi-cascader-demo data-selected="multi-3-a,multi-3-b"><button class="x-control x-cascader-multi-trigger" type="button" aria-expanded="false"><span class="x-cascader-multi-values"></span><i class="iconfont icon-xiajiantou"></i></button></div><div class="x-cascader-demo x-cascader-multi-demo" data-multi-cascader-demo data-selected="multi-3-a,multi-3-b,multi-3-c,multi-2-b" data-max-tags="2"><button class="x-control x-cascader-multi-trigger" type="button" aria-expanded="false"><span class="x-cascader-multi-values"></span><i class="iconfont icon-xiajiantou"></i></button></div></div><ul class="rule-list" style="margin-top:12px;"><li>默认未选择时仍展示占位文字和展开图标。</li><li>少量已选项直接回填标签；已选项过多时使用标签折叠或数量摘要，避免触发器无限增高。</li><li>多选面板沿用级联列结构，每一级选项均展示 iconfont 多选框。</li><li>多选结果应支持逐项移除，并保持已选路径可识别。</li></ul></div>
+                    <div class="doc-panel"><h3>API</h3><table class="doc-table"><tbody><tr><td>multiple</td><td>开启多路径选择模式。</td></tr><tr><td>options</td><td>节点应包含可识别 label、value 与 children。</td></tr><tr><td>maxTagCount</td><td>控制触发器内展示的标签数量。</td></tr><tr><td>showCheckedStrategy</td><td>控制父子节点选中后的结果回填策略。</td></tr><tr><td>status / help</td><td>多选校验状态与提示文案。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>代码示例</h3><pre class="code-block"><code>import { Cascader } from '360euxd';
+
+&lt;Cascader
+  multiple
+  options={categoryOptions}
+  maxTagCount={2}
+  placeholder="请选择分类"
+/&gt;
+
+&lt;Cascader
+  multiple
+  options={scopeOptions}
+  showSearch
+  placeholder="请选择权限范围"
+/&gt;</code></pre></div>
+                    <div class="doc-panel"><h3>AI 生成规则</h3><ul class="rule-list"><li>字段允许选择多条层级路径时使用多选 Cascader。</li><li>互斥路径或仅允许一个结果时改用单选 Cascader。</li><li>已选项较多时必须配置标签折叠规则，不要挤压表单布局。</li><li>错误态必须同时展示触发器状态和提示文案。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">禁止用法</h2><p class="section-desc">避免用级联选择器承载无层级数据，也避免让用户在路径语义不清时提交结果。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止把单层少量选项包装成级联面板。</li><li>禁止层级很深时无限增加级联列，应评估 TreeSelect。</li><li>禁止同名末级节点回填时丢失必要路径信息。</li><li>禁止错误状态只改变边框，不展示错误提示。</li></ul></div><div class="doc-panel"><h3>错误示例</h3><pre class="code-block"><code>// 错误：单层状态选项不应使用 Cascader
+&lt;Cascader options={statusOptions} /&gt;
+
+// 错误：只显示末级节点，用户无法判断父级路径
+&lt;Cascader displayRender={(labels) =&gt; labels.at(-1)} /&gt;
+
+// 错误：报错状态缺少错误提示
+&lt;Cascader status="error" /&gt;</code></pre></div></div>
+                </section>
               </section>
             </section>
 
             <section class="component-doc" data-component="checkbox" hidden>
               <section class="section-card spec-card">
-                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Checkbox 多选框规范页</h2><p class="section-desc">Checkbox 用于多项条件筛选、表单多选、权限配置和表格批量选择。</p></div><span class="code-note">360euxd: Checkbox</span></div>
-                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">控件尺寸</div><div class="spec-summary-value">16 × 16px</div></div><div class="spec-summary-item"><div class="spec-summary-label">文本</div><div class="spec-summary-value">14px / 22px</div></div><div class="spec-summary-item"><div class="spec-summary-label">圆角</div><div class="spec-summary-value">4px</div></div><div class="spec-summary-item"><div class="spec-summary-label">关键状态</div><div class="spec-summary-value">checked / indeterminate</div></div></div></div>
-                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与分组</h2><p class="section-desc">半选状态用于树选择、权限配置、批量选择场景，不能省略。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>状态预览</h3><div class="demo-stack"><label class="x-choice"><span class="x-checkbox"></span>未选</label><label class="x-choice is-hover"><span class="x-checkbox"></span>Hover</label><label class="x-choice is-checked"><span class="x-checkbox"></span>已选</label><label class="x-choice is-indeterminate"><span class="x-checkbox"></span>半选</label><label class="x-choice is-disabled"><span class="x-checkbox"></span>禁用</label></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>checked 使用 p6 #00AB7A。</li><li>全选必须和子项状态联动。</li><li>跨页选择必须明确作用范围。</li></ul></div></div></section>
-                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">表格选择需提供已选数量和批量操作启禁用。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Checkbox } from '360euxd';
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">数据录入组件库 / Checkbox 多选框规范页</h2>
+                    <p class="section-desc">Checkbox 用于一组选项中的多项选择，承载筛选、表单勾选、权限配置和批量选择。</p>
+                  </div>
+                  <span class="code-note">360euxd: Checkbox</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">组件定位</div><div class="spec-summary-value">多项条件选择</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">控件尺寸</div><div class="spec-summary-value">16 × 16px</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">文本规则</div><div class="spec-summary-value">14px / 22px</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">关键能力</div><div class="spec-summary-value">分组 / 全选 / 半选</div></div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">通用规范</h2><p class="section-desc">多选框需要统一尺寸、状态、Token 与分组反馈，半选状态必须可识别。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>尺寸</h3><div class="demo-stack"><label class="x-choice x-choice-live" data-checkbox-live><span class="x-checkbox"></span>Checkbox 文本</label><label class="x-choice x-choice-live is-checked" data-checkbox-live><span class="x-checkbox"></span>已选文本</label></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>控件</td><td>基础方框尺寸 16 × 16px，圆角 4px。</td></tr><tr><td>文本</td><td>选项文本使用 14px / 22px。</td></tr><tr><td>间距</td><td>控件与文本保持 8px 间距，分组选项间距按表单密度控制。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>状态</h3><div class="demo-stack"><label class="x-choice x-choice-live" data-checkbox-live><span class="x-checkbox"></span>默认</label><label class="x-choice x-choice-live is-hover" data-checkbox-live><span class="x-checkbox"></span>悬停</label><label class="x-choice x-choice-live is-checked" data-checkbox-live><span class="x-checkbox"></span>已选</label><label class="x-choice x-choice-live is-indeterminate" data-checkbox-live><span class="x-checkbox"></span>半选</label><label class="x-choice x-choice-live is-disabled" data-checkbox-live><span class="x-checkbox"></span>未选失效</label><label class="x-choice x-choice-live is-checked is-disabled" data-checkbox-live><span class="x-checkbox"></span>已选失效</label><label class="x-choice x-choice-live is-indeterminate is-disabled" data-checkbox-live><span class="x-checkbox"></span>半选失效</label></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>默认 / 悬停</td><td>未选状态保持方框清晰，悬停提供边框反馈。</td></tr><tr><td>已选</td><td>选中使用 p6，勾选符号必须清晰。</td></tr><tr><td>半选</td><td>用于父子项部分选中、全选联动和权限配置。</td></tr><tr><td>失效</td><td>未选、已选、半选均需展示失效态，不响应切换。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>Token</h3><div class="token-chip-row"><span class="token-chip"><span class="token-swatch" style="background: var(--p6);"></span>p6 #00AB7A</span><span class="token-chip"><span class="token-swatch" style="background: var(--p5);"></span>p5 #1DB887</span><span class="token-chip"><span class="token-swatch" style="background: var(--p1);"></span>p1 #D9F4EE</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-5);"></span>gray-5 #DFE1E6</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-6);"></span>gray-6 #AEB2B8</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-9);"></span>gray-9 #242933</span></div></div>
+                    <div class="doc-panel"><h3>校验规则</h3><ul class="rule-list"><li>必选多选项未选择时，错误提示应跟随表单项展示。</li><li>全选与子项状态必须联动，部分选中时使用半选。</li><li>跨页批量选择必须明确选择范围和已选数量。</li><li>互斥选项不应使用 Checkbox，应改用 Radio。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">组件定位与使用场景</h2><p class="section-desc">Checkbox 适用于可以同时成立的多个选项，不承载单一互斥选择。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>用于一组选项中选择零项、一项或多项。</li><li>支持单个复选项、分组复选、全选和半选联动。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>筛选条件、通知方式、权限项、批量勾选。</li><li>树状权限或表格全选中表达父子项部分选中。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">API</h2><p class="section-desc">Checkbox API 需要表达选中、半选、分组、禁用和变更事件。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>属性</th><th>说明</th><th>规则</th></tr></thead><tbody><tr><td>checked</td><td>是否选中</td><td>受控场景与业务值同步。</td></tr><tr><td>indeterminate</td><td>是否半选</td><td>父级只选中部分子项时使用。</td></tr><tr><td>disabled</td><td>是否禁用</td><td>不可响应勾选。</td></tr><tr><td>options</td><td>分组选项配置</td><td>选项过多时使用 Checkbox.Group 管理。</td></tr><tr><td>value</td><td>选项值</td><td>同组内必须唯一。</td></tr><tr><td>onChange</td><td>选中变化回调</td><td>用于同步表单值和全选联动。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">示例覆盖基础勾选、半选、禁用和分组选项。</p></div></div>
+                  <div class="section-body"><pre class="code-block"><code>import { Checkbox } from '360euxd';
 
 &lt;Checkbox&gt;未选&lt;/Checkbox&gt;
 &lt;Checkbox checked&gt;已选&lt;/Checkbox&gt;
 &lt;Checkbox indeterminate&gt;半选&lt;/Checkbox&gt;
-&lt;Checkbox.Group options={['读取', '编辑', '删除']} /&gt;</code></pre></div></section>
+&lt;Checkbox disabled&gt;禁用&lt;/Checkbox&gt;
+&lt;Checkbox.Group options={['读取', '编辑', '删除']} /&gt;</code></pre></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">AI 生成规则</h2><p class="section-desc">生成业务页面时，先判断选项是否可多选，再选择 Checkbox。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>选择任务</th><th>应使用组件</th><th>规则</th></tr></thead><tbody><tr><td>多个条件可同时成立</td><td>Checkbox</td><td>用于多选筛选和表单多选。</td></tr><tr><td>一组权限可批量勾选</td><td>Checkbox.Group</td><td>需要支持全选与半选联动。</td></tr><tr><td>表格行批量选择</td><td>Checkbox</td><td>同时展示已选数量和作用范围。</td></tr><tr><td>互斥选项中只能选一个</td><td>Radio / Select</td><td>禁止误用 Checkbox。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">禁止用法</h2><p class="section-desc">避免把多选框用于互斥选择，也避免遗漏全选与半选反馈。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止用 Checkbox 表达必须互斥的单选项。</li><li>禁止父子项联动场景缺失半选状态。</li><li>禁止跨页批量选择不说明选择范围。</li><li>禁止禁用项仍允许勾选切换。</li></ul></div><div class="doc-panel"><h3>错误示例</h3><pre class="code-block"><code>// 错误：启用与停用互斥，应使用 Radio
+&lt;Checkbox.Group options={['启用', '停用']} /&gt;
+
+// 错误：父级已部分选择却不展示半选
+&lt;Checkbox checked&gt;全选&lt;/Checkbox&gt;</code></pre></div></div>
+                </section>
               </section>
             </section>
 
             <section class="component-doc" data-component="radio" hidden>
               <section class="section-card spec-card">
-                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Radio 单选框规范页</h2><p class="section-desc">Radio 用于多个互斥选项中选择一个，选项超过 5 个建议改用 Select。</p></div><span class="code-note">360euxd: Radio</span></div>
-                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">基础 Radio</div><div class="spec-summary-value">控件 16px</div></div><div class="spec-summary-item"><div class="spec-summary-label">选项行高</div><div class="spec-summary-value">22px</div></div><div class="spec-summary-item"><div class="spec-summary-label">胶囊单选</div><div class="spec-summary-value">74 × 32px</div></div><div class="spec-summary-item"><div class="spec-summary-label">横向间距</div><div class="spec-summary-value">24px</div></div></div></div>
-                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与类型</h2><p class="section-desc">基础 Radio 用于表单互斥选择，胶囊单选用于模式切换、筛选切换。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>状态预览</h3><div class="demo-stack"><label class="x-choice"><span class="x-radio"></span>未选</label><label class="x-choice is-hover"><span class="x-radio"></span>Hover</label><label class="x-choice is-checked"><span class="x-radio"></span>已选</label><label class="x-choice is-disabled"><span class="x-radio"></span>禁用</label><div class="x-radio-button-group"><span class="x-radio-button is-selected">日</span><span class="x-radio-button">周</span><span class="x-radio-button">月</span></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>checked 使用 p6，selected 文本可使用 p7。</li><li>默认选中项需要符合业务安全默认值。</li><li>选项文案应短且互斥。</li></ul></div></div></section>
-                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">低数量互斥选项优先使用 Radio。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Radio } from '360euxd';
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">数据录入组件库 / Radio 单选框规范页</h2>
+                    <p class="section-desc">Radio 用于在一组互斥选项中选择一个，承载表单单选和少量平级条件选择。</p>
+                  </div>
+                  <span class="code-note">360euxd: Radio</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">组件定位</div><div class="spec-summary-value">互斥选项选择</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">控件尺寸</div><div class="spec-summary-value">16 × 16px</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">文本规则</div><div class="spec-summary-value">14px / 22px</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">关键能力</div><div class="spec-summary-value">分组 / 默认值 / 互斥选择</div></div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">通用规范</h2><p class="section-desc">单选框需要统一尺寸、状态、Token 与互斥关系，默认值必须符合业务安全预期。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>尺寸</h3><div class="demo-stack" data-radio-group="radio-size"><label class="x-choice x-choice-live" data-radio-live><span class="x-radio"></span>Radio 文本</label><label class="x-choice x-choice-live is-checked" data-radio-live><span class="x-radio"></span>已选文本</label></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>基础控件</td><td>圆形选择控件尺寸 16 × 16px。</td></tr><tr><td>文本</td><td>选项文本使用 14px / 22px。</td></tr><tr><td>间距</td><td>控件与文本保持 8px，横向选项建议保持 24px。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>状态</h3><div class="demo-stack" data-radio-group="radio-state"><label class="x-choice x-choice-live" data-radio-live><span class="x-radio"></span>默认</label><label class="x-choice x-choice-live is-hover" data-radio-live><span class="x-radio"></span>悬停</label><label class="x-choice x-choice-live is-checked" data-radio-live><span class="x-radio"></span>已选</label><label class="x-choice x-choice-live is-disabled" data-radio-live><span class="x-radio"></span>未选失效</label><label class="x-choice x-choice-live is-checked is-disabled" data-radio-live><span class="x-radio"></span>已选失效</label></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>默认 / 悬停</td><td>未选状态保持圆形边框清晰，悬停提供边框反馈。</td></tr><tr><td>已选</td><td>选中使用 p6，中心选中点必须清晰可辨。</td></tr><tr><td>失效</td><td>未选和已选都需展示失效态，不响应切换。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>Token</h3><div class="token-chip-row"><span class="token-chip"><span class="token-swatch" style="background: var(--p6);"></span>p6 #00AB7A</span><span class="token-chip"><span class="token-swatch" style="background: var(--p5);"></span>p5 #1DB887</span><span class="token-chip"><span class="token-swatch" style="background: var(--p1);"></span>p1 #D9F4EE</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-5);"></span>gray-5 #DFE1E6</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-6);"></span>gray-6 #AEB2B8</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-9);"></span>gray-9 #242933</span></div></div>
+                    <div class="doc-panel"><h3>校验规则</h3><ul class="rule-list"><li>必选单选项未选择时，错误提示应跟随表单项展示。</li><li>同组 Radio 只能保留一个已选值，不能出现多选结果。</li><li>有安全默认值时应明确默认选项，避免用户误判当前状态。</li><li>选项过多或需要搜索时应改用 Select。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">组件定位与使用场景</h2><p class="section-desc">Radio 适用于少量、平级、互斥的选项，帮助用户直接比较并确定唯一结果。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>用于一组选项中选择且仅选择一个结果。</li><li>选项需要平铺比较时使用普通 Radio。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>启用状态、风险等级、通知频率等少量互斥选项。</li><li>表单字段需要直接展示全部候选项时使用。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">API</h2><p class="section-desc">Radio API 需要表达组值、选项值、禁用和变更事件。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>属性</th><th>说明</th><th>规则</th></tr></thead><tbody><tr><td>value</td><td>单选项值或分组当前值</td><td>同组内必须唯一。</td></tr><tr><td>checked</td><td>单个 Radio 是否选中</td><td>受控场景与组值同步。</td></tr><tr><td>defaultValue</td><td>分组默认选项</td><td>仅用于明确的安全默认值。</td></tr><tr><td>disabled</td><td>是否禁用</td><td>禁用项不可切换。</td></tr><tr><td>options</td><td>分组选项配置</td><td>少量选项可直接平铺。</td></tr><tr><td>onChange</td><td>选中值变化回调</td><td>同组切换时返回唯一值。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">低数量互斥选项优先使用普通 Radio。</p></div></div>
+                  <div class="section-body"><pre class="code-block"><code>import { Radio } from '360euxd';
 
 &lt;Radio.Group value="enabled"&gt;
   &lt;Radio value="enabled"&gt;启用&lt;/Radio&gt;
   &lt;Radio value="disabled"&gt;停用&lt;/Radio&gt;
 &lt;/Radio.Group&gt;
-&lt;Radio.ButtonGroup options={['日', '周', '月']} /&gt;</code></pre></div></section>
+&lt;Radio.Group disabled options={statusOptions} /&gt;</code></pre></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">AI 生成规则</h2><p class="section-desc">生成业务页面时，先判断是否为唯一互斥结果，再选择 Radio。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>选择任务</th><th>应使用组件</th><th>规则</th></tr></thead><tbody><tr><td>少量互斥选项中选一个</td><td>Radio</td><td>选项平铺，便于直接比较。</td></tr><tr><td>选项数量超过 5 个</td><td>Select</td><td>避免 Radio 列表过长。</td></tr><tr><td>多个条件可同时成立</td><td>Checkbox</td><td>禁止误用 Radio。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">禁止用法</h2><p class="section-desc">避免把单选框用于多选任务，也避免在选项过多时强行平铺。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止用 Radio 表达可以同时成立的多个条件。</li><li>禁止同组出现多个已选值。</li><li>禁止把大量长文案选项铺成难扫描的 Radio 列表。</li><li>禁止禁用项仍允许切换选中值。</li></ul></div><div class="doc-panel"><h3>错误示例</h3><pre class="code-block"><code>// 错误：通知方式可多选，应使用 Checkbox
+&lt;Radio.Group options={['短信', '邮件', '站内信']} /&gt;
+
+// 错误：候选用户很多，应使用 Select
+&lt;Radio.Group options={allUsers} /&gt;</code></pre></div></div>
+                </section>
               </section>
             </section>
 
@@ -2619,28 +3302,80 @@ export default () =&gt; (
 
             <section class="component-doc" data-component="switch" hidden>
               <section class="section-card spec-card">
-                <div class="section-header"><div><h2 class="section-title">数据录入组件库 / Switch 开关规范页</h2><p class="section-desc">Switch 表示开启 / 关闭两种互斥状态，切换后系统立即执行。</p></div><span class="code-note">360euxd: Switch</span></div>
-                <div class="section-body"><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">Small</div><div class="spec-summary-value">28 × 16px</div></div><div class="spec-summary-item"><div class="spec-summary-label">Default</div><div class="spec-summary-value">44 × 22px</div></div><div class="spec-summary-item"><div class="spec-summary-label">Large</div><div class="spec-summary-value">56 × 28px</div></div><div class="spec-summary-item"><div class="spec-summary-label">On 色</div><div class="spec-summary-value">p6 #00AB7A</div></div></div></div>
-                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">状态与交互</h2><p class="section-desc">必须覆盖 Off、On、Hover、Active、Disabled、Loading；高风险启停需要二次确认。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>状态预览</h3><div class="demo-stack"><div class="demo-row"><span class="x-switch"></span><span>Off</span></div><div class="demo-row"><span class="x-switch is-on"></span><span>On</span></div><div class="demo-row"><span class="x-switch is-on is-disabled"></span><span>Disabled</span></div><div class="demo-row"><span class="x-switch is-small is-on"></span><span>Small</span></div><div class="demo-row"><span class="x-switch is-large is-on"></span><span>Large</span></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>Switch 表示立即生效，切换后应有反馈。</li><li>高风险启停需要二次确认，不应直接切换。</li><li>表格中的 Switch 需要处理 loading 和失败回滚。</li></ul></div></div></section>
-                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">需要提交后才生效的复杂表单项不适合使用 Switch。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Switch } from '360euxd';
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">数据录入组件库 / Switch 开关规范页</h2>
+                    <p class="section-desc">Switch 表示开启 / 关闭两种互斥状态，切换后系统立即执行。</p>
+                  </div>
+                  <span class="code-note">360euxd: Switch</span>
+                </div>
+                <div class="section-body">
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">组件定位</div><div class="spec-summary-value">即时启停开关</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">尺寸</div><div class="spec-summary-value">Large / Small</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">状态</div><div class="spec-summary-value">开 / 关 / 开失效 / 关失效</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">开启色</div><div class="spec-summary-value">p6 #00AB7A</div></div>
+                  </div>
+                </div>
 
-&lt;Switch checked /&gt;
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">通用规范</h2><p class="section-desc">开关只区分大、小两档尺寸，状态只表达开、关与对应失效态。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>尺寸</h3><div class="demo-stack"><div class="x-switch-size-demo"><span class="x-switch is-large is-on"></span><span>Large</span></div><div class="x-switch-size-demo"><span class="x-switch is-small is-on"></span><span>Small</span></div></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>Large</td><td>44 × 22px，承载默认开关场景。</td></tr><tr><td>Small</td><td>28 × 16px，用于紧凑区域。</td></tr><tr><td>滑块</td><td>滑块与轨道保持 2px 内边距。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>状态</h3><div class="demo-stack"><div class="x-switch-spec-row"><span>开</span><span class="x-switch is-large is-on"></span><span class="x-switch is-small is-on"></span></div><div class="x-switch-spec-row"><span>关</span><span class="x-switch is-large"></span><span class="x-switch is-small"></span></div><div class="x-switch-spec-row"><span>开-失效</span><span class="x-switch is-large is-on is-disabled"></span><span class="x-switch is-small is-on is-disabled"></span></div><div class="x-switch-spec-row"><span>关-失效</span><span class="x-switch is-large is-disabled"></span><span class="x-switch is-small is-disabled"></span></div></div><table class="doc-table" style="margin-top:16px;"><tbody><tr><td>开</td><td>开启状态使用 p6 轨道和白色滑块。</td></tr><tr><td>关</td><td>关闭状态使用灰色轨道和白色滑块。</td></tr><tr><td>失效</td><td>开与关都需要展示失效态，失效时不可切换。</td></tr></tbody></table></div>
+                    <div class="doc-panel"><h3>Token</h3><div class="token-chip-row"><span class="token-chip"><span class="token-swatch" style="background: var(--p6);"></span>p6 #00AB7A</span><span class="token-chip"><span class="token-swatch" style="background: var(--p1);"></span>p1 #D9F4EE</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-5);"></span>gray-5 #DFE1E6</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-6);"></span>gray-6 #AEB2B8</span><span class="token-chip"><span class="token-swatch" style="background: var(--gray-1);"></span>gray-1 #FFFFFF</span></div></div>
+                    <div class="doc-panel"><h3>交互规则</h3><ul class="rule-list"><li>Switch 切换后立即生效，应同步当前结果反馈。</li><li>高风险启停需要二次确认，避免误触直接生效。</li><li>失效态必须同时体现状态值和不可操作性。</li><li>需要填写后提交的设置项不应使用 Switch。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">组件定位与使用场景</h2><p class="section-desc">Switch 适合表示立即生效的布尔状态，不承载待提交的选项选择。</p></div></div>
+                  <div class="section-body doc-grid">
+                    <div class="doc-panel"><h3>组件定位</h3><ul class="rule-list"><li>用于在开与关之间快速切换一个即时状态。</li><li>状态本身即为结果，不需要额外保存动作。</li></ul></div>
+                    <div class="doc-panel"><h3>使用场景</h3><ul class="rule-list"><li>策略启停、消息提醒开关、列表内启用状态。</li><li>紧凑列表或表格行内可使用 Small。</li></ul></div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">API</h2><p class="section-desc">Switch API 需要表达开启值、尺寸、禁用和切换事件。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>属性</th><th>说明</th><th>规则</th></tr></thead><tbody><tr><td>checked</td><td>是否开启</td><td>开关值为布尔状态。</td></tr><tr><td>size</td><td>尺寸</td><td>仅使用 large 或 small。</td></tr><tr><td>disabled</td><td>是否失效</td><td>失效时保持当前开关值。</td></tr><tr><td>onChange</td><td>状态变化回调</td><td>切换后同步业务结果。</td></tr><tr><td>confirmBeforeChange</td><td>切换前确认</td><td>高风险启停场景使用。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">示例只覆盖开、关、两档尺寸和对应失效态。</p></div></div>
+                  <div class="section-body"><pre class="code-block"><code>import { Switch } from '360euxd';
+
+&lt;Switch size="large" checked /&gt;
+&lt;Switch size="large" /&gt;
 &lt;Switch size="small" checked /&gt;
-&lt;Switch loading checked /&gt;
+&lt;Switch checked disabled /&gt;
 &lt;Switch disabled /&gt;
-&lt;Switch confirmBeforeChange title="确认停用该策略吗？" /&gt;</code></pre></div></section>
+&lt;Switch confirmBeforeChange title="确认停用该策略吗？" /&gt;</code></pre></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">AI 生成规则</h2><p class="section-desc">生成业务页面时，先判断状态是否切换即生效，再选择 Switch。</p></div></div>
+                  <div class="section-body"><table class="doc-table"><thead><tr><th>选择任务</th><th>应使用组件</th><th>规则</th></tr></thead><tbody><tr><td>立即启用或停用</td><td>Switch</td><td>用于布尔启停状态。</td></tr><tr><td>表格行内紧凑启停</td><td>Switch small</td><td>使用 Small 尺寸。</td></tr><tr><td>互斥选项中选一个</td><td>Radio</td><td>不要把选项选择做成开关。</td></tr><tr><td>需要保存后生效</td><td>Checkbox / Radio / Form</td><td>不要误用 Switch。</td></tr></tbody></table></div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header"><div><h2 class="section-title">禁止用法</h2><p class="section-desc">避免用开关承载非即时状态，也避免遗漏高风险操作确认。</p></div></div>
+                  <div class="section-body doc-grid"><div class="doc-panel"><h3>禁止组件误用</h3><ul class="rule-list"><li>禁止把需要提交确认的表单选择项直接做成 Switch。</li><li>禁止高风险停用操作无确认直接切换。</li><li>禁止在失效态中仍允许状态变化。</li><li>禁止新增未定义的中间尺寸。</li></ul></div><div class="doc-panel"><h3>错误示例</h3><pre class="code-block"><code>// 错误：三选一状态不是开关
+&lt;Switch label="待处理 / 处理中 / 已完成" /&gt;
+
+// 错误：需要保存后生效的设置项不应立即切换
+&lt;Switch checked={draftValue} /&gt;</code></pre></div></div>
+                </section>
               </section>
             </section>
 
             <div class="component-empty" data-component-empty></div>
           </div>
-          <!-- COMPONENT_END: Basic & Data Entry DOM examples -->
         </div>
       </main>
     </div>
   </div>
 
-  <!-- DEMO_SHELL_START: component-library navigation and preview interactions. Do not copy this block into generated business pages. -->
   <script>
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -2686,12 +3421,249 @@ export default () =&gt; (
     window.addEventListener('hashchange', syncMenuFromHash);
     syncMenuFromHash();
 
+    const cascaderDemos = $$('[data-cascader-demo]');
+    function resetCascaderIcon(demo) {
+      const icon = $('.x-cascader-trigger .iconfont', demo);
+      if (!icon) return;
+      icon.classList.remove('icon-a-cuoguanbi');
+      icon.classList.toggle('icon-xiajiantou', !demo.classList.contains('is-open'));
+      icon.classList.toggle('icon-shangjiantou', demo.classList.contains('is-open'));
+    }
+
+    function resetCascaderBranches(demo) {
+      $$('.x-cascader-option', demo).forEach((option) => {
+        option.classList.remove('is-selected');
+        if (Number(option.dataset.cascaderLevel) > 1) option.hidden = true;
+      });
+      $$('[data-cascader-column]', demo).forEach((column) => {
+        column.hidden = Number(column.dataset.cascaderColumn) > 1;
+      });
+    }
+
+    function setCascaderOpen(demo, open) {
+      const trigger = $('.x-cascader-trigger', demo);
+      const popup = $('.x-cascader-popup', demo);
+      if (!trigger || !popup) return;
+      if (open) resetCascaderBranches(demo);
+      demo.classList.toggle('is-open', open);
+      popup.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+      resetCascaderIcon(demo);
+    }
+
+    function showCascaderChildren(demo, level, parentKey) {
+      const column = $(`[data-cascader-column="${level}"]`, demo);
+      if (column) column.hidden = false;
+      $$(`.x-cascader-option[data-cascader-level="${level}"]`, demo).forEach((option) => {
+        option.hidden = option.dataset.cascaderParent !== parentKey;
+        option.classList.remove('is-selected');
+      });
+      for (let nextLevel = level + 1; nextLevel <= 3; nextLevel += 1) {
+        const nextColumn = $(`[data-cascader-column="${nextLevel}"]`, demo);
+        if (nextColumn) nextColumn.hidden = true;
+        $$(`.x-cascader-option[data-cascader-level="${nextLevel}"]`, demo).forEach((option) => {
+          option.hidden = true;
+          option.classList.remove('is-selected');
+        });
+      }
+    }
+
+    function activateCascaderBranch(demo, option) {
+      const level = Number(option.dataset.cascaderLevel);
+      const key = option.dataset.cascaderKey;
+      if (!key || level >= 3) return;
+      $$(`.x-cascader-option[data-cascader-level="${level}"]`, demo).forEach((item) => {
+        item.classList.toggle('is-selected', item === option);
+      });
+      showCascaderChildren(demo, level + 1, key);
+    }
+
+    cascaderDemos.forEach((demo) => {
+      const trigger = $('.x-cascader-trigger', demo);
+      trigger?.addEventListener('click', (event) => {
+        const clearIcon = event.target.closest('.iconfont');
+        const value = $('[data-cascader-value]', demo);
+        if (clearIcon && value && trigger.classList.contains('is-clearable')) {
+          event.preventDefault();
+          value.textContent = '请选择';
+          value.classList.add('x-placeholder');
+          trigger.classList.remove('is-clearable');
+          setCascaderOpen(demo, false);
+          resetCascaderBranches(demo);
+          return;
+        }
+        const nextOpen = !demo.classList.contains('is-open');
+        if (nextOpen) {
+          cascaderDemos.forEach((item) => {
+            if (item !== demo) setCascaderOpen(item, false);
+          });
+        }
+        setCascaderOpen(demo, nextOpen);
+      });
+      trigger?.addEventListener('mouseover', (event) => {
+        const icon = event.target.closest('.icon-xiajiantou, .icon-shangjiantou');
+        if (!icon || !trigger.classList.contains('is-clearable')) return;
+        icon.classList.remove('icon-xiajiantou', 'icon-shangjiantou');
+        icon.classList.add('icon-a-cuoguanbi');
+      });
+      trigger?.addEventListener('mouseout', (event) => {
+        const icon = event.target.closest('.icon-a-cuoguanbi');
+        if (!icon || icon.contains(event.relatedTarget)) return;
+        resetCascaderIcon(demo);
+      });
+      $$('.x-cascader-option[data-cascader-level="1"], .x-cascader-option[data-cascader-level="2"]', demo).forEach((option) => {
+        ['mouseenter', 'focus', 'click'].forEach((eventName) => {
+          option.addEventListener(eventName, (event) => {
+            if (eventName === 'click') event.stopPropagation();
+            activateCascaderBranch(demo, option);
+          });
+        });
+      });
+      $$('.x-cascader-option[data-cascader-level="3"]', demo).forEach((option) => {
+        option.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const value = $('[data-cascader-value]', demo);
+          if (!value) return;
+          value.textContent = option.dataset.cascaderPath || option.textContent.trim();
+          value.classList.remove('x-placeholder');
+          trigger?.classList.add('is-clearable');
+          $$(`.x-cascader-option[data-cascader-level="3"]`, demo).forEach((item) => {
+            item.classList.toggle('is-selected', item === option);
+          });
+          setCascaderOpen(demo, false);
+        });
+      });
+    });
+
+    const multiCascaderDemos = $$('[data-multi-cascader-demo]');
+    const multiCascaderOptions = [
+      { level: 1, key: 'multi-1-a', label: '一级', path: '一级' },
+      { level: 1, key: 'multi-1-b', label: '一级', path: '一级' },
+      { level: 1, key: 'multi-1-c', label: '一级', path: '一级' },
+      { level: 2, key: 'multi-2-a', parent: 'multi-1-a', label: '二级', path: '一级 / 二级' },
+      { level: 2, key: 'multi-2-b', parent: 'multi-1-a', label: '二级', path: '一级 / 二级' },
+      { level: 2, key: 'multi-2-c', parent: 'multi-1-b', label: '二级', path: '一级 / 二级' },
+      { level: 2, key: 'multi-2-d', parent: 'multi-1-c', label: '二级', path: '一级 / 二级' },
+      { level: 3, key: 'multi-3-a', parent: 'multi-2-a', label: '三级', path: '一级 / 二级 / 三级' },
+      { level: 3, key: 'multi-3-b', parent: 'multi-2-b', label: '三级', path: '一级 / 二级 / 三级' },
+      { level: 3, key: 'multi-3-c', parent: 'multi-2-c', label: '三级', path: '一级 / 二级 / 三级' },
+      { level: 3, key: 'multi-3-d', parent: 'multi-2-d', label: '三级', path: '一级 / 二级 / 三级' }
+    ];
+
+    function createMultiCascaderPopup(demo) {
+      const columns = [1, 2, 3].map((level) => {
+        const options = multiCascaderOptions.filter((option) => option.level === level).map((option) => {
+          const parent = option.parent ? ` data-multi-parent="${option.parent}" hidden` : '';
+          const arrow = option.level < 3 ? '<i class="iconfont icon-you-jiantou"></i>' : '';
+          return `<button class="x-option x-cascader-option x-cascader-multi-option" type="button" data-multi-level="${option.level}" data-multi-key="${option.key}" data-multi-path="${option.path}"${parent}><span class="x-cascader-multi-label"><i class="iconfont icon-fang-dui x-cascader-multi-checkbox"></i><span>${option.label}</span></span>${arrow}</button>`;
+        }).join('');
+        const hidden = level > 1 ? ' hidden' : '';
+        return `<div class="x-cascader-column" data-multi-column="${level}"${hidden}><div class="x-cascader-list">${options}</div></div>`;
+      }).join('');
+      demo.insertAdjacentHTML('beforeend', `<div class="x-cascader-popup" hidden>${columns}</div>`);
+    }
+
+    function resetMultiCascaderBranches(demo) {
+      $$('[data-multi-column]', demo).forEach((column) => {
+        column.hidden = Number(column.dataset.multiColumn) > 1;
+      });
+      $$('.x-cascader-multi-option', demo).forEach((option) => {
+        if (Number(option.dataset.multiLevel) > 1) option.hidden = true;
+      });
+    }
+
+    function syncMultiCascaderChecks(demo) {
+      $$('.x-cascader-multi-option', demo).forEach((option) => {
+        const checked = demo._selectedMultiKeys.has(option.dataset.multiKey);
+        option.classList.toggle('is-selected', checked);
+      });
+    }
+
+    function setMultiCascaderOpen(demo, open) {
+      const popup = $('.x-cascader-popup', demo);
+      const trigger = $('.x-cascader-multi-trigger', demo);
+      if (!popup || !trigger) return;
+      if (open) {
+        cascaderDemos.forEach((item) => setCascaderOpen(item, false));
+        multiCascaderDemos.forEach((item) => {
+          if (item !== demo) setMultiCascaderOpen(item, false);
+        });
+        resetMultiCascaderBranches(demo);
+        syncMultiCascaderChecks(demo);
+      }
+      demo.classList.toggle('is-open', open);
+      popup.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+      const icon = $('.x-cascader-multi-trigger > .iconfont', demo);
+      icon?.classList.toggle('icon-xiajiantou', !open);
+      icon?.classList.toggle('icon-shangjiantou', open);
+    }
+
+    function showMultiCascaderChildren(demo, level, parentKey) {
+      const column = $(`[data-multi-column="${level}"]`, demo);
+      if (column) column.hidden = false;
+      $$(`.x-cascader-multi-option[data-multi-level="${level}"]`, demo).forEach((option) => {
+        option.hidden = option.dataset.multiParent !== parentKey;
+      });
+      for (let nextLevel = level + 1; nextLevel <= 3; nextLevel += 1) {
+        const nextColumn = $(`[data-multi-column="${nextLevel}"]`, demo);
+        if (nextColumn) nextColumn.hidden = true;
+        $$(`.x-cascader-multi-option[data-multi-level="${nextLevel}"]`, demo).forEach((option) => {
+          option.hidden = true;
+        });
+      }
+    }
+
+    function renderMultiCascaderValue(demo) {
+      const values = $('.x-cascader-multi-values', demo);
+      if (!values) return;
+      const selected = multiCascaderOptions.filter((option) => demo._selectedMultiKeys.has(option.key));
+      if (!selected.length) {
+        values.innerHTML = '<span class="x-placeholder">请选择</span>';
+        return;
+      }
+      const maxTags = Number(demo.dataset.maxTags || selected.length);
+      const tags = selected.slice(0, maxTags).map((option) => `<span class="x-tag">${option.path}<i class="iconfont icon-a-cuoguanbi"></i></span>`).join('');
+      const summary = selected.length > maxTags ? `<span class="x-placeholder">+${selected.length - maxTags}</span>` : '';
+      values.innerHTML = `${tags}${summary}`;
+    }
+
+    multiCascaderDemos.forEach((demo) => {
+      demo._selectedMultiKeys = new Set((demo.dataset.selected || '').split(',').filter(Boolean));
+      createMultiCascaderPopup(demo);
+      renderMultiCascaderValue(demo);
+      const trigger = $('.x-cascader-multi-trigger', demo);
+      trigger?.addEventListener('click', () => {
+        setMultiCascaderOpen(demo, !demo.classList.contains('is-open'));
+      });
+      $$('.x-cascader-multi-option', demo).forEach((option) => {
+        const level = Number(option.dataset.multiLevel);
+        if (level < 3) {
+          ['mouseenter', 'focus'].forEach((eventName) => {
+            option.addEventListener(eventName, () => {
+              showMultiCascaderChildren(demo, level + 1, option.dataset.multiKey);
+            });
+          });
+        }
+        option.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const key = option.dataset.multiKey;
+          if (demo._selectedMultiKeys.has(key)) demo._selectedMultiKeys.delete(key);
+          else demo._selectedMultiKeys.add(key);
+          syncMultiCascaderChecks(demo);
+          renderMultiCascaderValue(demo);
+          if (level < 3) showMultiCascaderChildren(demo, level + 1, key);
+        });
+      });
+    });
+
     const datePickerDemos = $$('[data-date-picker-demo]');
     const dateTimePickerDemos = $$('[data-date-time-picker-demo]');
     const monthPickerDemos = $$('[data-month-picker-demo]');
     const quarterPickerDemos = $$('[data-quarter-picker-demo]');
     const yearPickerDemos = $$('[data-year-picker-demo]');
     const rangePickerDemos = $$('[data-range-picker-demo]');
+    const dateComboDemos = $$('[data-date-combo-demo]');
     function isSameDate(left, right) {
       return Boolean(left && right)
         && left.getFullYear() === right.getFullYear()
@@ -3231,6 +4203,40 @@ export default () =&gt; (
       trigger.setAttribute('aria-expanded', String(open));
     }
 
+    function setDateComboMenuOpen(demo, open) {
+      const mode = $('.x-date-combo-mode', demo);
+      const trigger = $('.x-date-combo-mode-trigger', demo);
+      const menu = $('.x-date-combo-menu', demo);
+      if (!mode || !trigger || !menu) return;
+      mode.classList.toggle('is-open', open);
+      menu.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function closeDateComboPanel(panel) {
+      if (panel.hasAttribute('data-date-picker-demo') || panel.hasAttribute('data-date-time-picker-demo')) {
+        setDatePickerOpen(panel, false);
+      }
+      if (panel.hasAttribute('data-month-picker-demo')) setMonthPickerOpen(panel, false);
+      if (panel.hasAttribute('data-quarter-picker-demo')) setQuarterPickerOpen(panel, false);
+      if (panel.hasAttribute('data-year-picker-demo')) setYearPickerOpen(panel, false);
+    }
+
+    function setDateComboMode(demo, mode) {
+      const selectedOption = $(`.x-date-combo-option[data-date-combo-mode="${mode}"]`, demo);
+      const label = $('[data-date-combo-label]', demo);
+      if (!selectedOption || !label) return;
+      $$('.x-date-combo-option', demo).forEach((option) => {
+        option.classList.toggle('is-selected', option === selectedOption);
+      });
+      label.textContent = selectedOption.textContent;
+      $$('.x-date-combo-panel', demo).forEach((panel) => {
+        closeDateComboPanel(panel);
+        panel.hidden = panel.dataset.dateComboPanel !== mode;
+      });
+      setDateComboMenuOpen(demo, false);
+    }
+
     function selectRangeValue(state, value, compare) {
       if (!state.rangeStart || state.rangeEnd) {
         state.rangeStart = value;
@@ -3533,6 +4539,7 @@ export default () =&gt; (
     });
 
     monthPickerDemos.forEach((demo) => {
+      ensureMonthPickerPopup(demo);
       demo.monthState = {
         viewYear: 2022,
         selectedYear: null,
@@ -3557,6 +4564,7 @@ export default () =&gt; (
     });
 
     quarterPickerDemos.forEach((demo) => {
+      ensureQuarterPickerPopup(demo);
       demo.quarterState = {
         viewYear: 2022,
         selectedYear: null,
@@ -3581,6 +4589,7 @@ export default () =&gt; (
     });
 
     yearPickerDemos.forEach((demo) => {
+      ensureYearPickerPopup(demo);
       demo.yearState = {
         viewStart: 2020,
         selectedYear: null,
@@ -3601,6 +4610,20 @@ export default () =&gt; (
         setYearPickerValue(demo, year);
         renderYearPicker(demo);
         setYearPickerOpen(demo, false);
+      });
+    });
+
+    dateComboDemos.forEach((demo) => {
+      setDateComboMode(demo, 'date');
+      $('.x-date-combo-mode-trigger', demo)?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setDateComboMenuOpen(demo, !$('.x-date-combo-mode', demo)?.classList.contains('is-open'));
+      });
+      $('.x-date-combo-menu', demo)?.addEventListener('click', (event) => {
+        const option = event.target.closest('.x-date-combo-option');
+        if (!option) return;
+        event.stopPropagation();
+        setDateComboMode(demo, option.dataset.dateComboMode);
       });
     });
 
@@ -3796,6 +4819,9 @@ export default () =&gt; (
     });
 
     document.addEventListener('click', (event) => {
+      cascaderDemos.forEach((demo) => {
+        if (!demo.contains(event.target)) setCascaderOpen(demo, false);
+      });
       datePickerDemos.forEach((demo) => {
         if (!demo.contains(event.target)) setDatePickerOpen(demo, false);
       });
@@ -3814,16 +4840,117 @@ export default () =&gt; (
       rangePickerDemos.forEach((demo) => {
         if (!demo.contains(event.target)) setRangePickerOpen(demo, false);
       });
+      dateComboDemos.forEach((demo) => {
+        if (!demo.contains(event.target)) setDateComboMenuOpen(demo, false);
+      });
     });
 
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
+      cascaderDemos.forEach((demo) => setCascaderOpen(demo, false));
       datePickerDemos.forEach((demo) => setDatePickerOpen(demo, false));
       dateTimePickerDemos.forEach((demo) => setDatePickerOpen(demo, false));
       monthPickerDemos.forEach((demo) => setMonthPickerOpen(demo, false));
       quarterPickerDemos.forEach((demo) => setQuarterPickerOpen(demo, false));
       yearPickerDemos.forEach((demo) => setYearPickerOpen(demo, false));
       rangePickerDemos.forEach((demo) => setRangePickerOpen(demo, false));
+      dateComboDemos.forEach((demo) => setDateComboMenuOpen(demo, false));
+    });
+
+    $$('[data-checkbox-live]').forEach((choice) => {
+      const disabled = choice.classList.contains('is-disabled');
+      const syncCheckboxState = () => {
+        const mixed = choice.classList.contains('is-indeterminate');
+        choice.setAttribute('role', 'checkbox');
+        choice.setAttribute('aria-checked', mixed ? 'mixed' : String(choice.classList.contains('is-checked')));
+        choice.setAttribute('aria-disabled', String(disabled));
+      };
+      const toggleCheckboxState = () => {
+        if (disabled) return;
+        if (choice.classList.contains('is-indeterminate')) {
+          choice.classList.remove('is-indeterminate');
+          choice.classList.add('is-checked');
+        } else {
+          choice.classList.toggle('is-checked');
+        }
+        choice.classList.remove('is-hover');
+        syncCheckboxState();
+      };
+
+      if (!disabled) {
+        choice.tabIndex = 0;
+        choice.addEventListener('click', toggleCheckboxState);
+        choice.addEventListener('keydown', (event) => {
+          if (event.key !== ' ' && event.key !== 'Enter') return;
+          event.preventDefault();
+          toggleCheckboxState();
+        });
+      }
+
+      syncCheckboxState();
+    });
+
+    $$('[data-radio-group]').forEach((group) => {
+      const choices = $$('[data-radio-live]', group);
+      group.setAttribute('role', 'radiogroup');
+
+      const syncRadioStates = () => {
+        choices.forEach((choice) => {
+          const disabled = choice.classList.contains('is-disabled');
+          choice.setAttribute('role', 'radio');
+          choice.setAttribute('aria-checked', String(choice.classList.contains('is-checked')));
+          choice.setAttribute('aria-disabled', String(disabled));
+        });
+      };
+      const selectRadio = (selected) => {
+        if (selected.classList.contains('is-disabled')) return;
+        choices.forEach((choice) => {
+          if (choice.classList.contains('is-disabled')) return;
+          choice.classList.toggle('is-checked', choice === selected);
+          choice.classList.remove('is-hover');
+        });
+        syncRadioStates();
+      };
+
+      choices.forEach((choice) => {
+        if (choice.classList.contains('is-disabled')) return;
+        choice.tabIndex = 0;
+        choice.addEventListener('click', () => selectRadio(choice));
+        choice.addEventListener('keydown', (event) => {
+          if (event.key !== ' ' && event.key !== 'Enter') return;
+          event.preventDefault();
+          selectRadio(choice);
+        });
+      });
+
+      syncRadioStates();
+    });
+
+    $$('[data-component="switch"] .x-switch').forEach((switchDemo) => {
+      const disabled = switchDemo.classList.contains('is-disabled');
+      const syncSwitchState = () => {
+        switchDemo.classList.add('x-switch-live');
+        switchDemo.setAttribute('role', 'switch');
+        switchDemo.setAttribute('aria-checked', String(switchDemo.classList.contains('is-on')));
+        switchDemo.setAttribute('aria-disabled', String(disabled));
+      };
+      const toggleSwitchState = () => {
+        if (disabled) return;
+        switchDemo.classList.toggle('is-on');
+        syncSwitchState();
+      };
+
+      if (!disabled) {
+        switchDemo.tabIndex = 0;
+        switchDemo.addEventListener('click', toggleSwitchState);
+        switchDemo.addEventListener('keydown', (event) => {
+          if (event.key !== ' ' && event.key !== 'Enter') return;
+          event.preventDefault();
+          toggleSwitchState();
+        });
+      }
+
+      syncSwitchState();
     });
 
     $$('.code-block').forEach((block) => {
@@ -3851,6 +4978,5 @@ export default () =&gt; (
       });
     });
   </script>
-  <!-- DEMO_SHELL_END -->
 </body>
 </html>
