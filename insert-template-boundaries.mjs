@@ -6,8 +6,8 @@ import path from 'node:path';
 const repoRoot = process.cwd();
 
 const targets = [
-  '06-vue-code/templates/common-single-nav.html',
-  '06-vue-code/templates/double-nav-frame.html'
+  'Interaction Construction Specifications/common-single-nav.html',
+  'Interaction Construction Specifications/double-nav-frame.html'
 ];
 
 const markers = {
@@ -45,7 +45,9 @@ function wrapBusinessContent(content) {
     '<main class="main-content"',
     '<div class="main-content"',
     '<div class="content-area"',
-    '<section class="main-content"'
+    '<section class="main-content"',
+    '<div class="terminal-right-panel"',
+    '<div class="mock-content"'
   ];
 
   let startNeedle = null;
@@ -80,9 +82,7 @@ function updateFile(relativePath) {
   let content = fs.readFileSync(absolutePath, 'utf8');
   const original = content;
 
-  const firstBodyChild = '<body>';
-  content = insertAfterOnce(content, firstBodyChild, markers.frameStart);
-
+  content = insertAfterOnce(content, '<body>', markers.frameStart);
   content = wrapBusinessContent(content);
 
   if (!content.includes(markers.frameEnd)) {
