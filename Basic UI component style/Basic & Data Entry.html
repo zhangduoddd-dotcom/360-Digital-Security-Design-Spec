@@ -5,7 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360 Design</title>
   <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.css">
+  <!--
+    AI_COPY_RULE:
+    This file is a component library demo page. The platform frame, top navigation,
+    sidebar, page header, and documentation shell are preview-only.
+    For production HTML demos, copy component CSS/DOM only from COMPONENT_START /
+    COMPONENT_END blocks. Never copy .platform-* frame code from this file.
+  -->
   <style>
+    /* DEMO_SHELL_START: preview frame, documentation layout, and component-library demo chrome. Do not copy into generated business pages. */
     :root {
       --frame-top-height: 56px;
       --sidebar-expanded-width: 272px;
@@ -532,6 +540,9 @@
       border-radius: 50%;
       background: var(--p6);
     }
+    /* DEMO_SHELL_END */
+
+    /* COMPONENT_START: Basic & Data Entry CSS. AI may reuse these component classes with matching DOM fragments. */
     .x-input,
     .x-textarea {
       width: 200px;
@@ -1922,6 +1933,9 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
+    /* COMPONENT_END: Basic & Data Entry CSS */
+
+    /* DEMO_SHELL_START: preview-only token chips, empty panel, and hidden anchors. */
     .token-chip-row {
       display: flex;
       flex-wrap: wrap;
@@ -1960,6 +1974,7 @@
       clip: rect(0 0 0 0);
       white-space: nowrap;
     }
+    /* DEMO_SHELL_END */
   </style>
 </head>
 <body>
@@ -2005,6 +2020,13 @@
           </div>
         </div>
         <div class="platform-page-content">
+          <!--
+            COMPONENT_START: Basic & Data Entry DOM examples.
+            AI may inspect these sections for real x-* component DOM and states.
+            Do not copy content-shell, component-doc, section-card, section-header,
+            doc-panel, demo-row, or other documentation wrappers into business pages
+            unless the target page itself is a component documentation page.
+          -->
           <div class="anchor-list" aria-hidden="true">
             <span id="input"></span>
             <span id="input-number"></span>
@@ -2612,11 +2634,13 @@ export default () =&gt; (
 
             <div class="component-empty" data-component-empty></div>
           </div>
+          <!-- COMPONENT_END: Basic & Data Entry DOM examples -->
         </div>
       </main>
     </div>
   </div>
 
+  <!-- DEMO_SHELL_START: component-library navigation and preview interactions. Do not copy this block into generated business pages. -->
   <script>
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -3827,5 +3851,6 @@ export default () =&gt; (
       });
     });
   </script>
+  <!-- DEMO_SHELL_END -->
 </body>
 </html>
