@@ -58,6 +58,18 @@ HTML Demo 必须满足：
 - 把单层导航母版和双层导航母版混用。
 - 只参考母版视觉但不复制母版 DOM / CSS / JS。
 
+母版继承强校验补充：
+
+以下行为一律判定为未继承母版：
+
+- 重新编写 `.platform-*`、`.top-*`、`.sidebar-*`、`.menu-*`、`.page-*`、`.terminal-*`、`.local-*`、`.product-frame`、`.double-navigation-frame`、`.mock-body`、`.mock-main-panel`、`.main-content` 等母版框架 DOM。
+- 重新声明、裁剪、替换或覆盖母版中的框架 CSS，包括顶部导航、侧边栏、页头、内容外层容器、收起态、级联浮层、滚动容器和响应式规则。
+- 重新定义母版中的框架级 CSS 变量，例如 `--frame-top-height`、`--sidebar-expanded-width`、`--frame-sidebar-width`、`--frame-page-header-height`。
+- 删除或改写母版中的侧边栏收起展开、级联浮层、响应式、滚动容器、iconfont 初始化和框架 JS。
+- 只保留与母版相同的 class 名称，但 DOM 顺序、层级、CSS 或 JS 不是母版原文。
+
+合规做法是先完整复制母版 HTML / CSS / JS，再只修改母版允许的配置区、Logo、业务文案、mock 数据和 `BUSINESS_CONTENT_START` / `BUSINESS_CONTENT_END` 内部业务内容。
+
 ## 3. 业务内容边界
 
 业务内容只能进入母版指定的业务内容区。可替换内容仅包括：
@@ -79,6 +91,8 @@ HTML Demo 必须满足：
 - 母版 iconfont 与基础字体渲染规则。
 
 如果母版中已有 `BUSINESS_CONTENT_START` / `BUSINESS_CONTENT_END` 注释，只能替换该边界内部内容。没有显式边界时，按母版注释和业务内容容器判断，不得整体替换右侧框架区域。
+
+页面业务 CSS 不得覆盖或重写任何框架级选择器，包括 `.platform-*`、`.top-*`、`.sidebar-*`、`.menu-*`、`.page-*`、`.terminal-*`、`.local-*`、`.product-frame`、`.double-navigation-frame`、`.mock-body`、`.mock-main-panel`、`.main-content`，也不得重新定义 `--frame-*` 框架变量。
 
 ## 4. 组件来源硬约束
 
@@ -108,6 +122,18 @@ Basic UI component style/Navigation.html
 - 如果组件库未提供某个必需组件，不能伪装成规范组件；必须先补齐组件库，或在交付说明中标注该组件库缺口导致无法合规完成。
 
 页面业务 CSS 只能补充业务区布局、宽度、间距、对齐和局部业务修饰，不得重造基础组件视觉系统。
+
+组件来源强校验补充：
+
+以下行为一律判定为临时仿写组件：
+
+- 只使用 `ant-*`、`x-*` 或其他组件 class 名称，但 DOM 结构不是组件库 `COMPONENT_START` / `COMPONENT_END` 标记内的示例结构。
+- 从组件库中摘取少量 CSS 后重新组合、改名、裁剪为业务组件。
+- 在业务 CSS 中重写基础组件视觉样式，例如按钮高度、输入框边框、Select 下拉、Table 单元格、Pagination 页码、Tag 颜色、Modal 或 Drawer 外观。
+- 使用业务 class 替代组件库中已有的基础组件 class。
+- `COMPONENT_USAGE_MAP` 写了来源，但最终 HTML 中实际 DOM / class / CSS 无法对应到组件库标记区。
+
+允许的业务 CSS 仅限业务区布局、宽度、间距、对齐、表格列宽和局部业务状态排布。不得重造 Button、Input、Select、Table、Tag、Pagination、Dropdown、Tooltip、Toast、Modal、Drawer、Tabs、Steps 等基础组件视觉。
 
 ## 5. 当前页面执行契约
 
@@ -143,6 +169,18 @@ AI 必须按以下顺序执行：
 11. 不通过时先修正，再交付。
 ```
 
+读取失败与中止规则：
+
+如果无法完整读取或完整复制指定母版，不得自行补全、重写或压缩生成页面。如果组件库缺少当前页面必需组件，或当前组件只有 class 名称、没有完整 DOM / CSS / 状态来源，不得伪装成合规组件。
+
+必须返回以下结论之一：
+
+- `无法合规生成：母版文件未完整读取。`
+- `无法合规生成：组件库缺少当前页面必需组件。`
+- `无法合规生成：当前组件只有 class 名称，没有完整 DOM / CSS / 状态来源。`
+
+在上述情况下，禁止输出看似合规但实际仿写的 HTML Demo。
+
 `COMPONENT_USAGE_MAP` 必须与页面实际使用组件一致，不得写入未使用组件，也不得遗漏已使用组件。建议写成 HTML 注释，例如：
 
 ```html
@@ -152,6 +190,8 @@ button.primary: Basic UI component style/Basic & Data Entry.html | classes: ... 
 table.compact: Basic UI component style/Data Display.html | classes: ... | tokens: ...
 -->
 ```
+
+`COMPONENT_USAGE_MAP` 是可回溯证据，不是自我声明。每一项都必须能在最终 HTML 中找到对应 DOM / class，并能回溯到组件库 `COMPONENT_START` / `COMPONENT_END` 标记区；无法对应时，该项无效。
 
 ## 7. 交互与状态验收
 
@@ -174,11 +214,16 @@ HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的�
 
 - 已完整继承指定 HTML 母版。
 - 未重写顶部导航、侧边栏、页头和外层内容容器。
+- 最终 HTML 保留母版原始框架 DOM、CSS、JS、框架变量、iconfont、收起展开、级联浮层和响应式逻辑。
 - 业务内容只进入母版业务内容区。
+- 如母版存在 `BUSINESS_CONTENT_START` / `BUSINESS_CONTENT_END`，最终 HTML 只替换该边界内部内容。
 - 未保留母版示例业务内容。
 - 已建立当前页面执行契约。
 - 所有稳定基础组件均来自 `Basic UI component style/` 组件库资产。
 - 组件库 HTML 只使用 `COMPONENT_START` / `COMPONENT_END` 标记内的组件来源，未复制展示壳或 `.platform-*` 框架代码。
+- 业务 CSS 没有覆盖或重写 `.platform-*`、`.top-*`、`.sidebar-*`、`.menu-*`、`.page-*`、`.terminal-*`、`.local-*` 等框架选择器。
+- 业务 CSS 没有重写 `:root` 中的框架级变量或任何 `--frame-*` 变量。
+- 组件 DOM 能在组件库 `COMPONENT_START` / `COMPONENT_END` 标记区中找到对应结构。
 - Token 来源只指向 `Green Theme-Global Style.css`，未把组件 HTML 内重复 `:root` / `@font-face` 当作生成来源。
 - 未使用浏览器原生控件或临时 DOM 代替已有稳定组件。
 - 页面业务 CSS 没有重造基础组件样式。
@@ -188,6 +233,7 @@ HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的�
 - 全局字体渲染、iconfont、Token、主色、功能色、风险色使用一致。
 - 表格、工具栏、分页、固定列、横向滚动和内容边界没有溢出。
 - 最终 HTML 已写入 `COMPONENT_USAGE_MAP`，且与实际组件一致。
+- `COMPONENT_USAGE_MAP` 中每一项都能在最终 HTML 中找到对应组件，并能回溯到组件库真实片段。
 
 任一硬约束不通过时，不得交付为合规 HTML Demo。
 
@@ -208,6 +254,8 @@ HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的�
 - 缺少适用的 loading、empty、error、success、confirm 状态。
 - 没有组件来源证据。
 - 只完成语法检查或页面可运行检查，未完成规范验收。
+
+AI 不得用“视觉接近、类名相同、样式相似”替代“完整继承母版、真实复用组件”。只要框架或基础组件是重新组织生成的，即使视觉一致，也判定为不合规。
 
 ## 10. 维护原则
 
