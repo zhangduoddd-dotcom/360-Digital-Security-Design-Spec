@@ -1,5 +1,5 @@
-# HTML Demo 验收清单
-## HTML Demo Acceptance Checklist
+# HTML 验收清单
+## HTML Acceptance Checklist
 
 Keywords: html demo acceptance, snippet manifest, snippet file, template boundary, component dom, token, interaction
 
