@@ -77,4 +77,53 @@
   --投影-悬停: 0px 1px 2px -2px rgba(0,0,0,0.16),0px 3px 6px 0px rgba(0,0,0,0.12),0px 5px 12px 4px rgba(0,0,0,0.08); 
   --投影-默认: 0px 3px 6px -4px rgba(0,0,0,0.12),0px 6px 16px 0px rgba(0,0,0,0.08),0px 9px 28px 8px rgba(0,0,0,0.04); 
   --超级框hover阴影: 0px 4px 12px 0px rgba(183,179,255,0.50); 
+
+  /* AI_STABLE_TOKEN_START: stable semantic aliases. AI-generated pages must use these tokens as the only token source. */
+  --color-ai-default: linear-gradient(307deg, #004DFF 0%, #1093FF 65%, #1AFFAF 100%);
+  --color-ai-hover: linear-gradient(0deg, rgba(255,255,255,0.20), rgba(255,255,255,0.20)), linear-gradient(126deg, #1AFFAF 0%, #1093FF 37%, #004DFF 100%);
+  --color-ai-active: linear-gradient(0deg, rgba(0,0,0,0.20), rgba(0,0,0,0.20)), linear-gradient(309deg, #004DFF 0%, #1093FF 54%, #1AFFAF 100%);
+  --primary: var(--p6);
+  --primary-hover: var(--p5);
+  --primary-active: var(--p7);
+  --primary-bg: var(--p1);
+  --primary-bg-soft: #E6F8F3;
+  --page-bg: #F2F3F5;
+  --card-bg: var(--gray-1);
+  --top-bg: var(--gray-9);
+  --border: #E8EAED;
+  --border-strong: #DFE1E6;
+  --gray-3: #F2F3F5;
+  --gray-4: #E8EAED;
+  --gray-5: #DFE1E6;
+  --gray-6: #AEB2B8;
+  --text-title: var(--gray-9);
+  --text-body: var(--gray-8);
+  --text-secondary: var(--gray-7);
+  --text-tertiary: var(--gray-6);
+  --text-disabled: var(--gray-6);
+  --text-inverse: var(--gray-1);
+  --text-inverse-secondary: #D3D4D6;
+  --success: var(--Green-6);
+  --success-bg: var(--Green-1);
+  --success-border: var(--Green-3);
+  --info: var(--Blue-6);
+  --info-bg: var(--Blue-1);
+  --info-border: var(--Blue-3);
+  --warning: var(--Orange-6);
+  --warning-bg: var(--Orange-1);
+  --warning-border: var(--Orange-4);
+  --error: var(--Red-6);
+  --error-bg: var(--Red-1);
+  --error-border: var(--Red-2);
+  --focus-default: 0 0 0 2px #D9F4EE;
+  --focus-error: 0 0 0 2px #FFE8E6;
+  --focus-success: 0 0 0 2px #EFF8EE;
+  --focus-warning: 0 0 0 2px #FFF8E6;
+  --shadow-card: 0 4px 16px rgba(36, 41, 51, .05);
+  --shadow-card-up: 0 -4px 16px rgba(36, 41, 51, .05);
+  --shadow-popover: 0 8px 24px rgba(36, 41, 51, .14);
+  --shadow-overlay: 0 8px 80px rgba(36, 41, 51, .08);
+  --motion-fast: .15s ease;
+  --motion-base: .2s ease;
+  /* AI_STABLE_TOKEN_END */
 }
