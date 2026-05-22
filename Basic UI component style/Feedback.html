@@ -1,1 +1,2917 @@
+<!DOCTYPE html>
+<!--
+  AI_COPY_RULE
+  本 HTML 是“组件库展示页”。顶部导航、侧边栏、页头、外层框架、文档布局、
+  预览页交互脚本和响应式预览逻辑都只是组件库预览壳。
+  AI 生成最终业务页面时，不能复制 DEMO_SHELL 区域；只可参考 COMPONENT 区域中的组件样式和真实 DOM 示例。
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>360组件样式</title>
+  <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.css">
+  <style>
+    @font-face {
+      font-family: 'iconfont';
+      src: url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff2?t=1779186015229') format('woff2'),
+           url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.woff?t=1779186015229') format('woff'),
+           url('https://at.alicdn.com/t/c/font_5177816_df7h6mjlznn.ttf?t=1779186015229') format('truetype');
+    }
+
+    :root {
+      --frame-top-height: 56px;
+      --sidebar-expanded-width: 272px;
+      --sidebar-collapsed-width: 56px;
+      --frame-sidebar-width: var(--sidebar-expanded-width);
+      --frame-page-header-height: 48px;
+      --top-bg: #242933;
+      --page-bg: #F2F3F5;
+      --card-bg: #FFFFFF;
+      --border: #E8EAED;
+      --border-strong: #DFE1E6;
+      --text-title: #242933;
+      --text-body: #525966;
+      --text-secondary: #8A9099;
+      --text-disabled: #AEB2B8;
+      --text-inverse: #FFFFFF;
+      --text-inverse-secondary: #D3D4D6;
+      --color-ai-default: linear-gradient(307deg, #004DFF 0%, #1093FF 65%, #1AFFAF 100%);
+      --color-ai-hover: linear-gradient(0deg, rgba(255,255,255,0.20), rgba(255,255,255,0.20)), linear-gradient(126deg, #1AFFAF 0%, #1093FF 37%, #004DFF 100%);
+      --color-ai-active: linear-gradient(0deg, rgba(0,0,0,0.20), rgba(0,0,0,0.20)), linear-gradient(309deg, #004DFF 0%, #1093FF 54%, #1AFFAF 100%);
+      --primary: #00AB7A;
+      --primary-hover: #1DB887;
+      --primary-active: #039972;
+      --primary-bg: #D9F4EE;
+      --primary-bg-soft: #E6F8F3;
+      --gray-2: #F8F9FA;
+      --gray-3: #F2F3F5;
+      --gray-4: #E8EAED;
+      --success: #52C41A;
+      --success-bg: #EFF8EE;
+      --success-border: #BCE0B4;
+      --info: #1890FF;
+      --info-bg: #E6F7FF;
+      --info-border: #91D5FF;
+      --warning: #F58A02;
+      --warning-bg: #FFF8E6;
+      --warning-border: #FFC054;
+      --error: #F0131E;
+      --error-bg: #FFE8E6;
+      --error-border: #FFBEB8;
+      --shadow-card: 0 4px 16px rgba(36, 41, 51, .05);
+      --shadow-popover: 0 8px 24px rgba(36, 41, 51, .14);
+      --motion-fast: .15s ease;
+      --motion-base: .2s ease;
+    }
+
+    /* DEMO_SHELL_START
+       组件库展示壳样式：全局排版、顶部导航、侧边栏、页头、文档卡片、代码块和展示布局。
+       这些样式只服务本组件库页面，不应进入最终业务 HTML。
+    */
+    * { box-sizing: border-box; }
+    html,
+    body,
+    button,
+    input,
+    textarea,
+    select {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+      font-synthesis: none;
+      font-synthesis-weight: none;
+      font-synthesis-style: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--page-bg);
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+      letter-spacing: 0;
+    }
+    button { font: inherit; }
+    .platform-frame {
+      min-width: 1280px;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--page-bg);
+    }
+    .platform-frame.sidebar-collapsed { --frame-sidebar-width: var(--sidebar-collapsed-width); }
+    .platform-top-nav {
+      width: 100%;
+      height: var(--frame-top-height);
+      flex: 0 0 var(--frame-top-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--top-bg);
+      color: var(--text-inverse);
+      overflow: hidden;
+    }
+    .top-nav-left {
+      height: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      min-width: 0;
+    }
+    .top-brand {
+      width: 286px;
+      height: var(--frame-top-height);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+    .top-brand-mark {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: var(--text-inverse);
+    }
+    .iconfont {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1em;
+      height: 1em;
+      font-size: 16px;
+      line-height: 1;
+      color: currentColor;
+    }
+    .top-brand-title { font-size: 16px; line-height: 24px; font-weight: 600; }
+    .top-brand-sub { color: var(--text-inverse-secondary); font-size: 12px; line-height: 20px; }
+    .top-nav-right {
+      height: var(--frame-top-height);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 0 24px;
+      color: var(--text-disabled);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .top-nav-right-inner { height: var(--frame-top-height); display: flex; align-items: center; gap: 0; padding: 0 24px; }
+    .top-utility-row { height: var(--frame-top-height); display: flex; align-items: center; gap: 12px; color: var(--text-disabled); white-space: nowrap; }
+    .top-utility-item {
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      color: var(--text-disabled);
+      font-size: 12px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: color .16s ease, background-color .16s ease;
+    }
+    .top-utility-item.icon-only { width: 28px; justify-content: center; padding: 0; }
+    .top-utility-divider { width: 1px; height: 14px; background: var(--text-body); flex-shrink: 0; }
+    .top-utility-item:hover,
+    .top-utility-item.open { color: var(--text-inverse); background: rgba(255,255,255,.08); }
+    .top-utility-item strong { color: var(--text-inverse); font-weight: 500; padding: 0 2px; }
+    .platform-body { height: calc(100vh - var(--frame-top-height)); display: flex; overflow: hidden; }
+    .platform-sidebar {
+      position: relative;
+      width: var(--frame-sidebar-width);
+      flex: 0 0 var(--frame-sidebar-width);
+      height: 100%;
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: width .18s ease, flex-basis .18s ease;
+      z-index: 10;
+    }
+    .sidebar-scroll { flex: 1; min-height: 0; padding: 8px; overflow-x: hidden; overflow-y: auto; }
+    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+    .sidebar-scroll::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; }
+    .sidebar-title {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      color: var(--text-title);
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      white-space: nowrap;
+    }
+    .menu-item {
+      width: 100%;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      padding: 13px 12px;
+      border-radius: 6px;
+      color: var(--text-title);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color .16s ease, color .16s ease;
+    }
+    .menu-item-en {
+      color: var(--text-title);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 500;
+    }
+    .menu-item-zh {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 400;
+    }
+    .menu-item .iconfont,
+    .menu-item .line-icon { width: 18px; height: 18px; flex: 0 0 18px; font-size: 18px; color: var(--text-secondary); transition: color .16s ease; }
+    .line-icon { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+    .line-icon-modal::before { content: ""; width: 15px; height: 12px; border: 1.6px solid currentColor; border-radius: 3px; }
+    .line-icon-modal::after { content: ""; position: absolute; top: 5px; width: 8px; height: 1.6px; border-radius: 2px; background: currentColor; box-shadow: 0 4px 0 currentColor; }
+    .line-icon-drawer::before { content: ""; width: 15px; height: 13px; border: 1.6px solid currentColor; border-radius: 3px; }
+    .line-icon-drawer::after { content: ""; position: absolute; right: 3px; width: 5px; height: 13px; border-left: 1.6px solid currentColor; }
+    .line-icon-exception::before { content: ""; width: 13px; height: 15px; border: 1.6px solid currentColor; border-radius: 3px; }
+    .line-icon-exception::after { content: "!"; position: absolute; color: currentColor; font-size: 11px; line-height: 1; font-weight: 700; }
+    .line-icon-empty::before { content: ""; width: 14px; height: 10px; border: 1.6px solid currentColor; border-radius: 2px; transform: translateY(2px); }
+    .line-icon-empty::after { content: ""; position: absolute; top: 4px; width: 10px; height: 5px; border: 1.6px solid currentColor; border-bottom: 0; border-radius: 5px 5px 0 0; }
+    .menu-item:hover,
+    .menu-item.active { color: var(--primary-active); background: var(--primary-bg); }
+    .menu-item:hover .iconfont,
+    .menu-item.active .iconfont,
+    .menu-item:hover .line-icon,
+    .menu-item.active .line-icon,
+    .menu-item:hover .menu-item-en,
+    .menu-item.active .menu-item-en,
+    .menu-item:hover .menu-item-zh,
+    .menu-item.active .menu-item-zh { color: var(--primary-active); }
+    .sidebar-footer {
+      width: var(--frame-sidebar-width);
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-top: 1px solid var(--gray-2);
+      background: var(--card-bg);
+      transition: width .18s ease;
+    }
+    .sidebar-version { color: var(--text-secondary); font-size: 14px; line-height: 22px; }
+    .sidebar-collapse-button {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .sidebar-collapse-button:hover { background: var(--gray-2); color: var(--primary-active); }
+    .sidebar-collapsed .sidebar-title,
+    .sidebar-collapsed .menu-item {
+      font-size: 0;
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .sidebar-collapsed .menu-item .iconfont { margin: 0; }
+    .sidebar-collapsed .sidebar-version { display: none; }
+    .sidebar-collapsed .sidebar-footer { justify-content: center; padding-left: 19px; padding-right: 19px; }
+    .platform-main { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+    .platform-page-header {
+      height: var(--frame-page-header-height);
+      flex: 0 0 var(--frame-page-header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-title { margin: 0; color: var(--text-title); font-size: 16px; line-height: 28px; font-weight: 500; }
+    .page-subtitle { color: var(--text-secondary); font-size: 12px; line-height: 20px; }
+    .platform-page-content {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 16px;
+      background: var(--page-bg);
+    }
+    .content-shell { display: grid; gap: 16px; }
+    .section-card {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow-card);
+      overflow: visible;
+    }
+    .section-header {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title { margin: 0; color: var(--text-title); font-size: 15px; line-height: 24px; font-weight: 600; }
+    .section-desc { margin: 2px 0 0; color: var(--text-secondary); font-size: 12px; line-height: 20px; }
+    .section-body { padding: 20px; }
+    .demo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .demo-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .demo-panel {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--gray-3);
+    }
+    .demo-panel h3 { margin: 0 0 12px; color: var(--text-title); font-size: 14px; line-height: 22px; font-weight: 600; }
+    .module-anchor { display: block; position: relative; top: -12px; height: 0; overflow: hidden; }
+    .demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .demo-col { display: grid; gap: 12px; }
+    .muted { color: var(--text-secondary); }
+    .danger { color: var(--error); }
+    .divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .code-note {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: var(--primary-bg);
+      color: var(--primary-active);
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .component-doc[hidden] { display: none; }
+    .spec-card { padding: 24px; border-radius: 6px; overflow: hidden; }
+    .spec-card > .section-header { min-height: 0; padding: 0; border-bottom: 0; }
+    .spec-card > .section-header + .section-body { margin-top: 16px; }
+    .spec-card > .section-body { padding: 0; }
+    .spec-block { margin-top: 40px; }
+    .spec-block .section-header { min-height: 0; padding: 0; border-bottom: 0; }
+    .spec-block .section-body { padding: 0; margin-top: 16px; }
+    .spec-info-title { margin: 0 0 12px; color: var(--text-title); font-size: 14px; line-height: 22px; font-weight: 600; }
+    .spec-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .spec-summary-item { min-width: 0; padding: 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--gray-2); }
+    .spec-summary-label { color: var(--text-secondary); font-size: 12px; line-height: 20px; }
+    .spec-summary-value { margin-top: 4px; color: var(--text-title); font-size: 14px; line-height: 22px; font-weight: 600; }
+    .doc-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+    .doc-panel { min-width: 0; padding: 16px; border: 1px solid var(--border); border-radius: 6px; background: var(--card-bg); }
+    .doc-panel h3 { margin: 0 0 12px; color: var(--text-title); font-size: 14px; line-height: 22px; font-weight: 600; }
+    .rule-list { margin: 0; padding-left: 18px; color: var(--text-body); font-size: 13px; line-height: 22px; }
+    .rule-list li + li { margin-top: 6px; }
+    .code-block { position: relative; margin: 0; padding: 14px 16px; overflow: auto; border-radius: 6px; background: var(--gray-3); color: var(--text-title); font-size: 13px; line-height: 22px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; white-space: pre; }
+    .code-copy-button { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--border-strong); border-radius: 4px; background: var(--card-bg); color: var(--text-secondary); opacity: 0; cursor: pointer; transition: opacity var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast); z-index: 1; }
+    .code-block:hover .code-copy-button { opacity: 1; }
+    .code-copy-button:hover, .code-copy-button.is-copied { color: var(--primary-active); border-color: var(--primary-hover); background: var(--primary-bg); }
+    @media (max-width: 1180px) { .doc-grid, .spec-summary { grid-template-columns: 1fr; } }
+
+    /* DEMO_SHELL_END */
+
+    /* COMPONENT_START
+       AI 可参考的组件来源样式：反馈与状态、分页等组件 CSS。此轻量训练版本：异常界面只保留通知提示框参考图；空状态只保留无数据通用类参考图；数据加载只保留 3 个原始 GIF：数据正在分析中、正在生成文件、数据正在加载中。
+       新增或修改组件样式时放在此区域，避免混入 .platform-* 预览壳代码。
+    */
+    .ant-btn {
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 0 14px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      background: var(--card-bg);
+      color: var(--text-body);
+      cursor: pointer;
+      white-space: nowrap;
+      outline: none;
+      transition: color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast), box-shadow var(--motion-fast);
+    }
+    .ant-btn .iconfont { width: 16px; height: 16px; flex: 0 0 auto; font-size: 16px; }
+    .ant-btn:hover:not(:disabled),
+    .ant-btn.is-hover { color: var(--primary); border-color: var(--primary-hover); }
+    .ant-btn:active:not(:disabled),
+    .ant-btn.is-active { color: var(--primary-active); border-color: var(--primary-active); }
+    .ant-btn:focus-visible,
+    .ant-btn.is-focus { box-shadow: 0 0 0 2px rgba(0,171,122,.22); border-color: var(--primary); }
+    .ant-btn:disabled {
+      color: var(--text-disabled);
+      border-color: var(--border);
+      background: var(--gray-2);
+      cursor: not-allowed;
+    }
+    .ant-btn-primary { color: var(--text-inverse); border-color: var(--primary); background: var(--primary); }
+    .ant-btn-primary:hover:not(:disabled),
+    .ant-btn-primary.is-hover { color: var(--text-inverse); border-color: var(--primary-hover); background: var(--primary-hover); }
+    .ant-btn-primary:active:not(:disabled),
+    .ant-btn-primary.is-active { color: var(--text-inverse); border-color: var(--primary-active); background: var(--primary-active); }
+    .ant-btn-dashed { border-style: dashed; }
+    .ant-btn-text,
+    .ant-btn-link {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+    .ant-btn-text { color: var(--text-body); }
+    .ant-btn-text:hover:not(:disabled),
+    .ant-btn-text.is-hover { color: var(--text-title); background: var(--gray-2); border-color: transparent; }
+    .ant-btn-link { color: var(--primary); padding-inline: 4px; }
+    .ant-btn-link:hover:not(:disabled),
+    .ant-btn-link.is-hover { color: var(--primary-hover); border-color: transparent; background: transparent; }
+    .ant-btn-ai {
+      color: var(--text-inverse);
+      border: 0;
+      background: var(--color-ai-default);
+    }
+    .ant-btn-ai:hover:not(:disabled),
+    .ant-btn-ai.is-hover { color: var(--text-inverse); background: var(--color-ai-hover); }
+    .ant-btn-ai:active:not(:disabled),
+    .ant-btn-ai.is-active { color: var(--text-inverse); background: var(--color-ai-active); }
+    .ant-btn-sm { height: 24px; padding: 0 8px; border-radius: 4px; font-size: 12px; line-height: 20px; }
+    .ant-btn-lg { height: 40px; padding: 0 24px; border-radius: 8px; font-size: 16px; line-height: 28px; }
+    .ant-btn-icon-only { width: 32px; padding: 0; }
+    .ant-btn-sm.ant-btn-icon-only { width: 24px; }
+    .loading-spinner {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      flex: 0 0 auto;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    .ant-btn-lg .loading-spinner { width: 16px; height: 16px; }
+    .ant-btn-sm .loading-spinner { width: 12px; height: 12px; border-width: 1.5px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .ant-tabs { display: grid; gap: 12px; }
+    .ant-tabs-nav { display: flex; align-items: center; gap: 24px; border-bottom: 1px solid var(--border); }
+    .ant-tabs-tab {
+      position: relative;
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: color var(--motion-fast);
+    }
+    .ant-tabs-tab:hover,
+    .ant-tabs-tab.is-hover { color: var(--primary); }
+    .ant-tabs-tab-active { color: var(--primary-active); font-weight: 500; }
+    .ant-tabs-tab-active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px 2px 0 0;
+    }
+    .ant-tabs-tab-disabled { color: var(--text-disabled); cursor: not-allowed; }
+    .ant-tabs-card .ant-tabs-nav { gap: 0; border-bottom: 0; }
+    .ant-tabs-card .ant-tabs-tab {
+      min-width: 96px;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      margin-left: -1px;
+      background: var(--gray-2);
+    }
+    .ant-tabs-card .ant-tabs-tab:first-child { margin-left: 0; border-radius: 6px 0 0 6px; }
+    .ant-tabs-card .ant-tabs-tab:last-child { border-radius: 0 6px 6px 0; }
+    .ant-tabs-card .ant-tabs-tab-active { z-index: 1; background: var(--primary-bg); border-color: var(--primary); }
+    .ant-tabs-card .ant-tabs-tab-active::after { display: none; }
+    .ant-badge-count {
+      min-width: 18px;
+      height: 18px;
+      padding: 0 6px;
+      border-radius: 9px;
+      background: var(--error);
+      color: var(--text-inverse);
+      font-size: 12px;
+      line-height: 18px;
+    }
+    .ant-tabs-content {
+      min-height: 76px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--gray-2);
+      color: var(--text-body);
+    }
+    .ant-tabs-pane { display: none; }
+    .ant-tabs-pane-active { display: block; }
+
+    .ant-input,
+    .ant-picker,
+    .ant-select-selector {
+      height: 32px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      background: var(--card-bg);
+      color: var(--text-title);
+      outline: none;
+      transition: border-color var(--motion-fast), box-shadow var(--motion-fast), background-color var(--motion-fast);
+    }
+    .ant-input {
+      width: 200px;
+      padding: 4px 11px;
+      line-height: 22px;
+    }
+    .ant-input:hover:not(:disabled),
+    .ant-input.is-hover,
+    .ant-picker:hover:not(.disabled),
+    .ant-picker.is-hover,
+    .ant-select:not(.ant-select-disabled) .ant-select-selector:hover,
+    .ant-select.is-hover .ant-select-selector { border-color: var(--primary-hover); }
+    .ant-input:focus,
+    .ant-input-focused,
+    .ant-input.is-focus,
+    .ant-picker-focused,
+    .ant-picker.is-focus,
+    .ant-select-open .ant-select-selector {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0,171,122,.18);
+    }
+    .ant-input:disabled {
+      color: var(--text-disabled);
+      background: var(--gray-2);
+      border-color: var(--border);
+      cursor: not-allowed;
+    }
+    .ant-input-sm { height: 24px; padding: 1px 7px; border-radius: 4px; font-size: 12px; line-height: 20px; }
+    .ant-input-lg { height: 40px; padding: 5px 13px; border-radius: 8px; font-size: 16px; line-height: 28px; }
+    .ant-input-status-error { border-color: var(--error); }
+    .ant-input-status-error:focus { box-shadow: 0 0 0 2px rgba(255,77,79,.16); border-color: var(--error); }
+    .ant-form-item-explain-error { margin-top: 4px; color: var(--error); font-size: 12px; line-height: 20px; }
+    .ant-input-affix-wrapper {
+      width: 240px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 11px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      background: var(--card-bg);
+      transition: border-color var(--motion-fast), box-shadow var(--motion-fast);
+    }
+    .ant-input-affix-wrapper .ant-input { width: 100%; height: 30px; padding: 0; border: 0; box-shadow: none; }
+    .ant-input-clear-icon { color: var(--text-secondary); cursor: pointer; }
+    .ant-textarea {
+      width: 320px;
+      min-height: 92px;
+      padding: 6px 11px;
+      resize: vertical;
+    }
+    .ant-input-show-count { display: inline-grid; gap: 4px; justify-items: end; }
+    .ant-input-data-count { color: var(--text-secondary); font-size: 12px; line-height: 20px; }
+
+    .ant-select { position: relative; width: 200px; display: inline-block; vertical-align: top; }
+    .ant-select-open,
+    .ant-picker-open { z-index: 40; }
+    .ant-select-selector {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 11px;
+      cursor: pointer;
+    }
+    .ant-select-arrow { color: var(--text-secondary); }
+    .ant-select-arrow-up { display: none; }
+    .ant-select-open .ant-select-arrow-down { display: none; }
+    .ant-select-open .ant-select-arrow-up { display: inline-flex; color: var(--primary); }
+    .ant-select-dropdown,
+    .ant-picker-dropdown,
+    .ant-tooltip {
+      position: absolute;
+      z-index: 30;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: var(--shadow-popover);
+      opacity: 0;
+      transform: translateY(-4px);
+      pointer-events: none;
+      transition: opacity var(--motion-base), transform var(--motion-base);
+    }
+    .ant-select-open .ant-select-dropdown,
+    .ant-picker-open .ant-picker-dropdown,
+    .ant-tooltip-open .ant-tooltip {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .ant-select-dropdown { top: 38px; left: 0; width: 100%; padding: 4px; }
+    .ant-select-item {
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      color: var(--text-title);
+      cursor: pointer;
+      transition: background-color var(--motion-fast), color var(--motion-fast);
+    }
+    .ant-select-item:hover { background: var(--gray-3); color: var(--text-title); }
+    .ant-select-item-option-selected { color: var(--primary-active); background: var(--primary-bg); }
+    .ant-select-item-option-disabled { color: var(--text-disabled); cursor: not-allowed; background: transparent; }
+    .ant-select-multiple .ant-select-selector {
+      min-height: 32px;
+      height: auto;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding: 3px 5px;
+    }
+    .ant-select-selection-item {
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 6px;
+      border: 1px solid var(--gray-4);
+      border-radius: 4px;
+      background: var(--gray-3);
+      color: var(--text-body);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .ant-select-selection-item .iconfont {
+      width: 12px;
+      height: 12px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: color var(--motion-fast);
+    }
+    .ant-select-selection-item .iconfont:hover { color: var(--error); }
+    .ant-select-empty,
+    .ant-select-loading { min-height: 48px; display: grid; place-items: center; color: var(--text-secondary); font-size: 12px; }
+    .ant-select-status-error .ant-select-selector { border-color: var(--error); }
+    .ant-select-disabled .ant-select-selector {
+      color: var(--text-disabled);
+      background: var(--gray-2);
+      border-color: var(--border);
+      cursor: not-allowed;
+    }
+
+    .ant-checkbox-wrapper,
+    .ant-radio-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-body);
+      cursor: pointer;
+      line-height: 22px;
+    }
+    .ant-checkbox,
+    .ant-radio {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-strong);
+      background: var(--card-bg);
+      transition: border-color var(--motion-fast), background-color var(--motion-fast);
+    }
+    .ant-checkbox { border-radius: 4px; }
+    .ant-radio { border-radius: 50%; }
+    .ant-checkbox-wrapper:hover .ant-checkbox,
+    .ant-checkbox-wrapper.is-hover .ant-checkbox,
+    .ant-radio-wrapper:hover .ant-radio,
+    .ant-radio-wrapper.is-hover .ant-radio { border-color: var(--primary-hover); }
+    .ant-checkbox-wrapper.is-focus .ant-checkbox,
+    .ant-radio-wrapper.is-focus .ant-radio { box-shadow: 0 0 0 2px rgba(0,171,122,.18); border-color: var(--primary); }
+    .ant-checkbox-checked,
+    .ant-checkbox-indeterminate,
+    .ant-radio-checked { border-color: var(--primary); background: var(--primary); }
+    .ant-checkbox-checked::after {
+      content: "";
+      width: 5px;
+      height: 9px;
+      border: solid var(--card-bg);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+    .ant-checkbox-indeterminate::after {
+      content: "";
+      width: 8px;
+      height: 2px;
+      background: var(--card-bg);
+      border-radius: 2px;
+    }
+    .ant-radio-checked::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--card-bg);
+    }
+    .ant-checkbox-disabled,
+    .ant-radio-disabled {
+      background: var(--gray-2);
+      border-color: var(--border);
+      cursor: not-allowed;
+    }
+    .ant-checkbox-wrapper-disabled,
+    .ant-radio-wrapper-disabled {
+      color: var(--text-disabled);
+      cursor: not-allowed;
+    }
+    .ant-radio-button-wrapper {
+      height: 32px;
+      min-width: 74px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      margin-left: -1px;
+      border: 1px solid var(--border-strong);
+      background: var(--card-bg);
+      color: var(--text-body);
+      cursor: pointer;
+      transition: color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast);
+    }
+    .ant-radio-button-wrapper:first-child { margin-left: 0; border-radius: 6px 0 0 6px; }
+    .ant-radio-button-wrapper:last-child { border-radius: 0 6px 6px 0; }
+    .ant-radio-button-wrapper:hover,
+    .ant-radio-button-wrapper.is-hover { color: var(--primary); }
+    .ant-radio-button-wrapper-checked {
+      z-index: 1;
+      color: var(--primary-active);
+      border-color: var(--primary);
+      background: var(--primary-bg);
+    }
+    .ant-radio-button-wrapper-disabled { color: var(--text-disabled); background: var(--gray-2); cursor: not-allowed; }
+
+    .ant-table-wrapper {
+      border: 0;
+      border-radius: 0;
+      background: var(--card-bg);
+      overflow: hidden;
+    }
+    .ant-table-wrapper + .ant-table-wrapper { margin-top: 16px; }
+    .ant-table-density-note {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 4px;
+      background: var(--primary-bg);
+      color: var(--primary-active);
+      font-size: 12px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+    .ant-table-toolbar {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ant-table-selected-bar { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); }
+    .ant-table-scroll { overflow: auto; }
+    .ant-table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+    .ant-table th {
+      height: 48px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--border);
+      background: var(--gray-2);
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .ant-table td {
+      height: 48px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-body);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: background-color var(--motion-fast);
+    }
+    .ant-table-compact th,
+    .ant-table-compact td { height: 40px; }
+    .ant-table tbody tr:hover td { background: var(--gray-3); }
+    .ant-table tbody tr.row-selected td { background: var(--card-bg); }
+    .ant-table tbody tr.row-selected:hover td { background: var(--gray-3); }
+    .ant-table tbody tr.row-disabled td { color: var(--text-disabled); background: var(--gray-2); }
+    .ant-table-cell-actions { display: inline-flex; align-items: center; gap: 8px; }
+    .ant-table-cell-actions a {
+      color: var(--primary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color var(--motion-fast);
+    }
+    .ant-table-cell-actions a:hover { color: var(--primary-hover); }
+    .ant-table-cell-actions a.danger { color: var(--error); }
+    .ant-table-empty,
+    .ant-table-loading,
+    .ant-table-error {
+      min-height: 116px;
+      display: grid;
+      place-items: center;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+    }
+    .ant-table-loading .loading-spinner,
+    .ant-select-loading .loading-spinner { color: var(--primary); }
+
+    .ant-tag {
+      min-height: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 7px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--gray-2);
+      color: var(--text-body);
+      font-size: 12px;
+      line-height: 20px;
+      white-space: nowrap;
+      transition: color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast);
+    }
+    .ant-tag .iconfont { width: 12px; height: 12px; font-size: 12px; }
+    .ant-tag-checkable { cursor: pointer; }
+    .ant-tag-checkable:hover,
+    .ant-tag-checkable.is-hover { color: var(--primary); border-color: var(--primary-hover); }
+    .ant-tag-checkable-checked,
+    .ant-tag-primary { color: var(--primary-active); background: var(--primary-bg); border-color: var(--primary-hover); }
+    .ant-tag-success { color: #389E0D; background: var(--success-bg); border-color: var(--success-border); }
+    .ant-tag-processing { color: #096DD9; background: var(--info-bg); border-color: var(--info-border); }
+    .ant-tag-warning { color: #CF6E00; background: var(--warning-bg); border-color: var(--warning-border); }
+    .ant-tag-error { color: var(--error); background: var(--error-bg); border-color: var(--error-border); }
+    .ant-tag .iconfont { cursor: pointer; color: currentColor; opacity: .72; }
+    .ant-tag .iconfont:hover { opacity: 1; }
+    .ant-tag-lg { min-height: 28px; padding: 0 10px; border-radius: 6px; font-size: 14px; line-height: 22px; }
+
+    .tooltip-anchor { position: relative; display: inline-flex; }
+    .ant-tooltip {
+      left: 50%;
+      bottom: calc(100% + 8px);
+      width: max-content;
+      max-width: 240px;
+      padding: 6px 8px;
+      border-color: transparent;
+      background: rgba(36, 41, 51, .95);
+      color: var(--text-inverse);
+      font-size: 12px;
+      line-height: 20px;
+      transform: translate(-50%, 4px);
+    }
+    .ant-tooltip::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 8px;
+      height: 8px;
+      background: rgba(36, 41, 51, .95);
+      transform: translate(-50%, -4px) rotate(45deg);
+    }
+    .tooltip-anchor:hover .ant-tooltip,
+    .ant-tooltip-open .ant-tooltip {
+      opacity: 1;
+      transform: translate(-50%, 0);
+      pointer-events: auto;
+    }
+
+    .ant-picker {
+      position: relative;
+      width: 240px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 0 11px;
+      cursor: pointer;
+    }
+    .ant-picker-input { flex: 1; }
+    .ant-picker-suffix {
+      flex: 0 0 auto;
+      color: var(--text-tertiary);
+      transition: color var(--motion-fast);
+    }
+    .ant-picker:hover:not(.disabled) .ant-picker-suffix,
+    .ant-picker.is-hover .ant-picker-suffix,
+    .ant-picker-focused .ant-picker-suffix,
+    .ant-picker.is-focus .ant-picker-suffix,
+    .ant-picker-open .ant-picker-suffix { color: var(--primary); }
+    .ant-picker-status-error { border-color: var(--error); }
+    .ant-picker-status-error.ant-picker-focused,
+    .ant-picker-status-error.is-focus { box-shadow: 0 0 0 2px rgba(255,77,79,.16); border-color: var(--error); }
+    .ant-picker-range { width: 400px; }
+    .ant-picker-input { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
+    .ant-picker-dropdown {
+      top: 38px;
+      left: 0;
+      width: 280px;
+      padding: 12px;
+    }
+    .ant-picker-range .ant-picker-dropdown { width: 560px; }
+    .ant-picker-header {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-title);
+      font-weight: 500;
+    }
+    .ant-picker-content { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    .ant-picker-content th {
+      height: 28px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 400;
+      text-align: center;
+    }
+    .ant-picker-cell {
+      width: 32px;
+      height: 32px;
+      text-align: center;
+      border-radius: 4px;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: background-color var(--motion-fast), color var(--motion-fast);
+    }
+    .ant-picker-cell:hover { background: var(--gray-2); color: var(--primary-active); }
+    .ant-picker-cell-selected { background: var(--primary); color: var(--text-inverse); }
+    .ant-picker-cell-in-range { background: var(--primary-bg); color: var(--primary-active); }
+    .ant-picker-cell-disabled { color: var(--text-disabled); cursor: not-allowed; background: transparent; }
+    .ant-picker.disabled { color: var(--text-disabled); background: var(--gray-2); border-color: var(--border); cursor: not-allowed; }
+
+    .ant-pagination {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 10px 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 20px;
+    }
+    .ant-pagination-total-text { margin-right: auto; }
+    .ant-pagination-item,
+    .ant-pagination-prev,
+    .ant-pagination-next {
+      min-width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: var(--card-bg);
+      color: var(--text-body);
+      cursor: pointer;
+      transition: color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast);
+    }
+    .ant-pagination-item:hover,
+    .ant-pagination-prev:hover,
+    .ant-pagination-next:hover,
+    .ant-pagination-item.is-hover,
+    .ant-pagination-prev.is-hover,
+    .ant-pagination-next.is-hover { color: var(--primary); border-color: var(--primary-hover); }
+    .ant-pagination-prev,
+    .ant-pagination-next { color: var(--text-secondary); }
+    .ant-pagination-prev:hover,
+    .ant-pagination-next:hover,
+    .ant-pagination-prev.is-hover,
+    .ant-pagination-next.is-hover { color: var(--text-secondary); }
+    .ant-pagination-item-active {
+      color: var(--primary-active);
+      border-color: transparent;
+      background: var(--primary-bg);
+      font-weight: 500;
+    }
+    .ant-pagination-disabled {
+      color: var(--text-disabled);
+      background: var(--gray-2);
+      border-color: var(--border);
+      cursor: not-allowed;
+    }
+    .ant-pagination-options { display: inline-flex; align-items: center; gap: 8px; }
+    .ant-pagination-options-quick-jumper { display: inline-flex; align-items: center; gap: 4px; }
+    .ant-pagination-options-quick-jumper input {
+      width: 48px;
+      height: 32px;
+      padding: 0 8px;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      outline: none;
+    }
+    .pagination-demo-surface {
+      padding: 32px;
+      border-radius: 8px;
+      background: var(--card-bg);
+    }
+    .pagination-demo-section + .pagination-demo-section { margin-top: 56px; }
+    .pagination-demo-title {
+      margin: 0 0 18px;
+      color: var(--text-title);
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+    .pagination-demo-note {
+      margin: 0 0 24px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 24px;
+    }
+    .pagination-variant-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+      gap: 32px 48px;
+      align-items: start;
+    }
+    .pagination-variant {
+      min-width: 0;
+    }
+    .pagination-variant-title {
+      margin: 0 0 16px;
+      color: var(--text-title);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+    .pagination-demo-stack {
+      display: grid;
+      gap: 14px;
+      align-items: start;
+    }
+    .pagination-demo-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 24px;
+    }
+    .pagination-demo-row.is-simple { gap: 6px; font-size: 13px; line-height: 20px; }
+    .pagination-item,
+    .pagination-select,
+    .pagination-jumper {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      padding: 0;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      background: var(--card-bg);
+      color: var(--text-title);
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 400;
+      box-sizing: border-box;
+      cursor: pointer;
+      transition: color var(--motion-fast), border-color var(--motion-fast), background-color var(--motion-fast), box-shadow var(--motion-fast);
+    }
+    .pagination-item:hover,
+    .pagination-item.is-hover,
+    .pagination-select:hover {
+      color: var(--primary-active);
+      border-color: var(--primary-hover);
+    }
+    .pagination-item:focus-visible,
+    .pagination-select:focus-visible,
+    .pagination-jumper:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0,171,122,.18);
+      border-color: var(--primary);
+    }
+    .pagination-item.is-disabled,
+    .pagination-item:disabled {
+      color: var(--text-disabled);
+      background: var(--gray-2);
+      border-color: var(--border);
+      cursor: not-allowed;
+    }
+    .pagination-item.is-ellipsis {
+      color: var(--text-secondary);
+      border-color: var(--border-strong);
+      background: var(--card-bg);
+      cursor: default;
+    }
+    .pagination-item.is-jump {
+      color: var(--text-secondary);
+      border-color: var(--border-strong);
+      background: var(--card-bg);
+      font-weight: 500;
+    }
+    .pagination-item.is-ellipsis:hover,
+    .pagination-item.is-ellipsis.is-hover {
+      color: var(--text-secondary);
+      border-color: var(--border-strong);
+    }
+    .pagination-item.is-jump:hover,
+    .pagination-item.is-jump.is-hover {
+      color: var(--text-secondary);
+      border-color: var(--border-strong);
+    }
+    .pagination-item.is-ellipsis.is-disabled,
+    .pagination-item.is-jump.is-disabled,
+    .pagination-item.is-ellipsis:disabled,
+    .pagination-item.is-jump:disabled {
+      color: var(--text-disabled);
+      border-color: var(--border);
+      background: var(--gray-2);
+    }
+    .pagination-item svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .pagination-arrow {
+      width: 9px;
+      height: 9px;
+      display: block;
+      border: solid currentColor;
+      border-width: 0 1.5px 1.5px 0;
+    }
+    .pagination-arrow.is-prev { transform: rotate(135deg); margin-left: 2px; }
+    .pagination-arrow.is-next { transform: rotate(-45deg); margin-right: 2px; }
+    .pagination-prev,
+    .pagination-next,
+    .pagination-item:has(.pagination-arrow) {
+      color: var(--text-secondary);
+    }
+    .pagination-prev:hover,
+    .pagination-next:hover,
+    .pagination-prev.is-hover,
+    .pagination-next.is-hover,
+    .pagination-item:has(.pagination-arrow):hover,
+    .pagination-item.is-hover:has(.pagination-arrow) {
+      color: var(--text-secondary);
+    }
+    .pagination-prev.is-disabled,
+    .pagination-next.is-disabled,
+    .pagination-prev:disabled,
+    .pagination-next:disabled,
+    .pagination-item.is-disabled:has(.pagination-arrow),
+    .pagination-item:disabled:has(.pagination-arrow) {
+      color: var(--text-disabled);
+    }
+    .pagination-demo-row.is-linear .pagination-item.is-active {
+      color: var(--primary-active);
+      border-color: var(--primary-hover);
+      background: var(--card-bg);
+    }
+    .pagination-demo-row.is-filled .pagination-item.is-active {
+      color: var(--primary-active);
+      border-color: transparent;
+      background: var(--primary-bg);
+    }
+    .pagination-demo-row.is-filled .pagination-item.is-hover {
+      color: var(--text-title);
+      border-color: transparent;
+      background: var(--gray-3);
+    }
+    .pagination-demo-row.is-filled .pagination-item.is-disabled {
+      border-color: transparent;
+      background: var(--gray-3);
+    }
+    .pagination-demo-row.is-filled .pagination-item.is-ellipsis,
+    .pagination-demo-row.is-filled .pagination-item.is-jump,
+    .pagination-demo-row.is-filled .pagination-item.is-ellipsis:hover,
+    .pagination-demo-row.is-filled .pagination-item.is-jump:hover,
+    .pagination-demo-row.is-filled .pagination-item.is-ellipsis.is-hover,
+    .pagination-demo-row.is-filled .pagination-item.is-jump.is-hover {
+      color: var(--text-secondary);
+      border-color: var(--border-strong);
+      background: var(--card-bg);
+    }
+    .pagination-demo-row.is-filled .pagination-item:has(.pagination-arrow),
+    .pagination-demo-row.is-filled .pagination-item:has(.pagination-arrow):hover,
+    .pagination-demo-row.is-filled .pagination-item.is-hover:has(.pagination-arrow) {
+      color: var(--text-secondary);
+    }
+    .pagination-demo-row.is-filled .pagination-item.is-disabled:has(.pagination-arrow),
+    .pagination-demo-row.is-filled .pagination-item:disabled:has(.pagination-arrow) {
+      color: var(--text-disabled);
+    }
+    .pagination-demo-row.is-simple .pagination-item {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      border-radius: 3px;
+      font-size: 13px;
+      line-height: 20px;
+    }
+    .pagination-demo-row.is-simple .pagination-item svg {
+      width: 14px;
+      height: 14px;
+      stroke-width: 1.7;
+    }
+    .pagination-demo-row.is-simple .pagination-arrow {
+      width: 7px;
+      height: 7px;
+      border-width: 0 1.4px 1.4px 0;
+    }
+    .pagination-total strong { color: var(--text-title); font-weight: 600; }
+    .pagination-select-wrap { position: relative; display: inline-flex; flex: 0 0 auto; }
+    .pagination-select {
+      width: 104px;
+      justify-content: space-between;
+      padding: 0 10px;
+      color: var(--text-title);
+    }
+    .pagination-select::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid var(--text-secondary);
+      border-bottom: 1.5px solid var(--text-secondary);
+      transform: translateY(-2px) rotate(45deg);
+    }
+    .pagination-select-menu {
+      position: absolute;
+      left: 0;
+      top: 36px;
+      z-index: 3;
+      min-width: 104px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-popover);
+      display: none;
+    }
+    .pagination-select-wrap.is-open .pagination-select-menu { display: grid; }
+    .pagination-select-option {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text-title);
+      cursor: pointer;
+      font-size: 13px;
+      text-align: left;
+    }
+    .pagination-select-option:hover { background: var(--primary-bg-soft); color: var(--primary-active); }
+    .pagination-jumper {
+      width: 56px;
+      padding: 0 8px;
+      justify-content: center;
+      cursor: text;
+    }
+    .pagination-demo-row.is-simple .pagination-select,
+    .pagination-demo-row.is-simple .pagination-jumper { height: 24px; }
+    .pagination-pattern-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 28px;
+      margin-bottom: 32px;
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--gray-2);
+    }
+    .pagination-pattern-column {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      justify-items: start;
+    }
+    .pagination-pattern-column .pagination-item { margin-bottom: 4px; }
+    @media (max-width: 1180px) {
+      .pagination-variant-grid { grid-template-columns: 1fr; }
+      .pagination-pattern-strip { grid-template-columns: 1fr; }
+    }
+    .alert-type-icon {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 16px;
+      margin-top: 2px;
+      border: 1.5px solid currentColor;
+      border-radius: 50%;
+      color: var(--info);
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 600;
+    }
+    .alert-type-icon::before { content: "i"; transform: translateY(-.5px); }
+    .alert-type-icon-success { color: var(--success); }
+    .alert-type-icon-success::before { content: ""; width: 7px; height: 4px; border: solid currentColor; border-width: 0 0 1.5px 1.5px; transform: rotate(-45deg) translate(1px, -1px); }
+    .alert-type-icon-warning { color: var(--warning); }
+    .alert-type-icon-warning::before { content: "!"; }
+    .alert-type-icon-error { color: var(--error); }
+    .alert-type-icon-error::before,
+    .alert-type-icon-error::after { content: ""; position: absolute; width: 7px; height: 1.5px; border-radius: 2px; background: currentColor; }
+    .alert-type-icon-error::before { transform: rotate(45deg); }
+    .alert-type-icon-error::after { transform: rotate(-45deg); }
+
+    .ant-alert {
+      min-height: 40px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: var(--card-bg);
+      color: var(--text-body);
+      font-size: 13px;
+      line-height: 20px;
+    }
+    .ant-alert-text-only { align-items: center; }
+    .ant-alert-message { color: var(--text-title); font-weight: 500; }
+    .ant-alert-description { margin-top: 4px; color: var(--text-body); font-size: 13px; line-height: 22px; }
+    .ant-alert-close { margin-left: auto; color: var(--text-secondary); cursor: pointer; }
+    .ant-alert-success { background: var(--success-bg); border-color: var(--success-border); }
+    .ant-alert-info { background: var(--info-bg); border-color: var(--info-border); }
+    .ant-alert-warning { background: var(--warning-bg); border-color: var(--warning-border); }
+    .ant-alert-error { background: var(--error-bg); border-color: var(--error-border); }
+    .alert-demo-stack { display: grid; gap: 12px; }
+    .alert-demo-group { display: grid; gap: 8px; }
+    .alert-demo-title { margin: 4px 0 0; color: var(--text-title); font-size: 13px; line-height: 20px; font-weight: 600; }
+
+    .message-stack { position: relative; display: grid; gap: 8px; width: min(100%, 420px); margin: 0 auto; }
+    .ant-message-notice {
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      color: var(--text-body);
+      line-height: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .ant-message-notice .alert-type-icon { margin-top: 0; }
+    .ant-message-notice span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    .ant-message-info { background: var(--info-bg); border-color: var(--info-border); }
+    .ant-message-warning { background: var(--warning-bg); border-color: var(--warning-border); }
+    .ant-message-success { background: var(--success-bg); border-color: var(--success-border); }
+    .ant-message-error { background: var(--error-bg); border-color: var(--error-border); }
+
+    .notification-stack { display: grid; gap: 24px; width: 440px; max-width: 100%; }
+    .ant-notification-notice {
+      min-height: 118px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-popover);
+    }
+    .ant-notification-notice .alert-type-icon { width: 20px; height: 20px; flex-basis: 20px; margin-top: 2px; border-width: 2px; font-size: 13px; }
+    .ant-notification-message { color: var(--text-title); font-size: 16px; font-weight: 600; line-height: 24px; }
+    .ant-notification-description { margin-top: 16px; color: var(--text-body); font-size: 14px; line-height: 26px; }
+    .ant-notification-close,
+    .ant-modal-close,
+    .ant-drawer-close {
+      position: relative;
+      flex: 0 0 auto;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .ant-notification-close { width: 20px; height: 20px; margin-left: auto; }
+    .ant-modal-close { width: 16px; height: 16px; }
+    .ant-drawer-close { width: 24px; height: 24px; }
+    .ant-notification-close::before,
+    .ant-notification-close::after,
+    .ant-modal-close::before,
+    .ant-modal-close::after,
+    .ant-drawer-close::before,
+    .ant-drawer-close::after {
+      content: "";
+      position: absolute;
+      border-radius: 2px;
+      background: currentColor;
+    }
+    .ant-notification-close::before,
+    .ant-notification-close::after { left: 2px; top: 9px; width: 16px; height: 1.5px; }
+    .ant-modal-close::before,
+    .ant-modal-close::after { left: 1px; top: 7px; width: 14px; height: 1.5px; }
+    .ant-drawer-close::before,
+    .ant-drawer-close::after { left: 2px; top: 11px; width: 20px; height: 1.6px; }
+    .ant-notification-close::before,
+    .ant-modal-close::before,
+    .ant-drawer-close::before { transform: rotate(45deg); }
+    .ant-notification-close::after,
+    .ant-modal-close::after,
+    .ant-drawer-close::after { transform: rotate(-45deg); }
+
+    .modal-demo-stack { display: grid; gap: 16px; }
+    .modal-section-body {
+      display: grid;
+      gap: 16px;
+    }
+    .modal-style-panel {
+      width: 100%;
+      overflow: hidden;
+    }
+    .modal-example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 24px;
+      padding: 48px 32px;
+      border-radius: 8px;
+      background: var(--page-bg);
+    }
+    .modal-demo-stage {
+      position: relative;
+      min-height: 260px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--text-disabled);
+    }
+    .modal-example-grid .modal-demo-stage {
+      min-height: 280px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      overflow: visible;
+    }
+    .modal-demo-stage::before { content: ""; position: absolute; inset: 0; background: rgba(36,41,51,.28); }
+    .modal-example-grid .modal-demo-stage::before { content: none; }
+    .ant-modal {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 440px;
+      max-width: calc(100% - 48px);
+      border-radius: 8px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-popover);
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+    }
+    .ant-modal-confirm { width: 360px; }
+    .ant-modal-compact { width: 400px; }
+    .ant-modal-wide { width: 560px; }
+    .modal-example-grid .ant-modal {
+      width: 400px;
+      max-width: calc(100% - 16px);
+      border-radius: 6px;
+    }
+    .modal-example-grid .ant-modal-wide,
+    .modal-example-grid .ant-modal-plain { width: 560px; }
+    .ant-modal-header {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ant-modal-title { color: var(--text-title); font-weight: 600; }
+    .ant-modal-body { padding: 20px 16px 22px; color: var(--text-body); }
+    .ant-modal-copy { margin: 0; color: var(--text-body); font-size: 13px; line-height: 22px; }
+    .ant-modal-copy + .ant-modal-copy { margin-top: 4px; }
+    .ant-modal-confirm .ant-modal-body { padding: 24px 24px 22px; }
+    .ant-modal-plain .ant-modal-body { padding: 24px 24px 22px; }
+    .ant-modal-confirm-body { display: flex; gap: 12px; }
+    .ant-modal-confirm-body > div { flex: 1; min-width: 0; }
+    .ant-modal-confirm-body .ant-modal-close { margin-left: auto; }
+    .ant-modal-confirm-title { color: var(--text-title); font-weight: 600; line-height: 22px; }
+    .ant-modal-confirm-content { margin-top: 4px; color: var(--text-body); font-size: 12px; line-height: 20px; }
+    .ant-modal-status-body {
+      display: grid;
+      grid-template-columns: 16px minmax(0, 1fr) 16px;
+      gap: 10px;
+      align-items: start;
+    }
+    .ant-modal-status-body .alert-type-icon { margin-top: 2px; }
+    .ant-modal-status-title { color: var(--text-title); font-weight: 600; line-height: 22px; }
+    .ant-modal-status-content { margin-top: 8px; color: var(--text-body); font-size: 12px; line-height: 20px; }
+    .ant-modal-warning-strip {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--warning-bg);
+      color: var(--text-body);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .ant-modal-warning-strip + .ant-modal-body { padding-top: 16px; }
+    .ant-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 0 16px 16px;
+      border-top: 0;
+      background: var(--card-bg);
+    }
+    .ant-modal-footer .ant-btn {
+      width: 60px;
+      height: 32px;
+      padding: 0;
+    }
+    @media (max-width: 1280px) {
+      .modal-example-grid { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .modal-example-grid { grid-template-columns: 1fr; }
+    }
+
+    .drawer-demo-stack { display: grid; gap: 40px; padding: 16px; background: var(--page-bg); }
+    .drawer-demo-shell { display: flex; justify-content: flex-end; min-height: 320px; }
+    .ant-drawer {
+      position: relative;
+      width: 80%;
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-card);
+    }
+    .ant-drawer-header {
+      height: 48px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ant-drawer-title { color: var(--text-title); font-size: 16px; line-height: 24px; font-weight: 600; }
+    .ant-drawer-body { flex: 1; min-height: 0; padding: 24px; overflow: auto; }
+    .ant-drawer-footer {
+      height: 48px;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 4px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+    .ant-drawer-footer .ant-btn { width: 60px; height: 32px; padding: 0; }
+
+    .popconfirm-demo-stage {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(280px, 1fr));
+      gap: 96px 48px;
+      align-items: center;
+      padding: 64px 48px;
+      border-radius: 8px;
+      background: var(--gray-3);
+    }
+    .popconfirm-style-panel {
+      width: 100%;
+      overflow: hidden;
+    }
+    .ant-popconfirm {
+      width: 224px;
+      min-height: 76px;
+      position: relative;
+      padding: 16px;
+      border-radius: 4px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-popover);
+    }
+    .ant-popconfirm::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--card-bg);
+      transform: rotate(45deg);
+    }
+    .ant-popconfirm-top-left,
+    .ant-popconfirm-top,
+    .ant-popconfirm-top-right,
+    .ant-popconfirm-bottom-left,
+    .ant-popconfirm-bottom,
+    .ant-popconfirm-bottom-right,
+    .ant-popconfirm-left-top,
+    .ant-popconfirm-left,
+    .ant-popconfirm-left-bottom,
+    .ant-popconfirm-right-top,
+    .ant-popconfirm-right,
+    .ant-popconfirm-right-bottom { justify-self: center; }
+    .ant-popconfirm-top-left::after,
+    .ant-popconfirm-top::after,
+    .ant-popconfirm-top-right::after { bottom: -6px; }
+    .ant-popconfirm-top-left::after { right: 20px; }
+    .ant-popconfirm-top::after { left: 50%; margin-left: -6px; }
+    .ant-popconfirm-top-right::after { left: 20px; }
+    .ant-popconfirm-bottom-left::after,
+    .ant-popconfirm-bottom::after,
+    .ant-popconfirm-bottom-right::after { top: -6px; }
+    .ant-popconfirm-bottom-left::after { right: 20px; }
+    .ant-popconfirm-bottom::after { left: 50%; margin-left: -6px; }
+    .ant-popconfirm-bottom-right::after { left: 20px; }
+    .ant-popconfirm-left-top::after,
+    .ant-popconfirm-left::after,
+    .ant-popconfirm-left-bottom::after { right: -6px; }
+    .ant-popconfirm-left-top::after { top: 52px; }
+    .ant-popconfirm-left::after { top: 50%; margin-top: -6px; }
+    .ant-popconfirm-left-bottom::after { top: 16px; }
+    .ant-popconfirm-right-top::after,
+    .ant-popconfirm-right::after,
+    .ant-popconfirm-right-bottom::after { left: -6px; }
+    .ant-popconfirm-right-top::after { top: 52px; }
+    .ant-popconfirm-right::after { top: 50%; margin-top: -6px; }
+    .ant-popconfirm-right-bottom::after { top: 16px; }
+    @media (max-width: 1180px) {
+      .popconfirm-demo-stage { grid-template-columns: repeat(2, minmax(280px, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .popconfirm-demo-stage { grid-template-columns: 1fr; }
+    }
+    .ant-popconfirm-message {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--text-title);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 500;
+      white-space: nowrap;
+      padding-right: 16px;
+    }
+    .ant-popconfirm-message .alert-type-icon {
+      margin-top: 3px;
+      color: var(--warning);
+    }
+    .ant-popconfirm-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .ant-popconfirm-buttons .ant-btn {
+      width: 48px;
+      height: 24px;
+      padding: 0;
+      border-radius: 0;
+      font-size: 12px;
+      line-height: 20px;
+    }
+
+    .progress-demo-panel { display: grid; gap: 28px; }
+    .progress-style-panel { width: 100%; overflow: hidden; }
+    .progress-demo-surface {
+      display: grid;
+      gap: 36px;
+      padding: 40px 48px;
+      border-radius: 8px;
+      background: var(--page-bg);
+    }
+    .progress-demo-section {
+      display: grid;
+      gap: 20px;
+    }
+    .progress-demo-title {
+      color: var(--text-title);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+    .progress-line-group { display: grid; gap: 16px; max-width: 760px; }
+    .ant-progress-line {
+      --progress-size: 12px;
+      --progress-percent: 65%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 48px;
+      align-items: center;
+      gap: 12px;
+    }
+    .ant-progress-line-inner {
+      height: var(--progress-size);
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--gray-4);
+    }
+    .ant-progress-line-bg {
+      width: var(--progress-percent);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--info);
+    }
+    .ant-progress-line-text {
+      color: var(--text-body);
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .ant-progress-line-sm {
+      --progress-size: 6px;
+      grid-template-columns: minmax(0, 1fr) 40px;
+    }
+    .ant-progress-line-mini {
+      --progress-size: 3px;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .ant-progress-status-success .ant-progress-line-bg { width: 100%; background: var(--success); }
+    .ant-progress-status-error .ant-progress-line-bg { background: var(--error); }
+    .ant-progress-status-empty .ant-progress-line-bg { width: 0; }
+    .progress-status-icon {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      color: var(--success);
+    }
+    .progress-status-icon::before {
+      content: "";
+      width: 10px;
+      height: 6px;
+      border: solid currentColor;
+      border-width: 0 0 2px 2px;
+      transform: rotate(-45deg) translate(1px, -1px);
+    }
+    .progress-status-icon-error { color: var(--error); }
+    .progress-status-icon-error::before,
+    .progress-status-icon-error::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 2px;
+      border: 0;
+      border-radius: 2px;
+      background: currentColor;
+      transform: rotate(45deg);
+    }
+    .progress-status-icon-error::after { transform: rotate(-45deg); }
+    .ant-progress-line-sm .progress-status-icon { width: 16px; height: 16px; border-width: 1.5px; }
+    .ant-progress-line-sm .progress-status-icon::before { width: 7px; height: 4px; border-width: 0 0 1.5px 1.5px; }
+    .ant-progress-line-sm .progress-status-icon-error::before,
+    .ant-progress-line-sm .progress-status-icon-error::after { width: 7px; height: 1.5px; }
+    .progress-circle-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(96px, 1fr));
+      gap: 32px 40px;
+      align-items: center;
+      justify-items: center;
+      max-width: 760px;
+    }
+    .ant-progress-circle {
+      --progress-circle-size: 112px;
+      --progress-circle-width: 8px;
+      position: relative;
+      width: var(--progress-circle-size);
+      height: var(--progress-circle-size);
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--text-title);
+      font-size: 18px;
+      line-height: 26px;
+      font-weight: 500;
+    }
+    .ant-progress-circle svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+    .ant-progress-circle-track,
+    .ant-progress-circle-path {
+      fill: none;
+      stroke-width: var(--progress-circle-width);
+    }
+    .ant-progress-circle-track { stroke: var(--gray-4); }
+    .ant-progress-circle-path {
+      stroke: var(--info);
+      stroke-linecap: round;
+    }
+    .ant-progress-circle span {
+      position: relative;
+      z-index: 1;
+    }
+    .ant-progress-circle-success { color: var(--success); }
+    .ant-progress-circle-success .ant-progress-circle-path { stroke: var(--success); }
+    .ant-progress-circle-error { color: var(--error); }
+    .ant-progress-circle-error .ant-progress-circle-path { stroke: var(--error); }
+    .ant-progress-circle-empty { color: var(--text-title); }
+    .ant-progress-circle-empty .ant-progress-circle-path { stroke: transparent; }
+    .ant-progress-circle-sm {
+      --progress-circle-size: 56px;
+      --progress-circle-width: 5px;
+      font-size: 13px;
+      line-height: 20px;
+    }
+    .ant-progress-circle .progress-status-icon { width: 28px; height: 28px; border: 0; }
+    .ant-progress-circle .progress-status-icon::before { width: 18px; height: 10px; border-width: 0 0 3px 3px; }
+    .ant-progress-circle .progress-status-icon-error::before,
+    .ant-progress-circle .progress-status-icon-error::after { width: 24px; height: 3px; }
+    .ant-progress-circle-sm .progress-status-icon { width: 18px; height: 18px; }
+    .ant-progress-circle-sm .progress-status-icon::before { width: 10px; height: 6px; border-width: 0 0 2px 2px; }
+    .ant-progress-circle-sm .progress-status-icon-error::before,
+    .ant-progress-circle-sm .progress-status-icon-error::after { width: 14px; height: 2px; }
+
+    .spin-demo-panel {
+      display: grid;
+      gap: 16px;
+    }
+    .spin-demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .spin-demo-card {
+      min-height: 132px;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+    }
+    .ant-spin {
+      --spin-dot-size: 22px;
+      --spin-dot-item-size: 10px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .ant-spin-dot {
+      position: relative;
+      width: var(--spin-dot-size);
+      height: var(--spin-dot-size);
+      display: inline-block;
+      animation: ant-spin-rotate 1.2s infinite linear;
+    }
+    .ant-spin-dot-item {
+      position: absolute;
+      width: var(--spin-dot-item-size);
+      height: var(--spin-dot-item-size);
+      border-radius: 50%;
+      background: currentColor;
+      opacity: .45;
+      animation: ant-spin-pulse 1s infinite linear alternate;
+    }
+    .ant-spin-dot-item:nth-child(1) { left: 0; top: 0; }
+    .ant-spin-dot-item:nth-child(2) { right: 0; top: 0; animation-delay: .4s; }
+    .ant-spin-dot-item:nth-child(3) { right: 0; bottom: 0; animation-delay: .8s; }
+    .ant-spin-dot-item:nth-child(4) { left: 0; bottom: 0; animation-delay: 1.2s; }
+    .ant-spin-sm { --spin-dot-size: 16px; --spin-dot-item-size: 7px; }
+    .ant-spin-lg { --spin-dot-size: 32px; --spin-dot-item-size: 14px; }
+    .ant-spin-ring {
+      width: 22px;
+      height: 22px;
+      display: inline-block;
+      border: 3px solid #D7D9DD;
+      border-top-color: var(--text-body);
+      border-left-color: var(--text-body);
+      border-radius: 50%;
+      animation: ant-spin-rotate .8s infinite linear;
+    }
+    .ant-spin-ring-xs { width: 16px; height: 16px; border-width: 2px; }
+    .ant-spin-ring-lg { width: 32px; height: 32px; border-width: 4px; }
+    .ant-spin-text { color: var(--primary); }
+    .spin-container-demo {
+      position: relative;
+      width: 100%;
+      min-height: 180px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      overflow: hidden;
+    }
+    .spin-container-content {
+      display: grid;
+      gap: 10px;
+    }
+    .spin-skeleton-line {
+      height: 12px;
+      border-radius: 4px;
+      background: var(--gray-3);
+    }
+    .spin-skeleton-line:nth-child(1) { width: 62%; }
+    .spin-skeleton-line:nth-child(2) { width: 86%; }
+    .spin-skeleton-line:nth-child(3) { width: 74%; }
+    .spin-container-mask {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.72);
+    }
+    @keyframes ant-spin-rotate {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes ant-spin-pulse {
+      to { opacity: 1; }
+    }
+    @media (max-width: 1180px) {
+      .spin-demo-grid { grid-template-columns: 1fr; }
+    }
+
+    .exception-layout {
+      position: relative;
+      display: grid;
+      gap: 16px;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .exception-group {
+      display: grid;
+      gap: 16px;
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+    }
+    .exception-title {
+      margin: 0;
+      color: var(--text-title);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+    .exception-subtitle {
+      margin: 0 0 8px;
+      color: var(--text-title);
+      font-size: 13px;
+      line-height: 20px;
+      font-weight: 600;
+    }
+    .exception-notice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 440px));
+      gap: 16px;
+      align-items: start;
+    }
+    .exception-demo-surface {
+      padding: 16px;
+      border-radius: 6px;
+      background: var(--gray-2);
+    }
+    .exception-notice-card {
+      width: 440px;
+      max-width: 100%;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr) auto;
+      grid-template-rows: 24px 1fr;
+      grid-template-areas:
+        "icon title close"
+        ". desc action";
+      column-gap: 12px;
+      row-gap: 8px;
+      padding: 20px 20px 18px;
+      background: var(--card-bg);
+      color: var(--text-body);
+    }
+    .exception-notice-card .alert-type-icon {
+      grid-area: icon;
+      width: 20px;
+      height: 20px;
+      flex-basis: 20px;
+      margin-top: 2px;
+      border-width: 2px;
+      font-size: 13px;
+    }
+    .exception-notice-title {
+      grid-area: title;
+      min-width: 0;
+      color: var(--text-title);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .exception-notice-desc {
+      grid-area: desc;
+      min-width: 0;
+      align-self: start;
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .exception-notice-close {
+      grid-area: close;
+      justify-self: end;
+      align-self: center;
+      margin-left: 16px;
+    }
+    .exception-notice-action {
+      grid-area: action;
+      justify-self: end;
+      align-self: start;
+      margin-left: 16px;
+      white-space: nowrap;
+    }
+    .exception-notice-link {
+      color: var(--primary-active);
+      font-size: 14px;
+      line-height: 22px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .exception-notice-button {
+      height: 28px;
+      min-width: 92px;
+      padding: 0 12px;
+      border-radius: 0;
+      font-size: 13px;
+      line-height: 20px;
+    }
+    .exception-card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .exception-card-grid-2 {
+      grid-template-columns: repeat(2, minmax(260px, 500px));
+      justify-content: start;
+    }
+    .exception-card-grid-3 {
+      grid-template-columns: repeat(3, minmax(260px, 500px));
+      justify-content: start;
+    }
+    .exception-demo-item { min-width: 0; }
+    .exception-asset {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: var(--card-bg);
+    }
+    .exception-style-panel {
+      width: 100%;
+      overflow: hidden;
+    }
+    .exception-style-panel > h3 + .exception-demo-surface { margin-top: 0; }
+    .exception-demo-section {
+      display: grid;
+      gap: 16px;
+    }
+    .exception-demo-section + .exception-demo-section { margin-top: 32px; }
+    .exception-page-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+    .exception-page-card {
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 20px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      text-align: center;
+    }
+    .exception-page-illustration {
+      width: 180px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .exception-page-illustration img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center top;
+    }
+    .exception-page-illustration.is-code {
+      width: 220px;
+      height: 92px;
+      margin-bottom: 20px;
+    }
+    .exception-page-illustration.is-status {
+      width: 100px;
+      height: 100px;
+    }
+    .exception-page-title {
+      margin: 0;
+      color: var(--text-title);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+    .exception-page-desc {
+      margin: 4px 0 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .exception-page-action {
+      min-width: 64px;
+      height: 32px;
+      margin-top: 12px;
+      padding: 0 16px;
+      border-radius: 4px;
+    }
+    .empty-style-panel {
+      width: 100%;
+      overflow: hidden;
+    }
+    .empty-demo-surface {
+      display: grid;
+      gap: 40px;
+      padding: 40px 48px;
+      border-radius: 8px;
+      background: var(--page-bg);
+    }
+    .empty-demo-section {
+      display: grid;
+      gap: 20px;
+    }
+    .empty-section-title {
+      margin: 0;
+      color: var(--text-title);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+    }
+    .empty-subsection-title {
+      margin: 0;
+      color: var(--text-body);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+    .empty-state-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 28px 36px;
+      align-items: start;
+    }
+    .empty-state-grid.is-five {
+      grid-template-columns: repeat(5, minmax(140px, 1fr));
+    }
+    .empty-state-grid.is-four {
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+    }
+    .empty-state-grid.is-two {
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      max-width: 520px;
+    }
+    .empty-state-card {
+      min-height: 168px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 12px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      text-align: center;
+    }
+    .empty-state-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      display: block;
+    }
+    .empty-state-card.is-small img {
+      width: 108px;
+      height: 108px;
+    }
+    .empty-state-card.is-image img {
+      width: 120px;
+      height: 120px;
+    }
+    .empty-state-title {
+      margin-top: 12px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 400;
+    }
+    .empty-page-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(240px, 1fr));
+      gap: 36px 40px;
+      align-items: stretch;
+    }
+    .empty-page-card {
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      text-align: center;
+    }
+    .empty-page-card img {
+      display: block;
+      width: 240px;
+      height: 180px;
+      object-fit: contain;
+      object-position: center bottom;
+    }
+    .empty-page-title {
+      margin-top: 16px;
+      color: #000000;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+    }
+    .empty-chart-desc {
+      margin: -8px 0 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .empty-chart-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .empty-chart-card {
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 12px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      text-align: center;
+    }
+    .empty-chart-card img {
+      display: block;
+      width: 132px;
+      height: 99px;
+      object-fit: contain;
+    }
+    .empty-chart-title {
+      margin-top: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 20px;
+    }
+    .data-loading-demo-surface {
+      padding: 24px;
+      border-radius: 8px;
+      background: var(--gray-2);
+    }
+    .data-loading-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .data-loading-card {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      text-align: center;
+    }
+    .data-loading-card img {
+      display: block;
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+    }
+    .data-loading-title {
+      margin-top: 20px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .empty-placeholder-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .empty-placeholder-card {
+      min-height: 120px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed var(--border-strong);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text-tertiary);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .state-anchor {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    @media (max-width: 1280px) {
+      .exception-card-grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+      .exception-card-grid-2 { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+      .exception-card-grid-3 { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+      .exception-page-grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+      .empty-state-grid,
+      .empty-state-grid.is-five,
+      .empty-state-grid.is-four,
+      .empty-page-grid,
+      .empty-chart-grid,
+      .data-loading-grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .exception-layout { gap: 16px; }
+      .exception-notice-grid,
+      .exception-card-grid,
+      .exception-card-grid-2,
+      .exception-card-grid-3,
+      .exception-page-grid { grid-template-columns: 1fr; }
+      .empty-demo-surface { padding: 24px; }
+      .empty-state-grid,
+      .empty-state-grid.is-five,
+      .empty-state-grid.is-four,
+      .empty-state-grid.is-two,
+      .empty-page-grid,
+      .empty-chart-grid,
+      .data-loading-grid,
+      .empty-placeholder-grid { grid-template-columns: 1fr; }
+    }
+
+    /* COMPONENT_END */
+
+    /* DEMO_SHELL_START
+       组件库展示壳补充样式：toast、响应式布局和预览页动效。
+       这些样式只服务本组件库页面，不应进入最终业务 HTML。
+    */
+    .toast-holder { position: fixed; top: 72px; right: 24px; z-index: 99; display: grid; gap: 8px; }
+    .toast {
+      min-width: 240px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow-popover);
+      animation: toast-in .2s ease;
+    }
+    @keyframes toast-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 1180px) {
+      .top-utility-row { display: none; }
+      .platform-sidebar { width: 184px; flex-basis: 184px; }
+      .demo-grid,
+      .demo-grid-3 { grid-template-columns: 1fr; }
+      .platform-page-header {
+        height: auto;
+        min-height: 48px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 16px;
+      }
+      .platform-page-content { padding: 12px; }
+      .section-body { padding: 16px; }
+      .ant-pagination { justify-content: flex-start; }
+      .ant-pagination-total-text {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto; transition-duration: .01ms; animation-duration: .01ms; }
+    }
+    /* DEMO_SHELL_END */
+  </style>
+</head>
+<body>
+  <!-- DEMO_SHELL_START
+       组件库展示壳 DOM：顶部导航、侧边栏、页头和内容容器。
+       这些节点只负责让组件库页面好浏览，不应被复制到业务页面。
+  -->
+  <div class="platform-frame">
+    <header class="platform-top-nav">
+      <div class="top-nav-left">
+        <div class="top-brand">
+          <span class="top-brand-mark"><i class="iconfont icon-a-quanjucaidan1"></i></span>
+          <div>
+            <div class="top-brand-title">360组件样式</div>
+            <div class="top-brand-sub">Backend-Design-Standards</div>
+          </div>
+        </div>
+      </div>
+      <div class="top-nav-right">Backend Design Standards</div>
+    </header>
+
+    <div class="platform-body">
+      <aside class="platform-sidebar">
+        <div class="sidebar-scroll">
+          <div class="sidebar-title">反馈与状态</div>
+          <a class="menu-item active" href="#alert"><span class="menu-item-en">Alert</span><span class="menu-item-zh">警告提示</span></a>
+          <a class="menu-item" href="#message"><span class="menu-item-en">Message</span><span class="menu-item-zh">全局提醒</span></a>
+          <a class="menu-item" href="#notification"><span class="menu-item-en">Notification</span><span class="menu-item-zh">通知提醒框</span></a>
+          <a class="menu-item" href="#modal"><span class="menu-item-en">Modal</span><span class="menu-item-zh">对话框</span></a>
+          <a class="menu-item" href="#popconfirm"><span class="menu-item-en">Popconfirm</span><span class="menu-item-zh">气泡确认框</span></a>
+          <a class="menu-item" href="#drawer"><span class="menu-item-en">Drawer</span><span class="menu-item-zh">抽屉</span></a>
+          <a class="menu-item" href="#progress"><span class="menu-item-en">Progress</span><span class="menu-item-zh">进度</span></a>
+          <a class="menu-item" href="#spin"><span class="menu-item-en">Spin</span><span class="menu-item-zh">加载中</span></a>
+          <a class="menu-item" href="#exception"><span class="menu-item-en">Exception</span><span class="menu-item-zh">异常界面</span></a>
+          <a class="menu-item" href="#empty"><span class="menu-item-en">Empty</span><span class="menu-item-zh">空状态</span></a>
+          <a class="menu-item" href="#data-loading"><span class="menu-item-en">Data Loading</span><span class="menu-item-zh">数据加载</span></a>
+          <div class="sidebar-title">分页</div>
+          <a class="menu-item" href="#pagination"><span class="menu-item-en">Pagination</span><span class="menu-item-zh">分页</span></a>
+        </div>
+      </aside>
+
+      <main class="platform-main">
+        <div class="platform-page-header">
+          <div>
+            <h1 class="page-title">Alert 警告提示</h1>
+          </div>
+        </div>
+
+        <div class="platform-page-content">
+          <div class="content-shell">
+            <!-- DEMO_SHELL_END -->
+
+            <!-- COMPONENT_START
+                 AI 可参考的组件 DOM 示例：每个 component-doc 内包含组件信息、样式规则、真实 DOM 示例和代码示例。
+                 修改组件示例 DOM 或新增组件时放在此区域。
+            -->
+            <section class="component-doc" id="alert" data-component="alert">
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Alert 警告提示规范页</h2><p class="section-desc">警告提示用于在页面内静态展示需要用户关注的信息，不自动消失，可配置关闭、图标、标题和辅助说明。</p></div><span class="code-note">Ant: Alert</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">页面内静态提示</div></div><div class="spec-summary-item"><div class="spec-summary-label">状态类型</div><div class="spec-summary-value">常规 / 成功 / 预警 / 失败</div></div><div class="spec-summary-item"><div class="spec-summary-label">默认高度</div><div class="spec-summary-value">40px</div></div><div class="spec-summary-item"><div class="spec-summary-label">关键属性</div><div class="spec-summary-value">type / showIcon / closable</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">基本样式与规则</h2><p class="section-desc">参考 Ant Design Alert 的四种类型，结合全局状态色和现有线性图标规范。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>组件样式</h3><div class="alert-demo-stack"><div class="ant-alert ant-alert-info ant-alert-text-only">纯文本</div><div class="ant-alert ant-alert-success ant-alert-text-only">纯文本</div><div class="ant-alert ant-alert-warning ant-alert-text-only">纯文本</div><div class="ant-alert ant-alert-error ant-alert-text-only">纯文本</div><div class="ant-alert ant-alert-warning"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><div>图标+文本，警告提示</div></div><div class="ant-alert ant-alert-error"><span class="alert-type-icon alert-type-icon-error" aria-hidden="true"></span><div>图标+文本，出错提示</div></div><div class="ant-alert ant-alert-success"><span class="alert-type-icon alert-type-icon-success" aria-hidden="true"></span><div>图标+文本，成功、健康、安全提示</div></div><div class="ant-alert ant-alert-info"><span class="alert-type-icon" aria-hidden="true"></span><div>图标+文本，常用信息提示</div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>只允许常规、成功、预警、失败四种状态。</li><li>页面内长期存在的提示使用 Alert，不替代 Message。</li><li>信息较长时使用标题 + 辅助文字，不把所有内容堆在标题里。</li><li>可关闭提示必须保留明确关闭按钮。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">示例使用 360euxd 组件名，能力参考 Ant Design Alert。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Alert } from '360euxd';
+
+export default () =&gt; (
+  &lt;&gt;
+    &lt;Alert type="info" title="常用信息提示" /&gt;
+    &lt;Alert type="success" showIcon title="成功、健康、安全提示" /&gt;
+    &lt;Alert type="warning" showIcon title="警告提示" /&gt;
+    &lt;Alert type="error" showIcon closable title="出错提示" /&gt;
+  &lt;/&gt;
+);</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="message" data-component="message" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Message 全局提醒规范页</h2><p class="section-desc">全局提醒用于页面顶部中心的轻量反馈，提示当前操作结果，不打断用户流程。</p></div><span class="code-note">Ant: Message</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">全局临时反馈</div></div><div class="spec-summary-item"><div class="spec-summary-label">展示位置</div><div class="spec-summary-value">顶部居中</div></div><div class="spec-summary-item"><div class="spec-summary-label">默认消失</div><div class="spec-summary-value">3s</div></div><div class="spec-summary-item"><div class="spec-summary-label">方法</div><div class="spec-summary-value">success / error / info / warning</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">基本样式与规则</h2><p class="section-desc">参考 Ant Design Message 静态方法和配置项，限制为操作反馈而非页面内容说明。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>组件样式</h3><div class="message-stack"><div class="ant-message-notice ant-message-info"><span class="alert-type-icon" aria-hidden="true"></span><span>提醒反馈，提示信息提示信息，提示信息提示信息</span></div><div class="ant-message-notice ant-message-warning"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>警告，提示信息提示信息，提示信息提示信息</span></div><div class="ant-message-notice ant-message-success"><span class="alert-type-icon alert-type-icon-success" aria-hidden="true"></span><span>成功，提示信息提示信息，提示信息提示信息</span></div><div class="ant-message-notice ant-message-error"><span class="alert-type-icon alert-type-icon-error" aria-hidden="true"></span><span>失败，提示信息提示信息，提示信息提示信息</span></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>用于保存成功、提交失败、删除完成等操作反馈。</li><li>默认 3s 自动关闭，重要长信息应使用 Notification 或 Modal。</li><li>同类重复操作建议使用 key 更新同一条提示。</li><li>文字保持简短，避免超过 50 字。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">支持静态方法，也支持对象配置 duration、key、icon。</p></div></div><div class="section-body"><pre class="code-block"><code>import { message } from '360euxd';
+
+message.success('保存成功');
+message.warning({ content: '请先选择一条数据', duration: 3 });
+message.error({ key: 'submit', content: '提交失败，请重试' });</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="notification" data-component="notification" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Notification 通知提醒框规范页</h2><p class="section-desc">通知提醒框用于页面右上角的系统通知，可承载标题、描述、关闭和辅助操作。</p></div><span class="code-note">Ant: Notification</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">全局通知</div></div><div class="spec-summary-item"><div class="spec-summary-label">默认位置</div><div class="spec-summary-value">右上角</div></div><div class="spec-summary-item"><div class="spec-summary-label">推荐宽度</div><div class="spec-summary-value">440px</div></div><div class="spec-summary-item"><div class="spec-summary-label">状态</div><div class="spec-summary-value">普通 / 成功 / 失败 / 警示</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">基本样式与规则</h2><p class="section-desc">参考 Ant Design Notification 的 open 与全局配置能力，适合比 Message 更完整的信息反馈。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>组件样式</h3><div class="notification-stack"><div class="ant-notification-notice"><span class="alert-type-icon alert-type-icon-error" aria-hidden="true"></span><div><div class="ant-notification-message">通知提醒框</div><div class="ant-notification-description">一系列的信息描述，可能会很长。也可以是很短同样也可以带标点。</div></div><span class="ant-notification-close" aria-hidden="true"></span></div><div class="ant-notification-notice"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><div><div class="ant-notification-message">通知提醒框</div><div class="ant-notification-description">一系列的信息描述，可能会很长。也可以是很短同样也可以带标点。</div></div><span class="ant-notification-close" aria-hidden="true"></span></div><div class="ant-notification-notice"><span class="alert-type-icon" aria-hidden="true"></span><div><div class="ant-notification-message">通知提醒框</div><div class="ant-notification-description">一系列的信息描述，可能会很长。也可以是很短同样也可以带标点。</div></div><span class="ant-notification-close" aria-hidden="true"></span></div><div class="ant-notification-notice"><span class="alert-type-icon alert-type-icon-success" aria-hidden="true"></span><div><div class="ant-notification-message">通知提醒框</div><div class="ant-notification-description">一系列的信息描述，可能会很长。也可以是很短同样也可以带标点。</div></div><span class="ant-notification-close" aria-hidden="true"></span></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>系统异步通知、任务完成、后台失败等使用 Notification。</li><li>标题建议 10 字以内，描述用于补充原因或下一步动作。</li><li>同一任务通知应使用 key 更新，避免堆叠。</li><li>需要用户强确认时改用 Modal。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">支持 placement、duration、onClose、actions 等配置。</p></div></div><div class="section-body"><pre class="code-block"><code>import { notification } from '360euxd';
+
+notification.open({
+  type: 'error',
+  title: '通知提醒框',
+  description: '请查看网络连接后刷新页面重试',
+  placement: 'topRight',
+});</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="modal" data-component="modal" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Modal 对话框规范页</h2><p class="section-desc">对话框用于需要用户停下来确认、阅读或完成关键操作的场景。</p></div><span class="code-note">Ant: Modal</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">模态浮层</div></div><div class="spec-summary-item"><div class="spec-summary-label">默认宽度</div><div class="spec-summary-value">440px / 360px</div></div><div class="spec-summary-item"><div class="spec-summary-label">按钮尺寸</div><div class="spec-summary-value">60 × 32px</div></div><div class="spec-summary-item"><div class="spec-summary-label">方法</div><div class="spec-summary-value">confirm / info / success / error</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">基本样式与规则</h2><p class="section-desc">参考 Ant Design Modal 与 Modal.method，普通对话框和确认对话框分开使用。</p></div></div><div class="section-body modal-section-body"><div class="doc-panel modal-style-panel"><h3>组件样式</h3><div class="modal-example-grid">
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm"><div class="ant-modal-body"><div class="ant-modal-confirm-body"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><div><div class="ant-modal-confirm-title">确定AAA XXX 吗?</div><div class="ant-modal-confirm-content">选择以下任一说明（注:A为动作，X为对象，Q为结果）<br>1、通用说明：AAA 后 QQQ，请谨慎操作<br>2、增强说明：根据业务场景，详细说明</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm"><div class="ant-modal-body"><div class="ant-modal-confirm-body"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><div><div class="ant-modal-confirm-title">确定对XXX 进行AAA吗?</div><div class="ant-modal-confirm-content">选择以下任一说明（注:A为动作，X为对象，Q为结果）<br>1、通用说明：确定后开始AAA<br>2、增强说明：根据业务场景，详细说明</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm"><div class="ant-modal-body"><div class="ant-modal-confirm-body"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><div><div class="ant-modal-confirm-title">确定批量AAA XXX吗?</div><div class="ant-modal-confirm-content">通用说明：根据业务场景，详细说明<br>（注：A为动作，X为对象）</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm"><div class="ant-modal-body"><div class="ant-modal-status-body"><span class="alert-type-icon" aria-hidden="true"></span><div><div class="ant-modal-status-title">信息提示</div><div class="ant-modal-status-content">信息提示文案，用于状态提示，包含“常规信息、成功、警告、出错”四种状态。</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm"><div class="ant-modal-body"><div class="ant-modal-status-body"><span class="alert-type-icon alert-type-icon-success" aria-hidden="true"></span><div><div class="ant-modal-status-title">成功提示</div><div class="ant-modal-status-content">信息提示文案，用于状态提示，包含“常规信息、成功、警告、出错”四种状态。</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm"><div class="ant-modal-body"><div class="ant-modal-status-body"><span class="alert-type-icon alert-type-icon-error" aria-hidden="true"></span><div><div class="ant-modal-status-title">错误提示</div><div class="ant-modal-status-content">信息提示文案，用于状态提示，包含“常规信息、成功、警告、出错”四种状态。</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm ant-modal-compact"><div class="ant-modal-body"><div class="ant-modal-status-body"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><div><div class="ant-modal-status-title">警示提示，描述事件主题内容</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn ant-btn-primary">知道了</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm ant-modal-compact"><div class="ant-modal-body"><div class="ant-modal-status-body"><span class="alert-type-icon" aria-hidden="true"></span><div><div class="ant-modal-status-title">信息提示，描述事件主题内容。</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn ant-btn-primary">知道了</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm ant-modal-compact"><div class="ant-modal-body"><div class="ant-modal-status-body"><span class="alert-type-icon alert-type-icon-success" aria-hidden="true"></span><div><div class="ant-modal-status-title">成功提示，描述事件主题内容。</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn ant-btn-primary">知道了</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-confirm ant-modal-compact"><div class="ant-modal-body"><div class="ant-modal-status-body"><span class="alert-type-icon alert-type-icon-error" aria-hidden="true"></span><div><div class="ant-modal-status-title">发生错误！请确认后，重新上传。</div></div><span class="ant-modal-close" aria-hidden="true"></span></div></div><div class="ant-modal-footer"><button class="ant-btn ant-btn-primary">知道了</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-wide"><div class="ant-modal-header"><span class="ant-modal-title">对话框标题对话框标题对话框标题对话框标题</span><span class="ant-modal-close" aria-hidden="true"></span></div><div class="ant-modal-body"><p class="ant-modal-copy">- 位置在浏览器展示区域左右、上下居中对齐。</p><p class="ant-modal-copy">- 宽度为560px、880px、960px、80%的页面宽度（动态计算）；</p><p class="ant-modal-copy">- 蒙版黑色透明度30%</p></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-plain"><div class="ant-modal-body"><p class="ant-modal-copy">- 位置在浏览器展示区域左右、上下居中对齐。</p></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-wide"><div class="ant-modal-header"><span class="ant-modal-title">对话框标题，3个尺寸560、880、80%动态适配</span><span class="ant-modal-close" aria-hidden="true"></span></div><div class="ant-modal-body"><p class="ant-modal-copy">文本信息</p><p class="ant-modal-copy">- 位置在浏览器展示区域左右、上下居中对齐。</p><p class="ant-modal-copy">- 宽度为560px、880px、960px、80%的页面宽度（动态计算）；</p><p class="ant-modal-copy">- 蒙版黑色透明度30%</p></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+  <div class="modal-demo-stage"><div class="ant-modal ant-modal-wide"><div class="ant-modal-header"><span class="ant-modal-title">对话框标题，3个尺寸560、880、80%动态适配</span><span class="ant-modal-close" aria-hidden="true"></span></div><div class="ant-modal-warning-strip"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>警告提示提示信息，警告提示提示信息警告提示提示信息警告提示提示信息警告提示提示信息警告提示提示信息警告提示提示信息。</span></div><div class="ant-modal-body"><p class="ant-modal-copy">文本信息</p><p class="ant-modal-copy">- 位置在浏览器展示区域左右、上下居中对齐。</p><p class="ant-modal-copy">- 蒙版黑色透明度30%</p></div><div class="ant-modal-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div>
+</div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>会中断用户操作，只用于关键确认、复杂表单或重要信息。</li><li>取消和确认按钮固定 60 × 32px，确认按钮在右侧。</li><li>内容距离按钮区域保持 22px。</li><li>关闭后需清空状态时使用 destroyOnHidden。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">普通弹窗使用 Modal，二次确认使用 Modal.confirm。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Modal } from '360euxd';
+
+&lt;Modal open title="对话框标题" onCancel={close} onOk={submit}&gt;
+  &lt;p&gt;这里是内容说明，清晰表达当前操作影响。&lt;/p&gt;
+&lt;/Modal&gt;
+
+Modal.confirm({ title: '确认删除吗？', content: '删除后不可恢复。' });</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="popconfirm" data-component="popconfirm" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header">
+                  <div>
+                    <h2 class="section-title">Popconfirm 气泡确认框规范页</h2>
+                    <p class="section-desc">气泡确认框用于目标元素附近的轻量二次确认，比 Modal 更轻。</p>
+                  </div>
+                  <span class="code-note">Ant: Popconfirm</span>
+                </div>
+                <div class="section-body">
+                  <h3 class="spec-info-title">组件信息</h3>
+                  <div class="spec-summary">
+                    <div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">轻量确认浮层</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">内边距</div><div class="spec-summary-value">16px</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">按钮尺寸</div><div class="spec-summary-value">48 × 24px</div></div>
+                    <div class="spec-summary-item"><div class="spec-summary-label">位置</div><div class="spec-summary-value">12 种 placement</div></div>
+                  </div>
+                </div>
+
+                <section class="spec-block">
+                  <div class="section-header">
+                    <div>
+                      <h2 class="section-title">基本样式与规则</h2>
+                      <p class="section-desc">参考 Ant Design Popconfirm 的 placement、title、description、okText、cancelText。</p>
+                    </div>
+                  </div>
+                  <div class="section-body modal-section-body">
+                    <div class="doc-panel popconfirm-style-panel">
+                      <h3>组件样式</h3>
+                      <div class="popconfirm-demo-stage">
+                          <div class="ant-popconfirm ant-popconfirm-top-left"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-top"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-top-right"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-bottom-left"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-bottom"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-bottom-right"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-left-top"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-left"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-left-bottom"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-right-top"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-right"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                          <div class="ant-popconfirm ant-popconfirm-right-bottom"><div class="ant-popconfirm-message"><span class="alert-type-icon alert-type-icon-warning" aria-hidden="true"></span><span>确定删除这条信息吗?</span></div><div class="ant-popconfirm-buttons"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div>
+                      </div>
+                    </div>
+                    <div class="doc-panel">
+                      <h3>规则</h3>
+                      <ul class="rule-list">
+                        <li>用于删除、停用、撤销等局部轻量确认。</li>
+                        <li>气泡框四周内边距固定 16px。</li>
+                        <li>按钮使用小号 48 × 24px。</li>
+                        <li>高风险或需要展示较长说明时升级为 Modal。</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="spec-block">
+                  <div class="section-header">
+                    <div>
+                      <h2 class="section-title">代码示例</h2>
+                      <p class="section-desc">支持异步关闭、禁用触发、自定义图标和位置。</p>
+                    </div>
+                  </div>
+                  <div class="section-body"><pre class="code-block"><code>import { Popconfirm, Button } from '360euxd';
+
+&lt;Popconfirm
+  title="确定删除这条信息吗?"
+  okText="确定"
+  cancelText="取消"
+  placement="topRight"
+  onConfirm={remove}
+&gt;
+  &lt;Button danger&gt;删除&lt;/Button&gt;
+&lt;/Popconfirm&gt;</code></pre></div>
+                </section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="drawer" data-component="drawer" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Drawer 抽屉规范页</h2><p class="section-desc">抽屉是从屏幕边缘滑出的浮层面板，用于承载配置、详情和表单。</p></div><span class="code-note">Ant: Drawer</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">边缘浮层</div></div><div class="spec-summary-item"><div class="spec-summary-label">头部高度</div><div class="spec-summary-value">48px</div></div><div class="spec-summary-item"><div class="spec-summary-label">底部高度</div><div class="spec-summary-value">48px</div></div><div class="spec-summary-item"><div class="spec-summary-label">尺寸</div><div class="spec-summary-value">560 / 880 / 80%</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">基本样式与规则</h2><p class="section-desc">参考 Ant Design Drawer 的 placement、size、footer、extra 和 mask 配置。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>组件样式</h3><div class="drawer-demo-stack"><div class="drawer-demo-shell"><div class="ant-drawer"><div class="ant-drawer-header"><span class="ant-drawer-title">抽屉标题，3个尺寸560、880、80%动态适配</span><span class="ant-drawer-close" aria-hidden="true"></span></div><div class="ant-drawer-body"></div></div></div><div class="drawer-demo-shell"><div class="ant-drawer"><div class="ant-drawer-header"><span class="ant-drawer-title">有操作按钮</span><span class="ant-drawer-close" aria-hidden="true"></span></div><div class="ant-drawer-body"></div><div class="ant-drawer-footer"><button class="ant-btn">取消</button><button class="ant-btn ant-btn-primary">确定</button></div></div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>适合右侧详情、复杂配置和不中断上下文的表单。</li><li>头部栏高度 48px，底部操作栏高度 48px。</li><li>有操作按钮时使用 60 × 32px 常规按钮。</li><li>内容复杂或需多步骤时可使用 880px 或 80% 宽度。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">size 统一表达 560、880 或 80% 自适应宽度。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Drawer, Button } from '360euxd';
+
+&lt;Drawer
+  open
+  title="抽屉标题"
+  size={560}
+  footer={&lt;&gt;&lt;Button&gt;取消&lt;/Button&gt;&lt;Button type="primary"&gt;确定&lt;/Button&gt;&lt;/&gt;}
+  onClose={close}
+/&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="progress" data-component="progress" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Progress 进度规范页</h2><p class="section-desc">进度用于展示操作当前完成度，包含线性、环形、成功、失败和空状态。</p></div><span class="code-note">Ant: Progress</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">进度反馈</div></div><div class="spec-summary-item"><div class="spec-summary-label">线性高度</div><div class="spec-summary-value">12 / 6 / 3px</div></div><div class="spec-summary-item"><div class="spec-summary-label">环形样式</div><div class="spec-summary-value">大 / 小</div></div><div class="spec-summary-item"><div class="spec-summary-label">状态</div><div class="spec-summary-value">normal / success / error</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">基本样式与规则</h2><p class="section-desc">参考 Ant Design Progress 的 line、circle、percent、status 和 strokeWidth。</p></div></div><div class="section-body modal-section-body"><div class="doc-panel progress-style-panel"><h3>组件样式</h3><div class="progress-demo-surface"><div class="progress-demo-section"><div class="progress-demo-title">基本样式</div><div class="progress-line-group"><div class="ant-progress-line"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg"></div></div><span class="ant-progress-line-text">65%</span></div><div class="ant-progress-line ant-progress-status-error"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg" style="width:78%;"></div></div><span class="progress-status-icon progress-status-icon-error" aria-hidden="true"></span></div><div class="ant-progress-line ant-progress-status-success"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg"></div></div><span class="progress-status-icon" aria-hidden="true"></span></div><div class="ant-progress-line ant-progress-status-empty"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg"></div></div><span class="ant-progress-line-text">0%</span></div></div><div class="progress-line-group"><div class="ant-progress-line ant-progress-line-sm"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg"></div></div><span class="ant-progress-line-text">65%</span></div><div class="ant-progress-line ant-progress-line-sm ant-progress-status-error"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg" style="width:78%;"></div></div><span class="progress-status-icon progress-status-icon-error" aria-hidden="true"></span></div><div class="ant-progress-line ant-progress-line-sm ant-progress-status-success"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg"></div></div><span class="progress-status-icon" aria-hidden="true"></span></div><div class="ant-progress-line ant-progress-line-sm ant-progress-status-empty"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg"></div></div><span class="ant-progress-line-text">0%</span></div></div><div class="progress-line-group"><div class="ant-progress-line ant-progress-line-mini"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg" style="width:45%;"></div></div></div><div class="ant-progress-line ant-progress-line-mini ant-progress-status-error"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg" style="width:62%;"></div></div></div><div class="ant-progress-line ant-progress-line-mini ant-progress-status-success"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg"></div></div></div><div class="ant-progress-line ant-progress-line-mini ant-progress-status-empty"><div class="ant-progress-line-inner"><div class="ant-progress-line-bg"></div></div></div></div></div><div class="progress-demo-section"><div class="progress-demo-title">环形进度条样式</div><div class="progress-circle-grid"><div class="ant-progress-circle ant-progress-circle-success"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ant-progress-circle-track" cx="60" cy="60" r="54"></circle><circle class="ant-progress-circle-path" cx="60" cy="60" r="54" stroke-dasharray="339.292" stroke-dashoffset="0"></circle></svg><span class="progress-status-icon" aria-hidden="true"></span></div><div class="ant-progress-circle ant-progress-circle-error"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ant-progress-circle-track" cx="60" cy="60" r="54"></circle><circle class="ant-progress-circle-path" cx="60" cy="60" r="54" stroke-dasharray="339.292" stroke-dashoffset="0"></circle></svg><span class="progress-status-icon progress-status-icon-error" aria-hidden="true"></span></div><div class="ant-progress-circle"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ant-progress-circle-track" cx="60" cy="60" r="54"></circle><circle class="ant-progress-circle-path" cx="60" cy="60" r="54" stroke-dasharray="339.292" stroke-dashoffset="101.788"></circle></svg><span>70%</span></div><div class="ant-progress-circle ant-progress-circle-empty"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ant-progress-circle-track" cx="60" cy="60" r="54"></circle><circle class="ant-progress-circle-path" cx="60" cy="60" r="54" stroke-dasharray="339.292" stroke-dashoffset="339.292"></circle></svg><span>0%</span></div><div class="ant-progress-circle ant-progress-circle-sm ant-progress-circle-success"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ant-progress-circle-track" cx="60" cy="60" r="54"></circle><circle class="ant-progress-circle-path" cx="60" cy="60" r="54" stroke-dasharray="339.292" stroke-dashoffset="0"></circle></svg><span class="progress-status-icon" aria-hidden="true"></span></div><div class="ant-progress-circle ant-progress-circle-sm ant-progress-circle-error"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ant-progress-circle-track" cx="60" cy="60" r="54"></circle><circle class="ant-progress-circle-path" cx="60" cy="60" r="54" stroke-dasharray="339.292" stroke-dashoffset="0"></circle></svg><span class="progress-status-icon progress-status-icon-error" aria-hidden="true"></span></div><div class="ant-progress-circle ant-progress-circle-sm"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ant-progress-circle-track" cx="60" cy="60" r="54"></circle><circle class="ant-progress-circle-path" cx="60" cy="60" r="54" stroke-dasharray="339.292" stroke-dashoffset="101.788"></circle></svg><span>70%</span></div><div class="ant-progress-circle ant-progress-circle-sm ant-progress-circle-empty"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ant-progress-circle-track" cx="60" cy="60" r="54"></circle><circle class="ant-progress-circle-path" cx="60" cy="60" r="54" stroke-dasharray="339.292" stroke-dashoffset="339.292"></circle></svg><span>0%</span></div></div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>线性进度适合任务列表、上传和流程执行。</li><li>环形进度适合空间有限或强调单个任务完成度。</li><li>成功和失败状态必须用图标辅助表达。</li><li>0% 状态保留轨道和数值，不展示完成色。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">percent 必须由真实任务状态驱动。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Progress } from '360euxd';
+
+&lt;Progress percent={65} /&gt;
+&lt;Progress percent={100} status="success" /&gt;
+&lt;Progress percent={78} status="error" /&gt;
+&lt;Progress type="circle" percent={70} /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="spin" data-component="spin" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Spin 加载中规范页</h2><p class="section-desc">加载中用于页面、区块或局部容器的数据获取状态，避免空白等待。</p></div><span class="code-note">Ant: Spin</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">加载反馈</div></div><div class="spec-summary-item"><div class="spec-summary-label">尺寸</div><div class="spec-summary-value">16 / 22 / 32px</div></div><div class="spec-summary-item"><div class="spec-summary-label">形态</div><div class="spec-summary-value">花瓣 / 环形</div></div><div class="spec-summary-item"><div class="spec-summary-label">文本</div><div class="spec-summary-value">可选 description</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">基本样式与规则</h2><p class="section-desc">参考 Ant Design Spin 的 size、tip、spinning、fullscreen 和静态 indicator。</p></div></div><div class="section-body doc-grid"><div class="doc-panel"><h3>组件样式</h3><div class="spin-demo-grid"><div class="spin-demo-card"><div class="demo-row"><span class="ant-spin ant-spin-sm" aria-label="小号加载中"><span class="ant-spin-dot"><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i></span></span><span class="ant-spin" aria-label="默认加载中"><span class="ant-spin-dot"><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i></span></span><span class="ant-spin ant-spin-lg" aria-label="大号加载中"><span class="ant-spin-dot"><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i></span></span></div></div><div class="spin-demo-card"><div class="demo-row"><span class="ant-spin" aria-label="小号环状加载中"><span class="ant-spin-ring ant-spin-ring-xs"></span></span><span class="ant-spin" aria-label="默认环状加载中"><span class="ant-spin-ring"></span></span><span class="ant-spin" aria-label="大号环状加载中"><span class="ant-spin-ring ant-spin-ring-lg"></span></span></div></div><div class="spin-container-demo"><div class="spin-container-content"><span class="spin-skeleton-line"></span><span class="spin-skeleton-line"></span><span class="spin-skeleton-line"></span></div><div class="spin-container-mask"><span class="ant-spin"><span class="ant-spin-dot"><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i><i class="ant-spin-dot-item"></i></span><span class="ant-spin-text">数据加载中</span></span></div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>短时间加载可只显示指示器，长时间加载需要文案。</li><li>容器加载使用遮罩层，不改变容器原始布局。</li><li>花瓣和环形只保留 16、22、32 三档尺寸。</li><li>全屏加载只用于页面级阻塞状态。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">局部加载优先包裹内容区域，避免整页阻塞。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Spin } from '360euxd';
+
+&lt;Spin size="small" /&gt;
+&lt;Spin tip="数据加载中" spinning={loading}&gt;
+  &lt;Table dataSource={data} /&gt;
+&lt;/Spin&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="exception" data-component="exception" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Exception 异常规范页</h2><p class="section-desc">轻量训练版仅保留通知提示框参考图，减少异常插图资产体积。</p></div><span class="code-note">Ant: Result / Notification</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">异常反馈状态</div></div><div class="spec-summary-item"><div class="spec-summary-label">提示框</div><div class="spec-summary-value">错误 / 帮助 / 自动刷新</div></div><div class="spec-summary-item"><div class="spec-summary-label">适用场景</div><div class="spec-summary-value">普通错误 / 帮助说明 / 自动刷新</div></div><div class="spec-summary-item"><div class="spec-summary-label">压缩策略</div><div class="spec-summary-value">移除其它异常插图</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">保留样式与规则</h2><p class="section-desc">异常界面只保留通知提示框作为 AI 训练参考。</p></div></div><div class="section-body modal-section-body"><div class="doc-panel exception-style-panel"><h3>组件样式</h3><img src="assets/reference/exception-notice.png" alt="异常通知提示框参考图" style="display:block;width:100%;height:auto;border-radius:6px;"></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>错误提示需要说明原因和下一步操作。</li><li>有帮助说明时展示文字链接。</li><li>可自动刷新时展示倒计时按钮。</li><li>此训练包不再携带页面级异常插图资产。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">按错误类型补充说明和操作入口。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Notification } from '360euxd';
+
+Notification.error({
+  title: 'xxxxxx错误',
+  description: '请查看网络连接后刷新页面重试',
+  action: '帮助说明 / 立即刷新20S'
+});</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="empty" data-component="empty" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Empty 空状态规范页</h2><p class="section-desc">轻量训练版仅保留无数据通用类参考图。</p></div><span class="code-note">Ant: Empty</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">空数据反馈</div></div><div class="spec-summary-item"><div class="spec-summary-label">基础信息</div><div class="spec-summary-value">图标 / 标题 / 描述</div></div><div class="spec-summary-item"><div class="spec-summary-label">状态文案</div><div class="spec-summary-value">暂无数据 / 暂无图片</div></div><div class="spec-summary-item"><div class="spec-summary-label">压缩策略</div><div class="spec-summary-value">移除其它空状态图</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">保留样式与规则</h2><p class="section-desc">空状态只保留无数据通用类作为 AI 训练参考。</p></div></div><div class="section-body modal-section-body"><div class="doc-panel empty-style-panel"><h3>组件样式</h3><img src="assets/reference/empty-general.png" alt="无数据通用类空状态参考图" style="display:block;width:100%;height:auto;border-radius:6px;"></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>列表和表格空数据使用轻量空状态。</li><li>通用类空状态文案保持简短。</li><li>图片和文案居中展示。</li><li>此训练包不再携带页面空状态、图表空状态等其它图片资产。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">按场景传入标题、说明和操作按钮。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Empty } from '360euxd';
+
+&lt;Empty title="暂无数据" /&gt;
+&lt;Empty title="暂无图片" /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <section class="component-doc" id="data-loading" data-component="data-loading" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Data Loading 数据加载规范页</h2><p class="section-desc">轻量训练版仅保留 3 个原始 GIF：分析、生成、加载。</p></div><span class="code-note">Pattern: Data Loading</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">数据反馈状态</div></div><div class="spec-summary-item"><div class="spec-summary-label">展示形式</div><div class="spec-summary-value">gif 插图 + 状态文案</div></div><div class="spec-summary-item"><div class="spec-summary-label">使用场景</div><div class="spec-summary-value">分析 / 生成 / 加载</div></div><div class="spec-summary-item"><div class="spec-summary-label">文案规则</div><div class="spec-summary-value">动词 + 处理中 + 请稍后</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">保留样式与规则</h2><p class="section-desc">数据加载只保留“数据正在分析中，请稍后...”“正在生成文件，请稍后...”“数据正在加载中，请稍后...”三个 GIF。</p></div></div><div class="section-body modal-section-body"><div class="doc-panel empty-style-panel"><h3>组件样式</h3><div class="data-loading-grid"><div class="data-loading-card"><img src="assets/data-loading/loading-analysis.gif" alt="数据正在分析中，请稍后..."><div class="data-loading-title">数据正在分析中，请稍后...</div></div><div class="data-loading-card"><img src="assets/data-loading/loading-generate.gif" alt="正在生成文件，请稍后..."><div class="data-loading-title">正在生成文件，请稍后...</div></div><div class="data-loading-card"><img src="assets/data-loading/loading-load.gif" alt="数据正在加载中，请稍后..."><div class="data-loading-title">数据正在加载中，请稍后...</div></div></div></div><div class="doc-panel"><h3>规则</h3><ul class="rule-list"><li>数据加载文案需要说明当前任务正在进行。</li><li>同一页面内保持插图尺寸和文案格式一致。</li><li>耗时任务使用“请稍后”收尾。</li><li>此训练包不再携带其它数据加载 GIF 资产。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">按当前任务选择分析、生成或加载状态。</p></div></div><div class="section-body"><pre class="code-block"><code>&lt;DataLoading type="analysis" text="数据正在分析中，请稍后..." /&gt;
+&lt;DataLoading type="generate" text="正在生成文件，请稍后..." /&gt;
+&lt;DataLoading type="load" text="数据正在加载中，请稍后..." /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+
+            <section class="component-doc" id="pagination" data-component="pagination" hidden>
+              <section class="section-card spec-card">
+                <div class="section-header"><div><h2 class="section-title">Pagination 分页规范页</h2><p class="section-desc">分页用于分隔长列表或大批量数据，每次只加载一个页面。</p></div><span class="code-note">Ant: Pagination</span></div>
+                <div class="section-body"><h3 class="spec-info-title">组件信息</h3><div class="spec-summary"><div class="spec-summary-item"><div class="spec-summary-label">组件类型</div><div class="spec-summary-value">导航 / 数据分页</div></div><div class="spec-summary-item"><div class="spec-summary-label">尺寸</div><div class="spec-summary-value">基础与更多 32×32 / 简约 24×24</div></div><div class="spec-summary-item"><div class="spec-summary-label">样式分类</div><div class="spec-summary-value">线性 / 面性</div></div><div class="spec-summary-item"><div class="spec-summary-label">交互</div><div class="spec-summary-value">页码切换 / 下拉选择 / 快速跳转</div></div></div></div>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">使用场景</h2><p class="section-desc">当加载或渲染所有数据将花费较多时间时，使用分页切换页码浏览数据。</p></div></div><div class="section-body"><div class="doc-panel"><ul class="rule-list"><li>当加载/渲染所有数据将花费很多时间时使用分页。</li><li>可切换页码浏览数据，避免一次性渲染过多内容。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">基本样式与规则</h2><p class="section-desc">基础样式和更多页码使用 32×32；简约样式使用 24×24。三类样式均区分线性与面性。</p></div></div><div class="section-body"><div class="doc-panel"><h3>组件样式</h3><div class="pagination-demo-surface"><div class="pagination-demo-section"><h4 class="pagination-demo-title">基础样式</h4><p class="pagination-demo-note">最多显示 5 页内容，当数量多时默认显示前 5 页。</p><div class="pagination-pattern-strip"><div class="pagination-pattern-column"><div class="pagination-demo-row is-linear"><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button></div><div class="pagination-demo-row is-linear"><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-hover" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-disabled" type="button" disabled data-page="1">1</button></div><div class="pagination-demo-row is-linear"><button class="pagination-item" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><button class="pagination-item is-hover" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><button class="pagination-item is-disabled" type="button" disabled><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-linear"><button class="pagination-item" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item is-hover" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item is-disabled" type="button" disabled><span class="pagination-arrow is-prev" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-linear"><button class="pagination-item is-ellipsis" type="button">...</button><button class="pagination-item is-jump" type="button">«</button><button class="pagination-item is-jump" type="button">»</button></div></div><div class="pagination-pattern-column"><div class="pagination-demo-row is-filled"><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button></div><div class="pagination-demo-row is-filled"><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-hover" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-disabled" type="button" disabled data-page="1">1</button></div><div class="pagination-demo-row is-filled"><button class="pagination-item" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><button class="pagination-item is-hover" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><button class="pagination-item is-disabled" type="button" disabled><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-filled"><button class="pagination-item" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item is-hover" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item is-disabled" type="button" disabled><span class="pagination-arrow is-prev" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-filled"><button class="pagination-item is-ellipsis" type="button">...</button><button class="pagination-item is-jump" type="button">«</button><button class="pagination-item is-jump" type="button">»</button></div></div><div class="pagination-pattern-column"><div class="pagination-demo-row is-linear is-simple"><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button></div><div class="pagination-demo-row is-linear is-simple"><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-hover" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-disabled" type="button" disabled data-page="1">1</button></div><div class="pagination-demo-row is-linear is-simple"><button class="pagination-item" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><button class="pagination-item is-hover" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><button class="pagination-item is-disabled" type="button" disabled><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-linear is-simple"><button class="pagination-item" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item is-hover" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item is-disabled" type="button" disabled><span class="pagination-arrow is-prev" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-linear is-simple"><button class="pagination-item is-ellipsis" type="button">...</button><button class="pagination-item is-jump" type="button">«</button><button class="pagination-item is-jump" type="button">»</button></div></div></div><div class="pagination-variant-grid"><div class="pagination-variant"><h5 class="pagination-variant-title">分页-线性（32×32）</h5><div class="pagination-demo-stack"><div class="pagination-demo-row is-linear" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-linear" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-hover" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-linear" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-hover" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next is-disabled" type="button" disabled><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div></div></div><div class="pagination-variant"><h5 class="pagination-variant-title">分页-面性（32×32）</h5><div class="pagination-demo-stack"><div class="pagination-demo-row is-filled" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-filled" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-hover" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-filled" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-hover" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next is-disabled" type="button" disabled><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div></div></div></div></div><div class="pagination-demo-section"><h4 class="pagination-demo-title">更多页码</h4><p class="pagination-demo-note">最多显示 5 页内容，当数量多时默认显示前 5 页以及最后 1 页。</p><div class="pagination-variant-grid"><div class="pagination-variant"><h5 class="pagination-variant-title">分页栏-线性（32×32）</h5><div class="pagination-demo-stack"><div class="pagination-demo-row is-linear" data-pagination-demo data-pages="50"><span class="pagination-total">共计 7 条</span><span class="pagination-select-wrap"><button class="pagination-select" type="button"><span>10条/页</span></button><span class="pagination-select-menu"><button class="pagination-select-option" type="button">10条/页</button><button class="pagination-select-option" type="button">20条/页</button><button class="pagination-select-option" type="button">50条/页</button></span></span><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-linear" data-pagination-demo data-pages="50"><span class="pagination-total">共计 <strong>4568</strong> 条</span><span class="pagination-select-wrap"><button class="pagination-select" type="button"><span>10条/页</span></button><span class="pagination-select-menu"><button class="pagination-select-option" type="button">10条/页</button><button class="pagination-select-option" type="button">20条/页</button><button class="pagination-select-option" type="button">50条/页</button></span></span><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><span>前往</span><span class="pagination-jumper" contenteditable="true">4</span><span>页</span></div><div class="pagination-demo-row is-linear" data-pagination-demo data-pages="50"><span class="pagination-total">共计 <strong>4568</strong> 条</span><span class="pagination-select-wrap"><button class="pagination-select" type="button"><span>10条/页</span></button><span class="pagination-select-menu"><button class="pagination-select-option" type="button">10条/页</button><button class="pagination-select-option" type="button">20条/页</button><button class="pagination-select-option" type="button">50条/页</button></span></span><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item is-ellipsis" type="button">«</button><button class="pagination-item pagination-page is-active" type="button" data-page="13">13</button><button class="pagination-item pagination-page" type="button" data-page="14">14</button><button class="pagination-item pagination-page" type="button" data-page="15">15</button><button class="pagination-item pagination-page" type="button" data-page="16">16</button><button class="pagination-item pagination-page" type="button" data-page="17">17</button><button class="pagination-item is-ellipsis" type="button">...</button><button class="pagination-item pagination-page" type="button" data-page="50">50</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><span>前往</span><span class="pagination-jumper" contenteditable="true">123</span><span>页</span></div><div class="pagination-demo-row is-linear" data-pagination-demo data-pages="50"><span class="pagination-total">共计 <strong>4568</strong> 条</span><span class="pagination-select-wrap"><button class="pagination-select" type="button"><span>10条/页</span></button><span class="pagination-select-menu"><button class="pagination-select-option" type="button">10条/页</button><button class="pagination-select-option" type="button">20条/页</button><button class="pagination-select-option" type="button">50条/页</button></span></span><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item is-jump" type="button">«</button><button class="pagination-item pagination-page is-active" type="button" data-page="13">13</button><button class="pagination-item pagination-page" type="button" data-page="14">14</button><button class="pagination-item pagination-page" type="button" data-page="15">15</button><button class="pagination-item pagination-page" type="button" data-page="16">16</button><button class="pagination-item pagination-page" type="button" data-page="17">17</button><button class="pagination-item is-ellipsis" type="button">...</button><button class="pagination-item pagination-page" type="button" data-page="50">50</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><span>前往</span><span class="pagination-jumper" contenteditable="true">123</span><span>页</span></div></div></div><div class="pagination-variant"><h5 class="pagination-variant-title">分页栏-面性（32×32）</h5><div class="pagination-demo-stack"><div class="pagination-demo-row is-filled" data-pagination-demo data-pages="50"><span class="pagination-total">共计 7 条</span><span class="pagination-select-wrap"><button class="pagination-select" type="button"><span>10条/页</span></button><span class="pagination-select-menu"><button class="pagination-select-option" type="button">10条/页</button><button class="pagination-select-option" type="button">20条/页</button><button class="pagination-select-option" type="button">50条/页</button></span></span><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-filled" data-pagination-demo data-pages="50"><span class="pagination-total">共计 <strong>4568</strong> 条</span><span class="pagination-select-wrap"><button class="pagination-select" type="button"><span>10条/页</span></button><span class="pagination-select-menu"><button class="pagination-select-option" type="button">10条/页</button><button class="pagination-select-option" type="button">20条/页</button><button class="pagination-select-option" type="button">50条/页</button></span></span><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><span>前往</span><span class="pagination-jumper" contenteditable="true">4</span><span>页</span></div><div class="pagination-demo-row is-filled" data-pagination-demo data-pages="50"><span class="pagination-total">共计 <strong>4568</strong> 条</span><span class="pagination-select-wrap"><button class="pagination-select" type="button"><span>10条/页</span></button><span class="pagination-select-menu"><button class="pagination-select-option" type="button">10条/页</button><button class="pagination-select-option" type="button">20条/页</button><button class="pagination-select-option" type="button">50条/页</button></span></span><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item is-ellipsis" type="button">«</button><button class="pagination-item pagination-page is-active" type="button" data-page="13">13</button><button class="pagination-item pagination-page" type="button" data-page="14">14</button><button class="pagination-item pagination-page" type="button" data-page="15">15</button><button class="pagination-item pagination-page" type="button" data-page="16">16</button><button class="pagination-item pagination-page" type="button" data-page="17">17</button><button class="pagination-item is-ellipsis" type="button">...</button><button class="pagination-item pagination-page" type="button" data-page="50">50</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><span>前往</span><span class="pagination-jumper" contenteditable="true">123</span><span>页</span></div><div class="pagination-demo-row is-filled" data-pagination-demo data-pages="50"><span class="pagination-total">共计 <strong>4568</strong> 条</span><span class="pagination-select-wrap"><button class="pagination-select" type="button"><span>10条/页</span></button><span class="pagination-select-menu"><button class="pagination-select-option" type="button">10条/页</button><button class="pagination-select-option" type="button">20条/页</button><button class="pagination-select-option" type="button">50条/页</button></span></span><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item is-jump" type="button">«</button><button class="pagination-item pagination-page is-active" type="button" data-page="13">13</button><button class="pagination-item pagination-page" type="button" data-page="14">14</button><button class="pagination-item pagination-page" type="button" data-page="15">15</button><button class="pagination-item pagination-page" type="button" data-page="16">16</button><button class="pagination-item pagination-page" type="button" data-page="17">17</button><button class="pagination-item is-ellipsis" type="button">...</button><button class="pagination-item pagination-page" type="button" data-page="50">50</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button><span>前往</span><span class="pagination-jumper" contenteditable="true">123</span><span>页</span></div></div></div></div></div><div class="pagination-demo-section"><h4 class="pagination-demo-title">简约样式</h4><p class="pagination-demo-note">简约样式用于空间较紧凑的列表或卡片区域，尺寸固定为 24×24。</p><div class="pagination-variant-grid"><div class="pagination-variant"><h5 class="pagination-variant-title">简约-线性（24×24）</h5><div class="pagination-demo-stack"><div class="pagination-demo-row is-simple is-linear" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-simple is-linear" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-active" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-simple is-linear" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page is-active" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-simple is-linear" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page is-active" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-simple is-linear" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page is-active" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div></div></div><div class="pagination-variant"><h5 class="pagination-variant-title">简约-面性（24×24）</h5><div class="pagination-demo-stack"><div class="pagination-demo-row is-simple is-filled" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page is-active" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-simple is-filled" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page is-active" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-simple is-filled" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page is-active" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-simple is-filled" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page is-active" type="button" data-page="4">4</button><button class="pagination-item pagination-page" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div><div class="pagination-demo-row is-simple is-filled" data-pagination-demo data-pages="5"><button class="pagination-item pagination-prev" type="button"><span class="pagination-arrow is-prev" aria-hidden="true"></span></button><button class="pagination-item pagination-page" type="button" data-page="1">1</button><button class="pagination-item pagination-page" type="button" data-page="2">2</button><button class="pagination-item pagination-page" type="button" data-page="3">3</button><button class="pagination-item pagination-page" type="button" data-page="4">4</button><button class="pagination-item pagination-page is-active" type="button" data-page="5">5</button><button class="pagination-item pagination-next" type="button"><span class="pagination-arrow is-next" aria-hidden="true"></span></button></div></div></div></div></div></div></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">规则</h2><p class="section-desc">分页需要明确总数、当前页和可用操作。</p></div></div><div class="section-body"><div class="doc-panel"><ul class="rule-list"><li>基础样式和更多页码的按钮及单个数字大小固定 32×32px。</li><li>简约样式的按钮及单个数字大小固定 24×24px。</li><li>线性样式使用描边表达当前页，面性样式使用浅绿色背景表达当前页。</li><li>超过 5 页时保留当前页附近页码、上一页、下一页和最后一页。</li><li>下拉选择、前后箭头和页码点击需要可交互，并保持 Ant Design Pagination 的切换逻辑。</li></ul></div></div></section>
+                <section class="spec-block"><div class="section-header"><div><h2 class="section-title">代码示例</h2><p class="section-desc">能力参考 Ant Design Pagination，视觉样式按本规范实现。</p></div></div><div class="section-body"><pre class="code-block"><code>import { Pagination } from '360euxd';
+
+&lt;Pagination total={50} variant="linear" /&gt;
+&lt;Pagination total={50} variant="filled" /&gt;
+&lt;Pagination simple size="small" total={50} /&gt;
+&lt;Pagination showSizeChanger showQuickJumper total={4568} /&gt;</code></pre></div></section>
+              </section>
+            </section>
+
+            <!-- COMPONENT_END -->
+
+            <!-- DEMO_SHELL_START
+                 组件库展示壳收尾 DOM：内容容器、页面主体和平台框架的闭合结构。
+                 这些节点只服务组件库页面，不应被复制到业务页面。
+            -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast-holder" id="toastHolder"></div>
+  <!-- DEMO_SHELL_END -->
+
+  <!-- DEMO_SHELL_START
+       组件库展示壳 DOM 与脚本：闭合预览壳、toast 容器、目录切换、折叠侧边栏、
+       代码复制、分页示例交互和下拉演示。
+       这些内容只服务组件库预览，不应进入最终业务 HTML。
+  -->
+  <script>
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+    function getMenuTitle(item) {
+      const en = $('.menu-item-en', item)?.textContent?.trim() || '';
+      const zh = $('.menu-item-zh', item)?.textContent?.trim() || '';
+      return [en, zh].filter(Boolean).join(' ');
+    }
+
+    function syncComponentContent(item) {
+      const componentId = item?.getAttribute('href')?.replace('#', '') || 'alert';
+      let hasContent = false;
+      $$('.component-doc').forEach((doc) => {
+        const visible = doc.dataset.component === componentId;
+        doc.hidden = !visible;
+        hasContent = hasContent || visible;
+      });
+      const empty = $('[data-component-empty]');
+      if (empty) empty.hidden = hasContent;
+    }
+
+    function setActiveMenu(item) {
+      if (!item) return;
+      $$('.menu-item').forEach((nav) => nav.classList.remove('active'));
+      item.classList.add('active');
+      const title = getMenuTitle(item);
+      if (title) $('.page-title').textContent = title;
+      syncComponentContent(item);
+    }
+
+    function syncMenuFromHash() {
+      const hash = window.location.hash || '#alert';
+      const target = $(`.menu-item[href="${hash}"]`) || $('.menu-item');
+      setActiveMenu(target);
+    }
+
+    $('.sidebar-collapse-button')?.addEventListener('click', () => {
+      const frame = $('.platform-frame');
+      const icon = $('.sidebar-collapse-button .iconfont');
+      frame.classList.toggle('sidebar-collapsed');
+      icon.className = `iconfont ${frame.classList.contains('sidebar-collapsed') ? 'icon-xiangyouzhankai' : 'icon-xiangzuozhankai'}`;
+    });
+
+    $$('.menu-item').forEach((item) => {
+      item.addEventListener('click', () => setActiveMenu(item));
+    });
+
+    window.addEventListener('hashchange', syncMenuFromHash);
+    syncMenuFromHash();
+
+    $$('.pagination-demo-row[data-pagination-demo]').forEach((row) => {
+      const updateActive = (nextPage) => {
+        const pages = $$('.pagination-page', row);
+        if (!pages.length) return;
+        const available = pages
+          .map((button) => Number(button.dataset.page))
+          .filter((value) => Number.isFinite(value));
+        if (!available.length) return;
+        const min = Math.min(...available);
+        const max = Math.max(...available);
+        const safePage = Math.max(min, Math.min(max, nextPage));
+        pages.forEach((button) => {
+          button.classList.toggle('is-active', Number(button.dataset.page) === safePage);
+        });
+      };
+
+      row.addEventListener('click', (event) => {
+        const pageButton = event.target.closest('.pagination-page');
+        const active = $('.pagination-page.is-active', row);
+        const current = Number(active?.dataset.page || 1);
+        if (pageButton && !pageButton.disabled) {
+          updateActive(Number(pageButton.dataset.page));
+          return;
+        }
+        if (event.target.closest('.pagination-prev:not(:disabled)')) updateActive(current - 1);
+        if (event.target.closest('.pagination-next:not(:disabled)')) updateActive(current + 1);
+      });
+    });
+
+    $$('.pagination-select').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const wrap = button.closest('.pagination-select-wrap');
+        $$('.pagination-select-wrap.is-open').forEach((item) => {
+          if (item !== wrap) item.classList.remove('is-open');
+        });
+        wrap?.classList.toggle('is-open');
+      });
+    });
+
+    $$('.pagination-select-option').forEach((option) => {
+      option.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const wrap = option.closest('.pagination-select-wrap');
+        const label = $('.pagination-select span', wrap);
+        if (label) label.textContent = option.textContent;
+        wrap?.classList.remove('is-open');
+      });
+    });
+
+    document.addEventListener('click', () => {
+      $$('.pagination-select-wrap.is-open').forEach((wrap) => wrap.classList.remove('is-open'));
+    });
+
+    $$('.code-block').forEach((block) => {
+      const button = document.createElement('button');
+      button.className = 'code-copy-button';
+      button.type = 'button';
+      button.setAttribute('aria-label', '复制代码');
+      button.innerHTML = '<i class="iconfont icon-fuzhi"></i>';
+      block.appendChild(button);
+      button.addEventListener('click', async () => {
+        const code = $('code', block)?.textContent || '';
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code);
+          button.classList.add('is-copied');
+          button.setAttribute('aria-label', '已复制');
+          setTimeout(() => {
+            button.classList.remove('is-copied');
+            button.setAttribute('aria-label', '复制代码');
+          }, 1200);
+        } catch (error) {
+          button.setAttribute('aria-label', '复制失败');
+        }
+      });
+    });
+  </script>
+  <!-- DEMO_SHELL_END -->
+</body>
+</html>
 
