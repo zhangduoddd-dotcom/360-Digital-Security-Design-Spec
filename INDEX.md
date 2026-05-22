@@ -31,6 +31,7 @@ INDEX.md
 | 列表页搜索与表格交互规范 | `Interaction Construction Specifications/list-page.md` |
 | 表单录入交互规范 | `Interaction Construction Specifications/form-entry.md` |
 | 全局 Token / 主题样式 | `Basic UI component style/Green Theme-Global Style.css` |
+| 语义色 / 状态标签 / 图表用色规范 | `Basic UI component style/color.md` |
 | 基础与数据录入组件 | `Basic UI component style/Basic & Data Entry.html` |
 | 数据展示组件 | `Basic UI component style/Data Display.html` |
 | 反馈组件 | `Basic UI component style/Feedback.html` |
@@ -38,7 +39,7 @@ INDEX.md
 
 当前组件库状态：`Feedback.html` 和 `Navigation.html` 尚未补齐完整真实组件 DOM / CSS / 状态时，只能视为待补齐资产，不应作为完整组件真源。
 
-## 3. 全局交互规范读取规则
+## 3. 全局与模块读取规则
 
 所有页面都必须读取：
 
@@ -55,6 +56,8 @@ Interaction Construction Specifications/permission-state.md
 |---|---|
 | 列表页、查询结果页、用户管理列表、系统配置列表 | `Interaction Construction Specifications/list-page.md` |
 | 表单页、新增页、编辑页、配置页、抽屉表单、分步表单 | `Interaction Construction Specifications/form-entry.md` |
+| 页面包含等级标签、状态标签、状态点、风险等级、流程状态、开关状态或连接状态 | `Basic UI component style/color.md` |
+| 页面包含图表、统计图、趋势图、占比图、环图、饼图、柱状图、折线图或数据可视化模块 | `Basic UI component style/color.md` |
 | 详情页中包含关联表格 | `Interaction Construction Specifications/list-page.md` |
 | 详情页中包含编辑抽屉或配置表单 | `Interaction Construction Specifications/form-entry.md` |
 | 工作台中包含待办列表、排行列表或表格模块 | `Interaction Construction Specifications/list-page.md` |
@@ -62,16 +65,18 @@ Interaction Construction Specifications/permission-state.md
 
 ## 4. 页面类型读取映射
 
-| 页面类型 | 母版 / 交互规范 | 组件库资产 |
-|---|---|---|
-| 列表页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`、`list-page.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Navigation.html` |
-| 表单页 / 新增页 / 编辑页 / 配置页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`、`form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读取 `Feedback.html` |
-| 详情页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；若包含关联表格，追加读取 `list-page.md`；若包含编辑抽屉或配置表单，追加读取 `form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Feedback.html` |
-| 工作台 / Dashboard | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；若包含待办列表、排行列表或表格模块，追加读取 `list-page.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html` |
-| 分步流程页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`、`form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读取 `Navigation.html`、`Feedback.html` |
-| 异常页 / 空状态页 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读取 `Feedback.html` |
-| 用户管理 / 系统配置 / 系统设置 | `common-single-nav.html`，明确双层导航时用 `double-nav-frame.html`；必须读取 `page-container.md`、`permission-state.md`；包含列表时读取 `list-page.md`；包含新增 / 编辑 / 配置时读取 `form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读取 `Feedback.html`、`Navigation.html` |
-| HTML Demo 检查 | 读取待检查页面实际使用的母版；必须读取 `page-container.md`、`permission-state.md`；再按页面实际结构读取 `list-page.md`、`form-entry.md` | 读取待检查页面实际使用的组件库资产 |
+下表中的短文件名均对应第 2 节固定资产路径。默认使用 `common-single-nav.html`；用户或需求明确双层导航时，使用 `double-nav-frame.html`。
+
+| 页面类型 | 基础必读 | 条件追加读取 | 组件与样式资产 |
+|---|---|---|---|
+| 列表页 / 查询结果页 | `common-single-nav.html` 或 `double-nav-frame.html`；`page-container.md`、`permission-state.md`、`list-page.md` | 包含新增 / 编辑 / 配置表单时读 `form-entry.md`；包含等级、状态或图表时读 `color.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读 `Feedback.html`、`Navigation.html` |
+| 表单页 / 新增页 / 编辑页 / 配置页 | `common-single-nav.html` 或 `double-nav-frame.html`；`page-container.md`、`permission-state.md`、`form-entry.md` | 包含状态标签、风险等级、流程状态或结果状态时读 `color.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读 `Feedback.html` |
+| 详情页 | `common-single-nav.html` 或 `double-nav-frame.html`；`page-container.md`、`permission-state.md` | 包含关联表格时读 `list-page.md`；包含编辑抽屉或配置表单时读 `form-entry.md`；包含等级、状态或图表时读 `color.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读 `Feedback.html` |
+| 工作台 / Dashboard | `common-single-nav.html` 或 `double-nav-frame.html`；`page-container.md`、`permission-state.md`、`color.md` | 包含待办列表、排行列表或表格模块时读 `list-page.md`；包含配置表单、快捷编辑或抽屉表单时读 `form-entry.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读 `Feedback.html`、`Navigation.html` |
+| 分步流程页 | `common-single-nav.html` 或 `double-nav-frame.html`；`page-container.md`、`permission-state.md`、`form-entry.md`、`color.md` | 包含步骤导航时读 `Navigation.html`；包含结果反馈、确认或异常反馈时读 `Feedback.html` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读 `Navigation.html`、`Feedback.html` |
+| 异常页 / 空状态页 | `common-single-nav.html` 或 `double-nav-frame.html`；`page-container.md`、`permission-state.md` | 包含状态标签、错误等级或恢复流程状态时读 `color.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、按需读 `Feedback.html` |
+| 用户管理 / 系统配置 / 系统设置 | `common-single-nav.html` 或 `double-nav-frame.html`；`page-container.md`、`permission-state.md` | 包含列表时读 `list-page.md`；包含新增 / 编辑 / 配置时读 `form-entry.md`；包含等级、状态或图表时读 `color.md` | `Green Theme-Global Style.css`、`Basic & Data Entry.html`、`Data Display.html`、按需读 `Feedback.html`、`Navigation.html` |
+| HTML Demo 检查 | 读取待检查页面实际使用的母版；`page-container.md`、`permission-state.md` | 按页面实际结构读取 `list-page.md`、`form-entry.md`、`color.md` | 读取待检查页面实际使用的组件库资产；含图表、标签、状态点或语义色时必须核对 `color.md` |
 
 ## 5. 目录职责
 
@@ -80,7 +85,7 @@ Interaction Construction Specifications/permission-state.md
 | `README.md` | 给人看的仓库简介和使用说明 |
 | `SKILL.md` | AI 唯一执行约束 |
 | `INDEX.md` | AI 最小读取路径和资产索引 |
-| `Basic UI component style/` | 全局样式、Token、基础组件、数据展示组件、反馈组件、导航组件资产 |
+| `Basic UI component style/` | 全局样式、Token、语义色、图表色、基础组件、数据展示组件、反馈组件、导航组件资产 |
 | `Interaction Construction Specifications/` | 固定 HTML 母版、页面容器规范、列表交互、表单交互、权限与状态交互规范 |
 
 ## 6. 维护说明
