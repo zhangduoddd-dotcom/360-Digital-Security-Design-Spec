@@ -74,6 +74,7 @@ Keywords: background system, page construction, layout structure, top navigation
 | 内容容器背景 | #F2F3F5 |
 | 内容容器内边距 | 16px |
 | 业务子容器背景 | #FFFFFF |
+| 业务子容器内边距 | 24px |
 | 业务子容器圆角 | 8px |
 | 业务子容器间距 | 16px |
 
@@ -81,7 +82,7 @@ Keywords: background system, page construction, layout structure, top navigation
 
 ## 6. 页面类型组合
 
-| 页面类型 | 主内容区常见组合 |
+| 页面类型 | 主内容区业务子容器内常见组合 |
 |---|---|
 | 列表页 | 搜索区 + 工具栏 + 表格 + 分页 |
 | 详情页 | 摘要区 + 信息分组 + 关联列表 / 操作记录 |
@@ -101,7 +102,7 @@ Keywords: background system, page construction, layout structure, top navigation
 弹窗、抽屉、浮层属于内容弹层，不替代主内容区。
 
 - 高风险确认优先使用弹窗。
-- 详情查看、轻量编辑、筛选配置可使用抽屉。
+- 详情查看、轻量编辑、筛选配置优先使用抽屉。
 - 弹窗和抽屉必须有明确标题。
 - 关闭前如有未保存内容，应提示用户确认。
 - 弹层不应遮挡关键确认文案和主要操作按钮。
