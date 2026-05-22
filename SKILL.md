@@ -80,7 +80,37 @@ HTML Demo 必须满足：
 
 如果母版中已有 `BUSINESS_CONTENT_START` / `BUSINESS_CONTENT_END` 注释，只能替换该边界内部内容。没有显式边界时，按母版注释和业务内容容器判断，不得整体替换右侧框架区域。
 
-## 4. 组件来源硬约束
+## 4. 页面交互规范读取硬约束
+
+读取 `INDEX.md` 后，必须同时读取当前页面类型对应的 `Interaction Construction Specifications/*.md` 交互规范。
+
+仅继承 HTML 母版和组件库资产，不视为完成页面规范读取。
+
+所有页面必须读取：
+
+```text
+Interaction Construction Specifications/page-container.md
+Interaction Construction Specifications/permission-state.md
+```
+
+列表页、查询结果页、用户管理列表、系统配置列表必须额外读取：
+
+```text
+Interaction Construction Specifications/list-search.md
+Interaction Construction Specifications/list-table.md
+```
+
+表单页、新增页、编辑页、配置页、抽屉表单、分步表单必须额外读取：
+
+```text
+Interaction Construction Specifications/form-entry.md
+```
+
+详情页、工作台等页面如果包含表格、列表、搜索区或编辑表单，必须按实际模块追加读取 `list-search.md`、`list-table.md` 或 `form-entry.md`。
+
+未读取当前页面适用交互规范时，不得生成最终 HTML Demo。
+
+## 5. 组件来源硬约束
 
 组件 DOM / class / CSS 只能来自以下组件库资产；全局 Token 只能来自 `Basic UI component style/Green Theme-Global Style.css`：
 
@@ -109,13 +139,14 @@ Basic UI component style/Navigation.html
 
 页面业务 CSS 只能补充业务区布局、宽度、间距、对齐和局部业务修饰，不得重造基础组件视觉系统。
 
-## 5. 当前页面执行契约
+## 6. 当前页面执行契约
 
 生成 HTML / CSS / JS 前，必须先建立当前页面执行契约。执行契约是内部生成依据，不是交付后的说明文案。
 
 执行契约至少包含：
 
 - 页面类型与使用母版。
+- 已读取的页面交互规范文件。
 - 用户主任务与 P0 / P1 / P2 / P3 信息层级。
 - 业务内容进入母版的具体区域。
 - 组件映射表：组件用途、组件库文件、复用的 DOM / class / CSS / Token。
@@ -125,22 +156,23 @@ Basic UI component style/Navigation.html
 
 没有建立执行契约，不得直接生成 HTML Demo。
 
-## 6. 标准执行流程
+## 7. 标准执行流程
 
 AI 必须按以下顺序执行：
 
 ```text
 1. 识别任务类型和页面类型。
 2. 读取 INDEX.md，获得最小读取路径。
-3. 选择并完整继承固定 HTML 母版。
-4. 判断业务内容只能进入的母版业务区域。
-5. 读取需要的组件库资产，并只提取 `COMPONENT_START` / `COMPONENT_END` 标记内的组件来源。
-6. 建立当前页面执行契约。
-7. 基于真实组件 DOM / CSS / Token 生成业务内容。
-8. 添加页面业务 JS，实现主要点击交互和状态切换。
-9. 写入 COMPONENT_USAGE_MAP 组件来源证据。
-10. 按本文验收规则逐项自检。
-11. 不通过时先修正，再交付。
+3. 读取当前页面类型对应的 Interaction Construction Specifications/*.md 交互规范。
+4. 选择并完整继承固定 HTML 母版。
+5. 判断业务内容只能进入的母版业务区域。
+6. 读取需要的组件库资产，并只提取 `COMPONENT_START` / `COMPONENT_END` 标记内的组件来源。
+7. 建立当前页面执行契约。
+8. 基于真实组件 DOM / CSS / Token 生成业务内容。
+9. 添加页面业务 JS，实现主要点击交互和状态切换。
+10. 写入 COMPONENT_USAGE_MAP 组件来源证据。
+11. 按本文验收规则逐项自检。
+12. 不通过时先修正，再交付。
 ```
 
 `COMPONENT_USAGE_MAP` 必须与页面实际使用组件一致，不得写入未使用组件，也不得遗漏已使用组件。建议写成 HTML 注释，例如：
@@ -153,7 +185,7 @@ table.compact: Basic UI component style/Data Display.html | classes: ... | token
 -->
 ```
 
-## 7. 交互与状态验收
+## 8. 交互与状态验收
 
 HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的常见交互包括：
 
@@ -168,11 +200,12 @@ HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的�
 
 只实现静态展示、不落地适用交互和状态，视为不通过。
 
-## 8. 输出验收规则
+## 9. 输出验收规则
 
 交付前必须逐项确认：
 
 - 已完整继承指定 HTML 母版。
+- 已读取当前页面类型对应的 `Interaction Construction Specifications/*.md` 交互规范。
 - 未重写顶部导航、侧边栏、页头和外层内容容器。
 - 业务内容只进入母版业务内容区。
 - 未保留母版示例业务内容。
@@ -191,11 +224,12 @@ HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的�
 
 任一硬约束不通过时，不得交付为合规 HTML Demo。
 
-## 9. 禁止交付条件
+## 10. 禁止交付条件
 
 出现以下任一情况，必须先修正：
 
 - 未使用固定 HTML 母版。
+- 未读取当前页面类型对应的交互规范。
 - 破坏母版固定结构或框架交互。
 - 业务内容写到母版业务区之外。
 - 临时仿写基础组件。
@@ -209,7 +243,7 @@ HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的�
 - 没有组件来源证据。
 - 只完成语法检查或页面可运行检查，未完成规范验收。
 
-## 10. 维护原则
+## 11. 维护原则
 
 - 本文是唯一约束真源；新增或修改 AI 执行规则只改本文。
 - `INDEX.md` 只做读取索引，不重复维护规则。
