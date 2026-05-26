@@ -1,0 +1,362 @@
+# Tabs 标签页
+
+> 用于同层级内容切换、视图切换和局部导航。当前规范约束到本仓库现有 token 与 `shadcn/ui Tabs` 原语上落地。
+
+## 规范覆盖范围
+
+- 当前规范覆盖两套 tab：`线性 tab` 与 `面性 tab`
+- 线性 tab 覆盖：`状态`、`禁用`、`图标 on/off`、`溢出模式`
+- 面性 tab 覆盖：`状态`、`禁用`、`关闭=off`、`溢出模式`
+- `关闭=on` 暂不作为已定义默认能力，业务需要时应先沿用现有尺寸与圆角规则
+- `10+` 更适合作为“溢出已发生”的展示样例，而不是代码层的硬阈值
+
+## 动效补充
+
+Tabs 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
+
+- 线性 tab 的 hover 只做文字色变化，默认使用 `motion-fast`（`150ms`）
+- 面性 tab 的选中背景过渡默认使用 `motion-fast`（`150ms`）
+- 若实现独立激活指示条或滑块，位移默认使用 `motion-base`（`200ms`）+ `ease-in-out`
+- 标签切换的重点是保持上下文，不做整页大幅横移；内容区若需要切换动画，默认只用 `opacity` 或轻微 `translateY`
+
+## 组件分类
+
+### 1. 线性 Tab
+
+用于页面内主视图切换、二级信息分组、列表与详情的内容切换。
+
+特征：
+- 默认无背景
+- 选中态通过 `2px` 底边线强调
+- hover 不加块状底色，只提升一级文字的强调感
+- 支持前置图标
+
+### 2. 面性 Tab
+
+用于卡片内视图切换、内容分段切换、较轻量的子导航。
+
+特征：
+- 默认透明
+- 选中态使用实心主色底
+- hover 使用浅底提示
+- 当前规范只覆盖 `关闭=off`
+
+## 变体属性
+
+### 当前规范属性
+
+| 组件 | 属性 | 可选值 | 说明 |
+|------|------|--------|------|
+| 线性 tab | 状态 | `默认` / `悬停` / `选中` | 基础交互态 |
+| 线性 tab | 禁用 | `off` / `on` | 禁用后不可点击 |
+| 线性 tab | 图标 | `off` / `on` | 是否显示前置图标 |
+| 线性 tab | 数量 | `2~10` / `10+` | 用于区分常规数量与溢出样例 |
+| 面性 tab | 状态 | `默认` / `悬停` / `选中` | 基础交互态 |
+| 面性 tab | 禁用 | `off` / `on` | 禁用后不可点击 |
+| 面性 tab | 关闭 | `off` | 当前样例只展示 `off` |
+| 面性 tab | 数量 | `2~10` / `10+` | 用于区分常规数量与溢出样例 |
+
+### 当前仓库建议映射
+
+| 规范能力 | React / HTML 建议 |
+|------|-------------------|
+| 线性 tab | `type="line"` |
+| 面性 tab | `type="filled"` |
+| 选中 | `data-state="active"` |
+| 禁用 | `disabled` |
+| 图标 on | 前置图标 + 文本 |
+| 溢出模式 | 左右溢出控制 + 可横向滚动容器 |
+
+## 尺寸规范
+
+### 线性 Tab
+
+| 元素 | 尺寸 | Tailwind / 说明 |
+|------|------|-----------------|
+| 单个 tab 高度 | `40px` | `h-10` |
+| 单个 tab 最小宽度 | `50px` | 两字标签基准宽度 |
+| 水平内边距 | `8px` | `px-2` |
+| 垂直内边距 | `9px` | 用于对齐 `22px` 行高文本 |
+| 文本字号 | `14px` | `text-sm` |
+| 文本行高 | `22px` | `leading-[22px]` |
+| 字重 | `400` | `font-normal` |
+| 图标尺寸 | `16px` | `size-4` |
+| 图标与文字间距 | `8px` | `gap-2` |
+| 选中下划线 | `2px` | `border-b-2` |
+| 组内 tab 间距 | `16px` | 来自 `10+` 组合实例 |
+| 溢出控制宽度 | `32px` | 左右控制按钮保持 `40px` 高 |
+
+补充说明：
+- 当前单个线性 tab 组件内部始终保留图标位结构，但 `图标=off` 时图标节点隐藏
+- 根据图标开关的组合宽度差，带图标版本建议最小宽度按 `74px` 预估落地
+- 线性 tab 不要加圆角底块，不要在 hover 时变成胶囊按钮
+- 如果容器宽度不足以同时容纳全部 tab、组间距和操作区，不要继续压缩单个 tab 宽度，应切换为溢出模式
+
+### 面性 Tab
+
+| 元素 | 尺寸 | Tailwind / 说明 |
+|------|------|-----------------|
+| 单个 tab 高度 | `32px` | `h-8` |
+| 单个 tab 最小宽度 | `52px` | 两字标签基准宽度 |
+| 水平内边距 | `12px` | `px-3` |
+| 垂直内边距 | `5px` | 保持 `22px` 文本垂直居中 |
+| 文本字号 | `14px` | `text-sm` |
+| 文本行高 | `22px` | `leading-[22px]` |
+| 字重 | `400` | `font-normal` |
+| 圆角 | `8px` | `rounded-lg` |
+| 组内 tab 间距 | `8px` | `gap-2` |
+| 溢出控制宽度 | `32px` | 左右控制按钮保持 `32px` 高 |
+
+补充说明：
+- 面性 tab 的选中态是实心面，不是描边
+- hover 态是轻底色提示，不要改成描边按钮
+- 若后续启用 `关闭=on`，必须保持同样的 `32px` 高度与 `8px` 圆角，不允许因为关闭按钮导致高度变化
+- 如果内容区宽度持续收窄，优先进入溢出模式，而不是把 tab 压缩到低于最小可点击宽度
+
+## 图标规范
+
+tab 的图标必须继承 [SKILL.md](../../SKILL.md) 中的图标规则，不要为 tab 单独引入第二套图标库。
+
+- React 项目：统一使用 `lucide-react`
+- HTML Demo：统一使用 Lucide CDN + `data-lucide`
+- 默认图标尺寸：`16px`，对应 `size-4`
+- 图标与文字间距：线性 tab `8px`，面性 tab 若后续启用图标，默认也按 `8px` 对齐
+- 不使用手写内联 SVG，避免和全局图标风格漂移
+
+推荐映射：
+
+| 场景 | Lucide 建议 |
+|------|-------------|
+| 通用页签前置图标 | `Settings` / `FolderOpen` / `FileText` |
+| 左右溢出控制 | `ChevronLeft` / `ChevronRight` |
+| 可关闭页签 | `X` |
+
+## 状态规范
+
+### 线性 Tab
+
+| 状态 | 文字 | 下划线 / 边线 | 背景 |
+|------|------|---------------|------|
+| 默认 | `text-foreground` | 无 | 透明 |
+| 悬停 | `text-primary` | 无 | 透明 |
+| 选中 | `text-primary` | `border-primary border-b-2` | 透明 |
+| 默认禁用 | `text-disabled-foreground` | 无 | 透明 |
+| 选中禁用 | `text-disabled-foreground` | `border-disabled-foreground border-b-2` | 透明 |
+
+规则：
+- 线性 tab 的 hover 只提升文字，不铺底色
+- 默认态和禁用态都不保留装饰线
+- 选中禁用沿用底边线结构，但颜色降为 `disabled-foreground`
+
+### 面性 Tab
+
+| 状态 | 文字 | 背景 |
+|------|------|------|
+| 默认 | `text-foreground` | 透明 |
+| 悬停（未选中） | `text-primary` | 透明 |
+| 选中 | `text-primary-foreground` | `bg-primary` |
+| 选中悬停 | `text-primary-foreground` | `bg-primary-hover` |
+| 默认禁用 | `text-disabled-foreground` | 透明 |
+| 选中禁用 | `text-disabled-foreground` | `bg-muted` |
+
+规则：
+- 未选中的面性 tab 在 hover 时只提升文字颜色，不增加底色
+- 已选中的面性 tab 在 hover 时背景从 `bg-primary` 提升到 `bg-primary-hover`，文字保持 `text-primary-foreground`
+- 选中禁用不要直接套整组 `opacity-50`，否则会把文字一起压糊
+- 如果业务不需要保留当前禁用选中色，可退化为 `bg-muted text-disabled-foreground`；这里的文字仍归禁用文字层级
+
+### 键盘聚焦（工程补充）
+
+当前规范额外补齐 `focus` 态的可访问性约束：
+
+- 线性 tab 与面性 tab 都保留 `focus-visible:ring-2 focus-visible:ring-ring`
+- 线性 tab 在聚焦时不要移除 `active` 底边线
+- 面性 tab 在聚焦时不要额外加描边破坏选中面的完整性
+- 若 tab 承担路由切换，仍然必须保留键盘可达与聚焦可见性
+
+## 数量与溢出规则
+
+### 标准排布
+
+- tab 宽度由内容撑开，不做等分
+- 线性 tab 组间距使用 `16px`
+- 面性 tab 组间距使用 `8px`
+- 当容器宽度足以同时容纳所有 tab、组间距和必要操作区时，直接横向排布
+
+### 进入溢出模式的判断
+
+不要把“是否超过 10 个”写成硬编码规则，推荐按下面顺序判断：
+
+1. 先按规范最小宽度排布：
+   线性 tab 至少 `50px`，带图标版本建议至少 `74px`
+   面性 tab 至少 `52px`
+2. 叠加固定间距：
+   线性 tab 间距 `16px`
+   面性 tab 间距 `8px`
+3. 预留必要操作区：
+   如果有左右溢出控制，每侧至少 `32px`
+4. 若总宽度超过容器可用宽度，则进入溢出模式
+
+也就是说：
+
+- 某些长文案场景下，可能不到 `10` 个就应该溢出
+- 某些超宽容器场景下，即使超过 `10` 个，也仍然可以不进入溢出模式
+
+### 溢出模式结构
+
+当前规范中的 `10+` 样例，本质上是在展示溢出后的三段式结构，而不是在定义固定数量阈值：
+
+1. 左侧控制区：`32px`
+2. 中间 tab 容器：横向排列
+3. 右侧控制区：`32px`
+
+落地规则：
+- 中间区域支持横向滚动或平移控制
+- 左右控制按钮只负责滚动，不承担 tab 选中语义
+- 控制按钮与 tab 主体保持同高
+- 控制按钮内部推荐使用 `16px` 图标，水平内边距 `8px`
+- 若产品允许鼠标滚轮横向滚动，可把左右控制按钮作为增强能力，而不是唯一入口
+- 如果是移动端或窄容器，优先保证可滚动与当前激活项可见，不强求始终显示左右按钮
+
+## React 落地建议
+
+### 线性 Tab
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+
+<Tabs defaultValue="overview" className="w-full">
+  <TabsList className="h-10 gap-4 rounded-none border-b bg-transparent p-0">
+    <TabsTrigger
+      value="overview"
+      className="h-10 min-w-[50px] rounded-none border-b-2 border-transparent px-2 py-[9px] text-sm font-normal leading-[22px] text-foreground shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:text-disabled-foreground data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:shadow-none"
+    >
+      标签1
+    </TabsTrigger>
+    <TabsTrigger
+      value="detail"
+      className="h-10 min-w-[50px] rounded-none border-b-2 border-transparent px-2 py-[9px] text-sm font-normal leading-[22px] text-foreground shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:text-disabled-foreground hover:text-primary data-[state=active]:border-primary data-[state=active]:text-primary data-[state=active]:shadow-none"
+    >
+      标签2
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">...</TabsContent>
+  <TabsContent value="detail">...</TabsContent>
+</Tabs>
+```
+
+### 带图标的线性 Tab
+
+```tsx
+import { Settings } from "lucide-react"
+
+<TabsTrigger
+  value="setting"
+  className="h-10 min-w-[74px] rounded-none border-b-2 border-transparent px-2 py-[9px] text-sm font-normal leading-[22px] text-foreground shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:text-disabled-foreground hover:text-primary data-[state=active]:border-primary data-[state=active]:text-primary"
+>
+  <Settings className="mr-2 size-4" />
+  标签1
+</TabsTrigger>
+```
+
+### 溢出控制图标
+
+```tsx
+import { ChevronLeft, ChevronRight } from "lucide-react"
+
+<button
+  type="button"
+  className="inline-flex h-10 w-8 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+  aria-label="向左滚动标签页"
+>
+  <ChevronLeft className="size-4" />
+</button>
+
+<button
+  type="button"
+  className="inline-flex h-10 w-8 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+  aria-label="向右滚动标签页"
+>
+  <ChevronRight className="size-4" />
+</button>
+```
+
+### 面性 Tab
+
+```tsx
+<Tabs defaultValue="list" className="w-full">
+  <TabsList className="h-8 gap-2 rounded-none bg-transparent p-0">
+    <TabsTrigger
+      value="list"
+      className="h-8 min-w-[52px] rounded-lg px-3 py-[5px] text-sm font-normal leading-[22px] text-foreground shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:text-disabled-foreground hover:text-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:hover:bg-primary-hover data-[state=active]:hover:text-primary-foreground data-[state=active]:shadow-none"
+    >
+      标签
+    </TabsTrigger>
+    <TabsTrigger
+      value="board"
+      className="h-8 min-w-[52px] rounded-lg px-3 py-[5px] text-sm font-normal leading-[22px] text-foreground shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:text-disabled-foreground hover:text-primary data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:hover:bg-primary-hover data-[state=active]:hover:text-primary-foreground data-[state=active]:shadow-none"
+    >
+      标签
+    </TabsTrigger>
+  </TabsList>
+</Tabs>
+```
+
+## 当前规范边界
+
+- 当前已定义：`线性 / 面性` 两类、默认/悬停/选中/禁用状态、溢出后三段式结构、线性图标版、面性选中禁用色
+- 当前未定义：`关闭=on` 的默认视觉、关闭图标尺寸与热区
+- 若业务要做“可关闭 tab”，先遵循面性 tab 的尺寸、圆角与文本规范，再补充单独能力约束
+
+## HTML Demo 落地建议
+
+### 线性 Tabs 结构
+
+```html
+<div class="tabs tabs--line" data-tabs>
+  <div class="tabs__list" role="tablist">
+    <button class="tabs__trigger is-active" type="button" role="tab" aria-selected="true" data-state="active" data-tab="overview">概览</button>
+    <button class="tabs__trigger" type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="risk">风险</button>
+    <button class="tabs__trigger" type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="log">日志</button>
+  </div>
+
+  <div class="tabs__panel" role="tabpanel" data-panel="overview">当前展示概览数据。</div>
+  <div class="tabs__panel" role="tabpanel" data-panel="risk" hidden>当前展示风险分析。</div>
+  <div class="tabs__panel" role="tabpanel" data-panel="log" hidden>当前展示操作日志。</div>
+</div>
+```
+
+### 面性 Tabs 结构
+
+```html
+<div class="tabs tabs--pill" data-tabs>
+  <div class="tabs__list" role="tablist">
+    <button class="tabs__trigger is-active" type="button" role="tab" aria-selected="true" data-state="active" data-tab="list">列表</button>
+    <button class="tabs__trigger" type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="board">看板</button>
+  </div>
+
+  <div class="tabs__panel" role="tabpanel" data-panel="list">列表内容</div>
+  <div class="tabs__panel" role="tabpanel" data-panel="board" hidden>看板内容</div>
+</div>
+```
+
+### HTML Demo 规则
+
+- 触发项统一使用 `.tabs__trigger`，当前项同步 `.is-active`、`data-state="active"`、`aria-selected="true"`。
+- 面板统一使用 `.tabs__panel`，非当前面板加 `hidden`。
+- 线性 Tabs 使用 `.tabs--line`，面性 Tabs 使用 `.tabs--pill`。
+- HTML Demo 点击触发项时必须同步触发项状态和面板显示，不只改变文字颜色。
+
+## Checklist
+
+生成 tab 规范或代码时检查：
+
+- [ ] 先判断当前场景应该用 `线性` 还是 `面性`
+- [ ] 线性 tab 保持 `40px` 高，不要做成按钮胶囊
+- [ ] 面性 tab 保持 `32px` 高，选中态用实心主色底
+- [ ] 文本统一 `14px / 22px / 400`
+- [ ] 线性组间距 `16px`，面性组间距 `8px`
+- [ ] 根据容器可用宽度判断是否溢出，不把 `10` 当成绝对阈值
+- [ ] 溢出后补充左右控制或横向滚动，不要无脑压缩 tab
+- [ ] 图标统一使用 Lucide Icons，不单独引入其他图标库
+- [ ] 禁用态优先使用 token，不直接套整组透明度

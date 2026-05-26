@@ -1,0 +1,857 @@
+# Checkbox 复选框
+
+> 用于在一组选项中进行多项选择，或单独用于开关某个功能
+
+## 组件变体
+
+| 属性 | 可选值 | 说明 |
+|------|--------|------|
+| 尺寸 | 常规、紧凑 | 常规用于表单，紧凑用于表格/密集场景 |
+| 状态 | 未选中、悬停、选中、半选中、未选失效、已选失效 | 半选中用于全选场景 |
+| 禁用 | on / off | 禁用时不可交互 |
+| 文本 | on / off | 是否显示标签文本 |
+
+---
+
+## 尺寸规范
+
+### 常规尺寸（默认）
+
+| 元素 | 尺寸 | Tailwind |
+|------|------|----------|
+| 组件高度 | 32px | `h-8` |
+| Checkbox 方框 | 16px × 16px | `size-4` |
+| 对勾/横线图标 | 12px | 内部图标 |
+| 文字大小 | 14px | `text-sm` |
+| 文字行高 | 22px | `leading-[22px]` |
+| Checkbox 与文本间距 | 8px | `gap-2` |
+
+```tsx
+// 常规尺寸 - 带文本
+<div className="flex h-8 items-center gap-2">
+  <Checkbox id="option" className="size-4" />
+  <Label htmlFor="option" className="text-sm leading-[22px]">选项文本</Label>
+</div>
+
+// 常规尺寸 - 纯 Checkbox
+<Checkbox className="size-4" />
+```
+
+### 紧凑尺寸
+
+| 元素 | 尺寸 | Tailwind |
+|------|------|----------|
+| 组件高度 | 24px | `h-6` |
+| Checkbox 方框 | 16px × 16px | `size-4` |
+| 文字大小 | 12px | `text-xs` |
+| 文字行高 | 20px | `leading-5` |
+| Checkbox 与文本间距 | 8px | `gap-2` |
+
+```tsx
+// 紧凑尺寸 - 带文本
+<div className="flex h-6 items-center gap-2">
+  <Checkbox id="option" className="size-4" />
+  <Label htmlFor="option" className="text-xs leading-5">选项文本</Label>
+</div>
+
+// 紧凑尺寸 - 纯 Checkbox（常用于表格）
+<Checkbox className="size-4" />
+```
+
+---
+
+## 颜色规范
+
+### 颜色变量
+
+| 状态 | 元素 | 颜色值 | CSS 变量 |
+|------|------|--------|----------|
+| 默认 | 背景 | `var(--gray-1)` | `gray-1` |
+| 默认 | 边框 | `var(--gray-5)` | `gray-5` |
+| 默认 | 文字 | `var(--gray-9)` | `gray-9` |
+| 悬停 | 边框 | `var(--primary)` | `primary` |
+| 选中 | 背景 | `var(--primary)` | `primary` |
+| 选中 | 边框 | `var(--primary)` | `primary` |
+| 选中 | 对勾 | `var(--gray-1)` | `gray-1` |
+| 半选中 | 背景 | `var(--primary)` | `primary` |
+| 半选中 | 边框 | `var(--primary)` | `primary` |
+| 半选中 | 横线 | `var(--gray-1)` | `gray-1` |
+| 未选失效 | 背景 | `var(--gray-2)` | `gray-2` |
+| 未选失效 | 边框 | `var(--gray-5)` | `gray-5` |
+| 未选失效 | 文字 | `var(--gray-7)` | `gray-7` |
+| 已选失效 | 背景 | `var(--gray-5)` | `gray-5` |
+| 已选失效 | 边框 | `var(--gray-5)` | `gray-5` |
+| 已选失效 | 对勾 | `var(--gray-1)` | `gray-1` |
+| 已选失效 | 文字 | `var(--gray-7)` | `gray-7` |
+| 半选失效 | 横线 | `var(--gray-1)` | `gray-1` |
+
+### 状态样式实现
+
+```tsx
+// shadcn Checkbox 默认已支持以下状态：
+// - 未选中：border-input bg-background
+// - 选中：bg-primary text-[var(--gray-1)]
+// - 禁用：disabled:cursor-not-allowed
+//
+// 本设计系统要求：
+// - 默认背景使用 gray-1，默认边框使用 gray-5，默认文字使用 gray-9
+// - 悬停边框使用 primary
+// - 选中背景和边框使用 primary，对勾使用 gray-1
+// - 半选中背景和边框使用 primary，横线使用 gray-1
+// - 未选失效使用 gray-2 背景、gray-5 边框、gray-7 文字
+// - 已选失效使用 gray-5 背景和边框、gray-1 对勾、gray-7 文字
+// - 不建议对整个 Checkbox 额外使用 disabled:opacity-50
+//   否则会把边框、背景、对勾一起压灰，已选失效/半选失效状态不清晰
+
+// 悬停状态增强（可选）
+<Checkbox
+  className="
+    border-[var(--gray-5)] bg-[var(--gray-1)] text-[var(--gray-1)]
+    hover:border-[var(--primary)]
+    data-[state=checked]:border-[var(--primary)] data-[state=checked]:bg-[var(--primary)]
+    data-[state=indeterminate]:border-[var(--primary)] data-[state=indeterminate]:bg-[var(--primary)]
+    disabled:border-[var(--gray-5)] disabled:bg-[var(--gray-2)]
+    disabled:data-[state=checked]:border-[var(--gray-5)] disabled:data-[state=checked]:bg-[var(--gray-5)]
+  "
+/>
+```
+
+### HTML 独立示例注意事项
+
+如果在独立 HTML Demo 中手写 Checkbox 样式，并且主题变量采用 `210 20% 90%` 这类 **HSL 片段**格式存储，则自定义 CSS **必须**使用 `hsl(var(--token))` 取值，不能直接写 `var(--token)`。
+
+```css
+/* 正确 */
+.checkbox {
+  border: 1px solid var(--input);
+  background: var(--card);
+}
+
+.checkbox:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+/* 错误 */
+.checkbox {
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+```
+
+**原因**：
+- `--border` 是分割线色，不是组件描边色；Checkbox 这类组件外框应使用 `--input`
+- 一旦同时使用 `appearance: none` 去掉原生外观，组件描边语义必须明确，否则禁用、hover、选中态会和分割线规则混在一起
+
+---
+
+## 状态详解
+
+### 未选中状态
+
+```tsx
+<div className="flex items-center gap-2">
+  <Checkbox id="unchecked" />
+  <Label htmlFor="unchecked">未选中选项</Label>
+</div>
+```
+
+### 选中状态
+
+```tsx
+<div className="flex items-center gap-2">
+  <Checkbox id="checked" checked />
+  <Label htmlFor="checked">已选中选项</Label>
+</div>
+```
+
+### 半选中状态（Indeterminate）
+
+用于全选场景，当子选项部分选中时显示横线图标。
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox"
+import { Minus } from "lucide-react"
+
+// 方法一：使用 shadcn 的 checked="indeterminate"
+<Checkbox checked="indeterminate" />
+
+// 方法二：受控组件实现
+const [checked, setChecked] = useState<boolean | "indeterminate">("indeterminate")
+
+<Checkbox
+  checked={checked}
+  onCheckedChange={(value) => setChecked(value)}
+/>
+```
+
+### 禁用状态
+
+```tsx
+// 禁用 - 未选中
+<div className="flex items-center gap-2">
+  <Checkbox id="disabled" disabled />
+  <Label htmlFor="disabled" className="text-[var(--gray-7)]">禁用选项</Label>
+</div>
+
+// 禁用 - 已选中
+<div className="flex items-center gap-2">
+  <Checkbox id="disabled-checked" disabled checked />
+  <Label htmlFor="disabled-checked" className="text-[var(--gray-7)]">禁用已选</Label>
+</div>
+
+// 禁用 - 半选中
+<div className="flex items-center gap-2">
+  <Checkbox id="disabled-indeterminate" disabled checked="indeterminate" />
+  <Label htmlFor="disabled-indeterminate" className="text-[var(--gray-7)]">禁用半选</Label>
+</div>
+```
+
+**禁用图标规则**：
+- 未选失效：使用 `gray-2` 背景和 `gray-5` 边框，不显示图标
+- 已选失效：使用 `gray-5` 背景和边框，对勾使用 `gray-1`
+- 半选失效：横线使用 `gray-1`
+- 失效文案统一使用 `gray-7`
+
+---
+
+## 使用场景
+
+### 1. 基础多选列表
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
+
+const options = [
+  { value: "email", label: "邮件通知" },
+  { value: "sms", label: "短信通知" },
+  { value: "push", label: "推送通知" },
+]
+
+// 垂直列表（默认间距 8px）
+<div className="space-y-2">
+  {options.map((opt) => (
+    <div key={opt.value} className="flex h-8 items-center gap-2">
+      <Checkbox
+        id={opt.value}
+        checked={selected.includes(opt.value)}
+        onCheckedChange={(checked) => {
+          if (checked) {
+            setSelected([...selected, opt.value])
+          } else {
+            setSelected(selected.filter((v) => v !== opt.value))
+          }
+        }}
+      />
+      <Label htmlFor={opt.value} className="text-sm">{opt.label}</Label>
+    </div>
+  ))}
+</div>
+
+// 水平列表
+<div className="flex items-center gap-6">
+  {options.map((opt) => (
+    <div key={opt.value} className="flex items-center gap-2">
+      <Checkbox id={opt.value} />
+      <Label htmlFor={opt.value}>{opt.label}</Label>
+    </div>
+  ))}
+</div>
+```
+
+### 2. 带描述的复选框
+
+```tsx
+<div className="flex items-start gap-3">
+  <Checkbox id="marketing" className="mt-1" />
+  <div className="space-y-1">
+    <Label htmlFor="marketing" className="text-sm font-medium">接收营销邮件</Label>
+    <p className="text-sm text-muted-foreground">
+      我们会定期发送产品更新和优惠信息
+    </p>
+  </div>
+</div>
+```
+
+**规范说明**：
+- Checkbox 加 `mt-1` 与首行文字顶部对齐
+- 主标签：一级文字 `text-sm font-medium`
+- 描述文字：二级文字 `text-sm text-muted-foreground`
+- 间距从 `gap-2` 增加到 `gap-3`（12px）
+
+### 3. 全选与子选项
+
+```tsx
+const options = ["选项A", "选项B", "选项C"]
+const [selected, setSelected] = useState<string[]>([])
+
+const allChecked = selected.length === options.length
+const someChecked = selected.length > 0 && !allChecked
+
+<div className="space-y-4">
+  {/* 全选 */}
+  <div className="flex h-8 items-center gap-2">
+    <Checkbox
+      id="select-all"
+      checked={allChecked ? true : someChecked ? "indeterminate" : false}
+      onCheckedChange={(checked) => {
+        setSelected(checked ? [...options] : [])
+      }}
+    />
+    <Label htmlFor="select-all" className="text-sm font-medium">全选</Label>
+  </div>
+
+  {/* 子选项（缩进 24px） */}
+  <div className="ml-6 space-y-2">
+    {options.map((opt) => (
+      <div key={opt} className="flex h-8 items-center gap-2">
+        <Checkbox
+          id={opt}
+          checked={selected.includes(opt)}
+          onCheckedChange={(checked) => {
+            if (checked) {
+              setSelected([...selected, opt])
+            } else {
+              setSelected(selected.filter((v) => v !== opt))
+            }
+          }}
+        />
+        <Label htmlFor={opt} className="text-sm">{opt}</Label>
+      </div>
+    ))}
+  </div>
+</div>
+```
+
+**规范说明**：
+- 全选标签加 `font-medium` 突出显示
+- 子选项缩进：`ml-6`（24px）
+- 半选中状态使用 `checked="indeterminate"`
+
+### 4. 表格中的批量选择
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Checkbox } from "@/components/ui/checkbox"
+
+const [selectedRows, setSelectedRows] = useState<string[]>([])
+const allSelected = selectedRows.length === data.length
+const someSelected = selectedRows.length > 0 && !allSelected
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-12">
+        <Checkbox
+          checked={allSelected ? true : someSelected ? "indeterminate" : false}
+          onCheckedChange={(checked) => {
+            setSelectedRows(checked ? data.map((d) => d.id) : [])
+          }}
+        />
+      </TableHead>
+      <TableHead>名称</TableHead>
+      <TableHead>状态</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {data.map((row) => (
+      <TableRow key={row.id}>
+        <TableCell>
+          <Checkbox
+            checked={selectedRows.includes(row.id)}
+            onCheckedChange={(checked) => {
+              if (checked) {
+                setSelectedRows([...selectedRows, row.id])
+              } else {
+                setSelectedRows(selectedRows.filter((id) => id !== row.id))
+              }
+            }}
+          />
+        </TableCell>
+        <TableCell>{row.name}</TableCell>
+        <TableCell>{row.status}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+```
+
+**规范说明**：
+- 表头 Checkbox 列宽：`w-12`（48px）
+- 使用紧凑模式，无需额外 Label
+- 表头全选支持半选中状态
+
+### 5. 权限矩阵
+
+```tsx
+const modules = ["用户管理", "订单管理", "商品管理"]
+const permissions = ["查看", "新增", "编辑", "删除"]
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>模块</TableHead>
+      {permissions.map((p) => (
+        <TableHead key={p} className="text-center w-20">{p}</TableHead>
+      ))}
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {modules.map((module) => (
+      <TableRow key={module}>
+        <TableCell className="font-medium">{module}</TableCell>
+        {permissions.map((p) => (
+          <TableCell key={p} className="text-center">
+            <Checkbox />
+          </TableCell>
+        ))}
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+```
+
+### 6. 筛选面板
+
+```tsx
+<div className="space-y-4">
+  <div>
+    <h4 className="mb-2 text-sm font-medium">状态</h4>
+    <div className="space-y-2">
+      {["全部", "进行中", "已完成", "已取消"].map((status) => (
+        <div key={status} className="flex h-6 items-center gap-2">
+          <Checkbox id={status} />
+          <Label htmlFor={status} className="text-xs">{status}</Label>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div>
+    <h4 className="mb-2 text-sm font-medium">类型</h4>
+    <div className="space-y-2">
+      {["类型A", "类型B", "类型C"].map((type) => (
+        <div key={type} className="flex h-6 items-center gap-2">
+          <Checkbox id={type} />
+          <Label htmlFor={type} className="text-xs">{type}</Label>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+```
+
+**规范说明**：
+- 使用紧凑尺寸（h-6, text-xs）
+- 分组标题：`text-sm font-medium`
+- 分组间距：`space-y-4`（16px）
+
+### 7. 表单中的协议确认
+
+```tsx
+<div className="flex items-start gap-2">
+  <Checkbox id="agreement" className="mt-0.5" />
+  <Label htmlFor="agreement" className="text-sm leading-5">
+    我已阅读并同意
+    <a href="/terms" className="text-primary hover:underline">《服务条款》</a>
+    和
+    <a href="/privacy" className="text-primary hover:underline">《隐私政策》</a>
+  </Label>
+</div>
+```
+
+---
+
+## 表单集成
+
+### 使用 react-hook-form + zod
+
+```tsx
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Checkbox } from "@/components/ui/checkbox"
+
+const formSchema = z.object({
+  notifications: z.array(z.string()).min(1, "请至少选择一项"),
+  agreement: z.boolean().refine((val) => val === true, "请同意服务条款"),
+})
+
+// 多选字段
+<FormField
+  control={form.control}
+  name="notifications"
+  render={() => (
+    <FormItem>
+      <FormLabel>通知方式</FormLabel>
+      <div className="space-y-2">
+        {options.map((opt) => (
+          <FormField
+            key={opt.value}
+            control={form.control}
+            name="notifications"
+            render={({ field }) => (
+              <FormItem className="flex h-8 items-center gap-2 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value?.includes(opt.value)}
+                    onCheckedChange={(checked) => {
+                      const updated = checked
+                        ? [...field.value, opt.value]
+                        : field.value?.filter((v) => v !== opt.value)
+                      field.onChange(updated)
+                    }}
+                  />
+                </FormControl>
+                <FormLabel className="font-normal">{opt.label}</FormLabel>
+              </FormItem>
+            )}
+          />
+        ))}
+      </div>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
+// 单个确认字段
+<FormField
+  control={form.control}
+  name="agreement"
+  render={({ field }) => (
+    <FormItem className="flex items-start gap-2 space-y-0">
+      <FormControl>
+        <Checkbox
+          checked={field.value}
+          onCheckedChange={field.onChange}
+          className="mt-0.5"
+        />
+      </FormControl>
+      <div className="space-y-1">
+        <FormLabel>同意服务条款</FormLabel>
+        <FormDescription>
+          请阅读并同意我们的服务条款和隐私政策
+        </FormDescription>
+      </div>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+```
+
+---
+
+## 键盘交互
+
+| 按键 | 行为 |
+|------|------|
+| `Space` | 切换选中状态 |
+| `Tab` | 移动焦点到下一个可聚焦元素 |
+| `Shift + Tab` | 移动焦点到上一个可聚焦元素 |
+
+---
+
+## 无障碍
+
+- 始终使用 `<Label>` 关联 Checkbox，或使用 `aria-label`
+- 禁用状态使用 `disabled` 属性，自动添加 `aria-disabled`
+- 半选中状态自动设置 `aria-checked="mixed"`
+
+```tsx
+// 有可见标签
+<div className="flex items-center gap-2">
+  <Checkbox id="option" />
+  <Label htmlFor="option">选项文本</Label>
+</div>
+
+// 无可见标签（如表格中）
+<Checkbox aria-label="选择此行" />
+```
+
+---
+
+## Checklist
+
+生成复选框时检查：
+
+- [ ] 使用 shadcn `Checkbox` 组件（React）或 `.checkbox` 类（HTML）
+- [ ] Checkbox 尺寸 16px (`size-4`)
+- [ ] 常规尺寸高度 32px，紧凑尺寸 24px
+- [ ] Checkbox 与 Label 间距 8px (`gap-2`)
+- [ ] 垂直选项间距 8px (`space-y-2`)
+- [ ] 带描述时 Checkbox 加 `mt-1` 对齐
+- [ ] 全选场景正确使用半选中状态
+- [ ] 表格场景使用紧凑尺寸
+- [ ] 失效时 Label 使用 `gray-7` 或 `.disabled` 类
+- [ ] 有 Label 或 aria-label 保证无障碍
+- [ ] 颜色使用 CSS 变量，不硬编码
+
+---
+
+## HTML 独立使用（非 React）
+
+> 用于 HTML Demo 页面、原型预览等场景，样式需要随最终单文件 HTML 一起内联
+
+### CSS 类说明
+
+| 类名 | 说明 |
+|------|------|
+| `.checkbox-wrapper` | 复选框容器，包含 checkbox 和 label |
+| `.checkbox` | 复选框本身 |
+| `.checkbox-label` | 标签文字 |
+| `.checkbox.indeterminate` | 半选中状态（需 JS 添加类名） |
+| `.size-default` | 常规尺寸（高度 32px） |
+| `.size-compact` | 紧凑尺寸（高度 24px） |
+| `.disabled` | 禁用状态（加在 wrapper 和 label 上） |
+
+### 基础用法
+
+```html
+<!-- 常规尺寸 - 未选中 -->
+<label class="checkbox-wrapper size-default">
+  <input type="checkbox" class="checkbox" />
+  <span class="checkbox-label">选项文本</span>
+</label>
+
+<!-- 常规尺寸 - 选中 -->
+<label class="checkbox-wrapper size-default">
+  <input type="checkbox" class="checkbox" checked />
+  <span class="checkbox-label">已选中选项</span>
+</label>
+
+<!-- 紧凑尺寸 -->
+<label class="checkbox-wrapper size-compact">
+  <input type="checkbox" class="checkbox" />
+  <span class="checkbox-label">紧凑选项</span>
+</label>
+
+<!-- 纯 Checkbox（无文本，用于表格） -->
+<input type="checkbox" class="checkbox" aria-label="选择此行" />
+```
+
+### 禁用状态
+
+```html
+<!-- 禁用 - 未选中 -->
+<label class="checkbox-wrapper size-default disabled">
+  <input type="checkbox" class="checkbox" disabled />
+  <span class="checkbox-label disabled">禁用选项</span>
+</label>
+
+<!-- 禁用 - 已选中 -->
+<label class="checkbox-wrapper size-default disabled">
+  <input type="checkbox" class="checkbox" disabled checked />
+  <span class="checkbox-label disabled">禁用已选</span>
+</label>
+```
+
+### 半选中状态（Indeterminate）
+
+半选中状态需要通过 JavaScript 设置，并添加 `.indeterminate` 类：
+
+```html
+<label class="checkbox-wrapper size-default">
+  <input type="checkbox" class="checkbox indeterminate" id="selectAll" />
+  <span class="checkbox-label">全选</span>
+</label>
+
+<script>
+  // 设置原生 indeterminate 属性
+  document.getElementById('selectAll').indeterminate = true;
+</script>
+```
+
+### 多选列表
+
+```html
+<!-- 垂直列表 -->
+<div class="flex flex-col gap-2">
+  <label class="checkbox-wrapper size-default">
+    <input type="checkbox" class="checkbox" />
+    <span class="checkbox-label">邮件通知</span>
+  </label>
+  <label class="checkbox-wrapper size-default">
+    <input type="checkbox" class="checkbox" checked />
+    <span class="checkbox-label">短信通知</span>
+  </label>
+  <label class="checkbox-wrapper size-default">
+    <input type="checkbox" class="checkbox" />
+    <span class="checkbox-label">推送通知</span>
+  </label>
+</div>
+
+<!-- 水平列表 -->
+<div class="flex items-center gap-6">
+  <label class="checkbox-wrapper size-default">
+    <input type="checkbox" class="checkbox" />
+    <span class="checkbox-label">选项一</span>
+  </label>
+  <label class="checkbox-wrapper size-default">
+    <input type="checkbox" class="checkbox" />
+    <span class="checkbox-label">选项二</span>
+  </label>
+</div>
+```
+
+### 带描述的复选框
+
+```html
+<label class="checkbox-wrapper items-start gap-3">
+  <input type="checkbox" class="checkbox mt-1" />
+  <div class="flex flex-col gap-1">
+    <span class="checkbox-label font-medium">接收营销邮件</span>
+    <span class="text-sm text-muted-foreground">我们会定期发送产品更新和优惠信息</span>
+  </div>
+</label>
+```
+
+### 全选与子选项
+
+```html
+<div class="flex flex-col gap-4">
+  <!-- 全选 -->
+  <label class="checkbox-wrapper size-default">
+    <input type="checkbox" class="checkbox" id="checkAll" />
+    <span class="checkbox-label font-medium">全选</span>
+  </label>
+
+  <!-- 子选项（缩进 24px） -->
+  <div class="ml-6 flex flex-col gap-2">
+    <label class="checkbox-wrapper size-default">
+      <input type="checkbox" class="checkbox child-checkbox" />
+      <span class="checkbox-label">选项 A</span>
+    </label>
+    <label class="checkbox-wrapper size-default">
+      <input type="checkbox" class="checkbox child-checkbox" />
+      <span class="checkbox-label">选项 B</span>
+    </label>
+    <label class="checkbox-wrapper size-default">
+      <input type="checkbox" class="checkbox child-checkbox" />
+      <span class="checkbox-label">选项 C</span>
+    </label>
+  </div>
+</div>
+
+<script>
+  const checkAll = document.getElementById('checkAll');
+  const children = document.querySelectorAll('.child-checkbox');
+
+  // 全选逻辑
+  checkAll.addEventListener('change', (e) => {
+    children.forEach(cb => cb.checked = e.target.checked);
+    checkAll.classList.remove('indeterminate');
+  });
+
+  // 子选项变化时更新全选状态
+  children.forEach(cb => {
+    cb.addEventListener('change', () => {
+      const checkedCount = [...children].filter(c => c.checked).length;
+      checkAll.checked = checkedCount === children.length;
+      checkAll.indeterminate = checkedCount > 0 && checkedCount < children.length;
+      checkAll.classList.toggle('indeterminate', checkAll.indeterminate);
+    });
+  });
+</script>
+```
+
+### 表格中的批量选择
+
+```html
+<table class="table">
+  <thead>
+    <tr>
+      <th class="w-12">
+        <input type="checkbox" class="checkbox" id="tableCheckAll" aria-label="全选" />
+      </th>
+      <th>名称</th>
+      <th>状态</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <input type="checkbox" class="checkbox row-checkbox" aria-label="选择此行" />
+      </td>
+      <td>项目 A</td>
+      <td><span class="badge badge-success">进行中</span></td>
+    </tr>
+    <tr>
+      <td>
+        <input type="checkbox" class="checkbox row-checkbox" aria-label="选择此行" />
+      </td>
+      <td>项目 B</td>
+      <td><span class="badge badge-default">已完成</span></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### 筛选面板（紧凑尺寸）
+
+```html
+<div class="flex flex-col gap-4">
+  <div>
+    <h4 class="mb-2 text-sm font-medium">状态</h4>
+    <div class="flex flex-col gap-2">
+      <label class="checkbox-wrapper size-compact">
+        <input type="checkbox" class="checkbox" checked />
+        <span class="checkbox-label">全部</span>
+      </label>
+      <label class="checkbox-wrapper size-compact">
+        <input type="checkbox" class="checkbox" />
+        <span class="checkbox-label">进行中</span>
+      </label>
+      <label class="checkbox-wrapper size-compact">
+        <input type="checkbox" class="checkbox" />
+        <span class="checkbox-label">已完成</span>
+      </label>
+    </div>
+  </div>
+</div>
+```
+
+### 协议确认
+
+```html
+<label class="checkbox-wrapper items-start gap-2">
+  <input type="checkbox" class="checkbox mt-0.5" required />
+  <span class="checkbox-label text-sm leading-5">
+    我已阅读并同意
+    <a href="/terms" class="text-primary hover:underline">《服务条款》</a>
+    和
+    <a href="/privacy" class="text-primary hover:underline">《隐私政策》</a>
+  </span>
+</label>
+```
+
+### CSS 变量参考
+
+复选框样式使用以下 CSS 变量（已在 html-base.html 中定义）：
+
+```css
+/* 基础颜色 */
+--primary  /* 主色，选中状态背景和边框 */
+--gray-1   /* 默认背景、选中对勾、半选横线 */
+--gray-2   /* 未选失效背景 */
+--gray-5   /* 默认边框、失效边框、已选失效背景 */
+--gray-7   /* 失效文字 */
+--gray-9   /* 默认文字 */
+--ring     /* 聚焦环颜色 */
+```

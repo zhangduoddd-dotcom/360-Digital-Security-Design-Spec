@@ -1,0 +1,477 @@
+# Pagination 分页
+
+> 本文件定义分页器的结构、尺寸、状态、折叠规则与场景边界。分页器中的 **每页条数选择器** 与 **跳页输入框** 直接复用现有 `Select` / `Input` 规范，本文只定义它们在分页器中的组合关系，不重复定义主体样式。
+
+## 结构基准
+
+当前分页规范覆盖以下基础单元：
+
+- 页码
+- 左箭头
+- 右箭头
+- 复杂分页
+- 简单分页
+
+分页器由以下部分组成：
+
+- **信息文案区**：`共 N 条记录` + `第 X / Y 页`
+- **每页条数选择器**：例如 `10条/页`
+- **页码轨道**：上一页、页码、省略号、尾页、下一页
+- **跳页区**：`跳至 [输入框] 页`
+
+## 复用边界
+
+分页器是组合型组件，必须遵守以下复用边界：
+
+- **每页条数选择器** 直接复用 [select.txt](select.txt) 的基础 Select 规范；分页器仅定义其推荐宽度、位置与搭配方式
+- **跳页输入框** 直接复用 [input.txt](input.txt) 的基础 Input 规范；分页器仅定义其推荐宽度、位置与搭配方式
+- 左右翻页图标沿用项目统一图标体系；分页规范只定义按钮壳体、尺寸与状态，不单独建立图标规范
+- 省略号属于页码轨道中的折叠表达位，不是独立组件
+
+**结论**：
+
+- 分页规范关注 **组合结构、折叠逻辑、尺寸节奏、状态映射**
+- `Select` / `Input` 的边框、ring、错误提示、图标、字数限制等细节，统一回看各自组件文档
+
+## 动效补充
+
+分页动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
+
+- 页码单元与左右箭头的 `background-color / border-color / color` 过渡默认使用 `motion-fast`（`150ms`）
+- 页码切换只做状态反馈，不做横向滑动、整体缩放或整组抖动
+- 省略号是静态折叠标记，不需要额外动效强调
+- 每页条数下拉展开、跳页输入激活态分别继承 `Select` / `Input` 自身规范，不在分页器中重复叠加新动效
+
+## 全局一致性
+
+- 复杂分页中，`Select`、页码单元、左右箭头、跳页输入框必须跟随分页器尺寸联动
+- `default` 分页使用 `default Select` + `default Input`
+- `compact` 分页使用 `compact Select` + `compact Input`
+- 同一档位内，页码单元与左右箭头外框尺寸必须一致
+- 复杂分页的每页条数选择器推荐宽度固定为 `100px`
+- 复杂分页的跳页输入框推荐宽度固定为 `56px`
+- 复杂分页左侧统计信息与右侧操作组之间默认使用 `32px` 间距
+- 复杂分页右侧的每页条数、页码轨道、跳页区三组之间默认使用 `8px` 间距
+- 简单分页使用独立尺寸体系，不直接复用复杂分页的 `32 / 24px` 轨道规则
+
+## 结构与模式
+
+### 结构规则
+
+- **复杂分页** 是表格列表页默认路径，结构为：信息文案 + 每页条数 + 页码轨道 + 跳页
+- **简单分页** 是受限空间下的轻量路径，结构为：左箭头 + `当前页数字胶囊 / 总页数` + 右箭头
+- 页码按钮数量必须跟随总页数实时变化，不允许为了对齐版式而固定渲染一组按钮
+- 禁用态是整个分页器的组合状态之一，不是只将个别按钮置灰
+
+### React / 业务层推荐封装
+
+基础 `shadcn/ui` 只提供页码骨架能力；中后台分页建议统一收敛为业务层 `TablePagination` / `AppPagination`，避免页面里反复手拼结构。
+
+```tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+import { Input } from "@/components/ui/input"
+
+type TablePaginationProps = {
+  size?: "compact" | "default"
+  mode?: "simple" | "full"
+  total: number
+  page: number
+  totalPages: number
+  pageSize: number
+  disabled?: boolean
+}
+```
+
+## 元素规范
+
+### 页码单元
+
+页码单元的变体轴如下：
+
+- `尺寸`：`紧凑 / 常规`
+- `状态`：`默认 / 悬停 / 选中`
+- `禁用`：`off / on`
+
+#### 尺寸规范
+
+| 尺寸 | 外框尺寸 | 字号 | 行高 | 圆角 |
+|------|---------|------|------|------|
+| `compact` | 24 × 24px | 12px | 20px | 6px |
+| `default` | 32 × 32px | 14px | 22px | 6px |
+
+**补充**：
+
+- `default` 左右箭头图标容器尺寸为 `16 × 16px`
+- `compact` 左右箭头图标容器尺寸为 `14 × 14px`
+- 箭头图标在按钮内水平、垂直居中，不允许沿用通用 `16px` 图标导致紧凑态偏大
+
+#### 状态规范
+
+| 状态 | 背景 | 边框 | 文字 | 说明 |
+|------|------|------|------|------|
+| `default` | `bg-card` | `border-input` | `text-foreground` | 默认静态态 |
+| `hover` | `bg-background` | `border-input` | `text-foreground` | 轻量 hover 反馈 |
+| `selected` | `bg-accent` | `border-primary` | `text-primary` | 当前页态 |
+| `default + disabled` | `bg-field-disabled` | `border-input-disabled` | `text-disabled-foreground` | 不可交互页码 |
+| `selected + disabled` | `bg-field-disabled` | `border-input-disabled` | `text-disabled-foreground` | 当前页但整体不可操作 |
+
+**约束**：
+
+- 当前页只使用 `selected` 语义，不再叠加粗体、额外阴影或尺寸变化
+- 页码内容允许扩展为双位数，如 `10`、`20`，但单元外框尺寸不变化
+- 非当前页默认不使用主色描边，避免与 `selected` 冲突
+
+### 左右箭头
+
+左右箭头的变体轴如下：
+
+- `尺寸`：`紧凑 / 常规`
+- `状态`：`默认 / 悬停 / 禁用`
+
+#### 视觉规则
+
+| 状态 | 背景 | 边框 | 图标色 | 说明 |
+|------|------|------|--------|------|
+| `default` | `bg-card` | `border-input` | `text-foreground` | 默认态 |
+| `hover` | `bg-background` | `border-input` | `text-foreground` | 与页码 hover 一致 |
+| `disabled` | `bg-field-disabled` | `border-input-disabled` | `text-disabled-foreground` | 不可点击 |
+
+**约束**：
+
+- 左右箭头与页码单元共用同一尺寸、圆角和状态节奏
+- 左右箭头在分页器内视为轨道单元，不按通用 Button 另起一套尺寸体系
+- `default` 箭头图标使用 `16px`，`compact` 箭头图标使用 `14px`
+- 可补充 `focus-visible ring`，但视觉权重不应高于 `Select` / `Input` 主体
+
+### 省略号
+
+- 省略号用于“总页数超出展示上限”或“容器宽度不足”两类折叠场景
+- 省略号与页码轨道共享同一节奏，不作为强调按钮使用
+- 省略号不提供激活态、选中态
+- 省略号前后必须保留可理解的页码关系，避免折叠后失去阅读逻辑
+
+## 复杂分页
+
+复杂分页的变体轴如下：
+
+- `尺寸`：`紧凑 / 常规`
+- `页面数`：文档示例分组为 `1 / 5+`，真实实现以本文“页码显示规则”为准
+- `禁用`：`off / on`
+
+### 默认适用场景
+
+- 表格列表页
+- 带筛选、排序、批量操作的数据管理页
+- 明细量大、必须明确页数和总量的中后台页面
+
+### 结构拆解
+
+#### 1. 信息文案区
+
+显示两段文本：
+
+- `共 N 条记录`
+- `第 X / Y 页`
+
+**文案要求**：
+
+- 作为统计信息，默认使用常规字重，不做加粗
+- `总条数 N` 与 `当前页 X` 使用 `text-primary`
+- `共 / 条记录 / 第 / / / 总页数 Y / 页` 使用二级文字 `text-muted-foreground`
+- 左侧信息区默认拆成 `条数组`、`页数组` 两个子组
+- 子组之间间距 `8px`，组内文案间距 `4px`
+- 与页码轨道保持清晰分区，不与按钮混排成单一块
+- 数据为 `0` 时仍保留统计语义，不建议直接隐藏整段
+
+**尺寸映射**：
+
+| 档位 | 字号 | 行高 |
+|------|------|------|
+| `default` | 14px | 22px |
+| `compact` | 12px | 20px |
+
+#### 2. 每页条数选择器
+
+分页器中的条数选择器是带后置箭头的基础选择控件，常规态代表宽度约 `100px`。
+
+**规范要求**：
+
+- 直接复用 [select.txt](select.txt)
+- `default` / `compact` 两档推荐宽度均为 `100px`
+- `default` 分页必须使用 `default Select`
+- `compact` 分页必须使用 `compact Select`
+- 文案格式统一为 `10条/页`、`20条/页`、`50条/页`
+- 不在分页器规范中单独定义其成功态、失败态、分组面板样式
+- 如果分页器位于列表卡片底部，HTML Demo 中这颗 Select 默认应向上展开，避免把页面整体可滚动高度继续向下撑开；React / shadcn 优先依赖 `SelectContent` 的 popper / collision 能力处理开口方向
+
+#### 3. 页码轨道
+
+页码轨道内部顺序保持稳定：
+
+- 上一页箭头
+- 页码表达位
+- 下一页箭头
+
+其中，页码表达位可以由以下内容组成：
+
+- 连续页码
+- 省略号
+- 尾页
+
+**布局要求**：
+
+- 同尺寸下，所有轨道单元高度严格一致
+- 同一档位内，左右箭头与页码单元尺寸必须完全一致
+- 单元间距使用 `8px`
+- 轨道内部默认垂直居中，不允许数字和箭头出现基线漂移
+
+### 页码显示规则
+
+页码显示规则以总页数和当前页为准。
+
+#### 1. 基础展开规则
+
+| 总页数 | 展示规则 |
+|------|---------|
+| `1` | 只展示 `1` 个页码按钮 |
+| `2` | 展示 `2` 个页码按钮 |
+| `3 ~ 6` | 有几页展示几页，不使用省略号 |
+| `>= 7` | 进入折叠模式 |
+
+#### 2. 折叠模式
+
+当总页数大于等于 `7` 时，按当前页位置分三段处理：
+
+| 条件 | 展示规则 | 示例 |
+|------|---------|------|
+| `currentPage <= 5` | 前 `5` 页 + `省略号` + 尾页 | `1 2 3 4 5 ... 50` |
+| `6 <= currentPage <= totalPages - 5` | 首页 + `省略号` + 当前页附近连续窗口 + `省略号` + 尾页 | `1 ... 6 7 8 9 10 ... 50` |
+| `currentPage >= totalPages - 4` | 首页 + `省略号` + 最后 `5` 页 | `1 ... 46 47 48 49 50` |
+
+#### 3. 中段滑窗规则
+
+当分页进入中段滑窗时，采用以下口径：
+
+- 首页固定保留
+- 尾页固定保留
+- 中间窗口默认保留 **连续 5 个页码位**
+- 当前页位于这 `5` 个连续页码位的中间优先区域
+- 中段展示通式为：`1 ... currentPage-2 currentPage-1 currentPage currentPage+1 currentPage+2 ... N`
+
+**示例**：
+
+- 当前页 `6`，总页数 `50`：`1 ... 4 5 6 7 8 ... 50`
+- 当前页 `8`，总页数 `50`：`1 ... 6 7 8 9 10 ... 50`
+- 当前页 `20`，总页数 `50`：`1 ... 18 19 20 21 22 ... 50`
+
+#### 4. 尾段收窗规则
+
+当当前页逼近尾页时，切换为尾段收窗：
+
+- 展示规则：`1 ... N-4 N-3 N-2 N-1 N`
+- 进入尾段收窗后，不再保留第二个省略号
+- 尾段应优先保证最后 `5` 页连续可读
+
+**示例**：
+
+- 当前页 `48`，总页数 `50`：`1 ... 46 47 48 49 50`
+- 当前页 `50`，总页数 `50`：`1 ... 46 47 48 49 50`
+
+### 容器宽度不足时的折叠规则
+
+除总页数触发的折叠外，分页容器宽度不足时，也允许进一步折叠中间页码。
+
+**处理原则**：
+
+- 优先隐藏中间页码，不优先牺牲首页、尾页、当前页附近窗口或前后翻页按钮
+- 折叠后的结果仍需保持“首页 / 尾页可见 + 当前页附近可读”或“尾页连续区完整可读”的阅读逻辑
+- 不因为容器变窄而压缩页码按钮本体尺寸；应优先折叠，再考虑布局调整
+- 如果空间极度受限，优先切换为 **简单分页**，而不是将复杂分页挤成不可读状态
+
+**建议顺序**：
+
+1. 先按总页数规则生成默认轨道
+2. 判断容器是否足够容纳默认轨道
+3. 若不足，则从中间页码开始折叠
+4. 若仍不足，则切换为简单分页或调整整体布局层级
+
+#### 4. 跳页区
+
+结构固定为：`跳至 + 输入框 + 页`
+
+当前规范中，跳页输入框代表宽度约 `56px`。
+
+**规范要求**：
+
+- 直接复用 [input.txt](input.txt)
+- 推荐宽度固定为 `56px`
+- `default` 分页必须使用 `default Input`
+- `compact` 分页必须使用 `compact Input`
+- 输入框只承载页码数字，不扩展搜索、清空、前置图标等能力
+- 输入内容默认左对齐，沿用基础 Input 的内边距与描边
+- 输入值超出总页数时，校验样式与提示写法回看 `input.txt`
+
+### 尺寸规范
+
+| 维度 | `compact` | `default` |
+|------|-----------|-----------|
+| 页码/箭头单元 | 24px 高 | 32px 高 |
+| 轨道文本字号 | 12px | 14px |
+| 信息文案字号 | 12px | 14px |
+| 推荐场景 | 高密工具条 / 紧凑表格 | 标准表格列表页 |
+
+**使用原则**：
+
+- 表格列表页默认使用 `default`
+- 只有筛选区极度紧凑、工具条高度本身压到 24px 时，才使用 `compact`
+- 不建议在同一列表页中混用两种分页尺寸
+
+### 禁用规则
+
+复杂分页的 `disabled=on` 表示整体不可交互：
+
+- 左右箭头禁用
+- 非当前页码不可点击
+- 当前页保留“当前位置”表达，但不再表现为可切换
+- 每页条数选择器与跳页输入框同步进入不可交互态，并分别继承 `Select` / `Input` 的禁用样式
+
+## 简单分页
+
+简单分页采用以下结构：
+
+- 左箭头
+- 当前页数字胶囊
+- `/`
+- 总页数
+- 右箭头
+
+### 简单分页尺寸
+
+| 档位 | 左右箭头 | 当前页胶囊 | 文本字号 | 文本行高 | 组内间距 |
+|------|---------|-----------|---------|---------|---------|
+| `default` | 24 × 24px，图标 14px | 40 × 24px | 14px | 22px | 8px |
+| `compact` | 20 × 20px，图标 14px | 32 × 20px | 12px | 20px | 8px |
+
+### 默认适用场景
+
+- 卡片列表底部
+- 空间受限的轻量内容区
+- 不需要展示总记录数、每页条数、跳页输入的场景
+
+### 使用约束
+
+- 简单分页不是表格分页默认方案，只适用于轻量区域
+- 简单分页只表达“前后翻页 + 当前页 / 总页数”，不承载复杂表格操作
+- 一旦页面已出现筛选、批量条、总量统计等信息，优先切回复杂分页
+- 简单分页中的当前页不是固定色彩选中态，而是中性的数字胶囊
+- 当前页数字胶囊使用 `Semibold` 字重
+- 简单分页中的左右箭头默认不使用复杂分页的描边按钮外框，保持透明背景与无描边
+- 左右箭头通过图标颜色区分可用与禁用：可用态使用 `text-foreground`，禁用态使用 `text-disabled-foreground`
+- 简单分页中的 `/` 与总页数沿用一级文字色，不使用复杂分页左侧统计区的二级文字色
+
+## HTML Demo 应用场景
+
+本节先定义规范，不要求当前立即落入 `preview`。后续补 Demo 时，应按完整场景组织，而不是只保留一组静态 `.pagination-btn`。
+
+### 推荐类名结构
+
+```html
+<!-- 复杂分页 -->
+<div class="pagination-bar pagination-bar--default">
+  <div class="pagination-meta">
+    <span class="pagination-meta__group">
+      <span>共</span>
+      <span class="pagination-meta__value--accent">500</span>
+      <span>条记录</span>
+    </span>
+    <span class="pagination-meta__group">
+      <span>第</span>
+      <span class="pagination-meta__value--accent">8</span>
+      <span>/</span>
+      <span>50</span>
+      <span>页</span>
+    </span>
+  </div>
+
+  <div class="pagination-controls">
+    <div class="pagination-page-size">
+      <!-- 直接复用 Select -->
+    </div>
+
+    <div class="pagination-track">
+      <button class="pagination-arrow" disabled>...</button>
+      <button class="pagination-page">1</button>
+      <span class="pagination-ellipsis" aria-hidden="true">...</span>
+      <button class="pagination-page">6</button>
+      <button class="pagination-page">7</button>
+      <button class="pagination-page is-active">8</button>
+      <button class="pagination-page">9</button>
+      <button class="pagination-page">10</button>
+      <span class="pagination-ellipsis" aria-hidden="true">...</span>
+      <button class="pagination-page">50</button>
+      <button class="pagination-arrow">...</button>
+    </div>
+
+    <div class="pagination-jump">
+      <span>跳至</span>
+      <div class="pagination-jump-input">
+        <!-- 直接复用 Input -->
+      </div>
+      <span>页</span>
+    </div>
+  </div>
+</div>
+
+<!-- 简单分页 -->
+<div class="pagination-simple pagination-simple--compact">
+  <button class="pagination-arrow" disabled>...</button>
+  <span class="pagination-simple__page">1</span>
+  <span class="pagination-simple__separator">/</span>
+  <span class="pagination-simple__total">5</span>
+  <button class="pagination-arrow">...</button>
+</div>
+```
+
+### Demo 落地要求
+
+- Demo 中的页码、箭头、当前页、禁用态必须体现真实状态差异
+- 每页条数选择器与跳页输入框直接复用 `Select` / `Input` Demo 样式，不复制一套“分页专用输入框”
+- 同一档位内，`Select`、页码、箭头、跳页输入框必须保持尺寸一致
+- 至少覆盖一个标准表格页场景，展示分页与统计文案、选择器、跳页输入的完整搭配
+
+## Checklist
+
+生成分页器时检查：
+
+- [ ] 先判断场景应使用 `simple` 还是 `full`
+- [ ] 每页条数选择器直接复用 `Select`
+- [ ] 跳页输入框直接复用 `Input`
+- [ ] 页码单元与左右箭头遵循 `24 / 32px` 两档
+- [ ] 总页数为 `1` 时只展示 `1` 个页码按钮
+- [ ] 总页数为 `2` 时展示 `2` 个页码按钮
+- [ ] 总页数为 `3 ~ 6` 时全部展开，不使用省略号
+- [ ] 总页数大于等于 `7` 时进入折叠模式
+- [ ] `currentPage <= 5` 时展示 `前 5 页 + 省略号 + 尾页`
+- [ ] `6 <= currentPage <= totalPages - 5` 时展示 `首页 + 省略号 + 当前页附近连续窗口 + 省略号 + 尾页`
+- [ ] `currentPage >= totalPages - 4` 时展示 `首页 + 省略号 + 最后 5 页`
+- [ ] 容器宽度不足时优先折叠中间页码，不压缩按钮本体尺寸
+- [ ] 当前页只使用 `selected` 语义，不额外叠粗、放大或加重阴影
+- [ ] 表格列表页默认使用复杂分页，并包含记录数与页数信息
+- [ ] 紧凑态只用于高密工具条或紧凑列表
+- [ ] HTML Demo 中体现分页与表格、筛选区的组合关系

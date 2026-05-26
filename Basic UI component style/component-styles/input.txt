@@ -1,0 +1,487 @@
+# Input 输入框
+
+> 包含：文本输入框、搜索框、密码框、带前置图标输入框、带字数限制输入框
+
+## 组件能力范围
+
+当前 Input 规范覆盖以下能力轴：
+
+- `状态`：`默认 / 悬停 / 激活 / 禁用 / 成功 / 失败`
+- `尺寸`：`紧凑 / 常规 / 宽松`
+- `前置图标`：`off / on`
+- `字数限制`：布尔开关
+- `切换前置图标`：实例替换，落地时映射到基于 Lucide 的项目图标体系
+
+**关键约束**：
+
+- 生成代码时按 `size / status / leadingIcon / showCount / errorMessage` 这些语义 props 建模
+- 不要把 36 个变体逐个写成公开 API，也不要在文档里把所有排列组合写死
+- 只要是规范中的 `基础图标`、`语意图标` 槽位，都映射到基于 Lucide 的项目通用图标组件，不直接散落第三方直引
+- 默认单层 Input 仍是主路径；组合型输入框只是 Input 的衍生使用方法，不覆盖基础 Input 的默认规范
+
+## 动效补充
+
+Input 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
+
+- 默认只过渡 `border-color / box-shadow / background-color / color`
+- hover 与 focus ring 过渡默认使用 `motion-fast`（`150ms`）
+- 输入框本体不做位移、缩放、抖动
+- 错误辅助行若需要显隐，默认使用 `motion-base`（`200ms`）的 `opacity + translateY(4px)`，不要做大幅滑入
+
+## 基础样式
+
+```tsx
+// 标准输入框 — 基础场景可直接使用 shadcn Input
+import { Input } from "@/components/ui/input"
+
+<Input placeholder="请输入..." />
+```
+
+当出现前置图标、字数限制、错误辅助文案时，推荐封装为业务层 `AppInput` / `FieldInput`，不要在页面里重复拼接结构。
+
+```tsx
+import { SearchIcon, ErrorIcon } from "@/components/icons"
+
+type AppInputProps = {
+  size?: "compact" | "default" | "loose"
+  status?: "default" | "hover" | "active" | "disabled" | "success" | "error"
+  leadingIcon?: React.ReactNode
+  showCount?: boolean
+  errorMessage?: string
+}
+```
+
+### 基础类名
+
+```tsx
+// 纯文本输入基础建议
+className="flex w-full border bg-background placeholder:text-tertiary-foreground shadow-sm transition-colors hover:border-primary focus-visible:outline-none disabled:cursor-not-allowed"
+```
+
+### HTML Demo 样式映射
+
+HTML Demo 推荐按下面两层结构使用，并在最终单文件中补齐对应类名：
+
+- 简单输入框：`.input` + 尺寸修饰符 `.input--compact / .input--default / .input--loose`
+- 组合输入框：`.input-group > .input-shell + .input-helper`
+- 壳层负责边框、背景、状态；内部输入元素统一使用 `.input-field`
+
+```html
+<!-- 简单输入框 -->
+<input class="input input--default" placeholder="请输入..." />
+
+<!-- 带前置图标 + 字数限制 -->
+<div class="input-group">
+  <div class="input-shell input-shell--default input-shell--success">
+    <span class="input-icon" aria-hidden="true">
+      <!-- inline svg -->
+    </span>
+    <input class="input-field" placeholder="请输入..." />
+    <span class="input-count">0/10</span>
+  </div>
+</div>
+
+<!-- 错误态 -->
+<div class="input-group">
+  <div class="input-shell input-shell--default input-shell--error">
+    <span class="input-icon" aria-hidden="true">
+      <!-- inline svg -->
+    </span>
+    <input class="input-field" placeholder="请输入..." />
+  </div>
+  <div class="input-helper">
+    <span class="input-helper__icon" aria-hidden="true">
+      <!-- inline svg -->
+    </span>
+    <span>输入错误原因</span>
+  </div>
+</div>
+```
+
+## 尺寸规范
+
+| 尺寸 | 高度 | 推荐类名 | 文本 | 图标 | 圆角 | 适用场景 |
+|------|------------|----------|------|------|------|----------|
+| `compact` | 24px | `h-6 px-3 text-xs leading-5 rounded-md` | 12 / 20 | 14px | 6px | 表格内编辑、超紧凑筛选区 |
+| `default` | 32px | `h-8 px-3 text-sm leading-[22px] rounded-lg` | 14 / 22 | 16px | 8px | 标准表单（默认） |
+| `loose` | 40px | `h-10 px-3 text-base leading-7 rounded-lg` | 16 / 28 | 20px | 8px | 重要输入、强调型录入 |
+
+```tsx
+// 尺寸示例
+<Input className="h-6 rounded-md px-3 text-xs leading-5" placeholder="紧凑" />
+<Input className="h-8 rounded-lg px-3 text-sm leading-[22px]" placeholder="常规" />
+<Input className="h-10 rounded-lg px-3 text-base leading-7" placeholder="宽松" />
+```
+
+**注意**：
+
+- Input 不再默认使用 `h-9`
+- 水平内边距统一优先 `12px`
+- 带前置图标时，通过容器 `gap` 控制间距，不要单纯用 `pl-9` 把所有状态写死
+
+## 状态样式
+
+| 状态 | 边框 | 背景 | 文字 | 说明 |
+|------|------|------|------|------|
+| `default` | `border-input` | `bg-background` | `text-foreground` / `placeholder:text-tertiary-foreground` | 默认静态态 |
+| `hover` | `border-primary` | `bg-background` | 同默认 | 仅 hover 时加强描边，不新增阴影 |
+| `active` | `border-primary` + `ring-2 ring-primary/20` | `bg-background` | 同默认 | 激活态 |
+| `disabled` | `border-input-disabled` | `bg-background` | `text-disabled-foreground placeholder:text-disabled-foreground` | 不可编辑 |
+| `success` | `border-brand-green-500` | `bg-background` | 同默认 | 成功校验通过 |
+| `error` | `border-destructive` | `bg-background` | 输入区仍保留正文层级，错误信息单独显示 | 错误态为两层结构 |
+
+**交互约束**：
+
+- `hover` 是默认交互态之一，所有非 disabled 的普通 Input / `.input-shell` 默认都应响应 hover
+- `active` 仍由 focus / focus-visible 驱动，不把 hover 和 active 混成同一态
+- `.input-shell--hover` 只用于 HTML Demo 静态展示 hover 快照，不替代真实 `:hover` 实现
+
+### 禁用状态
+
+```tsx
+<Input disabled placeholder="不可编辑" />
+// 建议同时补 text-disabled-foreground / placeholder:text-disabled-foreground
+```
+
+### 激活态
+
+```tsx
+<Input className="border-primary focus-visible:ring-2 focus-visible:ring-primary/20" />
+```
+
+### 错误状态
+
+错误态不是只改一个红边框，而是 `输入框主体 + 错误辅助行` 的组合结构。辅助行与主体间距 `2px`，行内图标与文字间距 `4px`。
+
+```tsx
+import { ErrorIcon } from "@/components/icons"
+
+<div className="space-y-0.5">
+  <Input className="border-destructive focus-visible:ring-0" />
+  <div className="flex items-center gap-1 text-xs leading-5 text-destructive">
+    <ErrorIcon className="size-4 shrink-0" />
+    <span>输入错误原因</span>
+  </div>
+</div>
+```
+
+```tsx
+// 配合 Form 组件时，也要保留辅助行结构
+<FormField>
+  <FormControl>
+    <Input {...field} />
+  </FormControl>
+  <FormMessage />
+</FormField>
+```
+
+**错误状态样式规范**：
+- 边框：`border-destructive`
+- 辅助行：`flex items-center gap-1 text-destructive text-xs leading-5`
+- 错误图标：基于 Lucide 的项目通用图标组件，默认 `16px`，颜色跟随辅助行的 `text-destructive`
+
+## 前置图标输入框
+
+```tsx
+import { Input } from "@/components/ui/input"
+import { SearchIcon } from "@/components/icons"
+
+<div className="flex h-8 items-center gap-2 rounded-lg border border-input bg-background px-3">
+  <SearchIcon className="size-4 shrink-0 text-muted-foreground" />
+  <Input className="h-auto border-0 px-0 shadow-none focus-visible:ring-0" placeholder="请输入..." />
+</div>
+```
+
+**前置图标规范**：
+
+- 图标来源：基于 Lucide 的项目通用图标组件，通过 `leadingIcon` 或 slot 注入
+- 图标尺寸：`14 / 16 / 20px`，对应 `compact / default / loose`
+- 图标颜色：默认按二级文字使用 `text-muted-foreground`，禁用态同步降级为禁用文字 `text-disabled-foreground`
+- 图标与文本间距：有图标时优先 `gap-2`（8px）；紧凑态可按视觉压缩为 `gap-1`
+- 激活态不要把图标挤成单独按钮，仍作为输入内容区的一部分
+
+### 搜索框
+
+```tsx
+import { SearchIcon, ClearIcon } from "@/components/icons"
+
+const [value, setValue] = useState("")
+
+<div className="flex h-8 items-center gap-2 rounded-lg border border-input bg-background px-3">
+  <SearchIcon className="size-4 shrink-0 text-muted-foreground" />
+  <Input
+    className="h-auto border-0 px-0 shadow-none focus-visible:ring-0"
+    placeholder="搜索..."
+    value={value}
+    onChange={(e) => setValue(e.target.value)}
+  />
+  {value && (
+    <button
+      type="button"
+      onClick={() => setValue("")}
+      className="shrink-0 text-muted-foreground hover:text-foreground"
+    >
+      <ClearIcon className="size-4" />
+    </button>
+  )}
+</div>
+```
+
+## 字数限制
+
+```tsx
+<div className="flex h-8 items-center gap-2 rounded-lg border border-input bg-background px-3">
+  <Input className="h-auto flex-1 border-0 px-0 shadow-none focus-visible:ring-0" placeholder="请输入..." />
+  <span className="shrink-0 text-sm leading-[22px] text-tertiary-foreground">0/10</span>
+</div>
+```
+
+**字数限制规范**：
+
+- `showCount` 作为布尔能力开关，不单独拆出一套输入框变体命名
+- 计数字号随尺寸走：`12 / 14 / 16px`
+- 计数颜色默认使用三级文字 `text-tertiary-foreground`，与 placeholder 同级，禁用态同步降级为禁用文字
+- 错误态下可同时显示 `count + helper text`
+- HTML Demo 中统一使用 `.input-count`
+
+## 带前缀/后缀
+
+前缀/后缀不是当前基础 Input 的变体轴。需要网址协议、单位、域名后缀时，使用外层容器组合，不要把它塞回 Input 主组件 API。
+
+## 组合型输入框（前后置标签）
+
+这一类采用“前后置标签型输入框”的分段结构，不用通用 input-group 经验替代。变体轴如下：
+
+- `状态`：`默认 / 悬停 / 激活 / 禁用 / 失败`
+- `尺寸`：`紧凑 / 常规 / 宽松`
+- `内容`：`文字`
+- `前置标签`：`on / off`
+- `前置图标`：当前节点里固定 `off`
+- `后置图标`：当前节点里固定 `off`，不是这组组合型 Input 的公开变体轴
+- `后置标签`：`on / off`
+
+**关键约束**：
+
+- 这是分段结构，不是“一个共享大壳层”
+- 前置标签是独立灰底分段，和输入主体相邻拼接、同高度
+- `后置标签=on` 时，右侧是独立灰底分段，不与输入正文混在一起
+- 当前这组没有 `success` 变体，也不是“前置图标输入框”那一类
+- 失败态是 `输入主体 + 2px 间距的错误辅助行`
+- 激活态是“输入主体主色描边 + 2px ring + 光标”，不是额外拼出一个图标段
+- 左标签段只保留左侧外圆角，右标签段只保留右侧外圆角；内侧分段边界必须是直角拼接
+
+### 代表性宽度
+
+这些宽度作为当前规范的代表值。preview / HTML demo 做静态还原时，优先按这些代表性宽度落，不要随意拉满容器：
+
+| 尺寸 | 前置标签 + 输入 | 前置标签 + 输入 + 后置标签 | 输入 + 后置标签 |
+|------|-----------------|----------------------------|----------------|
+| `compact` | `296px` | `364px` | `272px` |
+| `default` | `296px` | `384px` | `272px` |
+| `loose` | `320px` | `400px` | `288px` |
+
+### React 工程落地
+
+建议封装业务层 `CompositeInput`，而不是把 `prefixLabel / suffixLabel` 回写进基础 `Input` 组件 API。
+
+```tsx
+import { Input } from "@/components/ui/input"
+import { ChevronDownIcon } from "@/components/icons"
+
+<div className="inline-flex h-8 w-full items-stretch">
+  <button
+    type="button"
+    className="inline-flex shrink-0 items-center gap-2 rounded-l-lg border border-input bg-background px-3 text-sm leading-[22px] text-foreground"
+  >
+    <span className="truncate">前置标签</span>
+    <ChevronDownIcon className="size-4 text-muted-foreground" />
+  </button>
+  <div className="inline-flex min-w-0 flex-1 items-center rounded-r-lg border border-l-0 border-input bg-card px-3">
+    <Input
+      className="h-auto flex-1 rounded-none border-0 px-0 text-sm leading-[22px] shadow-none focus-visible:ring-0"
+      placeholder="请输入..."
+    />
+  </div>
+</div>
+```
+
+```tsx
+<div className="inline-flex h-8 w-full items-stretch">
+  <button type="button" className="inline-flex shrink-0 items-center gap-2 rounded-l-lg border border-input bg-background px-3 text-sm leading-[22px] text-foreground">
+    <span>前置标签</span>
+    <ChevronDownIcon className="size-4 text-muted-foreground" />
+  </button>
+  <div className="inline-flex min-w-0 flex-1 items-center border-y border-input bg-card px-3">
+    <Input className="h-auto flex-1 rounded-none border-0 px-0 text-sm leading-[22px] shadow-none focus-visible:ring-0" placeholder="请输入..." />
+  </div>
+  <div className="inline-flex shrink-0 items-center rounded-r-lg border border-l-0 border-input bg-background px-3 text-sm leading-[22px] text-foreground">
+    后置标签
+  </div>
+</div>
+```
+
+### HTML Demo 结构
+
+```html
+<div class="input-group" style="--input-demo-width: 296px;">
+  <div class="input-shell input-shell--default input-shell--addon">
+    <button type="button" class="input-addon input-addon--button" aria-label="选择前置标签">
+      <span class="input-addon__label">前置标签</span>
+      <span class="input-addon__icon" aria-hidden="true">
+        <!-- inline svg -->
+      </span>
+    </button>
+    <div class="input-body input-body--with-prefix">
+      <input class="input-field" placeholder="请输入..." />
+    </div>
+  </div>
+</div>
+
+<div class="input-group" style="--input-demo-width: 384px;">
+  <div class="input-shell input-shell--default input-shell--addon">
+    <button type="button" class="input-addon input-addon--button" aria-label="选择前置标签">
+      <span class="input-addon__label">前置标签</span>
+      <span class="input-addon__icon" aria-hidden="true">
+        <!-- inline svg -->
+      </span>
+    </button>
+    <div class="input-body input-body--with-prefix input-body--with-suffix">
+      <input class="input-field" placeholder="请输入..." />
+    </div>
+    <span class="input-addon input-addon--suffix">后置标签</span>
+  </div>
+</div>
+
+<div class="input-group" style="--input-demo-width: 272px;">
+  <div class="input-shell input-shell--default input-shell--addon">
+    <div class="input-body input-body--with-suffix">
+      <input class="input-field" placeholder="请输入..." />
+    </div>
+    <span class="input-addon input-addon--suffix">后置标签</span>
+  </div>
+</div>
+```
+
+## 组合型 HTML Demo 状态类
+
+| 场景 | 壳层类名 | 说明 |
+|------|---------|------|
+| 默认 | `.input-shell.input-shell--default.input-shell--addon` | 32px 常规态 |
+| 悬停 | `.input-shell--hover` | 静态展示 hover 快照；真实交互仍依赖 `:hover` |
+| 激活 | `.input-shell--active` | 主色描边 + 2px focus ring |
+| 禁用 | `.input-shell--disabled` | 背景、图标、计数、placeholder 一起降级 |
+| 失败 | `.input-shell--error` + `.input-helper` | 错误描边 + 错误辅助行 |
+
+**HTML Demo 结构约束**：
+
+- 不要把错误文案直接塞进 `.input-shell` 里
+- 清空按钮、显隐密码按钮统一使用 `.input-action`
+- 标签段箭头统一挂在 `.input-addon__icon` 上；错误辅助图标挂在 `.input-helper__icon` 上，优先内联 SVG
+- 组合型输入框按当前分段规范建模，是相邻分段结构，不是共享单一外壳
+- 组合输入框中的真实输入节点只使用 `.input-field`，不要再叠第二层边框
+- preview 代表例优先带上 `--input-demo-width`，按当前规范的 `296 / 384 / 272 / 364 / 400 / 288px` 取值
+
+### HTML Demo 适配规范
+
+生成组合型 Input 的 HTML demo 时，统一按 “`可选前置标签段 / 输入主体段 / 可选后置标签段`” 三段式思路落，不要把 React 工程里的容器写法直接照搬成随意嵌套，也不要补不存在的“后置图标变体”。
+
+#### 类名映射
+
+| 组件能力 | HTML Demo 类名 | 说明 |
+|------|------|------|
+| 前置标签 | `.input-addon.input-addon--button` | 灰底标签段，可带箭头图标 |
+| 输入主体 | `.input-body` | 白底主体段，承载真实输入节点 |
+| 有前置标签 | `.input-body--with-prefix` | 去掉左边框，与前置标签拼接 |
+| 有后置标签 | `.input-body--with-suffix` | 去掉右边框，与后置标签拼接 |
+| 激活光标快照 | `.input-body__content + .input-caret` | 静态展示激活态时，用光标代替虚构图标 |
+| 后置标签 | `.input-addon.input-addon--suffix` | 独立灰底标签段 |
+| 错误辅助行 | `.input-helper` | 主体下方 2px 间距 |
+
+#### 组合规则
+
+- 只有前置标签：`.input-addon--button + .input-body--with-prefix`
+- 前置标签 + 后置标签：`.input-addon--button + .input-body--with-prefix.input-body--with-suffix + .input-addon--suffix`
+- 无前置标签 + 后置标签：`.input-body--with-suffix + .input-addon--suffix`
+- 激活快照：`.input-body > .input-body__content > .input-caret`
+
+#### 尺寸落地
+
+- `compact / 24px`：标签文字 `12/20`，输入文字 `12/20`，标签段图标 `16px`，标签段内部 `gap: 4px`
+- `default / 32px`：标签文字 `14/22`，输入文字 `14/22`，图标 `16px`
+- `loose / 40px`：标签文字 `16/28`，输入文字 `16/28`，图标 `20px`
+- 三档的标签段和输入主体段水平内边距都先按 `12px` 落
+- 静态 preview 额外带上 `--input-demo-width`，不要把组合型代表例直接拉成 `100%`
+
+#### 状态落地
+
+- `hover`：组合型 demo 里只强化 `.input-body` 的描边，不把整个组合块统一描成一圈
+- `active`：focus ring 只作用在 `.input-body`，静态快照优先展示 `caret`
+- `disabled`：`.input-addon` 和 `.input-body` 描边统一降级到 `border-input-disabled`，底色统一回到 `bg-background`
+- `error`：`.input-addon` 和 `.input-body` 一起变错误边框，并补 `.input-helper` + `16px` 警示三角
+- `radius`：`.input-addon--button` 去掉右侧圆角，`.input-addon--suffix` 去掉左侧圆角，不能把标签段画成独立圆角胶囊
+
+#### HTML Demo 检查清单
+
+- [ ] 标签段和输入主体段字号一致，随尺寸档一起变化
+- [ ] `button.input-addon` 显式继承字体，不使用浏览器默认按钮字体
+- [ ] `button.input-addon` 额外清掉浏览器默认 `appearance`
+- [ ] 后置标签是独立灰底分段，不要直接写成普通 `span` 文本
+- [ ] 左标签段只保留左外圆角，右标签段只保留右外圆角
+- [ ] `compact` 组合型里的标签图标仍保持 `16px`，不要误缩成普通输入图标的 `14px`
+- [ ] 不要凭经验补出这个节点里并不存在的“后置图标” demo
+- [ ] 激活态快照优先还原光标，而不是擅自补 `0/10` 或已输入文本
+- [ ] 错误态保留 `2px` 主体与辅助行间距
+
+## 密码框
+
+```tsx
+import { EyeOpenIcon, EyeCloseIcon } from "@/components/icons"
+
+const [showPassword, setShowPassword] = useState(false)
+
+<div className="relative">
+  <Input 
+    type={showPassword ? "text" : "password"} 
+    className="pr-9"
+    placeholder="请输入密码" 
+  />
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+  >
+    {showPassword ? <EyeCloseIcon className="size-4" /> : <EyeOpenIcon className="size-4" />}
+  </button>
+</div>
+```
+
+## 表单组合
+
+```tsx
+import { Label } from "@/components/ui/label"
+
+// 标准表单项布局
+<div className="space-y-2">
+  <Label htmlFor="email">邮箱地址</Label>
+  <Input id="email" type="email" placeholder="name@example.com" />
+  <p className="text-xs text-muted-foreground">我们不会公开你的邮箱</p>
+</div>
+```
+
+**表单项间距规范**：
+- Label 与 Input：`space-y-2`（8px）
+- 表单项之间：`space-y-4`（16px）
+- 帮助文字：二级文字 `text-xs text-muted-foreground`
+
+## Checklist
+
+生成输入框时检查：
+
+- [ ] API 按 `size / status / leadingIcon / showCount / errorMessage` 建模，不展开 36 个硬编码组合
+- [ ] 默认尺寸使用常规态：`32px`
+- [ ] 紧凑 / 常规 / 宽松对应 `24 / 32 / 40px`
+- [ ] 前置图标来自基于 Lucide 的项目通用图标组件，不直接在页面里散落第三方引用
+- [ ] 前置标签型组合输入使用相邻分段结构，标签段和输入主体同高拼接
+- [ ] 错误态包含辅助行，不只改红色边框
+- [ ] 字数限制作为布尔能力开关，位置在输入内容区右侧
+- [ ] 表单布局使用 `space-y-2` / `space-y-4`

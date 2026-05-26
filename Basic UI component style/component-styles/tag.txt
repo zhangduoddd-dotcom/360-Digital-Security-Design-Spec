@@ -1,0 +1,350 @@
+# Tag 标签
+
+> 用于展示状态、分类、来源或可移除标记。当前规范约束到本仓库现有的 token 与 `Badge` 原语上落地。
+
+## 规范说明
+
+- 扩展色能力共 `11` 条颜色语义
+- 变体由 `颜色 × 前置图标 × 后置图标 × 面性` 组成
+- 默认推荐值：`主色 + 前置图标=off + 后置图标=off + outline`
+- 当前仓库默认生成仍收口到 `Primary / Success / Neutral / Warning / Danger` 五条稳定语义色系
+- `Cyan / Gold / Lime / Pink / Purple / Teal` 的扩展 token 已内建，仅在用户明确要求或设计强依赖时启用
+
+## 组件变体
+
+### 扩展能力属性
+
+| 属性 | 可选值 | 说明 |
+|------|--------|------|
+| 颜色 | `Primary` / `Success` / `Neutral` / `Warning` / `Danger` / 扩展装饰色 | 以语义色为主，扩展装饰色仅保留设计意图 |
+| 前置图标 | `off` / `on` | 用于状态提示或来源识别 |
+| 后置图标 | `off` / `on` | 仅用于可关闭、可移除标签 |
+| 面性 | `off` / `on` | `off=线框`，`on=浅底填充` |
+
+### 当前仓库默认输出收口
+
+| 属性 | 可选值 | 说明 |
+|------|--------|------|
+| 颜色 | `primary` / `success` / `neutral` / `warning` / `danger` | 当前仓库默认只输出 5 条稳定语义色系 |
+| 前置图标 | `off` / `on` | 是否展示前置图标 |
+| 后置图标 | `off` / `on` | 是否展示后置图标 |
+| 面性 | `outline` / `solid` | 对 `off/on` 的代码语义化映射 |
+
+**推荐默认值**：
+- 状态标签：`solid`
+- 分类/来源标签：`outline`
+- 可关闭标签：`outline + 后置图标=on`
+- 单纯状态展示：不要默认带关闭图标
+
+## 尺寸规范
+
+当前规范只定义一档标准尺寸。
+
+| 元素 | 尺寸 | Tailwind / 说明 |
+|------|------|-----------------|
+| 高度 | `22px` | `h-[22px]` |
+| 水平内边距 | `8px` | `px-2` |
+| 垂直留白 | 由容器居中分配 | Web 还原时不要直接写 `py-1` |
+| 图标与文字间距 | `4px` | `gap-1` |
+| 圆角 | `6px` | `rounded-md` |
+| 字号 | `12px` | `text-xs` |
+| 行高 | `20px` | `leading-5` |
+| 字重 | `400` | `font-normal` |
+| 图标尺寸 | `14px` | `size-3.5` |
+
+**宽度规则**：
+- 宽度始终由内容撑开，不设置固定宽度
+- Web 还原时使用固定高度 `22px` + `items-center`，不要同时叠加 `py-1`
+- 两字标签基线宽度：
+- 无图标：`40px`
+- 单图标：`58px`
+- 双图标：`76px`
+- 文案增长时，仅横向扩展，不改变高度与内边距
+
+## 颜色规范
+
+### 当前默认落地色系
+
+| 语义 | 扩展色名 | Outline | Solid | 适用场景 |
+|------|--------------|---------|-------|----------|
+| 主色 | `Primary` | `border-primary text-primary` | `bg-accent text-primary` | 默认标签、品牌标签 |
+| 成功 | `Green` | `border-brand-green-500 text-brand-green-500` | `bg-brand-green-50 text-brand-green-500` | 成功、启用、已完成 |
+| 中性 | `Gray` | `border-brand-gray-600 text-brand-gray-600` | `bg-brand-gray-200 text-brand-gray-600` | 草稿、未开始、普通分类 |
+| 警告 | `Volcano` | `border-brand-orange-400 text-brand-orange-400` | `bg-brand-orange-50 text-brand-orange-400` | 风险、待处理、提醒 |
+| 危险 | `Red` | `border-brand-red-500 text-brand-red-500` | `bg-brand-red-50 text-brand-red-500` | 错误、停用、失败 |
+
+### 扩展色处理规则
+
+额外提供 `Cyan / Gold / Lime / Pink / Purple / Teal` 六组装饰色，对应 token 以 `../Green Theme-Global Style.css` 为准。处理规则：
+
+- 设计评审阶段：可以保留扩展色名作为设计意图
+- 默认代码输出阶段：优先映射到最接近的 5 条语义色系
+- 若业务明确要求保留扩展色：直接复用现有 token，再输出组件代码
+- 禁止在 React 或 HTML Demo 里直接写 hex/rgb
+
+## 当前规范收口
+
+- 固定结构：`22px` 高度、`6px` 圆角、`12px / 20px / 400` 文本、`14px` 图标、`4px` 间距，以及 `前置图标 / 后置图标 / 面性` 结构组合
+- 默认代码输出：只使用 `5` 条稳定语义色，扩展色按需启用
+- 代码命名：统一使用 `tag--outline / tag--solid`
+- 工程补充：默认补齐 `hover / focus-visible / disabled` 约束，不沿用旧 Badge 的 `12px / 16px / 500`
+
+## 图标规则
+
+默认图标建议：
+
+- 前置图标：`CheckCircle`
+- 后置图标：`Close`
+
+代码落地统一映射到当前仓库图标体系：
+
+- React：`lucide-react`
+- HTML Demo：Lucide CDN
+
+推荐映射：
+
+| 位置 | 推荐命名 | React 建议 |
+|------|----------|------------|
+| 前置图标 | `CheckCircle` | `CircleCheck` |
+| 后置图标 | `Close` | `X` |
+
+**使用规则**：
+- 前置图标只在“状态需要额外强化识别”时使用
+- 后置图标只用于可关闭、可移除标签，不用于纯展示状态
+- 不要在 `22px` 高度内塞入超过一个前置图标或一个后置图标
+- 图标与文字共色，不额外做二级灰处理
+
+## 类型规范
+
+### 1. Outline 标签
+
+用于分类、来源、弱语义标记，优先作为默认样式。
+
+```tsx
+<Badge className="inline-flex h-[22px] items-center rounded-md border border-primary bg-transparent px-2 text-xs font-normal leading-5 text-primary">
+  API
+</Badge>
+```
+
+规则：
+- 背景保持透明
+- 边框与文字同色，文字按状态语义使用，不走一级/二级/三级文字层级
+- 适合列表筛选、字段来源、对象分类
+
+### 2. Solid 标签
+
+用于状态、结果、风险等级等需要快速扫读的场景。
+
+```tsx
+<Badge className="inline-flex h-[22px] items-center rounded-md bg-brand-green-50 px-2 text-xs font-normal leading-5 text-brand-green-500">
+  已启用
+</Badge>
+```
+
+规则：
+- 使用浅色背景 + 同色文字，文字按状态语义使用
+- 默认不加边框
+- 表格状态列优先使用 `solid`，提升扫读效率
+
+### 3. 前置图标标签
+
+用于状态强化，但仍然保持轻量。
+
+```tsx
+<Badge className="inline-flex h-[22px] items-center gap-1 rounded-md border border-primary bg-transparent px-2 text-xs font-normal leading-5 text-primary">
+  <CircleCheck className="size-3.5" />
+  已验证
+</Badge>
+```
+
+规则：
+- 图标尺寸固定 `14px`
+- 前置图标优先用于正向结果或来源识别
+- 文案较长时，不强行补图标
+
+### 4. 可关闭标签
+
+用于筛选条件、已选项、可撤销标记。
+
+```tsx
+<Badge className="inline-flex h-[22px] items-center gap-1 rounded-md border border-brand-gray-600 bg-transparent px-2 text-xs font-normal leading-5 text-brand-gray-600">
+  自定义
+  <button
+    type="button"
+    className="inline-flex size-3.5 items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    aria-label="移除标签"
+  >
+    <X className="size-3.5" />
+  </button>
+</Badge>
+```
+
+规则：
+- 后置 `X` 必须有独立可点击语义和 `aria-label`
+- 关闭按钮不额外扩大整体高度
+- 纯状态标签不要复用关闭式结构
+
+## 交互状态
+
+当前规范以静态结构为基础，并额外补充如下交互约束：
+
+### 静态展示标签（默认）
+
+- 不加 hover 背景
+- 不加 pointer 样式
+- 仅承担信息展示
+
+### 可点击标签
+
+```tsx
+<button className="inline-flex h-[22px] items-center gap-1 rounded-md border border-primary bg-transparent px-2 text-xs font-normal leading-5 text-primary transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+  待审核
+</button>
+```
+
+规则：
+- 只有承担筛选、跳转、切换语义时才做成 button
+- `outline` hover 使用对应浅底，避免直接压暗文字
+- 必须保留 `focus-visible` 外环
+
+### Disabled 标签
+
+Disabled 版本默认不主动生成。若业务必须出现：
+
+- 线框：`border-brand-gray-300 text-disabled-foreground`
+- 填充：`bg-muted text-disabled-foreground`
+- Disabled 标签文字统一归到禁用文字层级
+- 这里的 `bg-muted` 表示弱化实底，不是表单禁用背景
+- 关闭图标同步禁用，不保留点击能力
+
+## React 落地建议
+
+优先复用 `shadcn/ui` 的 `Badge` 原语，通过 class 约束成 Tag，而不是另外发明一套组件骨架。
+
+```tsx
+import { Badge } from "@/components/ui/badge"
+import { CircleCheck, X } from "lucide-react"
+
+<Badge className="inline-flex h-[22px] items-center gap-1 rounded-md border border-primary bg-transparent px-2 text-xs font-normal leading-5 text-primary">
+  <CircleCheck className="size-3.5" />
+  标签
+</Badge>
+```
+
+**落地规则**：
+- Tag 默认使用 `rounded-md`，不要沿用旧的 `rounded-sm`
+- 固定 `h-[22px]` 后不要再叠加 `py-1`
+- 字重使用 `font-normal`，不要套按钮的 `font-medium`
+- 表格状态列优先使用 `solid`
+- 筛选条件、已选项优先使用 `outline + 后置图标`
+- 没有交互语义时，不要把 Tag 渲染成 `button`
+
+## HTML Demo 落地建议
+
+### 基础结构
+
+```html
+<span class="tag tag--outline tag--primary">
+  <i data-lucide="circle-check" class="tag__icon"></i>
+  已验证
+</span>
+
+<span class="tag tag--solid tag--success">已启用</span>
+
+<button class="tag tag--outline tag--neutral tag--interactive" type="button">
+  自定义
+  <i data-lucide="x" class="tag__icon"></i>
+</button>
+```
+
+### 样式类约定
+
+| 类名 | 作用 |
+|------|------|
+| `tag` | 基础骨架：`22px` 高度、`6px` 圆角、`12px/20px` 字体、`4px` 间距 |
+| `tag__icon` | 图标尺寸固定 `14px` |
+| `tag--outline` | 线框标签 |
+| `tag--solid` | 浅底填充标签 |
+| `tag--primary` | 主色语义 |
+| `tag--success` | 绿色语义 |
+| `tag--neutral` | 灰色语义 |
+| `tag--warning` | 橙色语义 |
+| `tag--danger` | 红色语义 |
+| `tag--interactive` | 可点击标签，启用 hover / focus-visible |
+
+### 推荐组合
+
+| 场景 | 推荐 class 组合 |
+|------|----------------|
+| 默认分类标签 | `tag tag--outline tag--primary` |
+| 成功状态 | `tag tag--solid tag--success` |
+| 草稿/中性 | `tag tag--solid tag--neutral` |
+| 风险提醒 | `tag tag--solid tag--warning` |
+| 错误状态 | `tag tag--solid tag--danger` |
+| 可关闭筛选项 | `tag tag--outline tag--neutral tag--interactive` |
+
+### 交互与禁用规则
+
+- 纯展示标签使用 `span`，不要附加 `tag--interactive`
+- 可点击标签使用 `button`，并附加 `tag--interactive`
+- `tag--interactive` 的 hover 仅用于 `outline` 标签，表现为对应浅底色
+- 必须保留 `focus-visible` 外环，不要手动去掉
+- 若业务必须输出禁用态，HTML Demo 直接内联以下组合：
+
+```html
+<span
+  class="tag tag--outline"
+  style="border-color: var(--brand-gray-300); color: var(--disabled-foreground);"
+>
+  已失效
+</span>
+
+<span
+  class="tag tag--solid"
+  style="background: var(--muted); color: var(--disabled-foreground);"
+>
+  不可用
+</span>
+```
+
+### HTML Demo 输出要求
+
+规则：
+- 使用 `tag` 系列 class，不继续扩散旧 `.badge-*` 命名
+- HTML Demo 中图标同样使用 Lucide
+- 图标节点统一写成 `<i data-lucide="..." class="tag__icon"></i>`
+- 输出可点击标签时，必须使用原生 `button`
+- 状态列标签优先输出 `tag--solid`
+- 分类/来源标签优先输出 `tag--outline`
+
+## 使用场景
+
+| 场景 | 推荐样式 |
+|------|----------|
+| 表格状态列 | `solid` |
+| 详情页属性分类 | `outline` |
+| 筛选条件回显 | `outline + 后置图标` |
+| 已绑定来源 / 渠道 | `outline + 前置图标` |
+| 失败 / 风险提醒 | `solid red` 或 `solid orange` |
+
+## 禁止事项
+
+- 不要把 Tag 当按钮样式的缩小版使用
+- 不要绕过现有 token 直接写扩展色值
+- 不要默认给所有 Tag 加前置或后置图标
+- 不要把关闭图标用于纯状态标签
+- 不要把 Tag 高度改成和表单控件一致的 `32 / 36 / 40px`
+
+## Checklist
+
+生成 Tag 时检查：
+
+- [ ] 高度固定 `22px`
+- [ ] 使用 `rounded-md`（6px），不是旧的 `rounded-sm`
+- [ ] 字号 `12px`，行高 `20px`，字重 `400`
+- [ ] 图标尺寸 `14px`
+- [ ] `solid` 与 `outline` 语义使用正确
+- [ ] 表格状态列优先使用 `solid`
+- [ ] 可关闭标签才允许后置 `X`
+- [ ] 扩展色通过现有 token 引用，不直接输出代码色值
+- 生成完成后执行 `lucide.createIcons()`

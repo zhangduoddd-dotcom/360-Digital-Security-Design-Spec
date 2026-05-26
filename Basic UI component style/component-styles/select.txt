@@ -1,0 +1,1094 @@
+# Select 下拉选择
+
+> 当前定义 **基础 Select** 与 **组合式 Select** 规范。搜索、多选 Select 仍待后续补充。
+
+## 基础能力
+
+这一版先定义基础单选 Select，组件能力轴如下：
+- 状态：`默认 / 悬停 / 激活 / 禁用 / 成功 / 失败`
+- 尺寸：`紧凑 / 常规 / 宽松`
+- 前置图标：`off / on`
+- 后置图标：固定 `on`
+
+**关键结论**：
+- 这一版先落单选基础 Select
+- 后置箭头是基础结构的一部分，不是可选装饰
+- 前置图标是基础变体的一部分，可以规范化
+- 失败态通过“主体 + 辅助文案”形成总高度，不把提示塞进主体内部
+
+## 动效补充
+
+Select 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
+
+- Trigger 的边框、外环、文字色过渡默认使用 `motion-fast`（`150ms`）
+- 后置箭头旋转默认使用 `motion-instant`（`100ms`）到 `motion-fast`（`150ms`），只表达开合，不夸张旋转
+- 下拉面板进出默认使用 `motion-base`（`200ms`）的 `opacity + translateY(4px~8px)`
+- 选项 hover 只做背景和文字反馈，不做横向滑动或逐项排队入场
+- HTML Demo 模板必须把这条动效真正做进 `setSelectDemoOpen` 和 `.select-panel`，不能只保留箭头旋转、把面板直接 `hidden` 硬切
+
+## 基础结构
+
+### React / shadcn 结构
+
+```tsx
+import * as SelectPrimitive from "@radix-ui/react-select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+import { ChevronDownIcon, PrefixIcon } from "@/components/icons"
+
+<Select>
+  <SelectTrigger className="w-[200px]">
+    <span className="inline-flex min-w-0 items-center gap-2">
+      <PrefixIcon className="size-4 shrink-0 text-muted-foreground" />
+      <SelectValue placeholder="请选择" />
+    </span>
+    <SelectPrimitive.Icon asChild>
+      <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground" />
+    </SelectPrimitive.Icon>
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="option-1">选项一</SelectItem>
+    <SelectItem value="option-2">选项二</SelectItem>
+    <SelectItem value="option-3">选项三</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+### 结构规则
+
+- 主体由 `SelectTrigger + SelectValue + Trigger Icon` 组成
+- 后置箭头固定存在，位于最右侧
+- 前置图标可开关，但只占一个标准图标位，不扩展成前置标签/前置按钮
+- placeholder 与选中值共用同一条文本轨道
+- 基础态推荐宽度先按代表值 `200px`
+
+## 尺寸规范
+
+| 尺寸 | 主体高度 | 文字 | 圆角 | 图标 |
+|------|---------|------|------|------|
+| `compact` | 24px | `text-xs leading-5` | `rounded-md` / 6px | 14px |
+| `default` | 32px | `text-sm leading-[22px]` | `rounded-lg` / 8px | 16px |
+| `loose` | 40px | `text-sm leading-[22px]` | `rounded-lg` / 8px | 16px |
+
+```tsx
+<SelectTrigger className="h-6 w-[200px] rounded-md px-3 text-xs" />
+<SelectTrigger className="h-8 w-[200px] rounded-lg px-3 text-sm" />
+<SelectTrigger className="h-10 w-[200px] rounded-lg px-3 text-sm" />
+```
+
+### 尺寸说明
+
+- `compact` 用于高密筛选区或表格工具条
+- `default` 是默认档
+- `loose` 用于更强输入存在感的表单区
+- 常规筛选区默认使用 `default` / 32px；只有空间非常紧的工具条或高密筛选区才降到 `compact` / 24px
+- 失败态总高度不是尺寸轴的一部分，错误提示额外占位
+
+## 宽度规范
+
+基础文档统一使用 `200px` 作为代表宽度，因此先以 `200px` 为标准示例。
+
+| 场景 | 宽度建议 |
+|------|---------|
+| 基础展示 / 文档示例 | `w-[200px]` |
+| 筛选区紧凑场景 | `w-[120px]` ~ `w-[160px]` |
+| 标准表单 | `w-[200px]` ~ `w-[280px]` |
+| 自适应布局 | `w-full` |
+
+**原则**：文档示例先锁定 `200px`，业务宽度再按内容长度扩展。
+
+## 状态规范
+
+### 默认
+
+```tsx
+<SelectTrigger className="w-[200px] border-input">
+  <SelectValue placeholder="请选择" />
+</SelectTrigger>
+```
+
+- 边框：`border-input`
+- 背景：`bg-card`
+- 文字：一级文字 `text-foreground`
+- placeholder：三级文字 `text-tertiary-foreground`
+
+### 悬停
+
+```tsx
+<SelectTrigger className="w-[200px] border-primary">
+  <SelectValue placeholder="请选择" />
+</SelectTrigger>
+```
+
+- 仅强化边框，不额外加外环
+- 图标颜色保持按二级文字使用 `text-muted-foreground`
+
+### 激活
+
+```tsx
+<SelectTrigger className="w-[200px] border-primary ring-2 ring-primary/20">
+  <SelectValue placeholder="请选择" />
+</SelectTrigger>
+```
+
+- 边框：`border-primary`
+- 外环：`ring-2 ring-primary/20`
+- 这是 Select 主体的主聚焦反馈
+
+### 禁用
+
+```tsx
+<Select disabled>
+  <SelectTrigger className="w-[200px] border-input-disabled bg-field-disabled text-disabled-foreground">
+    <SelectValue placeholder="不可选择" />
+  </SelectTrigger>
+</Select>
+```
+
+- 背景：`bg-field-disabled`
+- 描边：`border-input-disabled`
+- 文字：禁用文字 `text-disabled-foreground`
+- 图标：跟随禁用文字色
+- 光标：`cursor-not-allowed`
+
+### 成功
+
+```tsx
+<SelectTrigger className="w-[200px] border-[var(--brand-green-500)]">
+  <SelectValue placeholder="请选择" />
+</SelectTrigger>
+```
+
+- 只改边框色
+- 不额外添加成功图标
+- 不改变背景层
+
+### 失败
+
+```tsx
+<div className="space-y-0.5">
+  <SelectTrigger className="w-[200px] border-destructive focus-visible:ring-destructive/20">
+    <SelectValue placeholder="请选择" />
+  </SelectTrigger>
+  <p className="text-xs leading-5 text-destructive">输入错误原因</p>
+</div>
+```
+
+- 主体边框：`border-destructive`
+- 提示文案：`text-xs leading-5 text-destructive`
+- 主体与提示间距：`2px`
+- 对应总高度：
+  - `compact`：46px
+  - `default`：54px
+  - `loose`：62px
+
+## 图标规范
+
+### 基本原则
+
+- 图标必须来自项目规定图标库
+- 文档里只描述“图标位”与尺寸，不绑定外部网站
+- 前置图标与后置箭头都走同一套图标系统
+
+### 图标位规则
+
+| 位置 | 说明 | 尺寸 | 颜色 |
+|------|------|------|------|
+| 前置图标 | 可选 | `14px / 16px / 16px` 随尺寸变化 | `text-muted-foreground` |
+| 后置箭头 | 必选 | `14px / 16px / 16px` 随尺寸变化 | `text-muted-foreground` |
+
+### 图标开关规则
+
+- 基础 Select 支持 `前置图标=off/on`
+- 基础 Select 里 `后置图标` 固定开启，不提供关闭态
+- 不要在这一版基础规范里扩展清空按钮、搜索图标、勾选反馈等额外功能位
+
+## 下拉面板与选项规范
+
+展开后的面板体系按当前规范收口为以下变体轴：
+- 复选：`off / on`
+- 图标：`off / on`
+- 子项：`off / on`
+- 分组：`off / on`
+- 数量：当前示例固定 `8+`
+
+**关键结论**：
+- 展开面板宽度默认跟随当前 Select Trigger 宽度，先不额外设置最小宽度或最大宽度
+- 当前规范的最大可视高度是 `392px`
+- 单选基础 Select 默认使用 `复选=off`
+- 选项可以带前置图标、可以有子项缩进、可以分组
+- 面板中的复选项不单独发明样式，直接复用本 skill 中的 Checkbox 规范
+
+### React / shadcn 结构
+
+```tsx
+import {
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+} from "@/components/ui/select"
+
+import { Checkbox } from "@/components/ui/checkbox"
+import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
+
+<SelectContent
+  position="popper"
+  sideOffset={8}
+  className="max-h-[392px] rounded-lg border-0 bg-popover p-2 shadow-[var(--popover-shadow)]"
+>
+  <SelectGroup>
+    <SelectLabel className="h-10 px-3 text-sm font-normal leading-[22px] text-tertiary-foreground">
+      分组标题
+    </SelectLabel>
+    <SelectItem value="option-1" className="h-10 rounded-lg px-3 py-[5px] text-sm leading-[22px]">
+      选项一
+    </SelectItem>
+    <SelectItem value="option-2" className="h-10 rounded-lg px-3 py-[5px] text-sm leading-[22px]">
+      <span className="inline-flex w-full items-center gap-2">
+        <ItemLeadingIcon className="size-5 shrink-0 text-muted-foreground" />
+        <span className="min-w-0 flex-1 truncate">带图标子项</span>
+        <ArrowRightIcon className="size-4 shrink-0 text-muted-foreground" />
+      </span>
+    </SelectItem>
+  </SelectGroup>
+</SelectContent>
+```
+
+### 面板容器规则
+
+- 宽度：与当前 Trigger 保持一致，先不额外设置 `min-width` / `max-width`
+- 最大高度：`max-h-[392px]`
+- 与 Trigger 间距：`8px`
+- 超出后纵向滚动
+- 容器内边距：`p-2` / 8px
+- 背景：`bg-popover`
+- 默认不加描边，主要依靠圆角 + 阴影建立浮层层级
+
+**浮层约束补充**：
+
+- 下拉面板在语义上属于 **popover / floating layer**，不是普通文档流块
+- React / shadcn 默认使用 `SelectContent position="popper"`；不要把展开面板塞回会被列表、卡片或表格裁切的普通流布局里
+- HTML Demo 若使用绝对定位面板，必须确保宿主不会被相邻容器遮挡；放在带 `backdrop-filter`、`overflow` 裁切或复杂 stacking context 的卡片里时，要么把面板挂到 portal / 顶层浮层，要么给宿主添加类似 `.select-layer-host` 的展开提层机制
+- HTML Demo 默认不要写死 `240px`、`320px` 之类的展开面板宽度；常规单选 Select 的展开面板应直接使用 `width: 100%` 跟随当前 Trigger
+- 出现“下拉面板被下一张卡片盖住”时，优先检查宿主层级和 stacking context，不要误判为 Select 面板本身高度或阴影问题
+- 圆角：`rounded-lg`
+- 阴影 token：`--popover-shadow`
+- 亮色值：`0 6px 24px rgba(7, 22, 45, 0.08)`
+- 暗色值：`0 6px 24px rgba(0, 0, 0, 0.24)`
+- 面板宽度直接跟随 Trigger，不再单独写固定宽度、最小宽度或最大宽度
+- 面板必须以浮层方式展开，推荐走 `SelectContent` 自带 Portal + `position="popper"`
+- 展开态不参与外层表单容器高度计算，不允许把面板当普通块级节点直接撑开布局
+
+### 尺寸联动规则
+
+下拉面板与 Trigger 属于同一套 Select 体系，文字不能各走各的尺寸档。面板项、分组标题、复选项文本都要跟随 Trigger 同档同步。
+
+| Trigger 尺寸 | 面板最小行高 | 文字 | 前置图标 | 后置图标 / 勾选位 |
+|-------------|-------------|------|---------|-------------------|
+| `compact` | 32px | `text-xs leading-5` | 16px | 14px |
+| `default` | 40px | `text-sm leading-[22px]` | 20px | 16px |
+| `loose` | 40px | `text-sm leading-[22px]` | 20px | 16px |
+
+- `compact` 允许 Trigger 保持 24px，但展开后的面板行高不要再压到 24px，最低保持 32px 的可点击区
+- `default / loose` 面板继续使用 40px 行槽位
+- 如果业务没有明确切换尺寸档，面板默认按 `default` 档处理
+
+### 选项基础规则
+
+以下示例默认按 `default / loose` 档展示；如果 Trigger 是 `compact`，则按上面的尺寸联动表同步降级。
+
+```tsx
+<SelectItem value="option-1" className="h-10 rounded-lg px-3 py-[5px] text-sm leading-[22px]">
+  选项一
+</SelectItem>
+```
+
+- 单行选项高度：40px
+- 文本：`text-sm leading-[22px]`
+- 横向内边距：`px-3`
+- 纵向内边距：`py-[5px]`
+- 行内圆角：`rounded-lg`
+- 当前规范不定义“固定色彩实底高亮选中行”，默认保持基础底色，通过内容结构区分不同变体
+- 如果业务需要 hover / active 反馈，可以加轻量 `bg-accent`，但不要改成强选中底色
+
+### 选项变体
+
+#### 标准单选项
+
+```tsx
+<SelectItem value="option-1" className="h-10 rounded-lg px-3 py-[5px]">
+  选项一
+</SelectItem>
+```
+
+- 左侧不带额外图形
+- 用于最基础的单行选项
+
+#### 带前置图标项
+
+```tsx
+<SelectItem value="option-1" className="h-10 rounded-lg px-3 py-[5px]">
+  <span className="inline-flex w-full items-center gap-2">
+    <ItemLeadingIcon className="size-5 shrink-0 text-muted-foreground" />
+    <span className="min-w-0 flex-1 truncate">漏洞扫描</span>
+  </span>
+</SelectItem>
+```
+
+- 前置图标来自统一图标库
+- 图标容器尺寸：20px
+- 图标颜色默认按二级文字使用 `text-muted-foreground`
+
+#### 带子项箭头项
+
+```tsx
+<SelectItem value="option-1" className="h-10 rounded-lg px-3 py-[5px]">
+  <span className="inline-flex w-full items-center gap-2">
+    <span className="min-w-0 flex-1 truncate">子项内容</span>
+    <ArrowRightIcon className="size-4 shrink-0 text-muted-foreground" />
+  </span>
+</SelectItem>
+```
+
+- 当前规范里的“子项=on”不是左缩进树级，而是右侧带 `ArrowRight` 的子菜单入口
+- 右箭头尺寸：16px
+- 文本必须跟随当前 Select 尺寸档，不单独另起字号
+
+#### 分组
+
+```tsx
+<SelectGroup>
+  <SelectLabel className="h-10 px-3 text-sm font-normal leading-[22px] text-tertiary-foreground">
+    分组标题
+  </SelectLabel>
+  <SelectItem value="option-1">选项一</SelectItem>
+  <SelectItem value="option-2">选项二</SelectItem>
+</SelectGroup>
+```
+
+- 分组标题本身也是一个 40px 高的行槽位
+- 分组标题字号与选项保持同档同步
+- 颜色使用三级文字 `text-tertiary-foreground`
+- 分组下的选项继续沿用统一选项高度
+
+#### 复选项
+
+面板里的复选结构直接引用 [checkbox.txt](checkbox.txt) 中的 Checkbox 规范，Select 文档只补“放进面板里时怎么排”。
+
+```tsx
+<label className="flex h-10 cursor-pointer items-center rounded-lg px-3 py-[5px]">
+  <div className="flex items-center gap-2">
+    <Checkbox id="option-1" checked />
+    <span className="text-sm leading-[22px]">选项一</span>
+  </div>
+</label>
+```
+
+- Checkbox 本体尺寸、对勾尺寸、半选状态统一跟随 Checkbox 主规范
+- Select 面板里只额外约束外层行高、内边距和 hover 背景
+- 复选项文本字号也必须跟随当前 Select 尺寸档，不单独保留 Checkbox 默认字号
+- 如果业务仍是单选，不使用该变体
+
+### 分组标题规范
+
+```tsx
+<SelectLabel className="h-10 px-3 text-sm font-normal leading-[22px] text-tertiary-foreground">
+  分组标题
+</SelectLabel>
+```
+
+- 高度：40px
+- 字号：`text-sm`
+- 字重：`font-normal`
+- 颜色：三级文字 `text-tertiary-foreground`
+- 与选项列表保持同一行槽位体系，不单独做压缩标签条
+
+## HTML Demo 写法
+
+这一节是给 `html-standalone` 模式补足结构和样式约束，后续生成 HTML Demo 时直接复用。
+
+### 推荐结构
+
+```html
+<div class="select-demo select-demo--default">
+  <button type="button" class="select-trigger" aria-haspopup="listbox" aria-expanded="false">
+    <span class="select-trigger__main">
+      <span class="select-trigger__prefix" aria-hidden="true">
+        <!-- 项目图标库对应图形 -->
+      </span>
+      <span class="select-trigger__value select-trigger__value--placeholder">请选择</span>
+    </span>
+    <span class="select-trigger__suffix" aria-hidden="true">
+      <!-- 项目图标库对应箭头 -->
+    </span>
+  </button>
+</div>
+```
+
+### 失败态结构
+
+```html
+<div class="select-demo select-demo--default select-demo--error">
+  <button type="button" class="select-trigger" aria-invalid="true" aria-haspopup="listbox" aria-expanded="false">
+    <span class="select-trigger__main">
+      <span class="select-trigger__value select-trigger__value--placeholder">请选择</span>
+    </span>
+    <span class="select-trigger__suffix" aria-hidden="true"></span>
+  </button>
+  <div class="select-helper">输入错误原因</div>
+</div>
+```
+
+### 推荐样式
+
+```css
+.select-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 200px;
+}
+
+.select-trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--input);
+  background: var(--card);
+  color: var(--foreground);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.select-trigger__main {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+}
+
+.select-trigger__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-trigger__value--placeholder {
+  color: var(--tertiary-foreground);
+}
+
+.select-trigger__prefix,
+.select-trigger__suffix {
+  color: var(--muted-foreground);
+}
+
+.select-demo--compact .select-trigger {
+  height: 24px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.select-demo--default .select-trigger {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.select-demo--loose .select-trigger {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.select-demo.is-hover .select-trigger {
+  border-color: var(--primary);
+}
+
+.select-demo.is-active .select-trigger {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.select-demo.is-disabled .select-trigger {
+  background: var(--muted);
+  border-color: var(--input-disabled);
+  color: var(--disabled-foreground);
+  cursor: not-allowed;
+}
+
+.select-demo.is-success .select-trigger {
+  border-color: var(--brand-green-500);
+}
+
+.select-demo--error .select-trigger,
+.select-demo.is-error .select-trigger {
+  border-color: var(--destructive);
+}
+
+.select-helper {
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--destructive);
+}
+```
+
+### HTML Demo 规则
+
+- 基础 HTML Demo 默认宽度先用 `200px`
+- 前置图标是可选节点，后置箭头是必选节点
+- 失败态必须拆成 `trigger + helper` 两层
+- 不要在基础 HTML Demo 里提前塞搜索框、多选 checkbox、清空按钮
+
+### 展开面板 HTML Demo 结构
+
+```html
+<div class="select-panel-demo">
+  <div class="select-panel">
+    <div class="select-panel__group-label">分组标题</div>
+
+    <button type="button" class="select-panel__item">
+      <span class="select-panel__item-label">选项一</span>
+    </button>
+
+    <button type="button" class="select-panel__item">
+      <span class="select-panel__item-prefix" aria-hidden="true">
+        <!-- 统一图标库中的前置图标 -->
+      </span>
+      <span class="select-panel__item-label">带图标选项</span>
+    </button>
+
+    <button type="button" class="select-panel__item">
+      <span class="select-panel__item-label">子项内容</span>
+      <span class="select-panel__item-suffix" aria-hidden="true">
+        <!-- 统一图标库中的右箭头 -->
+      </span>
+    </button>
+
+    <label class="select-panel__item select-panel__item--checkbox">
+      <span class="select-panel__item-checkbox">
+        <!-- 直接复用 Checkbox 规范中的方框与对勾表现 -->
+      </span>
+      <span class="select-panel__item-label">复选项</span>
+    </label>
+  </div>
+</div>
+```
+
+### 展开面板 HTML Demo 样式
+
+```css
+.select-panel-demo {
+  width: 100%;
+}
+
+.select-panel {
+  --select-panel-item-min-height: 40px;
+  --select-panel-font-size: 14px;
+  --select-panel-line-height: 22px;
+  --select-panel-group-padding-block: 9px;
+  --select-panel-item-padding-block: 5px;
+  --select-panel-prefix-size: 20px;
+  --select-panel-trailing-size: 16px;
+  display: flex;
+  gap: 2px;
+  max-height: 392px;
+  flex-direction: column;
+  overflow-y: auto;
+  border-radius: 8px;
+  background: var(--popover);
+  padding: 8px;
+  box-shadow: var(--popover-shadow);
+}
+
+.select-panel--compact {
+  --select-panel-item-min-height: 32px;
+  --select-panel-font-size: 12px;
+  --select-panel-line-height: 20px;
+  --select-panel-group-padding-block: 6px;
+  --select-panel-item-padding-block: 6px;
+  --select-panel-prefix-size: 16px;
+  --select-panel-trailing-size: 14px;
+}
+
+.select-panel__group-label {
+  display: flex;
+  min-height: var(--select-panel-item-min-height);
+  align-items: center;
+  border-radius: 8px;
+  padding: var(--select-panel-group-padding-block) 12px;
+  font-size: var(--select-panel-font-size);
+  line-height: var(--select-panel-line-height);
+  color: var(--tertiary-foreground);
+}
+
+.select-panel__item {
+  display: inline-flex;
+  min-height: var(--select-panel-item-min-height);
+  width: 100%;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: var(--select-panel-item-padding-block) 12px;
+  background: var(--popover);
+  color: var(--popover-foreground);
+  text-align: left;
+  box-sizing: border-box;
+  font-size: var(--select-panel-font-size);
+  line-height: var(--select-panel-line-height);
+}
+
+.select-panel__item:hover {
+  background: var(--accent);
+}
+
+.select-panel__item-prefix,
+.select-panel__item-suffix,
+.select-panel__item-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.select-panel__item-prefix {
+  width: var(--select-panel-prefix-size);
+  height: var(--select-panel-prefix-size);
+  color: var(--muted-foreground);
+}
+
+.select-panel__item-suffix,
+.select-panel__item-checkbox {
+  width: var(--select-panel-trailing-size);
+  height: var(--select-panel-trailing-size);
+  color: var(--muted-foreground);
+}
+
+.select-panel__item-label {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-panel .checkbox-label {
+  font-size: var(--select-panel-font-size);
+  line-height: var(--select-panel-line-height);
+}
+```
+
+### 展开面板 HTML Demo 规则
+
+- 面板宽度默认与当前 Select Trigger 保持一致，不额外设置最小宽度或最大宽度
+- 面板最大高度使用 `392px`
+- 容器使用 `8px` 内边距 + `2px` 行间距，不额外加边框
+- 前置图形来自统一图标库，尺寸按 `20px` 图标位处理
+- 子项通过右侧 `ArrowRight` 识别，不通过左缩进伪装树级
+- 复选项直接复用 Checkbox 主规范中的方框、对勾、半选表现
+- 分组标题、普通项、带图标项、子项分别用独立类表达，不混成一个超大条件类
+- 当前基线不定义“固定色彩实底选中行”，默认保持基础底色列表
+
+## 组合式 Select 规范
+
+### 组合式基准
+
+组合式规范不是自由拼装，而是固定在以下设计轴里：
+- 状态：`默认 / 悬停 / 激活 / 禁用 / 失败`
+- 尺寸：`紧凑 / 常规 / 宽松`
+- 内容：固定 `文字`
+- 前置标签：`on / off`
+- 前置图标：固定 `off`
+- 后置图标：固定 `on`
+- 后置标签：`on / off`
+
+**关键结论**：
+- 组合式 Select 的核心是“标签段 + Select 主体 + 可选标签段”的分段结构
+- 这一版组合式没有 `success`
+- 这一版组合式没有前置图标变体，前置段是标签段，不是图标段
+- 后置箭头仍属于 Select 主体内部，不属于后置标签段
+
+### 组合类型
+
+当前规范收口 3 种基础组合：
+
+| 类型 | 描述 | 常规宽度 | 紧凑宽度 | 宽松宽度 |
+|------|------|---------|---------|---------|
+| `prefix-select` | 前置标签 + Select | 296px | 296px | 320px |
+| `prefix-select-suffix` | 前置标签 + Select + 后置标签 | 368px | 364px | 400px |
+| `select-suffix` | Select + 后置标签 | 272px | 272px | 288px |
+
+### React / shadcn 结构
+
+```tsx
+import * as SelectPrimitive from "@radix-ui/react-select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+import { ChevronDownIcon } from "@/components/icons"
+
+<div className="flex w-[368px]">
+  <button
+    type="button"
+    className="inline-flex h-8 items-center rounded-l-lg border border-r-0 border-input bg-surface-subtle px-3 text-sm text-muted-foreground"
+  >
+    前置标签
+  </button>
+
+  <Select>
+    <SelectTrigger className="h-8 rounded-none border-input px-3">
+      <SelectValue placeholder="请选择" />
+      <SelectPrimitive.Icon asChild>
+        <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground" />
+      </SelectPrimitive.Icon>
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="option-1">选项一</SelectItem>
+      <SelectItem value="option-2">选项二</SelectItem>
+    </SelectContent>
+  </Select>
+
+  <span className="inline-flex h-8 items-center rounded-r-lg border border-l-0 border-input bg-surface-subtle px-3 text-sm text-muted-foreground">
+    后置标签
+  </span>
+</div>
+```
+
+### 结构规则
+
+- 前置标签段和后置标签段都是独立分段，默认背景固定 `bg-surface-subtle`
+- 标签段文字与 Input 前后缀保持一致，默认按二级文字使用 `text-muted-foreground`
+- Select 主体保持 `bg-card`
+- 三段之间通过共享边框拼接，不留缝隙
+- `prefix-select`：前置标签段开启，后置标签段关闭
+- `prefix-select-suffix`：前后标签段都开启
+- `select-suffix`：前置标签段关闭，仅保留后置标签段
+- 这一版不补“前置图标段”“按钮段”“清空段”
+
+### 组合式尺寸规范
+
+| 尺寸 | 主体高度 | 文字 | 圆角 | 箭头图标 |
+|------|---------|------|------|---------|
+| `compact` | 24px | `text-xs leading-5` | 6px | 14px |
+| `default` | 32px | `text-sm leading-[22px]` | 8px | 16px |
+| `loose` | 40px | `text-sm leading-[22px]` | 8px | 16px |
+
+**规则**：
+- 标签段字号与 Select 主体字号必须同档同步
+- 主体与标签段高度完全一致
+- 组合宽度按当前规范的代表值落地，不自行压缩
+
+### 组合式状态规范
+
+#### 默认
+
+```tsx
+<div className="flex w-[296px]">
+  <span className="inline-flex h-8 items-center rounded-l-lg border border-r-0 border-input bg-surface-subtle px-3 text-sm text-muted-foreground">
+    前置标签
+  </span>
+  <SelectTrigger className="h-8 rounded-l-none border-input">
+    <SelectValue placeholder="请选择" />
+  </SelectTrigger>
+</div>
+```
+
+- 标签段边框跟主体同步为 `border-input`
+- 标签段默认背景固定 `bg-surface-subtle`
+- 主体背景固定 `bg-card`
+
+#### 悬停
+
+```tsx
+<div className="flex w-[296px]">
+  <span className="inline-flex h-8 items-center rounded-l-lg border border-r-0 border-input bg-surface-subtle px-3 text-sm text-muted-foreground">
+    前置标签
+  </span>
+  <SelectTrigger className="h-8 rounded-l-none border-primary">
+    <SelectValue placeholder="请选择" />
+  </SelectTrigger>
+</div>
+```
+
+- 悬停时只强化 Select 主体 trigger
+- 标签段保持默认分段边框，不单独参与 hover 反馈
+
+#### 激活
+
+```tsx
+<div className="flex w-[368px]">
+  <span className="inline-flex h-8 items-center rounded-l-lg border border-r-0 border-input bg-surface-subtle px-3 text-sm text-muted-foreground">
+    前置标签
+  </span>
+  <SelectTrigger className="h-8 rounded-none border-primary ring-2 ring-primary/20">
+    <SelectValue placeholder="请选择" />
+  </SelectTrigger>
+  <span className="inline-flex h-8 items-center rounded-r-lg border border-l-0 border-input bg-surface-subtle px-3 text-sm text-muted-foreground">
+    后置标签
+  </span>
+</div>
+```
+
+- 激活时只强化 Select 主体 trigger 的边框和 ring
+- 标签段保持默认分段边框，聚焦外环仅挂在主体 trigger 上
+
+#### 禁用
+
+```tsx
+<div className="flex w-[272px]">
+  <SelectTrigger className="h-8 rounded-r-none border-input-disabled bg-field-disabled text-disabled-foreground" disabled>
+    <SelectValue placeholder="不可选择" />
+  </SelectTrigger>
+  <span className="inline-flex h-8 items-center rounded-r-lg border border-l-0 border-input-disabled bg-field-disabled px-3 text-sm text-disabled-foreground">
+    后置标签
+  </span>
+</div>
+```
+
+- 标签段和主体一起进入禁用色，描边统一使用 `border-input-disabled`
+- 背景统一使用 `bg-field-disabled`
+- 文本和箭头统一降到禁用文字 `text-disabled-foreground`
+
+#### 失败
+
+```tsx
+<div className="space-y-0.5">
+  <div className="flex w-[368px]">
+    <span className="inline-flex h-8 items-center rounded-l-lg border border-r-0 border-destructive bg-surface-subtle px-3 text-sm text-muted-foreground">
+      前置标签
+    </span>
+    <SelectTrigger className="h-8 rounded-none border-destructive focus-visible:ring-destructive/20">
+      <SelectValue placeholder="请选择" />
+    </SelectTrigger>
+    <span className="inline-flex h-8 items-center rounded-r-lg border border-l-0 border-destructive bg-surface-subtle px-3 text-sm text-muted-foreground">
+      后置标签
+    </span>
+  </div>
+  <p className="text-xs leading-5 text-destructive">输入错误原因</p>
+</div>
+```
+
+- 失败时整组边框统一切到 `border-destructive`
+- 错误提示仍然是主体下方单独一行
+- 对应总高度：
+  - `compact`：46px
+  - `default`：54px
+  - `loose`：62px
+
+### 组合式 HTML Demo 写法
+
+#### 推荐结构
+
+```html
+<div class="select-combo select-combo--default select-combo--prefix-suffix">
+  <span class="select-combo__addon select-combo__addon--prefix">前置标签</span>
+
+  <button type="button" class="select-combo__trigger" aria-haspopup="listbox" aria-expanded="false">
+    <span class="select-combo__value select-combo__value--placeholder">请选择</span>
+    <span class="select-combo__suffix" aria-hidden="true">
+      <!-- 项目图标库对应箭头 -->
+    </span>
+  </button>
+
+  <span class="select-combo__addon select-combo__addon--suffix">后置标签</span>
+</div>
+```
+
+#### 失败态结构
+
+```html
+<div class="select-combo-demo select-combo-demo--default select-combo-demo--error">
+  <div class="select-combo select-combo--default select-combo--prefix-only">
+    <span class="select-combo__addon select-combo__addon--prefix">前置标签</span>
+    <button type="button" class="select-combo__trigger" aria-invalid="true" aria-haspopup="listbox" aria-expanded="false">
+      <span class="select-combo__value select-combo__value--placeholder">请选择</span>
+      <span class="select-combo__suffix" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="select-helper">输入错误原因</div>
+</div>
+```
+
+#### 推荐样式
+
+```css
+.select-combo-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.select-combo {
+  display: inline-flex;
+  align-items: stretch;
+  width: 368px;
+}
+
+.select-combo__addon,
+.select-combo__trigger {
+  box-sizing: border-box;
+  border: 1px solid var(--input);
+}
+
+.select-combo__addon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  background: var(--surface-subtle);
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.select-combo__trigger {
+  display: inline-flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--card);
+  color: var(--foreground);
+}
+
+.select-combo__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-combo__value--placeholder {
+  color: var(--tertiary-foreground);
+}
+
+.select-combo__suffix {
+  color: var(--muted-foreground);
+}
+
+.select-combo--compact .select-combo__addon,
+.select-combo--compact .select-combo__trigger {
+  height: 24px;
+  padding: 0 12px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.select-combo--default .select-combo__addon,
+.select-combo--default .select-combo__trigger {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.select-combo--loose .select-combo__addon,
+.select-combo--loose .select-combo__trigger {
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.select-combo__addon--prefix {
+  border-right: 0;
+  border-radius: 8px 0 0 8px;
+}
+
+.select-combo__addon--suffix {
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.select-combo--prefix-only .select-combo__trigger {
+  border-radius: 0 8px 8px 0;
+}
+
+.select-combo--prefix-suffix .select-combo__trigger {
+  border-radius: 0;
+}
+
+.select-combo--suffix-only .select-combo__trigger {
+  border-radius: 8px 0 0 8px;
+}
+
+.select-combo-demo.is-hover .select-combo__trigger {
+  border-color: var(--primary);
+}
+
+.select-combo-demo.is-active .select-combo__trigger {
+  border-color: var(--primary);
+}
+
+.select-combo-demo.is-active .select-combo__trigger {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.select-combo-demo.is-disabled .select-combo__addon,
+.select-combo-demo.is-disabled .select-combo__trigger {
+  background: var(--muted);
+  border-color: var(--input-disabled);
+  color: var(--disabled-foreground);
+}
+
+.select-combo-demo--error .select-combo__addon,
+.select-combo-demo--error .select-combo__trigger,
+.select-combo-demo.is-error .select-combo__addon,
+.select-combo-demo.is-error .select-combo__trigger {
+  border-color: var(--destructive);
+}
+```
+
+### 组合式 HTML Demo 规则
+
+- 组合宽度优先使用当前规范代表值：`296 / 368 / 272 / 320 / 400 / 288 / 364`
+- 标签段与主体必须是分段结构，不能把标签文字塞进主体 placeholder 轨道
+- 标签段默认使用 `bg-surface-subtle`，禁用态切到 `bg-field-disabled`
+- 激活时 ring 只挂在主体 trigger 上
+- preview 至少补 1 组“组合 trigger + 展开面板”的联动示意，不只展示静态拼接态
+- 失败态仍然使用外层 demo 容器 + `select-helper`
+
+## 暂不纳入本轮规范的内容
+
+以下能力等你给出后续规范后再补：
+- 可搜索 Select / Combobox
+- 多选 Select
+- 带按钮段、搜索段、清空段的扩展组合式 Select
+- 空状态、批量选择、级联交互逻辑
+
+## Checklist
+
+生成 Select 时检查：
+
+- [ ] 基础单选与组合式 Select 分开描述，不混写
+- [ ] 基础示例宽度先按代表值 `200px`
+- [ ] 状态轴覆盖 `默认 / 悬停 / 激活 / 禁用 / 成功 / 失败`
+- [ ] 尺寸轴覆盖 `24 / 32 / 40px`
+- [ ] 前置图标可开关，后置箭头固定开启
+- [ ] 失败态必须拆成主体和辅助文案两层
+- [ ] 展开面板宽度跟随 Trigger，且仅约束 `max-h-[392px]`
+- [ ] 展开面板文字、分组标题、复选项文本与 Trigger 同档同步
+- [ ] 展开面板必须以浮层方式呈现，不能撑开外层容器高度
+- [ ] 选项体系覆盖普通项、选中项、带图标项、子项、分组标题
+- [ ] 面板内所有图形统一来自规范中的图标库
+- [ ] 组合式只覆盖 `前置标签 + Select`、`前置标签 + Select + 后置标签`、`Select + 后置标签`
+- [ ] 组合式状态轴只覆盖 `默认 / 悬停 / 激活 / 禁用 / 失败`
+- [ ] preview 至少展示 1 组组合式展开联动，体现 Select 区别于 Input 的交互内容
+- [ ] HTML Demo 结构和样式写法可直接落到独立页面中

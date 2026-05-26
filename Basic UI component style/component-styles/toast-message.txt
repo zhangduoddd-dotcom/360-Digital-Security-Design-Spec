@@ -1,0 +1,352 @@
+# Toast / Message 消息提示
+
+> 轻量级操作反馈，自动消失，不打断用户流程
+
+## 动效补充
+
+Toast 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
+
+- 默认进场使用 `motion-base` 到 `motion-slow`（`200ms ~ 300ms`）的 `opacity + translateY(8px)`
+- 默认离场快于或不慢于进场，建议 `150ms ~ 200ms`
+- 多条 Toast 允许轻微堆叠过渡，但不做夸张逐条排队动画
+- Toast 的目标是解释“刚刚发生了什么”，不是制造存在感；不要加入弹跳、摇晃或长时间悬浮强调
+
+## 基础用法
+
+使用 shadcn Sonner 组件（基于 sonner 库）：
+
+```tsx
+// 1. 在 layout 中添加 Toaster
+import { Toaster } from "@/components/ui/sonner"
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  )
+}
+
+// 2. 在组件中调用 toast
+import { toast } from "sonner"
+
+// 触发 toast
+toast("操作成功")
+```
+
+## 语义类型
+
+### 普通消息
+
+```tsx
+toast("文件已保存")
+```
+
+### 成功消息
+
+```tsx
+toast.success("创建成功")
+```
+
+### 错误消息
+
+```tsx
+toast.error("操作失败，请重试")
+```
+
+### 警告消息
+
+```tsx
+toast.warning("该操作不可撤销")
+```
+
+### 信息消息
+
+```tsx
+toast.info("新版本已发布")
+```
+
+### 加载状态
+
+```tsx
+// 显示加载中
+const toastId = toast.loading("正在处理...")
+
+// 完成后更新
+toast.success("处理完成", { id: toastId })
+
+// 或者失败
+toast.error("处理失败", { id: toastId })
+```
+
+### Promise 模式
+
+```tsx
+toast.promise(saveData(), {
+  loading: "正在保存...",
+  success: "保存成功",
+  error: "保存失败",
+})
+```
+
+## 配置选项
+
+### 自定义持续时间
+
+```tsx
+toast("消息内容", {
+  duration: 5000, // 5 秒后消失，默认 4000ms
+})
+
+// 不自动消失
+toast("需要手动关闭", {
+  duration: Infinity,
+})
+```
+
+### 带描述
+
+```tsx
+toast("操作成功", {
+  description: "文件已保存到云端",
+})
+```
+
+### 带操作按钮
+
+```tsx
+toast("文件已删除", {
+  action: {
+    label: "撤销",
+    onClick: () => restoreFile(),
+  },
+})
+```
+
+### 带关闭按钮
+
+```tsx
+toast("消息内容", {
+  closeButton: true,
+})
+```
+
+### 自定义图标
+
+```tsx
+import { Rocket } from "lucide-react"
+
+toast("新功能上线", {
+  icon: <Rocket className="size-4" />,
+})
+```
+
+## Toaster 配置
+
+```tsx
+// 在 layout 中配置 Toaster
+<Toaster
+  position="top-right"        // 位置
+  richColors                  // 启用语义颜色
+  expand={false}              // 是否展开多条消息
+  closeButton                 // 全局显示关闭按钮
+  duration={4000}             // 默认持续时间
+/>
+```
+
+### 位置选项
+
+| 位置 | 值 | 适用场景 |
+|------|-----|---------|
+| 右上角 | `top-right` | **默认推荐**，不遮挡主内容 |
+| 左上角 | `top-left` | 侧边栏在右侧时 |
+| 顶部居中 | `top-center` | 需要强调时 |
+| 右下角 | `bottom-right` | 不重要的通知 |
+| 左下角 | `bottom-left` | 聊天应用风格 |
+| 底部居中 | `bottom-center` | 移动端风格 |
+
+**推荐配置**：
+
+```tsx
+<Toaster 
+  position="top-right" 
+  richColors 
+  closeButton
+/>
+```
+
+## 尺寸与间距
+
+| 元素 | 规范 |
+|------|------|
+| Toast 宽度 | 356px (默认) |
+| 内边距 | 16px |
+| 圆角 | 8px |
+| 图标尺寸 | 20px |
+| 多条 Toast 间距 | 8px |
+
+## 语义颜色
+
+启用 `richColors` 后的颜色对应：
+
+| 类型 | 背景色 | 图标色 |
+|------|--------|--------|
+| success | 绿色系 | 绿色 |
+| error | 红色系 | 红色 |
+| warning | 橙色系 | 橙色 |
+| info | 信息语义 | 信息语义色 |
+| default | 卡片色 | 无 |
+
+## 自定义样式
+
+```tsx
+// 通过 Toaster 的 toastOptions 配置
+<Toaster
+  toastOptions={{
+    classNames: {
+      toast: 'bg-card border-border',
+      title: 'text-foreground',
+      description: 'text-muted-foreground',
+      actionButton: 'bg-primary text-primary-foreground',
+      cancelButton: 'bg-muted text-muted-foreground',
+    },
+  }}
+/>
+```
+
+- `title` 使用一级文字 `text-foreground`
+- `description` 使用二级文字 `text-muted-foreground`
+- 操作按钮文字属于状态语义，不纳入一级 / 二级 / 三级 / 禁用文字四档
+
+## 使用规范
+
+### 何时使用 Toast
+
+- ✅ 操作成功/失败的即时反馈
+- ✅ 后台任务完成通知
+- ✅ 非阻塞性提示
+- ✅ 可撤销操作的确认
+
+### 何时不使用 Toast
+
+- ❌ 需要用户确认的重要操作 → 使用 Dialog
+- ❌ 需要持久展示的信息 → 使用 Alert
+- ❌ 表单验证错误 → 使用 Form 内联错误
+- ❌ 复杂内容展示 → 使用 Dialog 或页面
+
+### 文案规范
+
+| 场景 | 推荐文案 | 避免文案 |
+|------|---------|---------|
+| 创建成功 | "创建成功" | "您的操作已成功完成" |
+| 保存成功 | "已保存" | "保存操作成功" |
+| 删除成功 | "已删除" | "删除成功，数据已移除" |
+| 复制成功 | "已复制到剪贴板" | "复制成功" |
+| 网络错误 | "网络异常，请重试" | "错误" |
+| 权限不足 | "无权限执行此操作" | "操作失败" |
+
+**原则**：
+- 简洁明了，一句话说清
+- 避免技术术语
+- 错误信息要告知用户下一步
+
+### 持续时间规范
+
+| 类型 | 推荐时长 | 说明 |
+|------|---------|------|
+| 成功 | 2-3 秒 | 简单确认即可 |
+| 错误 | 4-5 秒 | 需要时间阅读 |
+| 警告 | 4-5 秒 | 需要引起注意 |
+| 带操作按钮 | 6-8 秒或 Infinity | 留时间点击 |
+
+## 完整示例
+
+```tsx
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+
+export function ToastDemo() {
+  const handleSave = async () => {
+    toast.promise(
+      saveData(),
+      {
+        loading: "正在保存...",
+        success: "保存成功",
+        error: (err) => `保存失败: ${err.message}`,
+      }
+    )
+  }
+
+  const handleDelete = () => {
+    toast("已删除", {
+      description: "该项目已移至回收站",
+      action: {
+        label: "撤销",
+        onClick: () => {
+          // 撤销逻辑
+          toast.success("已撤销")
+        },
+      },
+    })
+  }
+
+  return (
+    <div className="flex gap-2">
+      <Button onClick={handleSave}>保存</Button>
+      <Button variant="outline" onClick={handleDelete}>删除</Button>
+    </div>
+  )
+}
+```
+
+## HTML Demo 落地建议
+
+### 触发结构
+
+```html
+<div class="toast-actions">
+  <button class="btn btn-md btn-primary" type="button" data-toast-message="保存成功" data-toast-type="success">成功提示</button>
+  <button class="btn btn-md btn-secondary" type="button" data-toast-message="任务已进入后台处理" data-toast-type="default">普通消息</button>
+</div>
+
+<div class="toast-viewport" data-toast-viewport aria-live="polite" aria-atomic="false"></div>
+```
+
+### Toast 实例结构
+
+```html
+<div class="toast toast--success" role="status">
+  <div class="toast__content">
+    <strong class="toast__title">保存成功</strong>
+    <p class="toast__description">文件已保存到云端</p>
+  </div>
+  <button class="toast__close" type="button" aria-label="关闭消息">×</button>
+</div>
+```
+
+### HTML Demo 规则
+
+- 触发按钮通过 `data-toast-message` 声明消息文案。
+- Toast 容器固定使用 `.toast-viewport`，推荐右下角显示。
+- 每条消息使用 `.toast`，语义类型通过 `.toast--success / .toast--error / .toast--warning / .toast--default` 表达。
+- 关闭按钮使用 `.toast__close`，点击后移除当前消息。
+- 默认 2-3 秒自动消失；错误、警告或带操作按钮时可以延长。
+- HTML Demo 可以用原生 JS 创建 `.toast` 节点，但结构必须与上方实例一致。
+
+## Checklist
+
+生成 Toast 时检查：
+
+- [ ] layout 中已添加 `<Toaster />`
+- [ ] 使用语义化方法（toast.success/error/warning）
+- [ ] 启用 `richColors` 获得语义颜色
+- [ ] 位置使用 `top-right`（默认推荐）
+- [ ] 文案简洁，一句话说清
+- [ ] 错误消息告知下一步
+- [ ] 可撤销操作带 action 按钮
+- [ ] 异步操作使用 toast.promise

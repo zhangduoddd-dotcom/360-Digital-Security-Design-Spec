@@ -1,0 +1,424 @@
+# Alert 警告提示
+
+> 当前规范直接收口到 Alert 组件本身，不再做脱离组件边界的泛化抽象。
+
+## 组件结论
+
+当前规范覆盖一组完整的 Alert 组件实例，变体轴如下：
+
+| 维度 | 可选值 | 说明 |
+|------|--------|------|
+| `类型` | `通知` / `警告` / `失败` / `成功` | 4 条语义色 |
+| `说明` | `off` / `on` | `off` 为单行提示，`on` 为标题 + 说明文案 |
+| `关闭` | `on` | 当前默认示例全部为可关闭 |
+| `关闭类型` | `图标` | 当前默认关闭方式全部为右侧关闭图标 |
+| `可展开` | `off` / `on` | 仅出现在 `说明=on` 的结构上 |
+| `展开` | `off` / `on` | `可展开=on` 时，控制正文折叠 / 展开 |
+
+**重要判断**：
+
+- 这套 Alert 不是通用卡片，也不是带边框的消息条
+- 语义差异主要通过 **背景色 + 左侧语义图标** 表达
+- 标题、正文、关闭按钮、展开文案并不会跟随语义色一起变色
+- 当前规范不包含“按钮动作型 Alert”，也不包含“无关闭”默认示例，不要自行扩展成默认规范
+
+## 组件分层
+
+### 1. 单行提示
+
+对应：`说明=off, 可展开=off`
+
+结构：
+
+`语义图标 + 单行正文 + 关闭图标`
+
+### 2. 带说明提示
+
+对应：`说明=on, 可展开=off`
+
+结构：
+
+`主标题行（语义图标 + 标题 + 关闭） + 说明正文`
+
+### 3. 可展开提示
+
+对应：`说明=on, 可展开=on`
+
+结构：
+
+`主标题行 + 说明正文 + 展开/收起操作文案`
+
+## 动效补充
+
+Alert 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
+
+- Alert 默认不做整块进场表演，重点是信息稳定可读
+- 展开 / 收起正文时，默认只对说明区做轻量过渡，不带整块位移
+- 推荐使用 `motion-base`（`200ms`）的 `max-height + opacity`
+- 展开使用 `ease-out`，收起使用 `ease-in`
+- “展开更多 / 收起”文本按钮只保留颜色反馈，不加胶囊 hover 背景或额外下划线动画
+
+## 尺寸与间距
+
+### 固定参数
+
+这些值在当前规范中保持一致：
+
+| 元素 | 规格 |
+|------|------|
+| 圆角 | `8px` |
+| 容器内边距 | `8px 12px` |
+| 主轴间距 | `8px` |
+| 语义图标尺寸 | `20px` |
+| 关闭按钮命中区 | `22 × 22px` |
+| 关闭图标视觉尺寸 | `16px` |
+| 主体文字字号 | `14px` |
+| 主体文字行高 | `22px` |
+
+补充说明：
+
+- 这里的 `22px` 指关闭按钮的点击命中区，不是右侧 `X` 图标本身的视觉尺寸
+
+### 结构高度
+
+| 状态 | 高度 | 说明 |
+|------|------------|------|
+| 单行提示 | `38px` | `22px` 行高 + `8px` 上下内边距 |
+| 带说明提示 | `90px` | 标题行 + 正文行 + 行间距 |
+| 可展开收起态 | `98px` | 带一行正文截断 + “展开更多” |
+| 可展开展开态 | `208px` | 多行正文 + “收起” |
+
+### 缩进规则
+
+带说明与可展开结构中，正文和展开文案都统一左缩进 `28px`：
+
+`20px 图标宽度 + 8px 图标与文字间距 = 28px`
+
+因此：
+
+- 不要让正文与左图标重新对齐
+- 不要让“展开更多 / 收起”回到容器最左侧
+
+## 文本样式
+
+### 单行提示正文
+
+| 属性 | 值 |
+|------|----|
+| 字体 | `PingFang SC Regular` |
+| 字号 | `14px` |
+| 行高 | `22px` |
+| 字重 | `400` |
+| 颜色 | `文字色/一级文字` `#1D2531` |
+
+### 标题
+
+| 属性 | 值 |
+|------|----|
+| 字体 | `PingFang SC Semibold` |
+| 字号 | `14px` |
+| 行高 | `22px` |
+| 字重 | `600` |
+| 颜色 | `文字色/一级文字` `#1D2531` |
+
+### 说明正文
+
+| 属性 | 值 |
+|------|----|
+| 字体 | `PingFang SC Regular` |
+| 字号 | `14px` |
+| 行高 | `22px` |
+| 字重 | `400` |
+| 颜色 | `文字色/二级文字` `#657083` |
+
+### 展开 / 收起文案
+
+| 属性 | 值 |
+|------|----|
+| 字体 | `PingFang SC Regular` |
+| 字号 | `14px` |
+| 行高 | `22px` |
+| 字重 | `400` |
+| 颜色 | `品牌色/默认` `#006BFF` |
+
+**关键约束**：
+
+- 语义色不用于正文文字
+- 单行提示不是彩色文案，仍然使用一级文字
+- 只有左侧语义图标和背景跟随语义变化
+- 展开/收起链接统一使用主色文本，不随通知/警告/失败/成功改变
+
+## 颜色规范
+
+### 实际使用方式
+
+当前 Alert 的语义表达由两部分组成：
+
+1. 左侧语义图标使用对应语义主色
+2. 整个容器使用对应语义浅底背景
+
+容器本身：
+
+- **无边框**
+- **无描边**
+- **无阴影**
+
+### 类型映射
+
+| 类型 | 图标色 Token | 色值 | 背景 Token | 色值 |
+|------|--------------|------|------------|------|
+| 通知 | `语义色板/提醒/默认` | `#3491FA` | `语义色板/提醒/背景` | `#E8F7FF` |
+| 警告 | `语义色板/警告/默认` | `#FF9A2E` | `语义色板/警告/背景` | `#FFF7E8` |
+| 失败 | `语义色板/错误/默认` | `#F53F3F` | `语义色板/错误/背景` | `#FFECE8` |
+| 成功 | `语义色板/成功/默认` | `#00B42A` | `语义色板/成功/背景` | `#E8FFEA` |
+
+### 非语义色
+
+| 元素 | Token | 色值 |
+|------|-------|------|
+| 一级正文 / 标题 | `文字色/一级文字` | `#1D2531` |
+| 二级说明文字 | `文字色/二级文字` | `#657083` |
+| 关闭图标 | `文字色/三级文字` | `#9EA7B8` |
+| 展开 / 收起 | `品牌色/默认` | `#006BFF` |
+
+## 图标规范
+
+### 左侧语义图标
+
+| 类型 | 语义 |
+|------|------|
+| 通知 | 信息提示 |
+| 警告 | 风险提醒 |
+| 失败 | 错误失败 |
+| 成功 | 成功完成 |
+
+规则：
+
+- 图标来源统一走 Lucide Icons，推荐使用同一套语义图标
+- 图标尺寸固定 `20px`
+- 图标容器高度与正文行高保持 `22px` 对齐
+- 图标只出现在左侧，不参与展开交互
+
+推荐映射：
+
+| 类型 | 推荐图标形态 |
+|------|--------------|
+| 通知 | `Info` |
+| 成功 | `CircleCheck` / `Check` |
+| 警告 | `TriangleAlert` |
+| 失败 | `CircleX` / `OctagonX` |
+
+### 关闭图标
+
+规则：
+
+- 来源仍然走 Lucide Icons，但使用 `X`
+- 当前组件集中统一为右侧 `Close`
+- 命中区 `22px`（button 点击区域）
+- 图标视觉尺寸 `16px`
+- 颜色使用三级文字 `#9EA7B8`
+- 关闭图标与正文不共色，不使用语义主色
+
+## 可展开规则
+
+### 收起态
+
+对应节点：`24283:6217`
+
+特征：
+
+- 仍然保留标题与关闭图标
+- 正文只显示 `1` 行
+- 正文使用 `ellipsis` 截断
+- 下方单独一行显示 `展开更多`
+
+### 展开态
+
+对应节点：`24283:6321`
+
+特征：
+
+- 正文恢复多行自然换行
+- 下方操作文案变为 `收起`
+- 组件高度随内容增长，不再固定
+
+### 工程约束
+
+- “展开更多 / 收起”是文本按钮，不是实体按钮
+- 文案与正文之间仍然保持单独一行，不与正文拼在末尾
+- 如果内容不足一行，不要显示展开能力
+- 展开能力默认只在 `说明=on` 时启用
+- 可展开 Alert 不是带说明 Alert 的默认款；只有正文预计会超过收起态可见行数、确实需要折叠时才启用
+- HTML Demo / 前端实现应自动检测正文是否溢出；未溢出时即使结构里带了 `data-alert-toggle`，也应隐藏“展开更多”
+
+## React 工程规范
+
+这套 Alert 不建议直接使用 shadcn 默认 `Alert` 视觉输出后小修小补，更适合封装一层业务组件，例如 `InlineAlert` / `BannerAlert`。
+
+### 推荐 Props
+
+```tsx
+type AlertTone = "notice" | "warning" | "error" | "success"
+
+type AppAlertProps = {
+  tone: AlertTone
+  title?: string
+  description?: string | string[]
+  closable?: boolean
+  expandable?: boolean
+  expanded?: boolean
+}
+```
+
+### 结构规则
+
+- `description` 为空时，走单行提示结构
+- `description` 存在时，走标题 + 正文结构
+- `expandable=true` 时，仅对正文区做单行截断 / 多行展开切换
+- 关闭按钮固定右上，不与展开文案复用同一交互位
+
+### React 示例
+
+```tsx
+<div className="flex items-start gap-2 rounded-lg px-3 py-2 [background:var(--brand-orange-50)]">
+  <AttentionFilledIcon className="mt-px size-5 shrink-0 text-[var(--brand-orange-400)]" />
+  <p className="min-w-0 flex-1 text-sm leading-[22px] text-foreground">
+    这是一个警告提示
+  </p>
+  <button
+    type="button"
+    className="inline-flex size-[22px] shrink-0 items-center justify-center text-tertiary-foreground"
+    aria-label="关闭提示"
+  >
+    <CloseIcon className="size-4" />
+  </button>
+</div>
+```
+
+```tsx
+<div className="flex flex-col gap-2 rounded-lg px-3 py-2 [background:var(--brand-orange-50)]">
+  <div className="flex items-center gap-2">
+    <AttentionFilledIcon className="size-5 shrink-0 text-[var(--brand-orange-400)]" />
+    <p className="min-w-0 flex-1 text-sm leading-[22px] font-semibold text-foreground">
+      这是一个警告提示
+    </p>
+    <button type="button" className="inline-flex size-[22px] items-center justify-center text-tertiary-foreground" aria-label="关闭提示">
+      <CloseIcon className="size-4" />
+    </button>
+  </div>
+  <div className="pl-7 text-sm leading-[22px] text-muted-foreground">
+    1、申请开票后，电子发票在1～3个工作日内开具；
+  </div>
+  <button type="button" className="pl-7 text-left text-sm leading-[22px] text-primary">
+    展开更多
+  </button>
+</div>
+```
+
+**注意**：
+
+- 当前规范没有描边，React 里不要默认补 `border`
+- 不要把标题、正文、关闭按钮都染成状态语义色
+- 不要给展开文案做 `ghost button` 外观
+
+## HTML Demo 规范
+
+### 基础结构
+
+```html
+<div class="alert alert--warning" role="status" data-alert-demo>
+  <span class="alert__icon-wrap" aria-hidden="true">
+    <span class="alert__icon"><!-- icon library: Attention filled --></span>
+  </span>
+  <p class="alert__text">这是一个警告提示</p>
+  <button type="button" class="alert__close" aria-label="关闭提示" data-alert-close><!-- svg --></button>
+</div>
+```
+
+### 带说明结构
+
+```html
+<div class="alert alert--warning alert--with-description" role="status" data-alert-demo>
+  <div class="alert__header">
+    <span class="alert__icon-wrap" aria-hidden="true">
+      <span class="alert__icon"><!-- icon library: Attention filled --></span>
+    </span>
+    <p class="alert__title">这是一个警告提示</p>
+    <button type="button" class="alert__close" aria-label="关闭提示" data-alert-close><!-- svg --></button>
+  </div>
+  <div class="alert__description-wrap">
+    <p class="alert__description">
+      1、申请开票后，电子发票在1～3个工作日内开具；
+    </p>
+  </div>
+</div>
+```
+
+### 可展开结构
+
+```html
+<div class="alert alert--warning alert--with-description" role="status" data-alert-demo>
+  <div class="alert__header">
+    <span class="alert__icon-wrap" aria-hidden="true">
+      <span class="alert__icon"><!-- icon library: Attention filled --></span>
+    </span>
+    <p class="alert__title">这是一个警告提示</p>
+    <button type="button" class="alert__close" aria-label="关闭提示" data-alert-close><!-- svg --></button>
+  </div>
+  <div class="alert__description-wrap">
+    <p class="alert__description alert__description--clamp" data-alert-description id="alert-description-demo">
+      1. 小程序云服务器有奖内测中，即刻成为产品体验官；2. 报名通过后可优先体验算力扩容、实例诊断与成本优化等新能力；3. 体验期间请保持联系人电话畅通，便于产品团队回访收集反馈。
+    </p>
+  </div>
+  <div class="alert__toggle-row">
+    <button type="button" class="alert__toggle" data-alert-toggle data-expand-label="展开更多" data-collapse-label="收起" aria-expanded="false" aria-controls="alert-description-demo">展开更多</button>
+  </div>
+</div>
+```
+
+### 交互事件
+
+- 关闭按钮使用 `data-alert-close`，点击后关闭当前 `data-alert-demo`
+- 可展开正文使用 `data-alert-description`
+- 展开按钮使用 `data-alert-toggle`，通过 `aria-expanded` 管理展开态
+- 按钮文案默认在 `展开更多 / 收起` 间切换，也可通过 `data-expand-label / data-collapse-label` 覆盖
+
+### 类名职责
+
+| 类名 | 作用 |
+|------|------|
+| `alert` | 容器基础骨架 |
+| `alert--notice / --warning / --error / --success` | 语义背景与图标色 |
+| `alert--with-description` | 标题 + 正文结构 |
+| `alert__header` | 标题行 |
+| `alert__icon-wrap` | 左图标对齐容器 |
+| `alert__icon` | 20px 语义图标 |
+| `alert__text` | 单行正文 |
+| `alert__title` | 标题 |
+| `alert__description-wrap` | 28px 缩进容器 |
+| `alert__description` | 说明正文 |
+| `alert__description--clamp` | 单行截断正文 |
+| `alert__toggle-row` | 展开文案行 |
+| `alert__toggle` | 展开 / 收起文本按钮 |
+| `alert__close` | 右侧关闭按钮 |
+
+## 不要这样做
+
+- 不要给 Alert 补边框、阴影、卡片描边
+- 不要把这套组件做成“标题 + 主按钮 + 次按钮”的操作面板
+- 不要把关闭按钮染成语义色
+- 不要让说明正文与左侧图标重新对齐
+- 不要把“展开更多”做成胶囊按钮、文字按钮 hover 背景或下划线链接默认样式
+- 不要把所有类型统一写成 `destructive / success / warning` 文本颜色版
+
+## Checklist
+
+- [ ] 变体轴覆盖：`类型 / 说明 / 关闭 / 关闭类型 / 可展开 / 展开`
+- [ ] Alert 使用浅底，不使用边框
+- [ ] 语义色只作用于左图标和背景
+- [ ] 单行提示正文使用一级文字 `14/22/400`
+- [ ] 标题使用 `14/22/600`
+- [ ] 说明正文使用二级文字 `14/22/400`
+- [ ] 关闭按钮使用三级文字，命中区 `22px`，图标视觉 `16px`
+- [ ] 展开 / 收起文案使用主色文本，不跟随语义色变化
+- [ ] 带说明结构的正文和展开行都左缩进 `28px`

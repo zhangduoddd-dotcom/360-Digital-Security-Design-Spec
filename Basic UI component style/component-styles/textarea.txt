@@ -1,0 +1,243 @@
+# Textarea 文本域
+
+> 包含：基础多行输入、带字数统计文本域、带底角手柄文本域、错误辅助文案、滚动内容快照
+
+## 组件能力范围
+
+当前 Textarea 规范覆盖以下能力轴：
+
+- `状态`：`默认 / 悬停 / 激活 / 禁用 / 失败`
+- `尺寸`：`紧凑 / 常规`
+- `字数统计`：`off / on`
+- `底角手柄`：`off / on`
+- `内容溢出`：作为滚动快照表现，不作为公开变体轴
+
+**关键约束**：
+
+- Textarea 是独立组件，不再并入 `Input` 文档维护，但颜色、文字、描边、动效全部沿用同一套语义 token
+- 这一版不扩展 `success`、前置图标、前后置标签、富文本、自动增高等能力
+- `showCount` 与 `showResizeHandle` 只描述底部信息区能力，不应该演变成独立皮肤
+- 溢出滚动只是内容状态，不应为了静态还原手写一套脱离系统的装饰性滚动条
+
+## 动效补充
+
+Textarea 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
+
+- 默认只过渡 `border-color / box-shadow / background-color / color`
+- hover 与 focus ring 过渡默认使用 `motion-fast`（`150ms`）
+- 底部统计信息与错误辅助行显隐默认使用 `motion-base`（`200ms`）的 `opacity`
+- 文本域本体不做位移、缩放、抖动
+
+## 基础结构
+
+### React / shadcn 结构
+
+```tsx
+import { Textarea } from "@/components/ui/textarea"
+
+<Textarea
+  rows={4}
+  className="w-full rounded-lg border-input px-3 py-[5px] text-sm leading-[22px]"
+  placeholder="请输入..."
+/>
+```
+
+当出现 `count / resizeHandle / errorMessage` 时，推荐封装为业务层 `AppTextarea` / `FieldTextarea`，不要在页面里重复拼装底部信息区。
+
+```tsx
+type AppTextareaProps = {
+  size?: "compact" | "default"
+  status?: "default" | "hover" | "active" | "disabled" | "error"
+  showCount?: boolean
+  showResizeHandle?: boolean
+  errorMessage?: string
+  maxLength?: number
+}
+```
+
+### HTML Demo 结构
+
+HTML Demo 推荐按下面结构使用：
+
+```html
+<div class="textarea-group">
+  <div class="textarea-shell textarea-shell--default">
+    <textarea class="textarea-field" rows="4" placeholder="请输入..."></textarea>
+  </div>
+</div>
+
+<div class="textarea-group">
+  <div class="textarea-shell textarea-shell--default textarea-shell--with-resize">
+    <textarea class="textarea-field" rows="4" placeholder="请输入..."></textarea>
+    <div class="textarea-footer">
+      <span class="textarea-count">0 / 100</span>
+    </div>
+    <button class="textarea-resize" type="button" aria-label="调整文本域高度"></button>
+  </div>
+</div>
+
+<div class="textarea-group">
+  <div class="textarea-shell textarea-shell--default textarea-shell--error">
+    <textarea class="textarea-field" rows="4" placeholder="请输入..."></textarea>
+    <div class="textarea-footer">
+      <span class="textarea-count">0 / 100</span>
+    </div>
+  </div>
+  <div class="textarea-helper">
+    <span class="textarea-helper__icon" aria-hidden="true">
+      <!-- inline svg -->
+    </span>
+    <span>输入错误原因</span>
+  </div>
+</div>
+```
+
+## 尺寸决策原则
+
+Textarea 的宽高不写死，应该由业务场景、表单密度、输入任务长度共同决定。
+
+| 维度 | 决策方式 |
+|------|----------|
+| 宽度 | 跟随布局容器、字段权重、表单分栏决定，可用 `w-full`、固定列宽或栅格宽度 |
+| 高度 | 按预期输入长度决定，优先用 `rows`、`min-height`、`max-height` 控制，而不是在规范里强绑单一像素值 |
+| 最小可用高度 | 需要保证至少能稳定容纳 3 到 4 行输入与底部信息区 |
+| 扩展方式 | 内容较长时优先增加可用高度；空间受限时允许保留滚动 |
+
+**约束**：
+
+- 规范只定义文字、描边、状态、底部信息区的节奏，不强绑统一宽高
+- 如果产品有明确场景高度，可以在业务层封装默认值，但不要反向写成全局唯一规范
+- 文档示例可以出现示意尺寸，但必须明确它只是示例，不是唯一标准
+
+## 尺寸规范
+
+| 尺寸 | 垂直内边距 | 文本 | placeholder | 适用场景 |
+|------|------------|------|-------------|----------|
+| `compact` | `4px` | `12 / 20` | `12 / 20` | 高密表单、表格侧边编辑 |
+| `default` | `5px` | `14 / 22` | `14 / 22` | 标准表单（默认） |
+
+```tsx
+<Textarea rows={3} className="w-full rounded-lg px-3 py-1 text-xs leading-5" placeholder="紧凑" />
+<Textarea rows={4} className="w-full rounded-lg px-3 py-[5px] text-sm leading-[22px]" placeholder="常规" />
+```
+
+**尺寸约束**：
+
+- 这版 Textarea 不补 `loose`
+- 两档都保持 `rounded-lg / 8px`，不要为了贴近单行 Input 的 `compact` 去改成额外圆角 token
+- 字数统计默认统一使用 `text-xs leading-5`
+- 高度建议通过 `rows`、`min-h-*` 或业务容器约束决定，不写死为统一数值
+
+## 状态样式
+
+| 状态 | 边框 | 背景 | 文字 | 说明 |
+|------|------|------|------|------|
+| `default` | `border-input` | `bg-background` | `text-foreground` / `placeholder:text-tertiary-foreground` | 默认静态态 |
+| `hover` | `border-primary` | `bg-background` | 同默认 | 仅强化描边 |
+| `active` | `border-primary` + `ring-2 ring-primary/20` | `bg-background` | 同默认 | 由 focus / focus-visible 驱动 |
+| `disabled` | `border-input-disabled` | `bg-field-disabled` | `text-disabled-foreground placeholder:text-disabled-foreground` | 不可编辑 |
+| `error` | `border-destructive` | `bg-background` | 正文保持正文层级，错误信息单独显示 | 两层结构 |
+
+### React 基础类名
+
+```tsx
+className="w-full rounded-lg border border-input bg-background px-3 text-foreground placeholder:text-tertiary-foreground shadow-sm transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 disabled:cursor-not-allowed disabled:border-input-disabled disabled:bg-field-disabled disabled:text-disabled-foreground disabled:placeholder:text-disabled-foreground"
+```
+
+### 错误状态
+
+错误态不是只改一个红边框，而是 `主体 + 错误辅助行` 的组合结构。辅助行与主体间距 `2px`，行内图标与文字间距 `4px`。
+
+```tsx
+<div className="space-y-0.5">
+  <Textarea rows={4} className="w-full border-destructive focus-visible:ring-0" />
+  <div className="flex items-center gap-1 text-xs leading-5 text-destructive">
+    <ErrorIcon className="size-4 shrink-0" />
+    <span>输入错误原因</span>
+  </div>
+</div>
+```
+
+## 底部信息区
+
+底部信息区是 Textarea 的内部分区，不是额外浮在外面的 caption。它默认承载计数；出现底角手柄时，手柄贴在主体右下角内侧，不参与 footer 排版。
+
+| 元素 | 推荐类名 / 结构 | 说明 |
+|------|------------------|------|
+| 计数 | `text-xs leading-5 text-tertiary-foreground` / `.textarea-count` | 默认弱化显示 |
+| 底角手柄 | `text-muted-foreground` / `.textarea-resize` | 贴右下角的 resize affordance，不参与 footer 流式布局 |
+| 壳层定位 | `.textarea-shell { position: relative; }` | 为手柄提供右下角定位上下文 |
+
+**规则**：
+
+- `showCount` 与 `showResizeHandle` 可以同时存在
+- `showResizeHandle` 开启时，手柄通过绝对定位贴在主体右下角内侧，不放进 footer 行内
+- 不要为了给手柄让位给 `.textarea-footer` 额外加 `padding-right`
+- 禁用态下，计数与底角手柄一并降级到 `text-disabled-foreground`
+- 错误态下，计数仍保持弱化层级，错误信息单独在辅助行表达
+- 不要把底角手柄误做成“清空按钮”或“发送按钮”
+
+## 滚动与溢出
+
+- 内容超过当前业务设定高度后，正文区域允许出现纵向滚动
+- React 工程默认优先交给浏览器系统滚动条，不要求手写品牌化滚动条皮肤
+- HTML Demo 可以用窄条滚动快照表达溢出状态，但只允许复用现有灰阶 token，例如 `brand-gray-300`
+- 是否出现滚动条由内容决定，不要作为公开 props 写成 `scrollbar=true`
+
+## React 工程落地
+
+```tsx
+import { Textarea } from "@/components/ui/textarea"
+
+<div className="space-y-0.5">
+  <div className="relative rounded-lg border border-input bg-background px-3 py-[5px] transition-colors hover:border-primary focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20">
+    <Textarea
+      rows={4}
+      className="w-full resize-none border-0 bg-transparent p-0 text-sm leading-[22px] shadow-none focus-visible:ring-0"
+      placeholder="请输入..."
+    />
+    <div className="mt-1 flex items-end justify-end text-xs leading-5 text-tertiary-foreground">
+      <span>0 / 100</span>
+    </div>
+    <button
+      type="button"
+      className="absolute bottom-0.5 right-0.5 inline-flex h-3.5 w-3.5 items-end justify-end text-muted-foreground"
+      aria-label="调整文本域高度"
+    />
+  </div>
+</div>
+```
+
+**工程约束**：
+
+- 基础场景可直接使用 shadcn `Textarea`
+- 涉及 `count / helper / resizeHandle` 时，优先封装业务层 `AppTextarea`
+- 自绘 `resizeHandle` 默认贴主体右下角内侧，不通过 footer padding 做避让
+- 默认不要把浏览器原生 `resize` 手柄与自绘底角手柄同时露出；若项目需要原生拖拽，优先 `resize-y`，并重新确认底部信息区布局
+
+## HTML Demo 类名映射
+
+| 组件能力 | HTML Demo 类名 | 说明 |
+|------|----------------|------|
+| 外层分组 | `.textarea-group` | 控制宽度与辅助行间距 |
+| 主体壳层 | `.textarea-shell` | 承载边框、背景、状态 |
+| 尺寸 | `.textarea-shell--compact / --default` | 两档尺寸 |
+| 静态 hover 快照 | `.textarea-shell--hover` | 仅用于文档展示 |
+| 静态 active 快照 | `.textarea-shell--active` | 主色描边 + ring |
+| 禁用态 | `.textarea-shell--disabled` | 背景、文字、计数一起降级 |
+| 错误态 | `.textarea-shell--error` + `.textarea-helper` | 主体与辅助行分离 |
+| 带手柄壳层 | `.textarea-shell--with-resize` | 允许右下角手柄独立贴角 |
+| 正文 | `.textarea-field` | 原生 `<textarea>` 节点 |
+| 底部信息区 | `.textarea-footer` | 默认用于计数，不承载贴角手柄 |
+| 计数 | `.textarea-count` | 右下角弱化信息 |
+| 底角手柄 | `.textarea-resize` | 绝对定位在主体右下角内侧 |
+
+## 不要这样做
+
+- 不要沿用 `Input` 的 24 / 32 / 40 高度三档去拼一个“超高 input”
+- 不要为 Textarea 单独创造 `textarea-border`、`textarea-placeholder` 一类平行 token
+- 不要把错误文案塞进正文区域最后一行
+- 不要在 HTML Demo 或 React 示例里直接复用 preview 私有样式
+- 不要把滚动条快照做成强品牌装饰条
+- 不要把设计稿里的单一展示尺寸误写成全局固定宽高
+- 不要把底角手柄塞进 footer 流式排版里，再用额外 padding 给它让位

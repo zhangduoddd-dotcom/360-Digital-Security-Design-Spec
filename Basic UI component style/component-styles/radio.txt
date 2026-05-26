@@ -1,0 +1,468 @@
+# Radio 单选按钮
+
+> 用于在一组互斥选项中选择一个，默认一次只允许选中一项
+
+## 组件变体
+
+| 属性 | 可选值 | 说明 |
+|------|--------|------|
+| 尺寸 | 常规、紧凑 | 常规用于表单，紧凑用于表格/密集场景 |
+| 状态 | 未选中、悬停、选中、聚焦 | 聚焦态用于键盘可访问性 |
+| 禁用 | on / off | 禁用时不可交互 |
+| 文本 | on / off | 是否显示标签文本 |
+| 布局 | 垂直、水平 | 默认垂直，水平仅用于选项较少的场景 |
+
+---
+
+## 尺寸规范
+
+### 常规尺寸（默认）
+
+| 元素 | 尺寸 | Tailwind |
+|------|------|----------|
+| 组件高度 | 32px | `h-8` |
+| Radio 圆形主体 | 16px × 16px | `size-4` |
+| 默认/悬浮描边 | 1px | `border` |
+| 选中描边 | 4px | `border-4` |
+| 文字大小 | 14px | `text-sm` |
+| 文字字重 | 400 | `font-normal` |
+| 文字行高 | 22px | `leading-[22px]` |
+| Radio 与文本间距 | 8px | `gap-2` |
+
+```tsx
+// 常规尺寸 - 带文本
+<div className="flex h-8 items-center gap-2">
+  <RadioGroupItem id="option-a" value="option-a" className="size-4" />
+  <Label htmlFor="option-a" className="text-sm leading-[22px]">选项文本</Label>
+</div>
+
+// 常规尺寸 - 纯 Radio
+<RadioGroupItem value="option-a" className="size-4" aria-label="选项 A" />
+```
+
+### 紧凑尺寸
+
+| 元素 | 尺寸 | Tailwind |
+|------|------|----------|
+| 组件高度 | 24px | `h-6` |
+| Radio 圆形主体 | 16px × 16px | `size-4` |
+| 默认/悬浮描边 | 1px | `border` |
+| 选中描边 | 4px | `border-4` |
+| 文字大小 | 12px | `text-xs` |
+| 文字字重 | 400 | `font-normal` |
+| 文字行高 | 20px | `leading-5` |
+| Radio 与文本间距 | 8px | `gap-2` |
+
+```tsx
+// 紧凑尺寸 - 带文本
+<div className="flex h-6 items-center gap-2">
+  <RadioGroupItem id="option-b" value="option-b" className="size-4" />
+  <Label htmlFor="option-b" className="text-xs leading-5">选项文本</Label>
+</div>
+
+// 紧凑尺寸 - 纯 Radio
+<RadioGroupItem value="option-b" className="size-4" aria-label="选项 B" />
+```
+
+---
+
+## 颜色规范
+
+| 状态 | 元素 | 颜色值 | CSS 变量 |
+|------|------|--------|----------|
+| 默认 | 内部填充 | `var(--gray-1)` | `gray-1` |
+| 默认 | 内部描边 | 1px `var(--gray-5)` | `gray-5` |
+| 默认 | 文字 | `var(--gray-9)` | `gray-9` |
+| 悬停 | 内部填充 | `var(--gray-1)` | `gray-1` |
+| 悬停 | 内部描边 | 1px `var(--primary)` | `primary` |
+| 悬停 | 文字 | `var(--gray-9)` | `gray-9` |
+| 选中 | 内部填充 | `var(--gray-1)` | `gray-1` |
+| 选中 | 内部描边 | 4px `var(--primary)` | `primary` |
+| 选中 | 文字 | `var(--gray-9)` | `gray-9` |
+| 聚焦 | 外围描边 | `var(--focus-default)` | `focus-default` |
+| 未选失效 | 内部填充 | `var(--gray-2)` | `gray-2` |
+| 未选失效 | 内部描边 | 1px `var(--gray-5)` | `gray-5` |
+| 未选失效 | 文字 | `var(--gray-7)` | `gray-7` |
+| 已选失效 | 内部填充 | `var(--gray-2)` | `gray-2` |
+| 已选失效 | 内部描边 | 4px `var(--gray-5)` | `gray-5` |
+| 已选失效 | 文字 | `var(--gray-7)` | `gray-7` |
+
+### 状态样式实现
+
+```tsx
+// shadcn RadioGroupItem 默认已支持以下基础能力：
+// - 未选中：圆形边框
+// - 选中：互斥选择
+// - 禁用：disabled:cursor-not-allowed
+//
+// 本设计系统要求补充的视觉规则：
+// - 基础圆形主体固定 16px × 16px
+// - 默认内部填充 gray-1，1px 描边使用 gray-5
+// - hover 时内部描边保持 1px，颜色使用 primary
+// - 选中态通过 4px primary 描边表达，不再额外显示中心选中标记
+// - focus-visible 时保留主题 focus token，不要移除键盘焦点态
+// - 未选失效使用 gray-2 填充、1px gray-5 描边、gray-7 文案
+// - 已选失效使用 gray-2 填充、4px gray-5 描边、gray-7 文案
+
+<RadioGroupItem
+  className="
+    size-4 border border-[var(--gray-5)] bg-[var(--gray-1)]
+    hover:border-[var(--primary)]
+    data-[state=checked]:border-4 data-[state=checked]:border-[var(--primary)] data-[state=checked]:bg-[var(--gray-1)]
+    disabled:border-[var(--gray-5)] disabled:bg-[var(--gray-2)]
+    disabled:data-[state=checked]:border-4 disabled:data-[state=checked]:border-[var(--gray-5)]
+    focus-visible:ring-[var(--focus-default)]
+    [&_[data-slot=radio-group-indicator]]:hidden
+  "
+/>
+```
+
+---
+
+## 布局方式
+
+### 垂直布局（默认）
+
+```tsx
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
+<RadioGroup defaultValue="option1" className="space-y-3">
+  <div className="flex h-8 items-center gap-2">
+    <RadioGroupItem value="option1" id="option1" />
+    <Label htmlFor="option1" className="text-sm leading-[22px]">选项一</Label>
+  </div>
+  <div className="flex h-8 items-center gap-2">
+    <RadioGroupItem value="option2" id="option2" />
+    <Label htmlFor="option2" className="text-sm leading-[22px]">选项二</Label>
+  </div>
+  <div className="flex h-8 items-center gap-2">
+    <RadioGroupItem value="option3" id="option3" />
+    <Label htmlFor="option3" className="text-sm leading-[22px]">选项三</Label>
+  </div>
+</RadioGroup>
+```
+
+### 水平布局
+
+```tsx
+<RadioGroup defaultValue="option1" className="flex items-center gap-6">
+  <div className="flex h-8 items-center gap-2">
+    <RadioGroupItem value="option1" id="option1" />
+    <Label htmlFor="option1" className="text-sm leading-[22px]">选项一</Label>
+  </div>
+  <div className="flex h-8 items-center gap-2">
+    <RadioGroupItem value="option2" id="option2" />
+    <Label htmlFor="option2" className="text-sm leading-[22px]">选项二</Label>
+  </div>
+</RadioGroup>
+```
+
+**布局规则**：
+- 默认使用垂直布局，选项间距 `space-y-3`（12px）
+- 水平布局仅用于 2-3 个短标签选项，组内间距 `gap-6`（24px）
+- 当文案超过两行或带描述时，回到垂直布局
+
+---
+
+## 状态详解
+
+### 未选中状态
+
+```tsx
+<div className="flex h-8 items-center gap-2">
+  <RadioGroupItem
+    id="unchecked"
+    value="unchecked"
+    className="size-4 border border-[var(--gray-5)] bg-[var(--gray-1)] hover:border-[var(--primary)]"
+  />
+  <Label htmlFor="unchecked" className="text-sm font-normal leading-[22px] text-[var(--gray-9)]">未选中选项</Label>
+</div>
+```
+
+### 选中状态
+
+```tsx
+<RadioGroup defaultValue="checked">
+  <div className="flex h-8 items-center gap-2">
+    <RadioGroupItem
+      id="checked"
+      value="checked"
+      className="size-4 border-4 border-[var(--primary)] bg-[var(--gray-1)] [&_[data-slot=radio-group-indicator]]:hidden"
+    />
+    <Label htmlFor="checked" className="text-sm font-normal leading-[22px] text-[var(--gray-9)]">已选中选项</Label>
+  </div>
+</RadioGroup>
+```
+
+### 禁用状态
+
+```tsx
+// 禁用 - 未选中
+<div className="flex h-8 items-center gap-2">
+  <RadioGroupItem
+    id="disabled"
+    value="disabled"
+    disabled
+    className="size-4 border border-[var(--gray-5)] bg-[var(--gray-2)]"
+  />
+  <Label htmlFor="disabled" className="text-sm font-normal leading-[22px] text-[var(--gray-7)]">禁用选项</Label>
+</div>
+
+// 禁用 - 已选中
+<RadioGroup defaultValue="disabled-checked">
+  <div className="flex h-8 items-center gap-2">
+    <RadioGroupItem
+      id="disabled-checked"
+      value="disabled-checked"
+      disabled
+      className="size-4 border-4 border-[var(--gray-5)] bg-[var(--gray-2)] [&_[data-slot=radio-group-indicator]]:hidden"
+    />
+    <Label htmlFor="disabled-checked" className="text-sm font-normal leading-[22px] text-[var(--gray-7)]">禁用已选</Label>
+  </div>
+</RadioGroup>
+```
+
+**禁用规则**：
+- 禁用未选中：内部填充 `gray-2`，1px 内部描边使用 `gray-5`
+- 禁用已选中：内部填充 `gray-2`，4px 内部描边使用 `gray-5`
+- 禁用文案统一使用 `gray-7`
+- 不建议对整组额外套 `opacity-50`，避免选中态与未选中态一起变糊
+
+### 错误状态
+
+```tsx
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+
+<FormField
+  control={form.control}
+  name="plan"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>选择套餐</FormLabel>
+      <FormControl>
+        <RadioGroup
+          onValueChange={field.onChange}
+          defaultValue={field.value}
+          className="space-y-3"
+        >
+          {options.map((opt) => (
+            <div key={opt.value} className="flex h-8 items-center gap-2">
+              <RadioGroupItem value={opt.value} id={opt.value} />
+              <Label htmlFor={opt.value}>{opt.label}</Label>
+            </div>
+          ))}
+        </RadioGroup>
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+```
+
+**错误规则**：
+- 校验错误优先通过 `FormMessage` 暴露，而不是单独在每个选项旁堆提示
+- 若业务需要强调整组错误，可在 `FormItem` 或分组容器上增加 `text-destructive`
+
+---
+
+## 使用场景
+
+### 1. 带描述的单选
+
+```tsx
+<RadioGroup defaultValue="basic" className="space-y-4">
+  <div className="flex items-start gap-3">
+    <RadioGroupItem value="basic" id="basic" className="mt-1" />
+    <div className="space-y-1">
+      <Label htmlFor="basic" className="text-sm font-medium">基础版</Label>
+      <p className="text-sm text-muted-foreground">适合个人用户，功能有限</p>
+    </div>
+  </div>
+  <div className="flex items-start gap-3">
+    <RadioGroupItem value="pro" id="pro" className="mt-1" />
+    <div className="space-y-1">
+      <Label htmlFor="pro" className="text-sm font-medium">专业版</Label>
+      <p className="text-sm text-muted-foreground">适合企业用户，功能完整</p>
+    </div>
+  </div>
+</RadioGroup>
+```
+
+**规范说明**：
+- Radio 加 `mt-1` 与文字顶部对齐
+- 主标签使用一级文字 `text-sm font-medium`
+- 描述使用二级文字 `text-sm text-muted-foreground`
+- 选项间距提升到 `space-y-4`（16px）
+
+### 2. 卡片式单选
+
+```tsx
+<RadioGroup defaultValue="card1" className="grid grid-cols-3 gap-4">
+  {options.map((opt) => (
+    <Label
+      key={opt.value}
+      htmlFor={opt.value}
+      className="flex cursor-pointer flex-col items-center justify-center rounded-lg border border-input bg-card p-4 hover:border-primary hover:bg-accent [&:has([data-state=checked])]:border-primary [&:has([data-state=checked])]:bg-accent"
+    >
+      <RadioGroupItem value={opt.value} id={opt.value} className="sr-only" />
+      <opt.icon className="mb-2 size-6" />
+      <span className="text-sm font-medium">{opt.label}</span>
+    </Label>
+  ))}
+</RadioGroup>
+```
+
+**规范说明**：
+- 真实选中控件可隐藏为 `sr-only`，点击热区由整张卡片承担
+- 默认边框使用 `border-input`
+- 选中态至少同步边框和背景：`border-primary` + `bg-accent`
+- 卡片间距使用 `gap-4`（16px）
+
+### 3. 列表式卡片单选
+
+```tsx
+<RadioGroup defaultValue="plan1" className="space-y-3">
+  {plans.map((plan) => (
+    <Label
+      key={plan.value}
+      htmlFor={plan.value}
+      className="flex cursor-pointer items-center justify-between rounded-lg border border-input bg-card p-4 hover:border-primary hover:bg-accent [&:has([data-state=checked])]:border-primary [&:has([data-state=checked])]:bg-accent"
+    >
+      <div className="flex items-center gap-3">
+        <RadioGroupItem value={plan.value} id={plan.value} />
+        <div>
+          <div className="text-sm font-medium">{plan.name}</div>
+          <div className="text-sm text-muted-foreground">{plan.description}</div>
+        </div>
+      </div>
+      <div className="text-lg font-semibold">{plan.price}</div>
+    </Label>
+  ))}
+</RadioGroup>
+```
+
+### 4. 分段控制器样式
+
+```tsx
+<RadioGroup
+  defaultValue="day"
+  className="inline-flex h-9 items-center rounded-lg bg-muted p-1 text-muted-foreground"
+>
+  {["day", "week", "month"].map((period) => (
+    <Label
+      key={period}
+      htmlFor={period}
+      className="inline-flex cursor-pointer items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all [&:has([data-state=checked])]:bg-background [&:has([data-state=checked])]:text-foreground [&:has([data-state=checked])]:shadow-sm"
+    >
+      <RadioGroupItem value={period} id={period} className="sr-only" />
+      {period === "day" ? "日" : period === "week" ? "周" : "月"}
+    </Label>
+  ))}
+</RadioGroup>
+```
+
+---
+
+## 键盘交互
+
+| 按键 | 行为 |
+|------|------|
+| `Tab` | 移动焦点到 RadioGroup |
+| `Space` | 选中当前聚焦的选项 |
+| `↑` `←` | 移动到上一个选项并选中 |
+| `↓` `→` | 移动到下一个选项并选中 |
+
+---
+
+## 使用建议
+
+| 场景 | 推荐 | 不推荐 |
+|------|------|--------|
+| 2-5 个互斥选项 | Radio | Select |
+| 超过 5 个选项 | Select | Radio（太占空间） |
+| 需要多选 | Checkbox | Radio |
+| 二选一开关 | Switch | Radio |
+
+---
+
+## HTML Demo 落地建议
+
+### 基础结构
+
+```html
+<fieldset class="radio-group" data-radio-group>
+  <label class="radio-wrapper size-default">
+    <input class="radio-input" type="radio" name="radio-demo" checked>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">自动处置</span>
+  </label>
+
+  <label class="radio-wrapper size-default">
+    <input class="radio-input" type="radio" name="radio-demo">
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">人工确认</span>
+  </label>
+
+  <label class="radio-wrapper size-default disabled">
+    <input class="radio-input" type="radio" name="radio-disabled" disabled>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">未选失效</span>
+  </label>
+
+  <label class="radio-wrapper size-default disabled">
+    <input class="radio-input" type="radio" name="radio-disabled" checked disabled>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">已选失效</span>
+  </label>
+</fieldset>
+```
+
+### 样式类约定
+
+| 类名 | 作用 |
+|------|------|
+| `radio-group` | Radio 组容器 |
+| `radio-wrapper` | 单个选项容器，负责 8px 间距和文字样式 |
+| `radio-input` | 原生 input，视觉隐藏但保留表单语义 |
+| `radio-control` | 16px 圆形主体 |
+| `radio-label` | 标签文字 |
+| `size-default` | 常规尺寸，整体高度 32px |
+| `disabled` | 失效态，需加在 wrapper 上 |
+
+### HTML Demo 规则
+
+- 可用选中态通过 `radio-input:checked + .radio-control` 表达，使用 4px `primary` 描边。
+- 已选失效通过 `radio-input:checked:disabled + .radio-control` 表达，使用 4px `gray-5` 描边。
+- 未选失效使用 `gray-2` 填充、1px `gray-5` 描边。
+- 文字默认使用 `gray-9`，失效文字使用 `gray-7`。
+- HTML Demo 不使用浏览器原生 radio 外观，避免系统默认蓝色影响主题。
+
+---
+
+## Checklist
+
+生成单选按钮时检查：
+
+- [ ] 使用 shadcn `RadioGroup` + `RadioGroupItem` 组件
+- [ ] Radio 圆形主体尺寸 16px（`size-4`）
+- [ ] 默认和悬浮态描边 1px，选中态描边 4px
+- [ ] 默认、悬浮、选中态内部填充使用 `gray-1`
+- [ ] 默认描边使用 `gray-5`，悬浮和选中描边使用 `primary`
+- [ ] 未选失效使用 `gray-2` 填充、1px `gray-5` 描边、`gray-7` 文案
+- [ ] 已选失效使用 `gray-2` 填充、4px `gray-5` 描边、`gray-7` 文案
+- [ ] Radio 与文本间距 8px（`gap-2`）
+- [ ] 文案使用 14px、常规字重、`gray-9`，失效文案使用 `gray-7`
+- [ ] 默认使用垂直布局，选项间距 12px（`space-y-3`）
+- [ ] 水平布局仅用于少量短标签，组内间距 24px（`gap-6`）
+- [ ] 带描述时 Radio 加 `mt-1` 与文本首行对齐
+- [ ] 卡片式选中态至少同步 `border-primary` 与 `bg-accent`
+- [ ] 禁用时文案使用 `gray-7`
+- [ ] 每个 `RadioGroupItem` 都有关联 `Label` 或 `aria-label`
+- [ ] 保留 `focus-visible` 焦点样式，不要移除键盘可访问性反馈

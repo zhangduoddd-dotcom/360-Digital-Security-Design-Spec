@@ -1,0 +1,405 @@
+# Button 按钮
+
+> 包含：主按钮、次要按钮、辅助按钮、文字按钮
+
+## 变体属性
+
+| 属性 | 值 | 说明 |
+|------|-----|------|
+| **类型** | 主 / 次要 / 辅助 / 文字 | 视觉层级，对应 variant |
+| **状态** | 默认 / 悬停 / 按下 / 禁用 | 交互状态 |
+| **尺寸** | 紧凑 / 常规 / 宽松 | 对应 size: sm / default / lg |
+| **图标** | 前置 / 后置 / 仅图标 / 无 | 图标位置 |
+
+## 动效补充
+
+按钮动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
+
+- hover / active / focus 的颜色、边框、阴影过渡默认使用 `motion-fast`（`150ms`）
+- 按钮默认只做颜色反馈，不做整体位移、弹跳或缩放
+- 普通按钮不要通过动效制造“浮起”错觉，重点仍是状态可辨识
+
+## 尺寸规范
+
+| 尺寸 | 高度 | 内边距 | 字号 | 圆角 | Tailwind 类 |
+|------|------|--------|------|------|-------------|
+| `sm` (紧凑) | 24px | 8px | 12px | 6px | `h-6 px-2 text-xs rounded-md` |
+| `default` (常规) | 32px | 8px 16px | 14px | 8px | `h-8 px-4 text-sm rounded-lg` |
+| `lg` (宽松) | 40px | 8px 24px | 16px | 8px | `h-10 px-6 text-base rounded-lg` |
+
+## 按钮类型
+
+### 主按钮 (Primary)
+
+主操作按钮，实心填充背景。
+
+```tsx
+<Button>主按钮</Button>
+```
+
+**样式规范**：
+- 背景：`bg-primary` → hover: `bg-primary-hover` → active: `bg-primary-active`
+- 文字：`text-primary-foreground`
+- 禁用：`bg-muted text-disabled-foreground`
+- 说明：这里的 `bg-muted` 表示弱化实底，不属于表单禁用背景语义
+
+### 次要按钮 (Outline)
+
+次要操作按钮，主色线框样式。
+
+```tsx
+<Button variant="outline">次要按钮</Button>
+```
+
+**样式规范**：
+- 边框：`border-primary` → hover: `border-primary-hover` → active: `border-primary-active`
+- 文字：`text-primary` → hover: `text-primary-hover` → active: `text-primary-active`
+- 背景：透明
+- 禁用：`border-input-disabled bg-muted/50 text-disabled-foreground`
+- 说明：`bg-muted/50` 在这里作为透明按钮的轻量弱化底使用
+
+### 辅助按钮 (Secondary)
+
+低优先级操作，灰色线框。
+
+```tsx
+<Button variant="secondary">辅助按钮</Button>
+```
+
+**样式规范**：
+- 边框：`border-input`
+- 文字：`text-foreground`
+- 背景：透明 → hover: `bg-muted/50` → active: `bg-muted`
+- 禁用：`border-input-disabled bg-muted/50 text-disabled-foreground`
+- 说明：hover 用 `bg-muted/50` 做轻反馈，active 用 `bg-muted` 做更明确的弱化实底
+
+### 文字按钮 (Ghost)
+
+最轻量的操作，无背景无边框。
+
+```tsx
+<Button variant="ghost">文字按钮</Button>
+```
+
+**样式规范**：
+- 文字：`text-primary` → hover: `text-primary-hover` → active: `text-primary-active`
+- 背景：始终透明，hover / active 均不添加背景色
+- 禁用：`text-disabled-foreground`
+
+## 图标规范
+
+| 尺寸 | 图标尺寸 | Tailwind |
+|------|---------|----------|
+| 紧凑 (sm) | 14px | `size-3.5` |
+| 常规 (default) | 16px | `size-4` |
+| 宽松 (lg) | 16px | `size-4` |
+
+**图标来源**：按钮图标统一继承 [SKILL.md](../../SKILL.md) 中的图标规则，统一使用 **Lucide Icons**。
+
+- React 项目：使用 `lucide-react`
+- HTML Demo：使用 Lucide CDN + `data-lucide`
+- 按钮规范示例默认不使用手写内联 SVG，避免与全局图标系统冲突
+
+```html
+<script src="https://unpkg.com/lucide@latest"></script>
+<button class="btn btn-md btn-primary">
+  <i data-lucide="plus" class="w-4 h-4"></i>
+  新建
+</button>
+<script>lucide.createIcons()</script>
+```
+
+**图标与文字间距**：`gap-1`（4px）
+
+**HTML Demo 兜底要求**：单文件 HTML Demo 中的 `.btn` 需要提供按钮图标默认尺寸兜底，至少保证：`btn-sm / btn-icon-sm = 14px`，`btn-md / btn-lg / btn-icon = 16px`。这样即使页面忘记给 Lucide 图标单独写类名，也不会回退成默认 `24px`。
+
+```tsx
+// 带前置图标
+<Button>
+  <Plus className="size-4" />
+  新建
+</Button>
+
+// 带后置图标
+<Button>
+  下载
+  <Download className="size-4" />
+</Button>
+
+// 纯图标按钮
+<Button size="icon" variant="ghost">
+  <MoreHorizontal className="size-4" />
+</Button>
+```
+
+### 纯图标按钮尺寸
+
+| 尺寸 | 按钮尺寸 | 图标尺寸 |
+|------|---------|---------|
+| sm | 24×24px (`size-6`) | 14px (`size-3.5`) |
+| default | 32×32px (`size-8`) | 16px (`size-4`) |
+| lg | 40×40px (`size-10`) | 16px (`size-4`) |
+
+## shadcn Button 自定义（React 项目）
+
+```tsx
+// components/ui/button.tsx
+import { cva, type VariantProps } from "class-variance-authority"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-1 whitespace-nowrap font-normal transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none",
+  {
+    variants: {
+      variant: {
+        // 主按钮
+        default:
+          "bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-active disabled:bg-muted disabled:text-disabled-foreground",
+        // 次要按钮
+        outline:
+          "border border-primary text-primary bg-transparent hover:border-primary-hover hover:text-primary-hover active:border-primary-active active:text-primary-active disabled:border-input-disabled disabled:text-disabled-foreground disabled:bg-muted/50",
+        // 辅助按钮
+        secondary:
+          "border border-input text-foreground bg-transparent hover:bg-muted/50 active:bg-muted disabled:border-input-disabled disabled:text-disabled-foreground disabled:bg-muted/50",
+        // 文字按钮
+        ghost:
+          "text-primary bg-transparent hover:text-primary-hover active:text-primary-active disabled:text-disabled-foreground disabled:bg-transparent",
+        // 链接按钮
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        sm: "h-6 px-2 text-xs rounded-md",
+        default: "h-8 px-4 text-sm rounded-lg",
+        lg: "h-10 px-6 text-base rounded-lg",
+        icon: "h-8 w-8 rounded-lg p-0",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+```
+
+## 原生 CSS 实现（独立 HTML）
+
+生成独立 HTML 文件时，使用以下 CSS 样式（需配合 `../Green Theme-Global Style.css` 中的 CSS Variables）：
+
+```css
+/* 按钮基础样式 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-weight: 400;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  transition: all 0.15s ease;
+  border: none;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.btn:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* 主按钮 Primary */
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+.btn-primary:active:not(:disabled) {
+  background: var(--primary-active);
+}
+.btn-primary:disabled {
+  background: var(--muted);
+  color: var(--disabled-foreground);
+}
+
+/* 次要按钮 Outline */
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--primary-hover);
+  color: var(--primary-hover);
+}
+.btn-outline:active:not(:disabled) {
+  border-color: var(--primary-active);
+  color: var(--primary-active);
+}
+.btn-outline:disabled {
+  border-color: var(--input-disabled);
+  color: var(--disabled-foreground);
+  background: rgba(237, 241, 245, 0.5); /* --muted 的半透明 */
+}
+
+/* 辅助按钮 Secondary */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--input);
+  color: var(--foreground);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(237, 241, 245, 0.5); /* --muted 的半透明，亮色 */
+}
+.btn-secondary:active:not(:disabled) {
+  background: var(--muted);
+}
+.btn-secondary:disabled {
+  border-color: var(--input-disabled);
+  color: var(--disabled-foreground);
+  background: rgba(237, 241, 245, 0.5);
+}
+
+/* 暗色模式下的辅助按钮 hover */
+.dark .btn-secondary:hover:not(:disabled) {
+  background: rgba(41, 45, 51, 0.5); /* 暗色 --muted 的半透明 */
+}
+.dark .btn-secondary:active:not(:disabled) {
+  background: var(--muted);
+}
+.dark .btn-secondary:disabled {
+  background: rgba(41, 45, 51, 0.5);
+}
+
+/* 文字按钮 Ghost */
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: transparent;
+  color: var(--primary-hover);
+}
+.btn-ghost:active:not(:disabled) {
+  background: transparent;
+  color: var(--primary-active);
+}
+.btn-ghost:disabled {
+  color: var(--disabled-foreground);
+}
+
+.dark .btn-ghost:hover:not(:disabled) {
+  background: transparent;
+}
+
+/* 链接按钮 Link */
+.btn-link {
+  background: transparent;
+  color: var(--primary);
+  text-underline-offset: 4px;
+}
+.btn-link:hover:not(:disabled) {
+  text-decoration: underline;
+  color: var(--primary-hover);
+}
+
+/* 按钮尺寸 */
+.btn-sm {
+  height: 24px;
+  padding: 0 8px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+.btn-md {
+  height: 32px;
+  padding: 0 16px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+.btn-lg {
+  height: 40px;
+  padding: 0 24px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 8px;
+}
+```
+
+**注意**：原生 CSS 无法直接使用 Tailwind 的 `bg-muted/50` 语法，需要用 `rgba()` 实现半透明：
+- 亮色 `--muted` 的半透明：`rgba(237, 241, 245, 0.5)` (#EDF1F5 at 50%)
+- 暗色 `--muted` 的半透明：`rgba(41, 45, 51, 0.5)` (#292D33 at 50%)
+```
+
+## 使用示例
+
+```tsx
+// 按类型
+<Button>主按钮</Button>
+<Button variant="outline">次要按钮</Button>
+<Button variant="secondary">辅助按钮</Button>
+<Button variant="ghost">文字按钮</Button>
+
+// 按尺寸
+<Button size="sm">紧凑</Button>
+<Button>常规</Button>
+<Button size="lg">宽松</Button>
+
+// 带图标
+<Button><Plus className="size-4" />新建</Button>
+
+// 纯图标
+<Button size="icon" variant="ghost">
+  <MoreHorizontal className="size-4" />
+</Button>
+
+// 加载状态
+<Button disabled>
+  <Loader2 className="size-4 animate-spin" />
+  处理中
+</Button>
+```
+
+## 按钮组合
+
+```tsx
+// 操作按钮组 — 主操作在右
+<div className="flex items-center gap-2">
+  <Button variant="secondary">取消</Button>
+  <Button>确认</Button>
+</div>
+
+// 表单底部
+<div className="flex justify-end gap-2">
+  <Button variant="ghost">重置</Button>
+  <Button variant="outline">保存草稿</Button>
+  <Button>提交</Button>
+</div>
+```
+
+## 使用场景
+
+| 场景 | 推荐类型 | 说明 |
+|------|---------|------|
+| 页面主操作 | 主按钮 | 新建 |
+| 次要操作 | 次要按钮 | 与主操作并列的备选操作 |
+| 取消/返回 | 辅助按钮 | 低优先级操作 |
+| 内联操作 | 文字按钮 | 表格行操作、查看更多 |
+
+## Checklist
+
+生成按钮时检查：
+
+- [ ] 类型正确：主(实心) / 次要(主色线框) / 辅助(灰色线框) / 文字(无边框)
+- [ ] 尺寸正确：紧凑 24px / 常规 32px / 宽松 40px
+- [ ] 使用语义化颜色类（`bg-primary`、`text-primary-foreground`）
+- [ ] 图标尺寸：紧凑 14px / 常规&宽松 16px
+- [ ] 图标间距：`gap-1` (4px)
+- [ ] 圆角：紧凑 6px (`rounded-md`) / 常规&宽松 8px (`rounded-lg`)
