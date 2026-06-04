@@ -85,7 +85,7 @@ Keywords: form entry, validation, conditional visibility, step structure, form s
 
 规则：
 
-- 抽屉宽度建议 560px / 720px / 880px。
+- 抽屉宽度统一为 560px / 880px / 80%。
 - 标题固定在顶部，操作区固定在底部。
 - 内容区可滚动。
 - 关闭或取消时，如有未保存内容，必须二次确认。

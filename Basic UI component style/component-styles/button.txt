@@ -15,7 +15,7 @@
 
 按钮动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差异：
 
-- hover / active / focus 的颜色、边框、阴影过渡默认使用 `motion-fast`（`150ms`）
+- hover / active / focus 的颜色、边框、阴影过渡默认使用 `motion-fast`（`150ms`）；只有该按钮变体明确要求阴影或 focus ring 时才添加阴影，不得把阴影作为所有 icon 按钮的默认反馈
 - 按钮默认只做颜色反馈，不做整体位移、弹跳或缩放
 - 普通按钮不要通过动效制造“浮起”错觉，重点仍是状态可辨识
 
@@ -94,42 +94,50 @@
 | 常规 (default) | 16px | `size-4` |
 | 宽松 (lg) | 16px | `size-4` |
 
-**图标来源**：按钮图标统一继承 [SKILL.md](../../SKILL.md) 中的图标规则，统一使用 **Lucide Icons**。
+**图标来源**：按钮图标统一继承 [SKILL.md](../../SKILL.md) 中的图标规则，只允许使用 iconfont 项目 `5177816`。
 
-- React 项目：使用 `lucide-react`
-- HTML Demo：使用 Lucide CDN + `data-lucide`
-- 按钮规范示例默认不使用手写内联 SVG，避免与全局图标系统冲突
+- HTML Demo：使用 `<i class="iconfont icon-xxx"></i>`。
+- 需要母版未内置图标时，从 `assets/iconfont/font_5177816_5ilr2y8ewpn.css` 复制必要 class。
+- 按钮规范示例默认不使用手写内联 SVG、emoji 或其他图标库，避免与全局 iconfont 系统冲突。
+
+**图标使用边界**：
+
+- 除纯图标按钮外，有文字的按钮默认不增加前置 / 后置装饰图标。
+- 下拉箭头、展开 / 收起箭头、表头筛选 / 排序图标等属于功能性指示图标，可按对应组件规范保留。
+- `搜索`、`清空`、`新建`、`导入`、`导出`、`处置`、`忽略`、`删除` 等文字按钮默认使用纯文字；只有需求明确指定并且同页面同类按钮统一时，才允许增加图标。
+- 禁用按钮必须通过 Tooltip、`title` 或等效说明展示禁用原因，不得只表现为灰态。
 
 ```html
-<script src="https://unpkg.com/lucide@latest"></script>
 <button class="btn btn-md btn-primary">
-  <i data-lucide="plus" class="w-4 h-4"></i>
+  <i class="iconfont icon-add" aria-hidden="true"></i>
   新建
 </button>
-<script>lucide.createIcons()</script>
 ```
 
 **图标与文字间距**：`gap-1`（4px）
 
-**HTML Demo 兜底要求**：单文件 HTML Demo 中的 `.btn` 需要提供按钮图标默认尺寸兜底，至少保证：`btn-sm / btn-icon-sm = 14px`，`btn-md / btn-lg / btn-icon = 16px`。这样即使页面忘记给 Lucide 图标单独写类名，也不会回退成默认 `24px`。
+**HTML Demo 兜底要求**：单文件 HTML Demo 中的 `.btn` 需要提供按钮图标默认尺寸兜底，至少保证：`btn-sm / btn-icon-sm = 14px`，`btn-md / btn-lg / btn-icon = 16px`。这样即使页面忘记给 `.iconfont` 单独写尺寸，也不会回退成默认尺寸不一致。
 
-```tsx
-// 带前置图标
-<Button>
-  <Plus className="size-4" />
+```html
+<!-- 默认文字按钮，不加图标 -->
+<button class="btn btn-md btn-primary" type="button">新建</button>
+
+<!-- 需求明确时才使用前置 iconfont 图标 -->
+<button class="btn btn-md btn-primary" type="button">
+  <i class="iconfont icon-add" aria-hidden="true"></i>
   新建
-</Button>
+</button>
 
-// 带后置图标
-<Button>
+<!-- 带后置 iconfont 图标 -->
+<button class="btn btn-md btn-secondary" type="button">
   下载
-  <Download className="size-4" />
-</Button>
+  <i class="iconfont icon-xiazai" aria-hidden="true"></i>
+</button>
 
-// 纯图标按钮
-<Button size="icon" variant="ghost">
-  <MoreHorizontal className="size-4" />
-</Button>
+<!-- 纯图标按钮 -->
+<button class="btn btn-ghost btn-icon" type="button" aria-label="更多操作">
+  <i class="iconfont icon-a-gengduoqita" aria-hidden="true"></i>
+</button>
 ```
 
 ### 纯图标按钮尺寸
@@ -139,6 +147,20 @@
 | sm | 24×24px (`size-6`) | 14px (`size-3.5`) |
 | default | 32×32px (`size-8`) | 16px (`size-4`) |
 | lg | 40×40px (`size-10`) | 16px (`size-4`) |
+
+**工具栏辅助图标按钮**：
+
+- 表格工具栏右侧的 `刷新`、`字段配置 / 配置表格字段`、`规则配置` 等全局辅助操作，优先使用 `secondary + icon` 组合，即 32×32px 辅助样式纯图标按钮。
+- 纯图标按钮必须提供 `aria-label`，并在 hover 时通过 Tooltip 展示完整操作含义。
+- 需要区分操作范围的全局操作，例如 `导出全部`，可继续使用文字辅助按钮，不强制改为纯图标。
+- 删除、停用、覆盖等风险操作不得只显示图标，必须保留文字、Tooltip 或确认机制。
+
+**内联展开 / 收起 icon**：
+
+- 标题前方的展开 / 收起 icon（例如数据概览区、折叠面板、小型下拉入口）不使用 `secondary + icon` 的按钮皮肤。
+- 该类 icon 命中区可为 16×16px 或 24×24px，但视觉必须保持透明背景、无边框、无阴影。
+- hover / focus / active 不改变背景，不增加阴影或底部投影；悬停时仅 icon 颜色变化。
+- 该类 icon 样式应与 Select 下拉箭头保持一致，不做胶囊底、灰底或浮起效果。
 
 ## shadcn Button 自定义（React 项目）
 
@@ -201,8 +223,8 @@ const buttonVariants = cva(
   border: none;
 }
 .btn:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--focus-default);
 }
 .btn:disabled {
   pointer-events: none;
@@ -212,7 +234,7 @@ const buttonVariants = cva(
 /* 主按钮 Primary */
 .btn-primary {
   background: var(--primary);
-  color: var(--primary-foreground);
+  color: var(--text-inverse);
 }
 .btn-primary:hover:not(:disabled) {
   background: var(--primary-hover);
@@ -221,8 +243,8 @@ const buttonVariants = cva(
   background: var(--primary-active);
 }
 .btn-primary:disabled {
-  background: var(--muted);
-  color: var(--disabled-foreground);
+  background: var(--gray-2);
+  color: var(--text-disabled);
 }
 
 /* 次要按钮 Outline */
@@ -240,26 +262,26 @@ const buttonVariants = cva(
   color: var(--primary-active);
 }
 .btn-outline:disabled {
-  border-color: var(--input-disabled);
-  color: var(--disabled-foreground);
+  border-color: var(--gray-5);
+  color: var(--text-disabled);
   background: rgba(237, 241, 245, 0.5); /* --muted 的半透明 */
 }
 
 /* 辅助按钮 Secondary */
 .btn-secondary {
   background: transparent;
-  border: 1px solid var(--input);
-  color: var(--foreground);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 .btn-secondary:hover:not(:disabled) {
   background: rgba(237, 241, 245, 0.5); /* --muted 的半透明，亮色 */
 }
 .btn-secondary:active:not(:disabled) {
-  background: var(--muted);
+  background: var(--gray-2);
 }
 .btn-secondary:disabled {
-  border-color: var(--input-disabled);
-  color: var(--disabled-foreground);
+  border-color: var(--gray-5);
+  color: var(--text-disabled);
   background: rgba(237, 241, 245, 0.5);
 }
 
@@ -268,7 +290,7 @@ const buttonVariants = cva(
   background: rgba(41, 45, 51, 0.5); /* 暗色 --muted 的半透明 */
 }
 .dark .btn-secondary:active:not(:disabled) {
-  background: var(--muted);
+  background: var(--gray-2);
 }
 .dark .btn-secondary:disabled {
   background: rgba(41, 45, 51, 0.5);
@@ -288,7 +310,7 @@ const buttonVariants = cva(
   color: var(--primary-active);
 }
 .btn-ghost:disabled {
-  color: var(--disabled-foreground);
+  color: var(--text-disabled);
 }
 
 .dark .btn-ghost:hover:not(:disabled) {

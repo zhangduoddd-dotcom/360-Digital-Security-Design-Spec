@@ -139,7 +139,7 @@ Alert 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差�
 | 字号 | `14px` |
 | 行高 | `22px` |
 | 字重 | `400` |
-| 颜色 | `品牌色/默认` `#006BFF` |
+| 颜色 | `品牌色/默认` `#00AB7A` |
 
 **关键约束**：
 
@@ -179,7 +179,7 @@ Alert 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差�
 | 一级正文 / 标题 | `文字色/一级文字` | `#1D2531` |
 | 二级说明文字 | `文字色/二级文字` | `#657083` |
 | 关闭图标 | `文字色/三级文字` | `#9EA7B8` |
-| 展开 / 收起 | `品牌色/默认` | `#006BFF` |
+| 展开 / 收起 | `品牌色/默认` | `#00AB7A` |
 
 ## 图标规范
 
@@ -194,26 +194,26 @@ Alert 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差�
 
 规则：
 
-- 图标来源统一走 Lucide Icons，推荐使用同一套语义图标
+- 图标来源统一走 iconfont 项目 `5177816`，推荐使用同一套语义图标
 - 图标尺寸固定 `20px`
 - 图标容器高度与正文行高保持 `22px` 对齐
 - 图标只出现在左侧，不参与展开交互
 
 推荐映射：
 
-| 类型 | 推荐图标形态 |
+| 类型 | 推荐 iconfont class |
 |------|--------------|
-| 通知 | `Info` |
-| 成功 | `CircleCheck` / `Check` |
-| 警告 | `TriangleAlert` |
-| 失败 | `CircleX` / `OctagonX` |
+| 通知 | `icon-a-tixinglingdang` |
+| 成功 | `icon-dui` |
+| 警告 | `icon-jinggao` |
+| 失败 | `icon-guanbigaoliang` |
 
 ### 关闭图标
 
 规则：
 
-- 来源仍然走 Lucide Icons，但使用 `X`
-- 当前组件集中统一为右侧 `Close`
+- 来源仍然走 iconfont，默认使用 `icon-guanbigaoliang`
+- 当前组件集中统一为右侧关闭按钮
 - 命中区 `22px`（button 点击区域）
 - 图标视觉尺寸 `16px`
 - 颜色使用三级文字 `#9EA7B8`
@@ -277,36 +277,36 @@ type AppAlertProps = {
 - `expandable=true` 时，仅对正文区做单行截断 / 多行展开切换
 - 关闭按钮固定右上，不与展开文案复用同一交互位
 
-### React 示例
+### 工程示例（iconfont）
 
 ```tsx
-<div className="flex items-start gap-2 rounded-lg px-3 py-2 [background:var(--brand-orange-50)]">
-  <AttentionFilledIcon className="mt-px size-5 shrink-0 text-[var(--brand-orange-400)]" />
-  <p className="min-w-0 flex-1 text-sm leading-[22px] text-foreground">
+<div className="flex items-start gap-2 rounded-lg px-3 py-2 [background:var(--warning-bg)]">
+  <i className="iconfont icon-jinggao mt-px size-5 shrink-0 text-[var(--warning)]" aria-hidden="true" />
+  <p className="min-w-0 flex-1 text-sm leading-[22px] text-[var(--text-body)]">
     这是一个警告提示
   </p>
   <button
     type="button"
-    className="inline-flex size-[22px] shrink-0 items-center justify-center text-tertiary-foreground"
+    className="inline-flex size-[22px] shrink-0 items-center justify-center text-[var(--text-tertiary)]"
     aria-label="关闭提示"
   >
-    <CloseIcon className="size-4" />
+    <i className="iconfont icon-guanbigaoliang size-4" aria-hidden="true" />
   </button>
 </div>
 ```
 
 ```tsx
-<div className="flex flex-col gap-2 rounded-lg px-3 py-2 [background:var(--brand-orange-50)]">
+<div className="flex flex-col gap-2 rounded-lg px-3 py-2 [background:var(--warning-bg)]">
   <div className="flex items-center gap-2">
-    <AttentionFilledIcon className="size-5 shrink-0 text-[var(--brand-orange-400)]" />
-    <p className="min-w-0 flex-1 text-sm leading-[22px] font-semibold text-foreground">
+    <i className="iconfont icon-jinggao size-5 shrink-0 text-[var(--warning)]" aria-hidden="true" />
+    <p className="min-w-0 flex-1 text-sm leading-[22px] font-semibold text-[var(--text-body)]">
       这是一个警告提示
     </p>
-    <button type="button" className="inline-flex size-[22px] items-center justify-center text-tertiary-foreground" aria-label="关闭提示">
-      <CloseIcon className="size-4" />
+    <button type="button" className="inline-flex size-[22px] items-center justify-center text-[var(--text-tertiary)]" aria-label="关闭提示">
+      <i className="iconfont icon-guanbigaoliang size-4" aria-hidden="true" />
     </button>
   </div>
-  <div className="pl-7 text-sm leading-[22px] text-muted-foreground">
+  <div className="pl-7 text-sm leading-[22px] text-[var(--text-secondary)]">
     1、申请开票后，电子发票在1～3个工作日内开具；
   </div>
   <button type="button" className="pl-7 text-left text-sm leading-[22px] text-primary">

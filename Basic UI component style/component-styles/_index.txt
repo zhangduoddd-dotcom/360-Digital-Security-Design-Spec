@@ -7,7 +7,7 @@
 ## 设计原则
 
 1. **一致性优先**：同类组件在不同页面必须保持相同的视觉表现
-2. **语义化色值**：所有颜色使用 CSS Variables；文字层级只使用 `text-foreground / text-muted-foreground / text-tertiary-foreground / text-disabled-foreground` 四档，描边区分 `border-border` 分割线、`border-input` 组件描边、`border-input-disabled` 禁用描边，禁止硬编码色值
+2. **语义化色值**：所有颜色使用 `Green Theme-Global Style.css` 中的稳定变量；文字层级只使用 `--text-title / --text-body / --text-secondary / --text-tertiary / --text-disabled`，描边区分 `--border` 分割线与 `--border-strong` 组件描边，禁止硬编码色值
 3. **状态完备**：每个组件必须定义 default / hover / focus / disabled / error 等状态
 4. **尺寸统一**：组件遵循紧凑 / 常规 / 宽松三档，但具体高度以组件文档为准；`Input` 使用 `24 / 32 / 40px`，不要强套 `32 / 36 / 40px`
 5. **动效收口**：组件级动效统一遵循 `motion.txt`，单个组件文档只记录特殊时长、特殊方向或禁用项
@@ -18,6 +18,7 @@
 | 组件 | 文件 | 说明 |
 |------|------|------|
 | Motion 动效基础 | [motion.txt](motion.txt) | 全局时长、缓动、位移、组合与转场语义 |
+| Icon 图标 | [icon.md](icon.md) | iconfont 项目、菜单/按钮/状态图标语义、尺寸、颜色与禁用规则 |
 
 ### 表单组件
 | 组件 | 文件 | 说明 |
@@ -28,12 +29,12 @@
 | Radio 单选按钮 | [radio.txt](radio.txt) | 单选按钮组 |
 | Checkbox 复选框 | [checkbox.txt](checkbox.txt) | 复选框、全选/半选 |
 | Switch 开关 | [switch.txt](switch.txt) | 即时启停、状态切换 |
-| DatePicker 日期选择 | date-picker.txt | 日期、日期范围、时间选择（待补充） |
 
 ### 数据展示
 | 组件 | 文件 | 说明 |
 |------|------|------|
 | Table 表格 | [table.txt](table.txt) | 数据表格、可编辑表格 |
+| Data Metric Card 数据指标卡 | [data-metric-card.md](data-metric-card.md) | 关键统计数据、3Dicon 指标卡、列表页 / Dashboard 概览指标 |
 | Tag 标签 | [tag.txt](tag.txt) | 状态标签、分类标签、可关闭标签 |
 
 ### 反馈组件
@@ -41,7 +42,6 @@
 |------|------|------|
 | Alert 警告提示 | [alert.txt](alert.txt) | 页面级静态提示 |
 | Toast/Message 消息 | [toast-message.txt](toast-message.txt) | 轻量操作反馈 |
-| Dialog 弹窗 | dialog.txt | 模态确认、表单弹窗（待补充） |
 
 ### 导航组件
 | 组件 | 文件 | 说明 |
@@ -55,25 +55,23 @@
 | 尺寸 | 高度 | 内边距 | 字号 | 适用场景 |
 |------|------|--------|------|---------|
 | `sm` | 24-32px | `px-3` | 12px (`text-xs`) | 紧凑型表格、密集筛选区 |
-| `default` | 32-36px | `px-3` ~ `px-4` | 14px (`text-sm`) | 大多数场景默认 |
+| `default` | 32-36px | `px-3` ~ `px-4` | 14px (`text-sm`) | 大多数场景默认，具体以组件文档为准 |
 | `lg` | 40px (`h-10`) | `px-5` | 14px (`text-sm`) | 表单主操作、突出按钮 |
 
 ## 状态色值速查
 
 | 状态 | 边框色 | 背景色 | 文字色 |
 |------|--------|--------|--------|
-| Default | `border-input` | `bg-background` | `text-foreground` |
-| Hover | `border-primary/50` | — | — |
-| Focus | `ring-2 ring-ring` | — | — |
-| Disabled | `border-input-disabled` | `bg-field-disabled` | `text-disabled-foreground` |
-| Error | `border-destructive` | — | `text-destructive` |
-| Success | `border-brand-green-500` | — | `text-brand-green-600` |
+| Default | `--border-strong` | `--card-bg` | `--text-body` |
+| Hover | `--primary` | `--gray-3` | — |
+| Focus | `--primary` | — | 外环使用 `--focus-default` |
+| Disabled | `--gray-5` | `--gray-2` | `--text-disabled` |
+| Error | `--error` | `--error-bg` | `--error` |
+| Success | `--success` | `--success-bg` | `--success` |
 
 ## 颜色收口说明
 
-- `secondary` 仅作为兼容别名保留，不再作为新规范的独立语义
-- `muted` 用于弱化但非禁用的表面，例如表头、hover、浅辅助区
-- `bg-muted` 表示一层明确可见的弱化实底，`bg-muted/50` 表示更轻的一层弱化表面
-- 表单控件禁用底统一收口到 `bg-field-disabled`
-- 文字层级统一收口到一级 / 二级 / 三级 / 禁用四档，组件不要再自行发明“默认文字色”语义
-- 只有状态语义允许跳出四档文字层级，例如 `text-primary`、`text-destructive`、`text-brand-green-600`
+- 中性弱化表面使用 `--gray-2` 或 `--gray-3`，不要再新增 `muted` 类别变量
+- 表单控件禁用底统一使用 `--gray-2`
+- 文字层级统一收口到标题 / 正文 / 二级 / 三级 / 禁用五档，组件不要再自行发明“默认文字色”语义
+- 只有状态语义允许跳出常规文字层级，例如 `--primary`、`--error`、`--success`、`--warning`、`--info`

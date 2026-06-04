@@ -40,16 +40,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { ChevronDownIcon, PrefixIcon } from "@/components/icons"
-
 <Select>
   <SelectTrigger className="w-[200px]">
     <span className="inline-flex min-w-0 items-center gap-2">
-      <PrefixIcon className="size-4 shrink-0 text-muted-foreground" />
+      <i className="iconfont icon-yingyongguanli size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
       <SelectValue placeholder="请选择" />
     </span>
     <SelectPrimitive.Icon asChild>
-      <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground" />
+      <i className="iconfont icon-xiajiantou size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
     </SelectPrimitive.Icon>
   </SelectTrigger>
   <SelectContent>
@@ -89,6 +87,7 @@ import { ChevronDownIcon, PrefixIcon } from "@/components/icons"
 - `loose` 用于更强输入存在感的表单区
 - 常规筛选区默认使用 `default` / 32px；只有空间非常紧的工具条或高密筛选区才降到 `compact` / 24px
 - 失败态总高度不是尺寸轴的一部分，错误提示额外占位
+- Select Trigger、Select Value、下拉面板选项和分组标题必须显式声明当前尺寸档的字号和行高；不得只依赖 `font: inherit` 或浏览器默认字号，否则 HTML Demo 中容易回落到 16px。
 
 ## 宽度规范
 
@@ -160,7 +159,7 @@ import { ChevronDownIcon, PrefixIcon } from "@/components/icons"
 ### 成功
 
 ```tsx
-<SelectTrigger className="w-[200px] border-[var(--brand-green-500)]">
+<SelectTrigger className="w-[200px] border-[var(--primary)]">
   <SelectValue placeholder="请选择" />
 </SelectTrigger>
 ```
@@ -236,12 +235,11 @@ import {
 } from "@/components/ui/select"
 
 import { Checkbox } from "@/components/ui/checkbox"
-import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 
 <SelectContent
   position="popper"
   sideOffset={8}
-  className="max-h-[392px] rounded-lg border-0 bg-popover p-2 shadow-[var(--popover-shadow)]"
+  className="max-h-[392px] rounded-lg border-0 bg-popover p-2 shadow-[var(--shadow-popover)]"
 >
   <SelectGroup>
     <SelectLabel className="h-10 px-3 text-sm font-normal leading-[22px] text-tertiary-foreground">
@@ -252,9 +250,9 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
     </SelectItem>
     <SelectItem value="option-2" className="h-10 rounded-lg px-3 py-[5px] text-sm leading-[22px]">
       <span className="inline-flex w-full items-center gap-2">
-        <ItemLeadingIcon className="size-5 shrink-0 text-muted-foreground" />
+        <i className="iconfont icon-yingyongguanli size-5 shrink-0 text-muted-foreground" aria-hidden="true" />
         <span className="min-w-0 flex-1 truncate">带图标子项</span>
-        <ArrowRightIcon className="size-4 shrink-0 text-muted-foreground" />
+        <i className="iconfont icon-you-jiantou size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
       </span>
     </SelectItem>
   </SelectGroup>
@@ -316,7 +314,19 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 - 纵向内边距：`py-[5px]`
 - 行内圆角：`rounded-lg`
 - 当前规范不定义“固定色彩实底高亮选中行”，默认保持基础底色，通过内容结构区分不同变体
-- 如果业务需要 hover / active 反馈，可以加轻量 `bg-accent`，但不要改成强选中底色
+- 选项 hover 反馈必须使用中性 hover 背景，亮色主题为 `gray-3 / --gray-3`；hover 不改变文字颜色
+- 选中态与 hover 态分离：选中态可使用主色文字表达当前值，但 `selected:hover` 只改变背景，不再次改变文字色
+
+### 选项状态规则
+
+| 状态 | 背景 | 文字 |
+|---|---|---|
+| 默认 | `bg-popover` | `text-popover-foreground` |
+| hover | `gray-3 / --gray-3` | 保持默认文字色，不变主色 |
+| selected | `bg-popover` 或按业务保持无实底 | `text-primary` |
+| selected + hover | `gray-3 / --gray-3` | 保持 selected 文字色 |
+
+HTML Demo 中禁止把 hover 和 selected 合并成同一条规则，例如禁止 `.select-panel__item:hover, .select-panel__item.is-selected { color: var(--primary); }`。
 
 ### 选项变体
 
@@ -336,7 +346,7 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 ```tsx
 <SelectItem value="option-1" className="h-10 rounded-lg px-3 py-[5px]">
   <span className="inline-flex w-full items-center gap-2">
-    <ItemLeadingIcon className="size-5 shrink-0 text-muted-foreground" />
+    <i className="iconfont icon-yingyongguanli size-5 shrink-0 text-muted-foreground" aria-hidden="true" />
     <span className="min-w-0 flex-1 truncate">漏洞扫描</span>
   </span>
 </SelectItem>
@@ -352,12 +362,12 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 <SelectItem value="option-1" className="h-10 rounded-lg px-3 py-[5px]">
   <span className="inline-flex w-full items-center gap-2">
     <span className="min-w-0 flex-1 truncate">子项内容</span>
-    <ArrowRightIcon className="size-4 shrink-0 text-muted-foreground" />
+    <i className="iconfont icon-you-jiantou size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
   </span>
 </SelectItem>
 ```
 
-- 当前规范里的“子项=on”不是左缩进树级，而是右侧带 `ArrowRight` 的子菜单入口
+- 当前规范里的“子项=on”不是左缩进树级，而是右侧带 `icon-you-jiantou` 的子菜单入口
 - 右箭头尺寸：16px
 - 文本必须跟随当前 Select 尺寸档，不单独另起字号
 
@@ -461,9 +471,11 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid var(--input);
-  background: var(--card);
-  color: var(--foreground);
+  border: 1px solid var(--border-strong);
+  background: var(--card-bg);
+  color: var(--text-body);
+  font-size: 14px;
+  line-height: 22px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
   box-sizing: border-box;
 }
@@ -483,12 +495,12 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 }
 
 .select-trigger__value--placeholder {
-  color: var(--tertiary-foreground);
+  color: var(--text-tertiary);
 }
 
 .select-trigger__prefix,
 .select-trigger__suffix {
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .select-demo--compact .select-trigger {
@@ -525,25 +537,25 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 }
 
 .select-demo.is-disabled .select-trigger {
-  background: var(--muted);
-  border-color: var(--input-disabled);
-  color: var(--disabled-foreground);
+  background: var(--gray-2);
+  border-color: var(--gray-5);
+  color: var(--text-disabled);
   cursor: not-allowed;
 }
 
 .select-demo.is-success .select-trigger {
-  border-color: var(--brand-green-500);
+  border-color: var(--primary);
 }
 
 .select-demo--error .select-trigger,
 .select-demo.is-error .select-trigger {
-  border-color: var(--destructive);
+  border-color: var(--error);
 }
 
 .select-helper {
   font-size: 12px;
   line-height: 20px;
-  color: var(--destructive);
+  color: var(--error);
 }
 ```
 
@@ -610,9 +622,9 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
   flex-direction: column;
   overflow-y: auto;
   border-radius: 8px;
-  background: var(--popover);
+  background: var(--card-bg);
   padding: 8px;
-  box-shadow: var(--popover-shadow);
+  box-shadow: var(--shadow-popover);
 }
 
 .select-panel--compact {
@@ -633,7 +645,7 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
   padding: var(--select-panel-group-padding-block) 12px;
   font-size: var(--select-panel-font-size);
   line-height: var(--select-panel-line-height);
-  color: var(--tertiary-foreground);
+  color: var(--text-tertiary);
 }
 
 .select-panel__item {
@@ -644,8 +656,8 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
   gap: 8px;
   border-radius: 8px;
   padding: var(--select-panel-item-padding-block) 12px;
-  background: var(--popover);
-  color: var(--popover-foreground);
+  background: var(--card-bg);
+  color: var(--text-body);
   text-align: left;
   box-sizing: border-box;
   font-size: var(--select-panel-font-size);
@@ -653,7 +665,17 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 }
 
 .select-panel__item:hover {
-  background: var(--accent);
+  background: var(--gray-3);
+  color: var(--text-body);
+}
+
+.select-panel__item.is-selected {
+  color: var(--primary);
+}
+
+.select-panel__item.is-selected:hover {
+  background: var(--gray-3);
+  color: var(--primary);
 }
 
 .select-panel__item-prefix,
@@ -668,14 +690,14 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 .select-panel__item-prefix {
   width: var(--select-panel-prefix-size);
   height: var(--select-panel-prefix-size);
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .select-panel__item-suffix,
 .select-panel__item-checkbox {
   width: var(--select-panel-trailing-size);
   height: var(--select-panel-trailing-size);
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .select-panel__item-label {
@@ -698,10 +720,11 @@ import { ArrowRightIcon, ItemLeadingIcon } from "@/components/icons"
 - 面板最大高度使用 `392px`
 - 容器使用 `8px` 内边距 + `2px` 行间距，不额外加边框
 - 前置图形来自统一图标库，尺寸按 `20px` 图标位处理
-- 子项通过右侧 `ArrowRight` 识别，不通过左缩进伪装树级
+- 子项通过右侧 `icon-you-jiantou` 识别，不通过左缩进伪装树级
 - 复选项直接复用 Checkbox 主规范中的方框、对勾、半选表现
 - 分组标题、普通项、带图标项、子项分别用独立类表达，不混成一个超大条件类
 - 当前基线不定义“固定色彩实底选中行”，默认保持基础底色列表
+- 选项 hover 只使用 `gray-3 / --gray-3` 中性背景，不改变文字色；选中项 hover 也只改变背景，不改变选中项文字色
 
 ## 组合式 Select 规范
 
@@ -744,8 +767,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { ChevronDownIcon } from "@/components/icons"
-
 <div className="flex w-[368px]">
   <button
     type="button"
@@ -758,7 +779,7 @@ import { ChevronDownIcon } from "@/components/icons"
     <SelectTrigger className="h-8 rounded-none border-input px-3">
       <SelectValue placeholder="请选择" />
       <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground" />
+        <i className="iconfont icon-xiajiantou size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
       </SelectPrimitive.Icon>
     </SelectTrigger>
     <SelectContent>
@@ -946,15 +967,15 @@ import { ChevronDownIcon } from "@/components/icons"
 .select-combo__addon,
 .select-combo__trigger {
   box-sizing: border-box;
-  border: 1px solid var(--input);
+  border: 1px solid var(--border-strong);
 }
 
 .select-combo__addon {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  background: var(--surface-subtle);
-  color: var(--muted-foreground);
+  background: var(--gray-2);
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -965,8 +986,8 @@ import { ChevronDownIcon } from "@/components/icons"
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  background: var(--card);
-  color: var(--foreground);
+  background: var(--card-bg);
+  color: var(--text-body);
 }
 
 .select-combo__value {
@@ -976,11 +997,11 @@ import { ChevronDownIcon } from "@/components/icons"
 }
 
 .select-combo__value--placeholder {
-  color: var(--tertiary-foreground);
+  color: var(--text-tertiary);
 }
 
 .select-combo__suffix {
-  color: var(--muted-foreground);
+  color: var(--text-secondary);
 }
 
 .select-combo--compact .select-combo__addon,
@@ -1043,16 +1064,16 @@ import { ChevronDownIcon } from "@/components/icons"
 
 .select-combo-demo.is-disabled .select-combo__addon,
 .select-combo-demo.is-disabled .select-combo__trigger {
-  background: var(--muted);
-  border-color: var(--input-disabled);
-  color: var(--disabled-foreground);
+  background: var(--gray-2);
+  border-color: var(--gray-5);
+  color: var(--text-disabled);
 }
 
 .select-combo-demo--error .select-combo__addon,
 .select-combo-demo--error .select-combo__trigger,
 .select-combo-demo.is-error .select-combo__addon,
 .select-combo-demo.is-error .select-combo__trigger {
-  border-color: var(--destructive);
+  border-color: var(--error);
 }
 ```
 

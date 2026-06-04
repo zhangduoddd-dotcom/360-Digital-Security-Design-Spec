@@ -3,7 +3,7 @@
 
 Keywords: typography, font, type scale, line height, font weight, figma, frontend, backend, font rendering, font synthesis
 
-本文定义后台页面的字体家族、字号、行高、字重、层级规则和字体渲染规则。AI 生成页面、HTML 预览和 Vue 代码时，必须使用统一字体体系，避免不同页面出现字阶混乱或文字渲染过粗。
+本文定义后台页面的字体家族、字号、行高、字重、层级规则和字体渲染规则。AI 生成 HTML Demo 或检查 HTML 预览时，必须使用统一字体体系，避免不同页面出现字阶混乱或文字渲染过粗。
 
 ## 1. 字体家族
 
@@ -91,7 +91,7 @@ select {
 }
 ```
 
-平台固定框架和所有 HTML / Vue 页面必须继承以上字体渲染规则。
+平台固定框架和所有 HTML Demo 页面必须继承以上字体渲染规则。
 
 ## 5. 层级使用规则
 
@@ -103,13 +103,24 @@ select {
 - 错误提示必须说明原因和修正方式，不要只写“错误”。
 - 辅助文本不能低于可读对比度，不应因为弱化而不可读。
 
-## 6. 前端落地要求
+## 6. Figma 交付要求
 
-- Vue / HTML 输出应统一设置基础 `font-family`。
+| 交付项 | 要求 |
+|---|---|
+| Text Style | 按页面标题、模块标题、正文、辅助文本、高密度表格文本建立样式 |
+| 命名方式 | 建议使用 `Typography/Page Title/28` 这类可读命名 |
+| 字号使用 | 不直接手动输入散乱字号，优先使用 Text Style |
+| 状态标注 | 关键页面需标注标题、正文、辅助文本的使用场景 |
+| 表格文字 | 高密度表格需明确是否使用 12px |
+
+## 7. HTML Demo 落地要求
+
+- HTML Demo 输出应统一设置基础 `font-family`。
 - 不要在不同组件中散乱写不同字体族。
 - 文本字号、行高、字重应优先抽象成 CSS 变量或样式类。
 - 图表中的字体也应使用系统字体，不要使用浏览器默认 serif 字体。
 - 表格、表单、按钮、标签、tooltip、弹窗等组件应保持字阶一致。
+- 表单控件、选择器触发器、下拉项、分页选择器等交互组件必须在组件类中显式声明字号和行高，不得只依赖 `font: inherit` 或浏览器默认字号。
 - 必须关闭字体合成：`font-synthesis: none`、`font-synthesis-weight: none`、`font-synthesis-style: none`。
 - 必须启用平滑抗锯齿：`-webkit-font-smoothing: antialiased`、`-moz-osx-font-smoothing: grayscale`。
 
@@ -130,10 +141,9 @@ select {
 }
 ```
 
-## 7. AI 生成要求
+## 8. HTML Demo 生成要求
 
-- AI 生图时，主要中文标题必须可读，不要生成过小、过密、扭曲的文字。
 - Dashboard 核心数值可以大号展示，但辅助信息必须有层级。
 - 列表页和表单页以可读性优先，不应为了视觉冲击使用过大标题。
-- 生成 HTML / Vue 代码时，字号、行高、字重必须与本文件保持一致。
-- 生成 HTML / Vue 代码时，必须继承字体渲染规则，不得省略 `font-synthesis` 和字体抗锯齿设置。
+- 生成 HTML Demo 时，字号、行高、字重必须与本文件保持一致。
+- 生成 HTML Demo 时，必须继承字体渲染规则，不得省略 `font-synthesis` 和字体抗锯齿设置。

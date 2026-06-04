@@ -1,0 +1,67 @@
+:root {
+  --p1: #111F1C; /* 部分组件选中态填充色、图形化配色 */
+  --p10: #00F2A1; /* 图形化配色 */
+  --p2: #0F3028; /* 图形化配色 */
+  --p3: #0E4133; /* 图形化配色 */
+  --p4: #0B5842; /* 图形化配色 */
+  --p5: #077656; /* 可交互控件填充色hover/图形化配色 */
+  --p6: #00AB7A; /* 主色/可交互控件填充色normal / 文本色hover/图形化配色 */
+  --p7: #00CC92; /* 可交互控件填充色click / 文本色normal/图形化配色 */
+  --p8: #00D990; /* 文本色click/图形化配色 */
+  --p9: #00E699; /* 图形化配色 */
+  --Deep red-1: #230904; 
+  --Deep red-2: #F0A399; 
+  --Deep red-6: #BC0004; 
+  --Deep red-7: #960008; 
+  --Default 默认: 0px 0px 0px 2px #111F1C; 
+  --Error 错误: 0px 0px 0px 2px #431418; 
+  --Success成功: 0px 0px 0px 2px #1F2611; 
+  --Warning警告: 0px 0px 0px 2px #442A11; 
+  --gray-1: #050505; 
+  --gray-10: #F0F4FA; 
+  --gray-2-背景色、下拉背景: #14151C; 
+  --gray-3-表格、卡片、禁用、导航: #1C1E26; 
+  --gray-4-表头、分割线、hover状态: #2C2F3B; 
+  --gray-5-输入框、次要按钮边框: #3E4352; 
+  --gray-6-占位、禁用文字: #5A606B; 
+  --gray-7-次要文字、图标颜色: #767F8C; 
+  --gray-8-正文: #9DA6B2; 
+  --gray-9-标题: #C3CCD9; 
+  --Orange red-1: #431418; 
+  --Orange red-3: #FFBC85; 
+  --Orange red-6: #F05A0A; 
+  --Orange red-7: #C94000; 
+  --Yellow-1: #404005; 
+  --Yellow-5: #EBD426; 
+  --Yellow-6: #DFBC00; 
+  --Yellow-7: #B89600; 
+  --Orange-1: #442A11; 
+  --Orange-4: #7C4A15; 
+  --Orange-6: #FA8C16; 
+  --Orange-7: #FA8C16; 
+  --Blue-1: #112A45; 
+  --Blue-3: #164C7E; 
+  --Blue-5: #40A9FF; 
+  --Blue-6: #1890FF; 
+  --Blue-7: #4AA8FF; 
+  --Blue-8: #0050B3; 
+  --Red-1: #431418; 
+  --Red-2: #A61D24; 
+  --Red-3: #FF948F; 
+  --Red-5: #FC3D40; 
+  --Red-6: #F5222D; 
+  --Red-7: #F5222D; 
+  --Green-1: #1F2611; 
+  --Green-3: #536D13; 
+  --Green-6: #52C41A; 
+  --Green-7: #52C41A; 
+  --Blue-7: #4AA8FF; 
+  --P6: #00AB7A; 
+  --P7: #00CC92; 
+  --gray-6: #5A606B; 
+  --gray-7: #767F8C; 
+  --gray-8: #A6B0BD; 
+  --gray-9: #C3CCD9; 
+  --投影-悬停: 0px 3px 6px -4px rgba(0,0,0,0.48),0px 6px 16px 0px rgba(0,0,0,0.32),0px 9px 28px 8px rgba(0,0,0,0.08); 
+  --投影-默认: 0px 1px 2px -2px rgba(0,0,0,0.52),0px 3px 6px 0px rgba(0,0,0,0.36),0px 5px 12px 4px rgba(0,0,0,0.16); 
+}

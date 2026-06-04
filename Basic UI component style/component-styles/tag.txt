@@ -36,6 +36,13 @@
 - 可关闭标签：`outline + 后置图标=on`
 - 单纯状态展示：不要默认带关闭图标
 
+**重要边界**：
+
+- `tag--solid` 在当前组件层表示“浅底填充标签”，适合状态、结果和弱风险提示，不等同于 `color.md` 中的“面性标签”。
+- `color.md` 中的“面性标签”专指等级 / 最高风险标签：对应语义色 `-6` 背景 + `#FFFFFF` 文字。
+- 告警级别、事件级别、漏洞等级、风险等级等字段默认使用面性标签，不得直接用浅底 `tag--solid` 替代。
+- 处置状态、流程状态默认使用浅底状态标签或状态点，不得直接套用等级面性标签。
+
 ## 尺寸规范
 
 当前规范只定义一档标准尺寸。
@@ -93,20 +100,15 @@
 
 默认图标建议：
 
-- 前置图标：`CheckCircle`
-- 后置图标：`Close`
+- 前置图标：`icon-a-biaoqianjingbaojingshibaojing` 或按具体状态语义从 iconfont 中选择。
+- 后置关闭图标：优先使用当前 iconfont 中的 `icon-guanbigaoliang`；如后续 iconfont 增加更准确的关闭图标，可按 `icon.md` 规则统一替换。
 
-代码落地统一映射到当前仓库图标体系：
+代码落地统一映射到当前仓库 iconfont 体系：
 
-- React：`lucide-react`
-- HTML Demo：Lucide CDN
-
-推荐映射：
-
-| 位置 | 推荐命名 | React 建议 |
+| 位置 | 推荐语义 | HTML Demo 写法 |
 |------|----------|------------|
-| 前置图标 | `CheckCircle` | `CircleCheck` |
-| 后置图标 | `Close` | `X` |
+| 前置图标 | 状态强化 | `<i class="iconfont icon-a-biaoqianjingbaojingshibaojing tag__icon" aria-hidden="true"></i>` |
+| 后置图标 | 关闭 / 移除 | `<i class="iconfont icon-guanbigaoliang tag__icon" aria-hidden="true"></i>` |
 
 **使用规则**：
 - 前置图标只在“状态需要额外强化识别”时使用
@@ -133,7 +135,7 @@
 
 ### 2. Solid 标签
 
-用于状态、结果、风险等级等需要快速扫读的场景。
+用于状态、结果等需要快速扫读但不需要最高风险强调的场景。当前组件层的 `solid` 为浅底填充样式，不用于替代等级面性标签。
 
 ```tsx
 <Badge className="inline-flex h-[22px] items-center rounded-md bg-brand-green-50 px-2 text-xs font-normal leading-5 text-brand-green-500">
@@ -145,6 +147,27 @@
 - 使用浅色背景 + 同色文字，文字按状态语义使用
 - 默认不加边框
 - 表格状态列优先使用 `solid`，提升扫读效率
+
+### 2.1 Filled / Level 面性标签
+
+用于告警级别、事件级别、漏洞等级、风险等级、威胁等级等最高优先级信息。该类型遵循 `color.md` 的面性标签规则：语义色 `-6` 背景 + `#FFFFFF` 文字。
+
+```html
+<span class="tag tag--filled tag--level-critical">紧急</span>
+<span class="tag tag--filled tag--level-danger">严重</span>
+<span class="tag tag--filled tag--level-warning">警告</span>
+```
+
+HTML Demo 中如果母版组件层暂未内置 `tag--filled`，允许在业务 CSS 中补充仅用于等级标签的扩展类，但颜色仍必须来自 `Green Theme-Global Style.css` / `color.md` 的语义 token，不得临时写随机色。
+
+推荐映射：
+
+| 等级 | 标签类型 | 背景 | 文字 |
+|---|---|---|---|
+| 紧急 | `tag--filled` | Deep red-6 | #FFFFFF |
+| 严重 | `tag--filled` | Red-6 | #FFFFFF |
+| 警告 | `tag--filled` | Orange red-6 | #FFFFFF |
+| 提醒 | `tag--filled` | Orange-6 / Yellow-6 | #FFFFFF |
 
 ### 3. 前置图标标签
 
@@ -217,19 +240,9 @@ Disabled 版本默认不主动生成。若业务必须出现：
 - 这里的 `bg-muted` 表示弱化实底，不是表单禁用背景
 - 关闭图标同步禁用，不保留点击能力
 
-## React 落地建议
+## 工程附录（非 HTML Demo 默认读取）
 
-优先复用 `shadcn/ui` 的 `Badge` 原语，通过 class 约束成 Tag，而不是另外发明一套组件骨架。
-
-```tsx
-import { Badge } from "@/components/ui/badge"
-import { CircleCheck, X } from "lucide-react"
-
-<Badge className="inline-flex h-[22px] items-center gap-1 rounded-md border border-primary bg-transparent px-2 text-xs font-normal leading-5 text-primary">
-  <CircleCheck className="size-3.5" />
-  标签
-</Badge>
-```
+如工程项目需要封装 Tag，可复用项目原有 Badge 原语，但图标仍必须走 iconfont 语义映射，不得把外部图标库作为默认来源。
 
 **落地规则**：
 - Tag 默认使用 `rounded-md`，不要沿用旧的 `rounded-sm`
@@ -245,7 +258,7 @@ import { CircleCheck, X } from "lucide-react"
 
 ```html
 <span class="tag tag--outline tag--primary">
-  <i data-lucide="circle-check" class="tag__icon"></i>
+  <i class="iconfont icon-a-biaoqianjingbaojingshibaojing tag__icon" aria-hidden="true"></i>
   已验证
 </span>
 
@@ -253,7 +266,7 @@ import { CircleCheck, X } from "lucide-react"
 
 <button class="tag tag--outline tag--neutral tag--interactive" type="button">
   自定义
-  <i data-lucide="x" class="tag__icon"></i>
+  <i class="iconfont icon-guanbigaoliang tag__icon" aria-hidden="true"></i>
 </button>
 ```
 
@@ -294,14 +307,14 @@ import { CircleCheck, X } from "lucide-react"
 ```html
 <span
   class="tag tag--outline"
-  style="border-color: var(--brand-gray-300); color: var(--disabled-foreground);"
+  style="border-color: var(--gray-5); color: var(--text-disabled);"
 >
   已失效
 </span>
 
 <span
   class="tag tag--solid"
-  style="background: var(--muted); color: var(--disabled-foreground);"
+  style="background: var(--gray-2); color: var(--text-disabled);"
 >
   不可用
 </span>
@@ -311,8 +324,8 @@ import { CircleCheck, X } from "lucide-react"
 
 规则：
 - 使用 `tag` 系列 class，不继续扩散旧 `.badge-*` 命名
-- HTML Demo 中图标同样使用 Lucide
-- 图标节点统一写成 `<i data-lucide="..." class="tag__icon"></i>`
+- HTML Demo 中图标只能使用 iconfont
+- 图标节点统一写成 `<i class="iconfont icon-xxx tag__icon" aria-hidden="true"></i>`
 - 输出可点击标签时，必须使用原生 `button`
 - 状态列标签优先输出 `tag--solid`
 - 分类/来源标签优先输出 `tag--outline`
@@ -347,4 +360,4 @@ import { CircleCheck, X } from "lucide-react"
 - [ ] 表格状态列优先使用 `solid`
 - [ ] 可关闭标签才允许后置 `X`
 - [ ] 扩展色通过现有 token 引用，不直接输出代码色值
-- 生成完成后执行 `lucide.createIcons()`
+- 图标 class 必须能在母版内置 iconfont 或 `assets/iconfont/font_5177816_5ilr2y8ewpn.css` 中找到
