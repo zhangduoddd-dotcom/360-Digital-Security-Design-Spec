@@ -1,288 +1,221 @@
 ---
 name: backend-design-standards
-description: Use this skill when the user asks for B-end/backend/admin/management-system UI design, 中后台/后台管理/管理系统页面, dashboard/workbench, list/form/detail/config/user-management pages, clickable HTML demos, high-fidelity previews, or design-standard-compliant HTML pages. This skill only targets high-fidelity single-file HTML Demo generation and review. Do not generate Vue, React, Tailwind, frontend engineering code, or framework project code from this standard.
-version: 1.0.0
+description: |
+  B 端后台/管理系统 HTML Demo 设计规范。用于生成或审核高保真、可点击、单文件 HTML Demo；必须继承 single-nav-green-template.html，并遵循绿色主题、布局、交互和组件规范。不得用于 React/Vue/Tailwind 工程代码生成。
+version: 2.3.0
 ---
 
 # 后台设计规范 Skill
-## Backend Design Standards Skill
 
-本文是 AI 使用本仓库生成或检查高保真后台 HTML Demo 时的唯一执行约束。`INDEX.md` 只负责路径索引；所有生成约束、母版边界、组件来源、执行流程和验收规则均以本文为准。
+本 Skill 只服务一个目标：生成符合设计规范、组件规范和交互规范的高保真、可点击、单文件 HTML Demo。
 
-本仓库只服务一个目标：
+不得把本规范用于 React / Vue / Tailwind / shadcn 工程代码生成。若组件文档保留工程附录，HTML Demo 任务只读取 HTML Demo、尺寸、状态、交互、禁用和验收部分。
 
-```text
-生成符合设计规范、组件规范和交互规范的高保真、可点击、单文件 HTML Demo。
-```
+本规范包只保留一套主规范路径；`assets/3Dicon/` 仅服务数据指标卡，不扩展为通用插图目录。
 
-不得把本规范用于 Vue / React / Tailwind / 前端工程代码生成。
+## 1. 真相来源顺序
 
-## 1. 默认交付物
+文件冲突时，按下面顺序判断：
 
-默认且唯一交付物为：
+1. `SKILL.md`：执行目标、读取流程、交付物和禁止项。
+2. `Basic UI component style/single-nav-green-template.html`：固定框架、运行结构、内置组件 class 和框架交互。
+3. `Basic UI component style/Green Theme-Global Style.css`：颜色、Token、字体与动效变量。
+4. `Interaction Construction Specifications/*.md`：页面类型交互逻辑。
+5. `Basic UI component style/layout.md`：布局、栅格、响应式和滚动规则。
+6. `Basic UI component style/component-styles/*.txt` 与 `*.md`：具体组件尺寸、状态和 HTML Demo 结构。
+7. `assets/iconfont/` 与 `assets/3Dicon/`：正式静态资源。
+8. `INDEX.md`：路径索引和最小读取映射。
 
-```text
-单文件 HTML Demo
-```
+母版 HTML 是页面底座，不是视觉参考。颜色 Token 以 `Green Theme-Global Style.css` 为准，优先使用 `AI_STABLE_TOKEN_START` / `AI_STABLE_TOKEN_END` 之间的稳定变量。
 
-HTML Demo 必须满足：
+## 2. 默认交付物
+
+默认且唯一交付物为单文件 HTML Demo。HTML 必须：
 
 - 可直接打开预览。
 - 包含完整 HTML、CSS、JavaScript。
 - 使用 mock 数据，不请求真实接口。
 - 支持当前页面主要点击交互。
 - 覆盖适用的 loading、empty、error、success、disabled、confirm 等状态。
-- 保留组件来源证据，证明页面组件来自本仓库组件库。
+- 写入 `COMPONENT_USAGE_MAP`，证明页面组件来自本仓库组件规范。
 
-只给静态页面、截图、框架工程代码或无法点击验证的视觉稿，均不算完成。
+只交付静态截图、不可点击页面、框架工程代码或没有规范自检的 HTML，都不算完成。
 
-## 2. 固定母版硬约束
+## 3. 生成前必读路径
 
-生成 HTML Demo 前，必须先选择并完整继承固定 HTML 母版：
-
-| 场景 | 必须继承 |
-|---|---|
-| 用户未明确指定导航类型、按本仓库规范生成页面、普通后台页面 | `Interaction Construction Specifications/common-single-nav.html` |
-| 用户明确要求单层导航 | `Interaction Construction Specifications/common-single-nav.html` |
-| 用户明确要求双层导航 | `Interaction Construction Specifications/double-nav-frame.html` |
-
-母版是页面底座，不是视觉参考。必须完整保留母版中的顶部导航、侧边栏、页头、外层内容容器、收起展开逻辑、级联浮层、响应式规则、iconfont、基础字体渲染和框架 JS。
-
-禁止：
-
-- 重新设计或重写顶部导航。
-- 重新设计或重写侧边栏。
-- 删除或重建母版页头。
-- 替换母版外层内容容器。
-- 在业务内容区内再生成一套页面框架。
-- 把单层导航母版和双层导航母版混用。
-- 只参考母版视觉但不复制母版 DOM / CSS / JS。
-
-## 3. 业务内容边界
-
-业务内容只能进入母版指定的业务内容区。可替换内容仅包括：
-
-- 页面标题、页面说明、少量页头右侧业务动作。
-- 业务主体内容。
-- mock 数据。
-- 业务字段、业务状态、表格列、业务文案。
-- 与业务内容绑定的局部交互。
-
-不可替换内容包括：
-
-- 框架根容器。
-- 顶部导航 DOM / CSS / JS。
-- 侧边导航 DOM / CSS / JS。
-- 页头基础结构。
-- 内容区外层容器、背景、滚动规则、最小宽度规则。
-- 菜单展开、收起、级联浮层和响应式逻辑。
-- 母版 iconfont 与基础字体渲染规则。
-
-如果母版中已有 `BUSINESS_CONTENT_START` / `BUSINESS_CONTENT_END` 注释，只能替换该边界内部内容。没有显式边界时，按母版注释和业务内容容器判断，不得整体替换右侧框架区域。
-
-## 4. 页面交互规范读取硬约束
-
-读取 `INDEX.md` 后，必须同时读取当前页面类型对应的 `Interaction Construction Specifications/*.md` 交互规范。
-
-仅继承 HTML 母版和组件库资产，不视为完成页面规范读取。
-
-所有页面必须读取：
+任何生成或审核任务先读：
 
 ```text
+SKILL.md
+INDEX.md
+Basic UI component style/single-nav-green-template.html
+Basic UI component style/Green Theme-Global Style.css
+Basic UI component style/layout.md
 Interaction Construction Specifications/page-container.md
 Interaction Construction Specifications/permission-state.md
 ```
 
-列表页、查询结果页、用户管理列表、系统配置列表必须额外读取：
+然后按页面结构追加读取：
+
+| 页面结构 | 必须追加 |
+|---|---|
+| 列表页、查询结果页、用户管理、系统配置列表、含表格/排行/待办列表 | `Interaction Construction Specifications/list-page.md` |
+| 表单页、新增页、编辑页、配置页、抽屉表单、分步表单 | `Interaction Construction Specifications/form-entry.md` |
+| 包含状态标签、风险等级、状态点、流程状态、图表或数据可视化 | `Basic UI component style/color.md` |
+| 包含数据指标卡、关键统计卡或需要 3Dicon 的概览指标 | `Basic UI component style/component-styles/data-metric-card.md` 与 `assets/3Dicon/` |
+| 包含任何交互组件 | `Basic UI component style/component-styles/motion.txt` |
+| 包含菜单图标、按钮图标、状态图标、空状态图标或图标按钮 | `Basic UI component style/component-styles/icon.md` 与 `assets/iconfont/font_5177816_5ilr2y8ewpn.css`；数据指标卡 3D 图标不适用此行，必须走 `data-metric-card.md` |
+| 使用具体组件 | 读取 `Basic UI component style/component-styles/` 中对应组件文档 |
+
+未读取当前页面适用的交互规范和组件规范时，不得生成最终 HTML Demo。
+
+## 4. 固定母版硬约束
+
+生成 HTML Demo 时必须完整调用并继承：
 
 ```text
-Interaction Construction Specifications/list-page.md
+Basic UI component style/single-nav-green-template.html
 ```
 
-表单页、新增页、编辑页、配置页、抽屉表单、分步表单必须额外读取：
+允许修改：
 
-```text
-Interaction Construction Specifications/form-entry.md
-```
+- `DEFAULT_FRAME_CONFIG` 或 `window.SINGLE_NAV_GREEN_CONFIG`
+- 顶部 logo / 产品名 / 用户名 / 菜单数据
+- `BUSINESS_CONTENT_START` / `BUSINESS_CONTENT_END` 内的业务内容
+- mock 数据、业务文案和业务局部交互
 
-详情页、工作台等页面如果包含表格、列表、搜索区或编辑表单，必须按实际模块追加读取 `list-page.md` 或 `form-entry.md`。
+禁止修改或重写：
 
-未读取当前页面适用交互规范时，不得生成最终 HTML Demo。
+- 页面根框架、顶部导航、侧边栏、页头、右侧外层内容容器
+- 收起展开、级联浮层、响应式、滚动、iconfont 与框架 JS
+- 母版提供的基础字体渲染和全局变量
+- 在业务内容区内重新生成一套 app-shell、page frame、顶部导航或侧边导航
 
-## 5. 组件来源硬约束
+业务内容只能写入 `BUSINESS_CONTENT_START` / `BUSINESS_CONTENT_END` 内，或通过 `window.SingleNavGreenBase.setBusinessContent()` 注入。
 
-组件 DOM / class / CSS 只能来自以下组件库资产；全局 Token 只能来自 `Basic UI component style/Green Theme-Global Style.css`：
-
-```text
-Basic UI component style/Green Theme-Global Style.css
-Basic UI component style/Basic & Data Entry.html
-Basic UI component style/Data Display.html
-Basic UI component style/Feedback.html
-Basic UI component style/Navigation.html
-```
-
-稳定基础组件必须直接复用组件库中的真实 DOM、class 和 CSS，并使用 `Green Theme-Global Style.css` 中的真实 Token。不得为了视觉接近临时仿写 Button、Input、Select、Table、Tag、Pagination、Dropdown、Tooltip、Toast、Modal、Drawer、Tabs、Steps 等基础组件。
-
-组件库 HTML 是可预览的展示页，其中可能包含展示壳、导航、页头和文档说明结构。AI 只能把 `COMPONENT_START` / `COMPONENT_END` 标记内的组件 CSS、组件 DOM 示例和组件状态作为组件来源；标记外内容只用于理解展示页，不得复制进业务页面。尤其禁止从组件库 HTML 中复制 `.platform-frame`、`.platform-top-nav`、`.platform-sidebar`、`.platform-page-header`、`.platform-page-content` 等框架结构。
-
-组件库 HTML 中重复出现的 `:root`、`@font-face`、颜色、阴影、动效变量只作为该展示页独立运行的依赖，不是生成页面的 Token 来源。生成页面、业务 CSS 和 `COMPONENT_USAGE_MAP` 中的 Token 来源只能指向 `Green Theme-Global Style.css`，优先使用其中 `AI_STABLE_TOKEN_START` / `AI_STABLE_TOKEN_END` 内的稳定语义 Token。
-
-组件使用规则：
-
-- 全局 Token、颜色、阴影、字体基线必须来自 `Green Theme-Global Style.css`，不得从组件 HTML 的 `:root` 或展示页字体定义中取值。
-- 表单、按钮、输入、选择、数据录入类组件优先来自 `Basic & Data Entry.html`。
-- 表格、标签、状态、数据展示类组件优先来自 `Data Display.html`。
-- 反馈类组件只有在 `Feedback.html` 已补齐真实 DOM / CSS / 状态后，才能作为完整组件真源。
-- 导航类组件只有在 `Navigation.html` 已补齐真实 DOM / CSS / 状态后，才能作为完整组件真源。
-- 如果组件库未提供某个必需组件，不能伪装成规范组件；必须先补齐组件库，或在交付说明中标注该组件库缺口导致无法合规完成。
+## 5. 组件与颜色使用规则
 
 页面业务 CSS 只能补充业务区布局、宽度、间距、对齐和局部业务修饰，不得重造基础组件视觉系统。
 
-## 6. 用户参考图使用规则
+必须优先复用母版和组件文档中的真实 class：
 
-当用户提供页面截图、设计稿或参考图时，参考图只作为业务布局、信息结构、模块顺序、字段内容和视觉意图参考。
+```text
+.btn
+.input / .input-shell
+.select
+.table / .table-shell
+.tag
+.alert
+.pagination
+.toast
+.checkbox
+.radio
+.switch
+.tabs
+.iconfont
+.metric-card / data metric card 结构（仅当读取 `data-metric-card.md` 后使用）
+```
 
-参考图不是框架真源、不是组件真源、不是交互真源，不得覆盖以下硬约束：
+组件使用规则：
 
-1. 固定 HTML 母版。
-2. 组件库真实 DOM / class / CSS / Token。
-3. `Interaction Construction Specifications/*.md` 中的交互规范。
-4. 页面容器、表格、表单、权限状态等基础规则。
+- Button、Input、Select、Textarea、Checkbox、Radio、Switch 读取对应组件文档。
+- Table 使用时必须同时检查 Table、Pagination、Tag，以及表格内实际出现的 Checkbox / Switch / Button / Select；列表页表格默认使用 `.table--sm` 小号密度，不加外边缘框，表头使用 `gray-2 / gray-9`，普通单元格使用 `gray-8`，左右冻结列必须各自形成连续冻结组，左侧阴影只在左冻结组右边界，右侧阴影只在右冻结组左边界，并按横向滚动位置显示 / 隐藏。
+- Alert、Toast、Tag、Tabs 使用时读取各自组件文档。
+- 数据指标卡必须读取 `data-metric-card.md`，数值使用 24px / Medium，3D 图标只能来自 `assets/3Dicon/`。
+- 所有交互组件必须读取 `motion.txt` 并实现 hover / focus / active / open / close 等必要反馈。
+- 色彩、阴影、焦点环、状态色只允许来自 `Green Theme-Global Style.css`；禁止临时写浏览器默认蓝、旧品牌蓝或随手 hex。
+- 组件库没有定义的能力不能伪装成规范组件；应先说明缺口，或用已定义组件组合实现。
 
-如果参考图样式与本仓库规范冲突，以本仓库规范为准。
+### 图标资源
 
-允许根据参考图调整：
+- 普通图标必须遵循 `Basic UI component style/component-styles/icon.md`，默认且唯一来源为 iconfont 项目 `5177816`。
+- 统一 iconfont 版本为 `//at.alicdn.com/t/c/font_5177816_5ilr2y8ewpn.css`。
+- 母版内置 iconfont 子集；若页面需要未内置的图标 class，读取 `assets/iconfont/font_5177816_5ilr2y8ewpn.css`，只把必要的 `@font-face` 与 class 片段并入单文件 HTML。
+- 普通菜单、按钮、表格、状态、空状态、Toast、Alert、Tabs、Switch 等图标不得使用 iconfont 以外的图标来源，包括 emoji、自绘 SVG 或其他外部图标库。
+- 数据指标卡中的 3D 图标是唯一允许使用 3Dicon 的场景，必须遵循 `Basic UI component style/component-styles/data-metric-card.md`，先查 `assets/3Dicon/INDEX.md`，且只能从 `assets/3Dicon/` 选取已有素材。
+- 不生成、不调用 AI 插图、AI 生成配图、图片提示词资产或自行创造的三维图标。
 
-- 页面模块顺序。
-- 业务字段。
-- 信息层级。
-- 卡片组合。
-- 表格列配置。
-- 搜索条件数量。
-- 文案和 mock 数据。
-- 不影响组件规范的局部业务修饰。
+## 6. 页面执行契约
 
-禁止根据参考图：
+生成 HTML / CSS / JS 前，必须先建立当前页面执行契约。契约可作为内部依据，至少包含：
 
-- 重写顶部导航、侧边栏、页头或内容容器。
-- 仿写组件库之外的基础组件。
-- 覆盖组件库 Token、颜色、圆角、阴影、字体、状态样式。
-- 省略当前页面适用的交互规范。
-- 把静态视觉稿当成可交互 HTML Demo 的最终标准。
-
-使用参考图时，必须先抽取参考图中的业务意图，再映射到本仓库母版、组件库和交互规范中实现。
-
-## 7. 当前页面执行契约
-
-生成 HTML / CSS / JS 前，必须先建立当前页面执行契约。执行契约是内部生成依据，不是交付后的说明文案。
-
-执行契约至少包含：
-
-- 页面类型与使用母版。
-- 已读取的页面交互规范文件。
-- 若用户提供参考图，参考图中被采纳的业务布局、字段、模块顺序和信息层级。
+- 页面类型。
+- 已读取的交互规范文件。
+- 使用的母版和业务内容注入区域。
 - 用户主任务与 P0 / P1 / P2 / P3 信息层级。
-- 业务内容进入母版的具体区域。
-- 组件映射表：组件用途、组件库文件、复用的 DOM / class / CSS / Token。
+- 组件映射表：组件用途、组件文件、复用 class、Token 来源。
+- 图标映射：iconfont class 与来源文件；如使用数据指标卡，记录 3Dicon 文件名和 `assets/3Dicon/` 来源。
 - 当前页面交互清单。
-- 状态清单：loading、empty、error、success、disabled、confirm 等适用状态。
+- 状态清单：loading、empty、error、success、disabled、confirm 等。
 - 布局风险点：容器边界、表格溢出、固定列、分页位置、响应式断点。
 
 没有建立执行契约，不得直接生成 HTML Demo。
 
-## 8. 标准执行流程
+## 7. 标准执行流程
 
-AI 必须按以下顺序执行：
+按以下顺序执行：
 
-```text
 1. 识别任务类型和页面类型。
-2. 读取 INDEX.md，获得最小读取路径。
-3. 读取当前页面类型对应的 Interaction Construction Specifications/*.md 交互规范。
-4. 选择并完整继承固定 HTML 母版。
-5. 判断业务内容只能进入的母版业务区域。
-6. 读取需要的组件库资产，并只提取 `COMPONENT_START` / `COMPONENT_END` 标记内的组件来源。
-7. 如用户提供参考图，提取参考图中的业务布局、信息结构、模块顺序和字段内容，并映射到本仓库规范。
-8. 建立当前页面执行契约。
-9. 基于真实组件 DOM / CSS / Token 生成业务内容。
-10. 添加页面业务 JS，实现主要点击交互和状态切换。
-11. 写入 COMPONENT_USAGE_MAP 组件来源证据。
-12. 按本文验收规则逐项自检。
-13. 不通过时先修正，再交付。
-```
+2. 读取 `INDEX.md`，获得最小读取路径。
+3. 读取 `single-nav-green-template.html`、`Green Theme-Global Style.css` 和 `layout.md`。
+4. 读取页面类型对应的 `Interaction Construction Specifications/*.md`。
+5. 读取实际使用组件对应的 `component-styles/*` 文档。
+6. 如用户提供参考图，只抽取业务布局、信息结构、模块顺序和字段内容。
+7. 建立页面执行契约。
+8. 基于母版业务区和真实组件 class 生成业务内容。
+9. 添加页面业务 JS，实现主要点击交互和状态切换。
+10. 写入 `COMPONENT_USAGE_MAP`。
+11. 按交互规范和组件规范逐项自检。
+12. 不通过时先修正，再交付。
 
-`COMPONENT_USAGE_MAP` 必须与页面实际使用组件一致，不得写入未使用组件，也不得遗漏已使用组件。建议写成 HTML 注释，例如：
+`COMPONENT_USAGE_MAP` 建议写成 HTML 注释：
 
 ```html
 <!--
 COMPONENT_USAGE_MAP
-button.primary: Basic UI component style/Basic & Data Entry.html | classes: ... | tokens: ...
-table.compact: Basic UI component style/Data Display.html | classes: ... | tokens: ...
+button.primary: Basic UI component style/component-styles/button.txt | classes: btn btn-primary btn-md | tokens: --primary, --primary-hover, --primary-active
+table.list: Basic UI component style/component-styles/table.txt | classes: table-shell table table--sm table-row | tokens: --gray-2, --gray-8, --gray-9, --border
 -->
 ```
 
-## 9. 交互与状态验收
+## 8. 生成后审核硬约束
 
-HTML Demo 必须能验证当前页面主要业务路径。页面类型对应的常见交互包括：
+每次生成 HTML Demo 后，必须再次检查：
 
-| 页面类型 | 必须覆盖的典型交互 |
-|---|---|
-| 列表页 | 搜索、清空、筛选、排序、分页、每页条数、勾选、已选 N 项、行操作、更多菜单、Tooltip、确认弹窗、Toast |
-| 表单页 | 字段输入、必填校验、格式提示、条件显隐、提交 loading、成功或失败反馈 |
-| 详情页 | 标签页切换、展开收起、抽屉或弹窗查看、操作反馈 |
-| 工作台 | 卡片 hover、快捷入口点击、简单筛选或标签切换 |
-| 分步流程页 | 上一步、下一步、步骤校验、提交 loading、结果反馈 |
-| 异常页 | 刷新重试、返回首页、申请权限等可恢复操作 |
-
-只实现静态展示、不落地适用交互和状态，视为不通过。
-
-## 10. 输出验收规则
-
-交付前必须逐项确认：
-
-- 已完整继承指定 HTML 母版。
-- 已读取当前页面类型对应的 `Interaction Construction Specifications/*.md` 交互规范。
-- 如用户提供参考图，参考图仅用于业务布局、信息结构、模块顺序、字段内容和视觉意图，未覆盖母版、组件库和交互规范。
-- 未重写顶部导航、侧边栏、页头和外层内容容器。
-- 业务内容只进入母版业务内容区。
-- 未保留母版示例业务内容。
-- 已建立当前页面执行契约。
-- 所有稳定基础组件均来自 `Basic UI component style/` 组件库资产。
-- 组件库 HTML 只使用 `COMPONENT_START` / `COMPONENT_END` 标记内的组件来源，未复制展示壳或 `.platform-*` 框架代码。
-- Token 来源只指向 `Green Theme-Global Style.css`，未把组件 HTML 内重复 `:root` / `@font-face` 当作生成来源。
-- 未使用浏览器原生控件或临时 DOM 代替已有稳定组件。
-- 页面业务 CSS 没有重造基础组件样式。
-- 已覆盖当前页面适用的交互和状态。
-- 关键操作有确认，异步操作有 loading，高风险操作不能只用 Toast 提示。
-- 空值、时间、数字、分页、状态文案格式统一。
-- 全局字体渲染、iconfont、Token、主色、功能色、风险色使用一致。
-- 表格、工具栏、分页、固定列、横向滚动和内容边界没有溢出。
-- 最终 HTML 已写入 `COMPONENT_USAGE_MAP`，且与实际组件一致。
+- 是否完整继承 `single-nav-green-template.html`，没有重写顶部导航、侧边栏、页头和外层容器。
+- 业务内容是否只进入 `BUSINESS_CONTENT_START` / `BUSINESS_CONTENT_END`。
+- 是否使用 `Green Theme-Global Style.css` 作为唯一色彩 Token 来源。
+- 是否符合 `layout.md` 的页面宽度、栅格、间距、响应式与滚动规则。
+- 是否符合当前页面对应的 `Interaction Construction Specifications` 交互逻辑。
+- 所有调用到的组件是否符合 `component-styles` 对应文档的尺寸、状态、动效、禁用和验收规则。
+- 普通图标是否符合 `icon.md`；数据指标卡是否符合 `data-metric-card.md`，且 3D 图标来自 `assets/3Dicon/`。
+- 列表页是否覆盖搜索、清空、筛选、排序、分页、勾选、行操作、确认弹窗和 Toast 等适用交互。
+- 表单页是否覆盖输入、必填、格式校验、条件显隐、提交 loading、成功或失败反馈。
+- loading、empty、error、success、disabled、confirm 等状态是否可验证。
+- `COMPONENT_USAGE_MAP` 是否与实际使用组件一致。
 
 任一硬约束不通过时，不得交付为合规 HTML Demo。
 
-## 11. 禁止交付条件
+## 9. 禁止交付条件
 
-出现以下任一情况，必须先修正：
+出现以下任一情况必须先修正：
 
-- 未使用固定 HTML 母版。
+- 未使用固定母版。
 - 未读取当前页面类型对应的交互规范。
-- 破坏母版固定结构或框架交互。
+- 破坏母版框架结构或框架交互。
 - 业务内容写到母版业务区之外。
-- 根据用户参考图重写母版框架、仿写组件库外的基础组件或省略交互规范。
-- 临时仿写基础组件。
-- 从组件库 HTML 复制展示壳、导航、页头、文档说明结构或 `.platform-*` 框架代码。
-- 从组件库 HTML 的重复 `:root`、字体、颜色、阴影或动效变量取 Token。
-- 把未补齐组件库文件当作完整组件真源。
-- 只复制 CSS 但手写组件 DOM。
-- 只写相似 class 但没有组件库真实结构。
-- 页面只有静态视觉，没有主要交互。
-- 缺少适用的 loading、empty、error、success、confirm 状态。
-- 没有组件来源证据。
+- 临时仿写基础组件，或只写相似 class 但没有组件规范依据。
+- 使用旧蓝色 Token、浏览器默认蓝色或随手 hex 替代绿色主题 Token。
 - 只完成语法检查或页面可运行检查，未完成规范验收。
+- 页面只有静态视觉，没有主要点击交互和状态反馈。
+- 缺少组件来源证据。
 
-## 12. 维护原则
+## 10. 维护说明
 
-- 本文是唯一约束真源；新增或修改 AI 执行规则只改本文。
-- `INDEX.md` 只做读取索引，不重复维护规则。
-- 母版 HTML 和组件库 HTML / CSS 是资产，不是第二套约束文档。
-- 同一规则不得在多个文件中重复维护。
+- `SKILL.md` 维护执行规则。
+- `INDEX.md` 维护读取路径。
+- `Basic UI component style/` 保留母版、主题、布局、色彩和组件规范。
+- `Interaction Construction Specifications/` 保留页面交互规范。
+- `assets/iconfont/` 保留本地全量 iconfont CSS。
+- `assets/3Dicon/` 保留数据指标卡专用 3Dicon 素材库。
+- 不维护镜像目录；修改规范时只改主路径。

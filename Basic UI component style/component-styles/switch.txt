@@ -126,11 +126,11 @@ Switch 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差
 
 ### 3. 图标
 
-适用于状态更依赖图形识别的轻量场景。当前规范默认使用固定图标对：`on=check`、`off=close`。落地到本 skill 时，图标必须统一映射到 [SKILL.md](../../SKILL.md) 中的图标规则。
+适用于状态更依赖图形识别的轻量场景。当前规范默认使用固定 iconfont 图标对：`on=icon-dui`、`off=icon-guanbigaoliang`。落地到本 skill 时，图标必须统一映射到 [SKILL.md](../../SKILL.md) 中的图标规则。
 
 **使用规则**：
-- React 工程中使用 `lucide-react`，推荐映射为 `Check` / `X`
-- HTML Demo 中使用 Lucide CDN，推荐映射为 `data-lucide="check"` / `data-lucide="x"`
+- HTML Demo 中使用 iconfont，推荐映射为 `icon-dui` / `icon-guanbigaoliang`
+- 不得使用 iconfont 以外的图标来源，包括 emoji、自绘 SVG 或其他外部图标库
 - 图标占位尺寸与当前尺寸档一致：常规 `16px`、紧凑 `12px`
 - 图标始终放在与 thumb 相对的一侧空槽中
 - 不使用手写内联 SVG，避免偏离 skill 统一图标库
@@ -187,17 +187,17 @@ Switch 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差
 
 ---
 
-## React 落地建议（shadcn/ui）
+## 工程附录（非 HTML Demo 默认读取）
 
 **重要**：
 - shadcn 默认 `Switch` 尺寸与本规范不一致
 - 生成代码时必须覆写轨道尺寸、内边距、thumb 尺寸和 thumb 位移
 - 禁用态不要沿用默认 `disabled:opacity-50`
+- 工程封装如需图标，仍映射 iconfont class，不引入外部图标包
 
 ```tsx
 import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
-import { Check, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -245,17 +245,17 @@ function Switch({
 - 外部有可见标签时，优先使用 `描述=无`
 - 纯开关场景必须补 `aria-label`
 - 文字描述变体默认使用 `开 / 关`
-- 图标描述变体默认使用 Lucide `Check / X`
+- 图标描述变体默认使用 iconfont `icon-dui / icon-guanbigaoliang`
 - 如果点击后会立刻写库或触发高风险动作，业务层应增加二次确认或撤销能力
 
-### React 图标描述变体示例
+### 图标描述变体示例
 
-```tsx
-<SwitchPrimitives.Root className="relative h-6 w-12 rounded-full bg-primary p-1">
-  <Check className="absolute left-2 top-1/2 size-4 -translate-y-1/2 text-primary-foreground" />
-  <X className="absolute right-2 top-1/2 size-4 -translate-y-1/2 text-primary-foreground opacity-0" />
-  <SwitchPrimitives.Thumb className="block size-4 rounded-full bg-primary-foreground transition-transform data-[state=checked]:translate-x-6" />
-</SwitchPrimitives.Root>
+```html
+<span class="switch-track size-default">
+  <i class="iconfont icon-dui switch-icon switch-icon-on" aria-hidden="true"></i>
+  <i class="iconfont icon-guanbigaoliang switch-icon switch-icon-off" aria-hidden="true"></i>
+  <span class="switch-thumb"></span>
+</span>
 ```
 
 ---
@@ -263,22 +263,19 @@ function Switch({
 ## HTML Demo 落地建议
 
 **图标来源**：
-- 必须使用 Lucide CDN + `data-lucide`
-- 不使用手写内联 SVG
-- 生成完成后执行 `lucide.createIcons()`
+- 必须使用 iconfont class
+- 不使用手写内联 SVG 或其他外部图标库
 
 ```html
-<script src="https://unpkg.com/lucide@latest"></script>
 <label class="switch-wrapper">
   <input type="checkbox" class="switch-input" checked />
   <span class="switch-track size-default">
-    <i data-lucide="check" class="switch-icon switch-icon-on"></i>
-    <i data-lucide="x" class="switch-icon switch-icon-off"></i>
+    <i class="iconfont icon-dui switch-icon switch-icon-on" aria-hidden="true"></i>
+    <i class="iconfont icon-guanbigaoliang switch-icon switch-icon-off" aria-hidden="true"></i>
     <span class="switch-thumb"></span>
   </span>
   <span class="switch-label">自动备份</span>
 </label>
-<script>lucide.createIcons()</script>
 ```
 
 ### HTML 文字描述变体示例
@@ -396,10 +393,10 @@ function Switch({
 - [ ] `off` hover 只能增强中性色，不可切成开启态主色
 - [ ] 禁用态不可只依赖 `opacity-50`
 - [ ] 文字描述变体默认使用 `开 / 关`
-- [ ] 图标描述变体默认使用 Lucide `Check / X` 或 HTML `check / x`
+- [ ] 图标描述变体默认使用 iconfont `icon-dui / icon-guanbigaoliang`
 - [ ] 描述内容始终位于 thumb 对侧空槽
 - [ ] 有外部标签时，优先使用 `描述=无`
 - [ ] 表格或无可见文案场景补齐 `aria-label`
-- [ ] shadcn 默认尺寸必须覆写，不可直接沿用默认 Switch
+- [ ] 工程组件默认尺寸必须覆写，不可直接沿用未对齐的默认 Switch
 - [ ] HTML Demo 使用模板内置 `.switch-*` 类，不手写额外 SVG
 - [ ] 仅在“即时生效”场景使用 Switch

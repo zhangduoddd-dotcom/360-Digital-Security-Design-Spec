@@ -123,8 +123,8 @@
 ```css
 /* 正确 */
 .checkbox {
-  border: 1px solid var(--input);
-  background: var(--card);
+  border: 1px solid var(--border-strong);
+  background: var(--card-bg);
 }
 
 .checkbox:checked {
@@ -135,7 +135,7 @@
 /* 错误 */
 .checkbox {
   border: 1px solid var(--border);
-  background: var(--card);
+  background: var(--card-bg);
 }
 ```
 
@@ -167,22 +167,14 @@
 
 ### 半选中状态（Indeterminate）
 
-用于全选场景，当子选项部分选中时显示横线图标。
+用于全选场景，当子选项部分选中时显示横线标记。HTML Demo 中可由 Checkbox 内置样式表现；如使用图标，必须从 iconfont 中选择，不引入外部图标库。
 
-```tsx
-import { Checkbox } from "@/components/ui/checkbox"
-import { Minus } from "lucide-react"
-
-// 方法一：使用 shadcn 的 checked="indeterminate"
-<Checkbox checked="indeterminate" />
-
-// 方法二：受控组件实现
-const [checked, setChecked] = useState<boolean | "indeterminate">("indeterminate")
-
-<Checkbox
-  checked={checked}
-  onCheckedChange={(value) => setChecked(value)}
-/>
+```html
+<label class="checkbox-wrapper">
+  <input type="checkbox" class="checkbox-input" data-state="indeterminate" />
+  <span class="checkbox-box checkbox-box-indeterminate" aria-hidden="true"></span>
+  <span class="checkbox-label">全选</span>
+</label>
 ```
 
 ### 禁用状态
@@ -853,5 +845,5 @@ const formSchema = z.object({
 --gray-5   /* 默认边框、失效边框、已选失效背景 */
 --gray-7   /* 失效文字 */
 --gray-9   /* 默认文字 */
---ring     /* 聚焦环颜色 */
+--focus-default /* 聚焦环阴影 */
 ```

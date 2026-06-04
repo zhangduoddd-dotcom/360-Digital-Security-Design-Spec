@@ -117,19 +117,18 @@ Tabs 动效统一继承 [motion.txt](motion.txt)；本组件只补充以下差�
 
 tab 的图标必须继承 [SKILL.md](../../SKILL.md) 中的图标规则，不要为 tab 单独引入第二套图标库。
 
-- React 项目：统一使用 `lucide-react`
-- HTML Demo：统一使用 Lucide CDN + `data-lucide`
-- 默认图标尺寸：`16px`，对应 `size-4`
+- HTML Demo：统一使用 iconfont class
+- 默认图标尺寸：`16px`
 - 图标与文字间距：线性 tab `8px`，面性 tab 若后续启用图标，默认也按 `8px` 对齐
 - 不使用手写内联 SVG，避免和全局图标风格漂移
 
 推荐映射：
 
-| 场景 | Lucide 建议 |
+| 场景 | iconfont 建议 |
 |------|-------------|
-| 通用页签前置图标 | `Settings` / `FolderOpen` / `FileText` |
-| 左右溢出控制 | `ChevronLeft` / `ChevronRight` |
-| 可关闭页签 | `X` |
+| 通用页签前置图标 | `icon-a-shezhixitong` / `icon-guanliwendang` / `icon-wendang` |
+| 左右溢出控制 | `icon-xiangzuozhankai` / `icon-xiangyouzhankai` |
+| 可关闭页签 | `icon-guanbigaoliang` |
 
 ## 状态规范
 
@@ -247,37 +246,30 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 
 ### 带图标的线性 Tab
 
-```tsx
-import { Settings } from "lucide-react"
-
-<TabsTrigger
-  value="setting"
-  className="h-10 min-w-[74px] rounded-none border-b-2 border-transparent px-2 py-[9px] text-sm font-normal leading-[22px] text-foreground shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:text-disabled-foreground hover:text-primary data-[state=active]:border-primary data-[state=active]:text-primary"
->
-  <Settings className="mr-2 size-4" />
+```html
+<button class="tabs-trigger tabs-trigger--active" type="button">
+  <i class="iconfont icon-a-shezhixitong tabs-trigger__icon" aria-hidden="true"></i>
   标签1
-</TabsTrigger>
+</button>
 ```
 
 ### 溢出控制图标
 
-```tsx
-import { ChevronLeft, ChevronRight } from "lucide-react"
-
+```html
 <button
   type="button"
-  className="inline-flex h-10 w-8 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+  class="tabs-overflow-control"
   aria-label="向左滚动标签页"
 >
-  <ChevronLeft className="size-4" />
+  <i class="iconfont icon-xiangzuozhankai" aria-hidden="true"></i>
 </button>
 
 <button
   type="button"
-  className="inline-flex h-10 w-8 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+  class="tabs-overflow-control"
   aria-label="向右滚动标签页"
 >
-  <ChevronRight className="size-4" />
+  <i class="iconfont icon-xiangyouzhankai" aria-hidden="true"></i>
 </button>
 ```
 
@@ -358,5 +350,5 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 - [ ] 线性组间距 `16px`，面性组间距 `8px`
 - [ ] 根据容器可用宽度判断是否溢出，不把 `10` 当成绝对阈值
 - [ ] 溢出后补充左右控制或横向滚动，不要无脑压缩 tab
-- [ ] 图标统一使用 Lucide Icons，不单独引入其他图标库
+- [ ] 图标统一使用 iconfont，不单独引入其他图标库
 - [ ] 禁用态优先使用 token，不直接套整组透明度

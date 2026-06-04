@@ -16,7 +16,7 @@
 
 ### 必须覆盖的基础交互
 
-- Button：hover / active / focus 的颜色、边框、阴影或 ring 反馈
+- Button：hover / active / focus 的颜色、边框、阴影或 ring 反馈；内联展开 / 收起 icon 不默认使用阴影或背景反馈，仅做 icon 颜色变化
 - Input / Textarea：hover / focus / error / disabled 的边框、ring、文字或背景反馈
 - Select / Combobox / DatePicker Trigger：hover / active / open / close 反馈，箭头开合反馈，面板进出反馈
 - Switch / Checkbox / Radio：checked 与 unchecked 切换反馈，必要时含图标或文案显隐

@@ -136,12 +136,13 @@ toast("消息内容", {
 
 ### 自定义图标
 
-```tsx
-import { Rocket } from "lucide-react"
+HTML Demo 中的自定义图标仍使用 iconfont class，不引入外部图标库。
 
-toast("新功能上线", {
-  icon: <Rocket className="size-4" />,
-})
+```html
+<div class="toast toast-info">
+  <i class="iconfont icon-a-tixinglingdang toast-icon" aria-hidden="true"></i>
+  <span class="toast-content">新功能上线</span>
+</div>
 ```
 
 ## Toaster 配置

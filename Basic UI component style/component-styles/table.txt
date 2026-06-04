@@ -13,7 +13,8 @@
 
 - 如果仓库中已经存在可直接复用的子组件，就优先继承该组件的尺寸、状态、图标、圆角和 token，不在 table 内再做“差不多”的平替
 - 如果 table 某个局部只是组合关系，而不是新的原子组件，就用本仓库已有组件组合实现，不额外抽离新的 table-only 组件
-- 颜色只允许来自现有 token：表格行分隔走 `border-border`，表内交互控件外框走 `border-input / border-input-disabled`，状态色走 `primary / destructive / brand-*`
+- 颜色只允许来自现有 token：表头背景走 `gray-2`，表头文字走 `gray-9`，普通单元格文字走 `gray-8`，表格行分隔走 `border-border / gray-4`，表内交互控件外框走 `border-input / border-input-disabled`，状态色走 `primary / destructive / brand-*`
+- 表格主体横向 / 纵向滚动条统一使用 4px 细滚动条，thumb 使用中性弱色，hover 可略加深；不要让浏览器默认粗滚动条破坏高密数据区
 
 ## 组件拆解
 
@@ -55,9 +56,11 @@ Table 组件拆成以下子模块：
 
 ## Token 边界
 
-- 表格分割线、外层容器描边统一使用 `border-border`
-- 表头弱化底、行 hover 弱化底统一使用 `bg-muted/50`
-- 行选中背景统一使用 `bg-muted`
+- 表格行分割线统一使用 `border-border / gray-4`；列表页的列表容器 / 表格区容器内表格默认不加外边缘框
+- 表头背景统一使用 `gray-2`，表头文字统一使用 `gray-9`
+- 普通单元格文字统一使用 `gray-8`
+- 行 hover / selected 使用中性弱背景，不改写文字层级
+- 只有独立展示型表格可使用外层 `border-border` 和圆角；列表容器 / 表格区容器内表格禁止额外外框
 - `bg-field-disabled` 只用于表内**禁用控件**，不要拿来做整行 hover、选中或斑马纹
 - `border-input` / `border-input-disabled` 只属于 `Checkbox / Input / Select / Switch / Button` 这类交互控件，不属于表格行分隔线
 - 不要在 table 文档里新造 `gray-100 / gray-200 / 固定浅色值` 这类脱离 token 的局部色名；直接引用现有语义 token 或品牌扩展 token
@@ -112,36 +115,31 @@ import {
 
 | 元素 | 尺寸 | 类名 | 说明 |
 |------|------|------|------|
-| 紧凑行高 | 32px | `h-8` | 紧凑密度 |
-| 常规行高 | 40px | `h-10` | 默认列表密度 |
-| 宽松行高 | 48px | `h-12` | 宽松密度 |
-| 单元格内边距 | 16px | `px-4` | 左右内边距 |
-| 选择/单选/展开/拖拽列宽 | 32 / 40 / 48px | `w-8 / w-10 / w-12` | 跟随三档尺寸联动 |
+| 小号行高 | 40px | `h-10` / `.table--sm` | 默认密度，适用于日志、审计、认证记录等高密扫读表格 |
+| 小号文字 | 12px / 20px / 400 | `text-xs leading-5` | 默认单元格文字规格 |
+| 大号行高 | 48px | `h-12` / `.table--lg` | 信息量较少、需要更舒展的普通列表 |
+| 大号文字 | 14px / 22px / 400 | `text-sm leading-[22px]` | 大号单元格文字规格 |
+| 单元格横向内边距 | 12px | `px-3` | 默认高密列表内边距 |
+| 选择/单选/展开/拖拽列宽 | 48px | `w-12` | 保持稳定点击区域，居中摆放子控件 |
 
 ```tsx
-// 紧凑表格
-<Table className="[&_td]:h-8 [&_th]:h-8">
+// 小号表格（默认）
+<Table className="[&_td]:h-10 [&_th]:h-10 [&_td]:text-xs [&_th]:text-xs">
   ...
 </Table>
 ```
 
 ```tsx
-// 常规表格（默认）
-<Table className="[&_td]:h-10 [&_th]:h-10">
-  ...
-</Table>
-```
-
-```tsx
-// 宽松表格
-<Table className="[&_td]:h-12 [&_th]:h-12">
+// 大号表格
+<Table className="[&_td]:h-12 [&_th]:h-12 [&_td]:text-sm [&_th]:text-sm">
   ...
 </Table>
 ```
 
 **尺寸补充**：
 
-- 当前主密度体系是 `32 / 40 / 48`
+- 当前主密度体系只有 `小号 40px / 12px` 与 `大号 48px / 14px` 两档；HTML Demo 和列表页默认使用小号
+- 不再把 `32px` 作为标准数据行高；32px 只可出现在表内 icon button、排序按钮等局部操作位
 - 个别文本、链接、标签单元格出现 `54px` 高示例，说明某些宽松态单元格允许因内容结构产生更高展示块；这不应改写 table 的主密度基线
 - 可展开行、嵌套表、附加说明区会突破基础行高，属于结构扩展，不属于基础尺寸轴
 
@@ -149,16 +147,16 @@ import {
 
 ```tsx
 // 表头默认样式
-<TableHead className="h-10 px-4 text-left align-middle font-medium text-tertiary-foreground [&:has([role=checkbox])]:pr-0">
+<TableHead className="h-10 bg-[var(--gray-2)] px-3 text-left align-middle text-xs font-semibold text-[var(--gray-9)] [&:has([role=checkbox])]:pr-0">
   列名
 </TableHead>
 ```
 
 **表头规范**：
-- 字号：14px (`text-sm`，默认)
-- 字重：`font-medium`
-- 颜色：三级文字 `text-tertiary-foreground`
-- 背景：`bg-muted/50`（可选，用于视觉分隔，属于轻量弱化表面）
+- 字号：小号表格使用 12px / 20px，大号表格使用 14px / 22px
+- 字重：`font-semibold` / 600
+- 颜色：`gray-9`
+- 背景：`gray-2`
 - 表头轴包括 `排序 / 筛选 / 搜索 / 分割线 / 对齐`，代码侧要把它视为表头规范的一部分，而不是页面里自由添加的小图标
 
 ### 表头能力边界
@@ -173,28 +171,13 @@ import {
 
 ### 可排序表头
 
-```tsx
-import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
-
-<TableHead>
-  <Button 
-    variant="ghost" 
-    className="-ml-2 h-8 px-2 text-muted-foreground hover:bg-transparent hover:text-primary"
-    onClick={() => handleSort("name")}
-  >
+```html
+<th class="table-head-cell table-head-cell--sortable" aria-sort="ascending">
+  <button class="table-sort-trigger" type="button">
     名称
-    {sortColumn === "name" ? (
-      sortDirection === "asc" ? (
-        <ArrowUp className="ml-2 size-4" />
-      ) : (
-        <ArrowDown className="ml-2 size-4" />
-      )
-    ) : (
-      <ArrowUpDown className="ml-2 size-4" />
-    )}
-  </Button>
-</TableHead>
+    <i class="iconfont icon-shangjiantou table-sort-icon" aria-hidden="true"></i>
+  </button>
+</th>
 ```
 
 **排序图标规范**：
@@ -208,10 +191,9 @@ import { Button } from "@/components/ui/button"
 ### 表头图标操作位
 
 - 表头中的筛选、搜索、列设置图标位跟随 table 尺寸轴联动：
-  - 紧凑：`32px`
-  - 常规：`40px`
-  - 宽松：`48px`
-- 图标位里的实际图标默认统一使用 `16px`（`size-4`）；不要因为壳体是 `32 / 40 / 48px` 就把图标一并放大
+  - 小号：`40px`
+  - 大号：`48px`
+- 图标位里的实际图标默认统一使用 `16px`（`size-4`）；不要因为壳体是 `40 / 48px` 就把图标一并放大
 - 默认颜色统一使用二级文字 `text-muted-foreground`
 - 只有 hover / active / open 等状态才做颜色变化；不要让表头操作位在静态态就带主色倾向
 - 默认不铺底色；若需要 hover 反馈，优先使用透明背景上的文字色变化或极轻量反馈
@@ -222,15 +204,17 @@ import { Button } from "@/components/ui/button"
 
 ```tsx
 // 数据行默认样式
-<TableRow className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+<TableRow className="border-b transition-colors hover:bg-[var(--gray-2)] data-[state=selected]:bg-[var(--gray-2)]">
   ...
 </TableRow>
 ```
 
 **数据行规范**：
-- 分隔线：`border-b border-border`
-- 悬停：`hover:bg-muted/50`，属于轻量弱化反馈
-- 选中：`data-[state=selected]:bg-muted`，属于明确可见的弱化实底
+- 分隔线：`border-b border-border / gray-4`
+- 悬停：`hover:bg-[var(--gray-2)]`，属于中性弱背景反馈，文字颜色不变化
+- 选中：`data-[state=selected]:bg-[var(--gray-2)]`，属于明确可见的中性弱背景
+- 普通单元格文字：小号表格默认 12px / 20px / 400 / `gray-8`，大号表格默认 14px / 22px / 400 / `gray-8`
+- 行高必须通过固定高度与垂直居中控制，单元格不要使用会撑高 40px 小号行的上下 padding
 - 行 hover 与行选中优先保持真实交互，不建议在 demo 中额外摆一套静态状态样本
 - 行选中应与选择列 `Checkbox` 联动，而不是单独造一层平行状态
 - 选中态只保留整行底色差异，不额外添加左侧色条、强调边线或其他新标记
@@ -273,8 +257,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 ```
 
 **行选择规范**：
-- 复选框列宽跟随密度联动：紧凑 `32px`、常规 `40px`、宽松 `48px`
-- 选中行背景：`bg-muted`
+- 复选框列默认宽度 `48px`，表头和数据单元格宽度必须一致，子控件居中摆放
+- 选中行背景：`gray-2`
 - 选择列本身不重新定义 Checkbox 视觉，直接复用 [checkbox.txt](checkbox.txt)；表格里默认走纯方框或紧凑场景，不额外补标签文本
 - 全选列必须支持 `indeterminate`，不能用两个独立视觉态冒充半选
 - 没有可见文案时必须补 `aria-label`
@@ -286,14 +270,33 @@ import { Checkbox } from "@/components/ui/checkbox"
 - `可拖拽列` 复用现有拖拽图标与 hover 态，只把它约束在 table 列宽和居中规则里
 - 这三类列都属于 table 已定义子模块，文档里不能再把它们归类为“页面自由扩展”
 
+### 固定列与冻结阴影
+
+- 冻结列按方向分为左侧冻结组和右侧冻结组；每一侧冻结组内部都必须连续，禁止在冻结组中间夹入非冻结列。
+- 左侧存在勾选列时，勾选列固定在最左侧，首个关键识别业务列如需冻结，必须紧随勾选列之后。
+- 右侧存在操作列时，操作列默认固定在最右侧；如果右侧还有其他固定列，也必须与操作列形成连续右侧冻结组。
+- 如果原始字段顺序中关键识别列前还有未冻结业务列，应调整列顺序让关键识别列进入左侧冻结组，或将其前面的业务列一并冻结。
+- 每个左侧冻结列的 `left` 偏移必须等于前面左侧冻结列宽度之和；每个右侧冻结列的 `right` 偏移必须等于后面右侧冻结列宽度之和；表头和数据单元格使用同一列宽与同一偏移值。
+- 左侧冻结阴影只出现在左侧冻结组最后一列的右边界，横向滚动距离大于 0 时显示，回到最左侧时隐藏。
+- 右侧冻结阴影只出现在右侧冻结组最左一列的左边界，未滚到最右侧时显示，滚到最右侧时隐藏。
+- 冻结阴影应使用边界冻结列的 `::after / ::before` 或覆盖层实现，稳定压在滚动内容上方；不要把阴影加在非冻结列或表格中间列上，也不要依赖 `border-collapse` 下不稳定的 `td box-shadow`。
+- 冻结列必须设置明确背景和层级，避免滚动内容透出。
+
 ## 单元格内容样式
 
 ### 主要字段
 
 ```tsx
-// 主要字段（如名称）加粗
+// 主要字段（如对象名称、策略名称、资产名称）加粗
 <TableCell className="font-medium">{item.name}</TableCell>
 ```
+
+**主要字段使用边界**：
+
+- 主要字段样式只用于明确承担主对象名称、主识别信息或用户需要优先扫读的对象列。
+- 固定列不自动等于主要字段；不要因为某列被冻结、靠左或是第一列业务列就默认加粗。
+- 日志、审计、认证记录等记录型表格通常以逐行事实扫读为主，除非业务明确指定主对象列，否则普通数据列保持当前密度的 `400 / gray-8`。
+- 同一张表内不要同时出现多个无明确语义的 `font-medium` 数据列，避免正文视觉接近表头。
 
 ### 状态标签
 
@@ -324,56 +327,32 @@ import { Badge } from "@/components/ui/badge"
 ### 时间字段
 
 ```tsx
-<TableCell className="text-tertiary-foreground">{item.createdAt}</TableCell>
+<TableCell className="text-[var(--gray-8)]">{item.createdAt}</TableCell>
 ```
 
 ### 操作列
 
-```tsx
-import { MoreHorizontal, Pencil, Trash2, Copy } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-<TableCell className="text-left">
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="ghost" className="size-8 p-0">
-        <span className="sr-only">打开菜单</span>
-        <MoreHorizontal className="size-4" />
-      </Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent align="start">
-      <DropdownMenuItem>
-        <Pencil className="mr-2 size-4" />
-        编辑
-      </DropdownMenuItem>
-      <DropdownMenuItem>
-        <Copy className="mr-2 size-4" />
-        复制
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem>
-        <Trash2 className="mr-2 size-4" />
-        删除
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-</TableCell>
+```html
+<td class="table-cell table-cell--actions">
+  <div class="table-actions">
+    <button class="btn btn-ghost btn-icon" type="button" aria-label="编辑">
+      <i class="iconfont icon-bianji" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-ghost btn-icon" type="button" aria-label="更多操作">
+      <i class="iconfont icon-a-gengduoqita" aria-hidden="true"></i>
+    </button>
+  </div>
+</td>
 ```
 
 **操作列规范**：
 - 对齐：`text-left`
-- 触发按钮：`size-8 p-0` + `MoreHorizontal` 图标
-- 菜单对齐：`align="start"`
-- 菜单项图标：`mr-2 size-4`
+- 触发按钮：`.btn btn-ghost btn-icon` + `icon-a-gengduoqita`
+- 菜单对齐：按触发按钮左边界或右边界自动对齐，避免出屏
+- 菜单项图标：统一使用 `16px` iconfont
 - 操作列按钮与菜单继续复用 Button / DropdownMenu 规范，不再单独定义 table 专属按钮视觉
 - 行内编辑、删除、复制、更多等操作图标默认统一使用 `16px`（`size-4`），避免按钮壳体与图标一起变大
+- 多列横向滚动场景中，操作列默认固定在最右侧，并按右侧冻结组规则处理左边界阴影
 - 操作列存在 `更多=on/off` 与 `操作数量=1 / 2 / 3 / 4 / 4+` 轴
 - 代码建议同步遵守这条收口：
   - `1~3` 个高频操作可直接平铺
@@ -382,18 +361,18 @@ import {
 
 ### 快捷操作按钮
 
-```tsx
-// 当操作项较少（2-3个）时，直接显示按钮
-<TableCell className="text-left">
-  <div className="flex items-center gap-2">
-    <Button variant="ghost" size="icon" className="size-8">
-      <Pencil className="size-4" />
-    </Button>
-    <Button variant="ghost" size="icon" className="size-8">
-      <Trash2 className="size-4" />
-    </Button>
+```html
+<!-- 当操作项较少（2-3 个）时，直接显示按钮 -->
+<td class="table-cell table-cell--actions">
+  <div class="table-actions">
+    <button class="btn btn-ghost btn-icon" type="button" aria-label="编辑">
+      <i class="iconfont icon-bianji" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-ghost btn-icon" type="button" aria-label="删除">
+      <i class="iconfont icon-shanchu" aria-hidden="true"></i>
+    </button>
   </div>
-</TableCell>
+</td>
 ```
 
 ## 空状态
@@ -453,29 +432,39 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Checkbox } from "@/components/ui/checkbox"
 
-<div className="flex items-center justify-between py-4">
-  <p className="text-sm text-tertiary-foreground">
-    共 {total} 条，第 {page} / {totalPages} 页
-  </p>
-  <Pagination>
-    <PaginationContent>
-      <PaginationItem>
-        <PaginationPrevious href="#" />
-      </PaginationItem>
-      {/* 页码 */}
-      <PaginationItem>
-        <PaginationNext href="#" />
-      </PaginationItem>
-    </PaginationContent>
-  </Pagination>
+<div className="flex items-center justify-between pt-2">
+  <div className="flex items-center gap-2">
+    <Checkbox aria-label="跨页全选" />
+    <span className="text-sm text-foreground">跨页全选</span>
+    <button className="size-3.5" aria-label="勾选当前过滤条件下所有内容">i</button>
+  </div>
+  <div className="flex items-center gap-2">
+    <p className="text-sm text-tertiary-foreground">共计 {total} 条</p>
+    {/* 每页条数 Select */}
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href="#" />
+        </PaginationItem>
+        {/* 页码 */}
+        <PaginationItem>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+    {/* 跳页 Input */}
+  </div>
 </div>
 ```
 
 **分页规范**：
-- 位置：表格下方，`py-4`
-- 布局：`justify-between`
-- 统计文字：三级文字 `text-sm text-tertiary-foreground`
+- 位置：表格下方，与表格主体保持 8px 间距
+- 布局：`justify-between`，左侧可放跨页全选，右侧放 `共计 X 条`、每页条数、页码轨道和跳页
+- 统计文字：三级文字 `text-sm text-tertiary-foreground`，总数文案统一为 `共计 X 条`
+- 支持跨页选择时，左侧 `跨页全选` Checkbox 必须与表格勾选列 Checkbox 垂直对齐；信息提示图标为 14px x 14px，Tooltip 文案为 `勾选当前过滤条件下所有内容`
+- 表格内容少时分页跟随表格主体；内容多时表格主体滚动，分页吸底冻结
 - 复杂分页的结构、尺寸、状态和 `Select/Input` 复用边界，统一参考 [pagination.txt](pagination.txt)
 - 每页条数选择器与跳页输入框分别回看 [select.txt](select.txt) 与 [input.txt](input.txt)，不要在 table 文档里复制一份
 
@@ -507,7 +496,7 @@ import {
 
 ```html
 <div class="table-shell">
-  <table class="table">
+  <table class="table table--sm">
     <thead class="table-head">
       <tr class="table-row">
         <th class="table-head-cell table-check-col">
@@ -532,10 +521,10 @@ import {
         <td class="table-cell table-cell--actions">
           <div class="table-actions">
             <button class="btn btn-ghost btn-icon" type="button" aria-label="编辑">
-              <i data-lucide="pencil"></i>
+              <i class="iconfont icon-bianji" aria-hidden="true"></i>
             </button>
             <button class="btn btn-ghost btn-icon" type="button" aria-label="更多操作">
-              <i data-lucide="more-horizontal"></i>
+              <i class="iconfont icon-a-gengduoqita" aria-hidden="true"></i>
             </button>
           </div>
         </td>
@@ -547,13 +536,16 @@ import {
 
 ### HTML 复用规则
 
-- 外层优先复用模板中的 `.table-shell + .table`
+- 外层优先复用模板中的 `.table-shell + .table`，默认不额外加外边缘框
+- `.table` 默认按小号密度输出，也可显式加 `.table--sm`；只有需要更舒展展示时才加 `.table--lg`
+- 需要独立带框展示时，外层使用 `.table-shell.table-shell--bordered`，不要把带框样式写成默认表格样式
 - 表头、行、单元格优先使用 `.table-head / .table-head-cell / .table-row / .table-cell`
 - 选择列复用现有 `.checkbox`
 - 状态列复用现有 `.tag`
 - 操作列按钮复用 `.btn btn-ghost btn-icon`
 - 表头图标位、行内操作位、分页箭头里的图标默认继续使用 `16px`
 - 表格下方分页复用 `.pagination-bar / .pagination-track / .pagination-page / .pagination-arrow / .pagination-jump`
+- 支持跨页选择时，分页左侧复用 `.pagination-selection / .pagination-cross-select / .pagination-info`；不要把跨页全选做成表格外的独立浮条
 - 不要在 HTML Demo 里再手写一套 table 专用 checkbox、table 专用 badge、table 专用分页按钮
 
 ## 表格容器
@@ -576,26 +568,33 @@ import {
 ```
 
 **容器规范**：
-- Card 内表格：CardContent 加 `p-0` 让表格撑满
-- 独立表格：外层 `rounded-md border border-border`
+- 列表容器 / 表格区容器内表格：不加外边缘框，不额外圆角，表头和行分割线承担结构分隔
+- Card 内表格：CardContent 加 `p-0` 让表格撑满，除非该 Card 本身就是独立展示容器，否则表格内部不再追加外框
+- 独立展示型表格：可使用外层 `rounded-md border border-border` 或 `.table-shell--bordered`
 
 ## Checklist
 
 生成表格时检查：
 
-- [ ] 使用 shadcn Table 组件
+- [ ] HTML Demo 使用 `.table-shell + .table` 结构
 - [ ] Table 只负责布局与行状态，子控件继续复用现有组件规范
-- [ ] 表头颜色 `text-tertiary-foreground` + `font-medium`
+- [ ] 表格默认小号密度：行高 40px，普通单元格 12px / 20px / 400；大号密度为 48px + 14px / 22px
+- [ ] 表头背景 `gray-2`，表头文字 `gray-9` + 600
+- [ ] 普通单元格文字 `gray-8`，未被误加粗
 - [ ] 数据行有 hover 效果
-- [ ] 表格分割线使用 `border-border`，不要误用 `border-input`
-- [ ] 主要字段 `font-medium`
-- [ ] 时间字段 `text-tertiary-foreground`
+- [ ] 表格分割线使用 `border-border / gray-4`，不要误用 `border-input`
+- [ ] 列表容器 / 表格区容器内表格没有外边缘框；只有独立展示型表格才使用 `.table-shell--bordered` 或外层 border
+- [ ] 主要字段仅在明确主对象名称或主识别信息时使用 `font-medium`
+- [ ] 时间字段保持普通单元格层级，默认使用 `gray-8`
 - [ ] 状态列优先使用 Tag 规范；若暂用 Badge，也已对齐 `tag.txt`
 - [ ] 操作列左对齐，使用 DropdownMenu
 - [ ] 选择列复用 Checkbox，并支持全选/半选逻辑
 - [ ] 单选 / 展开 / 拖拽列如出现，已按 table 子模块处理，而不是页面私有组件
 - [ ] 表头中的排序 / 筛选 / 搜索 / 列设置按 table 子模块落地
+- [ ] 左右冻结列各自形成连续冻结组；左侧阴影只在左冻结组右边界，右侧阴影只在右冻结组左边界，并按横向滚动位置显示 / 隐藏
 - [ ] 空状态有图标和提示文字
-- [ ] 分页在表格下方
+- [ ] 分页在表格下方；右侧保留 `共计 X 条`、每页条数、页码轨道和跳页输入
+- [ ] 如支持跨页选择，分页左侧 `跨页全选` 与表格勾选列垂直对齐，信息提示图标为 14px x 14px
+- [ ] 表格主体横向 / 纵向滚动条为 4px
 - [ ] 每页条数 / 跳页输入已分别回看 Select / Input 规范
 - [ ] Card 内表格 CardContent 加 `p-0`
